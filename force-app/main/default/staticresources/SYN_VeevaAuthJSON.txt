@@ -1,0 +1,13 @@
+{
+    "responseStatus": "SUCCESS",
+    "sessionId": "54C64E59FF67F0052FEFE1A6FD7D784EBDB3A5CB813E8834CE5BEC6C51B21873FF3B3AD818B00A417B2B2E0F22CF7E060DE3D4D6B3F914FD82B6A088AB2FA433D8A6AAF4639646D7B4DE8EF995184B24D74E59782891BB8289AFB414CAEBF2B5",
+    "userId": 2000031617,
+    "networkId": "41466",
+    "networkIds": [
+        {
+            "id": 41466,
+            "name": "Syneos Health DEV",
+            "url": "https://syneoshealthdev.veevanetwork.com/api"
+        }
+    ]
+}

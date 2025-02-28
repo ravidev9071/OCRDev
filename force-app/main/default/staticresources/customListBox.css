@@ -1,0 +1,24 @@
+.slds-dropdown_fluid,.slds-dropdown--fluid {
+    min-width: var(--lwc-sizeXSmall,12rem);
+    max-width: 37%;
+    width: 37%
+}
+
+.slds-dropdown {
+    position: absolute;
+    z-index: var(--lwc-zIndexDropdown,7000);
+    left: 20%;
+    float: left;
+    min-width: var(--lwc-sizeXxSmall,6rem);
+    max-width: var(--lwc-sizeMedium,20rem);
+    margin-top: var(--lwc-spacingXxxSmall,0.125rem);
+    margin-bottom: var(--lwc-spacingXxxSmall,0.125rem);
+    border: var(--lwc-borderWidthThin,1px) solid var(--slds-g-color-border-base-4, var(--lwc-colorBorder,rgb(229, 229, 229)));
+    border-radius: var(--lwc-borderRadiusMedium,0.25rem);
+    padding: var(--lwc-spacingXxSmall,0.25rem) 0;
+    font-size: var(--lwc-fontSize2,0.75rem);
+    background: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundAlt,rgb(255, 255, 255)));
+    box-shadow: var(--lwc-shadowDropDown,0 2px 3px 0 rgba(0, 0, 0, 0.16));
+    transform: translateX(-50%);
+    color: var(--slds-g-color-neutral-base-10, var(--lwc-colorTextDefault,rgb(24, 24, 24)))
+}
