@@ -1,0 +1,36 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <!-- Attributes -->
+    <aura:attribute name="selectedSubRole" type="String" default=""/>
+    <aura:attribute name="isLandingPage" type="Boolean" default="true"/>
+    <aura:attribute name="allowOnClickNextProvider" type="Boolean" default="false"/>
+    <aura:attribute name="allowOnClickNextPharmacy" type="Boolean" default="false"/>
+    <aura:attribute name="hideScreen1" type="Boolean" default="true"/>
+    
+    <aura:if isTrue="{!v.hideScreen1}"> 
+        <div align="center">
+            <!-- BOXED AREA -->
+            <fieldset class="slds-box slds-theme_default slds-container_large">
+                <h2 class="slds-page-header__title"><b>Sodium Oxybate REMS Account Creation</b></h2>
+                <form class="slds-form_stacked">
+                    <lightning:select aura:id="selectSubRole" name="select1" label="Create an Account:" onchange="{!c.handleOnChangeSubRole}" required="true" class="rclass">
+                        <option>Select</option> 
+                        <option>Prescriber</option>
+                        <option>Pharmacy Participant</option>
+                    </lightning:select>
+                    
+              <div aura:id="messageId2" class="message slds-form-element__control slds-hide">Please select a value!</div>
+                  
+                </form>
+            </fieldset>
+        </div>
+    </aura:if>
+  
+    <!-- PPP-498 -->
+    <!-- User input screens based on the roles selected -->
+    <aura:if isTrue="{!v.allowOnClickNextProvider}">
+       <c:SYN_PortalPrescriberRegistration hideScreen2 = "{!v.hideScreen1}"/> 
+    </aura:if>
+    <aura:if isTrue="{!v.allowOnClickNextPharmacy}">
+        <c:SOX_ProviderRegistration hideScreen1 = "{!v.hideScreen1}"/>
+    </aura:if> 
+</aura:component>

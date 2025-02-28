@@ -1,0 +1,101 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 13/09/2022
+Description   :- Created for Maci Portal -> Confirm-email Page { Middle Context }
+-->
+
+
+<aura:component controller ="MaciPortalCustomController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="portalUserId" type="String" default=""/>
+    <aura:attribute name="oPharmyInfo" type="Case" default="{ 'sobjectType': 'Case'}"/> 
+    <!-- storing current pharmacy Type -->
+    <aura:attribute name="pharmacyType" type="string" default =""/>
+
+    <section class="sec-one-1 pb-0" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;">
+        <div class="container-fluid px-5 pb-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card p-0 rounded-0 border-0" style="overflow: hidden;">
+                        <div class="card-header border-0 crd-hdr-m">
+                            <div class="row d-flex justify-content-center align-items-center" style="background-color:#EBEBEB;">
+                                <div class="col-lg-5">
+                                    <div class="row">
+                                        <div class="col-lg-11 col-sm col-10">
+                                            <h5 class="heading mb-0 fs-3 mt-0 fw-lighter mt-n1" style="padding-left: 0px !important;"><i class="fa fa-file-text pe-1"></i>
+                                                Pharmacy Certification by Enrollment</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                     <div class="progressbar">
+                                        <div class="progress" id="progress"></div>
+                                        
+								    	<div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                            <span>PHARMACY TYPE SELECTION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                              <div class="progress-step"></div>
+                                            <span>INSTRUCTIONS</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AUTHORIZED REPRESENTATIVE INFORMATION</span>
+                                        </div>
+                                         <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                             <span  class="text-theme"><em>PASSWORD</em></span>
+                                         </div>
+                                         <div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                            <span>PHARMACY INFORMATION</span>
+                                        </div>
+                                         <div class="progress-block">
+                                        	<div class="progress-step last-step"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                         <aura:if isTrue="{!v.pharmacyType == 'Inpatient Pharmacy'}">
+                                             <div class="progress-block">
+                                                 <div class="progress-step last-step"></div>
+                                                 <span>COMPLETE</span>
+                                             </div>
+                                         </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body llc-dv-16">
+
+                            <div class="row mb-4">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold text-theme">Password</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm" style="padding-top: 5rem;">
+                                <div class="col-lg-12 text-center pt-4 pb-2">
+                                    <p style="color: #3e3e3e;font-weight: 600;">You must confirm your email to continue</p>
+
+                                    <h5 style="color: #565656;">An email has been sent to you at the following address: </h5>
+                                    <span class="mail-link fs-5" ><b>{!v.oPharmyInfo.US_WSREMS__Email__c}</b></span>
+
+                                    <div class="form-check d-flex justify-content-center my-3">
+                                        <input name="text-loaction" class="form-check-input" type="checkbox" value=""
+                                               id="flexCheckDefault"></input>
+                                            <h5 style="color: #565656;" class="form-check-label ms-2" for="flexCheckDefault">
+                                            I have checked my junk mail, and waited a few minutes
+                                        </h5>
+                                    </div>
+
+                                    <a id="resend-btn" class="resend-btn" onclick="{!c.resendConfirmationMail}"><i class="fa fa-refresh"></i> Resend Email</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m py-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>

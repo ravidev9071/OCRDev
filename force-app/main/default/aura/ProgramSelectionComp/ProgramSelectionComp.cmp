@@ -1,0 +1,25 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride,lightning:isUrlAddressable" access="global" controller="RemsNewAccViaCaseCreationController">
+    <aura:attribute name="Programs" type="List"/>
+    <aura:attribute name="showMaciComponent" type="boolean" default="false"/>
+    <aura:attribute name="showSodiumOxybateComponent" type="boolean" default="false"/>
+     <aura:attribute name="showProductComponent" type="boolean" default="false"/>
+    <aura:attribute name="showButtons" type="boolean" default="false"/>
+    <aura:attribute name="selectedProgram" type="String"/>
+	<aura:handler name="init" value="{!this}"  action="{!c.doInit}"/>
+    <aura:if isTrue="{!OR(v.showSodiumOxybateComponent,v.showMaciComponent)}">
+     <lightning:card>
+        <p class="slds-p-horizontal_small">
+            <aura:if isTrue="{!v.showSodiumOxybateComponent}">
+                <c:NewAccountViaCase aura:id="account" programName ="{!v.selectedProgram}" REMSPrograms="{!v.Programs}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.showMaciComponent}">
+                <c:REMSNewAccountViaCase aura:id="account" programName ="{!v.selectedProgram}" REMSPrograms="{!v.Programs}"/>
+            </aura:if>
+        </p>
+    </lightning:card>
+        
+    </aura:if>
+    <aura:if isTrue="{!v.showProductComponent}">
+        <US_WSREMS:newAccountFromOverideNewButton/>
+    </aura:if>
+</aura:component>

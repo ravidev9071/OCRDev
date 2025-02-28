@@ -1,0 +1,145 @@
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="programId" type="String" default=""/>
+    <aura:attribute name="recordTypeDeveloperName" type="String" default=""/>
+    <aura:attribute name="portalRole" type="String" default=""/>
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="cAccount2" type="Account" />
+    <aura:attribute name="pAccount" type="case" />
+    <aura:attribute name="pregancyTest" type="Boolean" default="false" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:navigation aura:id="navigation"/>
+    <section class="sec-one-1" style="background-image: url('assets/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;">
+        <div class="section-content container-fluid px-5">
+            <div class="col-lg-12">
+                      <!---Office Contact-->                          
+    			<div class="p-3" style="background-color: #EBEBEB">
+    				<div class="border-bottom-0 mx-0">
+                  <div class="row px-1">
+                      <div class="col-lg-7 col-sm col-12 text-start pb-2">
+                    
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa fa-user-md fs-1 me-0 mt-0"></i>
+                                    
+                                <div class="">
+                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                       <b>Office Contact:</b> {!v.cAccount.Name}
+                                    </h3>
+                                </div>
+                            </div>
+                      </div>
+                      <div class="col-lg-5 col-sm col-4 text-end pe-4">
+                        <span class=" text-muted">Program Status:&nbsp; <span class="text-theme fw-bold">Active as of <span name="enrolled-number" id="enrolled-number"><lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></span> <i class="fa fa-check-circle ps-1"></i></span></span>
+                    </div>
+                   </div>
+                </div>
+
+                <div class="d-flex justify-content-between border-bottom-0 pb-2">
+                    <div class="col-lg-7 col-sm col-8 text-start">
+                        
+                        <div class="d-flex ps-3">
+                            <div class="col-1 pe-0" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                    </span>
+                                </div>
+                             <div class="col-1" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <span class="text-theme">
+                                            <i class="fa fa-user-md fs-1 me-0 mt-0"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="">
+                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                    	{!v.pAccount.SYN_Prescriber__r.FirstName}{!v.pAccount.SYN_Prescriber__r.LastName}
+                                	</h3>
+                                    <div>
+                                    	<span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                    	<span class="fs-6 text-black-50 fw-bold">NPI: <strong style="color: #011338;">{!v.pAccount.SYN_Prescriber__r.US_WSREMS__NPI__c}</strong></span>
+                                		</span>    
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    
+                </div>
+  
+               <div class="border-bottom-0 mx-0 pb-2">
+                  <div class="row px-1">
+                      <div class="col-lg-12 col-sm col-12 text-start">
+                    
+                            <div class="d-flex ps-6 gap-1 ms-2">
+                                <div class="" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                    </span>
+                                </div>
+                                <div class="" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <span class="text-theme">
+                                            <i class="fa fa-user text-info fs-1"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="">
+                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                        {!v.pAccount.US_WSREMS__Patient__r.FirstName}&nbsp;{!v.pAccount.US_WSREMS__Patient__r.LastName}</h3>
+                                    <div class="">
+                                    <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                        <span class="fs-6 text-black-50 fw-bold">Date of Birth: <strong style="color: #011338;"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.US_WSREMS__Patient__r.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" /></strong></span>
+                                    </span>
+                                    </div>
+                                    <div class="">
+                                        <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                            <span class="fs-6 text-black-50 fw-bold">REMS ID: <strong style="color: #011338;">{!v.pAccount.US_WSREMS__Patient__r.SYN_Ref_Id__c}</strong>
+                                        </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                   </div>
+                  </div>
+                </div>
+            </div>
+            <aura:if isTrue="{! v.isLoading }">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:if>
+            <div class="bg-white p-4" style="padding-bottom: 6rem !important;height: 33vw;">
+                <div class="row d-flex  h-100">
+                    <div class="col-md-9 border-end pe-3">
+                        <h5 class="text-theme mb-3 fw-bold"> Monthly Pregnancy Test</h5>
+                        <div class="border p-4"> 
+                            <h6 class="mb-2 text-theme fw-bold">Pregnancy Test</h6>
+                            
+                            
+                            <div class="form-check">
+                                <ui:inputCheckbox class="form-check-input" aura:id="checkbox" change="{!c.monthlyPregancyTest}" />
+                                <label class="form-check-label ps-2" for="flexCheckDefault" style="font-size:16px;">
+                                    Monthly Pregnancy Test Obtained
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3  ps-3">
+                        <h5 class="text-theme mb-3 fw-bold"><i class="fa fa-info pe-2"></i> Information</h5>
+                        <p style="font-size:16px;">Confirm that a pregnancy test has been obtained within the last month for this patient.</p>
+                        <p style="font-size:16px;">The prescriber must notify the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center (by phone at
+                            1-888-572-2934) of any pregnancies that occur during treatment or within one month of discontinuation.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-0 crd-hdr-m">
+                <div class="row">
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <lightning:button variant="brand" class="btn btn-primary-m my-2 pull-right rounded-0" label="COMPLETE" aura:id="disableenable" disabled="true" onclick="{!c.handleComplete}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+</aura:component>

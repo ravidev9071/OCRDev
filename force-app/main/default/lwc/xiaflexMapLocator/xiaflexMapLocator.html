@@ -1,0 +1,11 @@
+<template>
+	<template if:true={mapMarkers}>
+		<article class="slds-card">
+			<div class="slds-card__body slds-card__body_inner">
+				<lightning-map map-markers={mapMarkers}
+				markers-title={markerTitle} list-view={listViewType} selected-marker-value={selectedvalue} zoom-level={zoomType}> </lightning-map>
+			</div>
+            </article>
+	</template>
+	<template if:false={mapMarkers}> Loading .... </template>
+</template>

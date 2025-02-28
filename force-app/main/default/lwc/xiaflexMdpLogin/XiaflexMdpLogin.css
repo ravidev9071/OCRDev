@@ -1,0 +1,24 @@
+.siteforceContentArea{
+    background: white !important;
+}
+.frmRegister{
+    background: white !important;
+}
+.frmContainer .slds-card__body p.frmInstructions {
+    padding: 10px 15px !important;
+}
+.frmInstructions{
+    color: #696969 !important;
+}
+.custom-button {
+    width:31rem !important;
+    background-color: #eb5903 !important; 
+}
+
+lightning-button.slds-align_absolute-center.confirmBtnClass.slds-button_brand.slds-button_full-width button {
+    width: 100% !important;
+}
+
+button.slds-button.slds-button_brand {
+    width: 100% !important;
+}

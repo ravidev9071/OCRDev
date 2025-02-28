@@ -1,0 +1,285 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> Outpatient Pharmacy Agreement { Middle Context }
+-->
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="SignatureStatus" type="string" default=""/>
+    <aura:attribute name="termsFlag" type="boolean" default="false"/> 
+    <aura:attribute name="DisableSignatureStatus" type="boolean" default="true"/>
+    <aura:attribute name="cAccount" type="Account" /> 
+    
+    
+    <ltng:require scripts="{!$Resource.signaturePad}" afterScriptsLoaded="{!c.doInit}" />
+    
+    <aura:method name="SaveSignature" action="{!c.saveSignatureOnClick}" description="Save Signature" />
+    
+    <aura:method name="IsCanvasEmpty" action="{!c.IsCanvasEmpty}" description="Check Signature is done or not" />
+    
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:attribute name="IsImageDrawn" type="Boolean" default="false" />
+    <aura:attribute name="signaturePad" type="Object" /> 
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false"/>
+    <aura:registerEvent name="ShowOutPatinetScreens" type="c:MaciShowOutPatientPharmacyEnrollmentScreen"/>
+    
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+     <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: center;background-attachment: fixed;">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card p-0 rounded-0 border-0 bg-white-2" style="height: 44vw;">
+                        <div class="card-header border-0 crd-hdr-m bg-blue-header">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-5">
+                                    <div class="row d-flex justify-content-left align-items-center">
+                                        <div class="col-lg-1 col-sm col-1 text-end pe-3">
+                                            <i class="fa fa-file-text fa-2x heading-i"></i>
+                                        </div>
+                                        <div class="col-lg-9 col-sm col-10 ps-2">
+                                            <h5 class="card-title mt-2 d-block heading-h fs-3">
+                                               Pharmacy Enrollment</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 modify-pro px-0">
+                                    <div class="progressbar mb-5">
+                                        <div class="progress" id="progress"></div>
+										<div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY TYPE SELECTION </span>
+                                        </div>
+                                        <div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                          <span>INSTRUCTIONS</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AUTHORIZED REPRESENTATIVE INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span class="text-theme"><em>PASSWORD</em></span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step last-step "></div>
+                                            <span>COMPLETE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body llc-dv-16 pb-5">
+                            <div class="row mb-2">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold text-theme">Outpatient Pharmacy Agreement</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm px-4">
+                                <div class="col-lg-12">
+                                    <p class="mb-0">Please read and accept the following terms:</p>
+                                    <div class="border p-4">
+                                        <p class="fw-bold mb-0">Authorized Representative Agreement </p>
+
+                                        <p class="mb-0">I am the authorized representative designated by my
+                                            outpatient pharmacy to coordinate the activities of the {!$Label.c.Macitentan_Containing_Products_REMS}.
+                                            <b>Therefore, I must</b>:</p>
+
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        carry out the certification process and oversee implementation of and
+                                                    compliance with the REMS on behalf of the pharmacy.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                   <div>
+                                                        review the Prescribing Information and <em>Prescriber and Pharmacy Guide.</em>
+                                                   </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                   <div>
+                                                    certify by enrolling in the REMS by completing the <em>Outpatient Pharmacy
+                                                    Enrollment Form</em> and submitting it to the REMS.
+                                                   </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        train all relevant staff involved in dispensing on the REMS
+                                                    requirements, procedures, and REMS materials.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <p class="fw-bold mb-0">Before dispensing, the outpatient pharmacy must: </p>
+                                       <div class="list-bullets">
+                                        <ul class="p-inline-s">
+                                            <li class="d-flex">
+                                                <i class="fa fa-circle pt-2"></i>
+                                                <div>
+                                                    Obtain a REMS Dispense Authorization (RDA) from the {!$Label.c.Macitentan_Containing_Products_REMS}
+                                                Coordinating Center or the {!$Label.c.Macitentan_Containing_Products_REMS} website that verifies female
+                                                patients are
+                                                enrolled, the reproductive status has not changed, the prescriber is
+                                                certified, and pregnancy test is completed for females of reproductive
+                                                potential - or the prescriber
+                                                authorizes the dispensing.
+                                                </div> 
+                                            </li>
+                                            <li class="d-flex">
+                                                <i class="fa fa-circle pt-2"></i>
+                                                <div>
+                                                    Counsel females of reproductive potential on the risk of embryo-fetal
+                                                toxicity, the need to use reliable contraception during treatment and
+                                                for one month after stopping
+                                                treatment to get monthly pregnancy tests, and to inform her prescriber
+                                                immediately if she misses a menstrual period or suspects she is
+                                                pregnant.
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                <i class="fa fa-circle pt-2"></i>
+                                                <div>
+                                                    Dispense no more than a 30-days' supply for females of reproductive
+                                                potential.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                       </div>
+                                        <p class="fw-bold  mb-0">To maintain certification to dispense:</p>
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                   <div>
+                                                    Have a new authorized representative certify by enrolling in the REMS by
+                                                    completing the <em>Outpatient Pharmacy Enrollment Form</em> if the
+                                                    authorized representative
+                                                    changes.
+                                                   </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="fw-bold  mb-0">At all times, the outpatient pharmacy must:</p>
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        report pregnancies to the REMS.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                   <div>
+                                                    not distribute, transfer, loan, or sell {!$Label.c.macitentan_containing_products}, except to certified
+                                                    dispensers.
+                                                   </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        maintain and submit records of daily product dispensing data for all
+                                                    females.
+                                                    </div>    
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        maintain records that all processes and procedures are in place and
+                                                    being followed.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        comply with audits carried out by the manufacturers or a third party
+                                                    acting on behalf of the manufacturers to ensure that all processes and
+                                                    procedures are in place and
+                                                    are being followed.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2 row-check">
+                                        <div class="col-lg-12">
+                                            <div class="form-check">
+                                                <lightning:input name="text-agree" aura:id="termsFlag" type="checkbox" label="As the authorized representative, I will ensure that all pharmacy dispensing staff are trained on the Macitentan-Containing Products REMS requirements prior to dispensing macitentan-containing products" checked="{!v.termsFlag}" class="form-check-label m-0 customcheckbox" />
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12 ps-lg-4">
+                                            <p class="ps-lg-3 mt-4">Authorized Representative Signature:</p>
+                                            <p class="ps-lg-3 mt-3">Please use your mouse to sign your name,
+                                                {!v.cAccount.Name} in the box below:</p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="col-lg-7 overflow-hidden px-0">
+                                            <div class=" space-md border signClass">
+                                                <canvas id="signature-pad" aura:id="signature-pad" class="signature-pad w-100" style ="height:25rem"></canvas>
+                                                <canvas id='blank' aura:id="blank" class="signature-pad w-100" style='display:none'></canvas>                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 mt-2 d-flex align-items-center overflow-hidden justify-content-center">
+                                            <aura:if isTrue="{!v.DisableSignatureStatus}">
+                                                <a class="btn btn-primary-m mx-1 my-2" onclick="{!c.saveSignatureOnClick}">SAVE</a>
+                                                <a class="btn btn-primary-m mx-1 my-2" onclick="{!c.clearSignatureOnClick}">CLEAR</a>
+                                                <aura:set attribute="else">
+                                                    <a class="btn btn-secondary mx-1 my-2 btn-block">SAVE</a>
+                                                    <a class="btn btn-secondary mx-1 my-2 btn-block">CLEAR</a>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">SUBMIT</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</aura:component>

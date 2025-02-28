@@ -1,0 +1,163 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" controller="SYN_InvitePharamcyStaffController">
+	<!--Attributes-->
+     <!-- storing Prescriver data info -->
+    <aura:attribute name="oPharmyInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="userType" type="String" default=""/>
+   
+    <!-- storing Case Title Picklist values  -->
+    <aura:attribute name="titleMap" type="Map"/> 
+    <!-- storing Case Credentials Picklist values  -->
+    <aura:attribute name="credentialsMap" type="Map"/>
+    <!-- storing Confirm Email  -->
+    <aura:attribute name="confirmEmail" type="string" default=""/>
+    <lightning:navigation aura:id="navigation"/>
+    <!-- storing current program Id -->
+    <aura:attribute name="programId" type="string" default =""/>
+    
+    <!-- storing current portal profile Id -->
+    <aura:attribute name="profileId" type="string" default =""/>
+    
+    <!-- storing current portal user role -->
+    <aura:attribute name="userrole" type="string" default =""/>
+    
+    <!-- storing portal user id when user gets created at password screen -->
+    <aura:attribute name="portalUserId" type="String" default=""/>
+    
+    <aura:attribute name="authRepAccount" type="Account" /> 
+	<aura:attribute name="pharmacy" type="Account" />
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false" />
+    <aura:attribute name="termsFlag" type="boolean" default="false"/>
+    
+    <aura:attribute name="ShowScreen" type="Boolean" default="false" />
+    <aura:attribute name="reloadForm" type="boolean" default="false" />
+    
+    <aura:attribute name="pharmacyAffilation" type="US_WSREMS__Affiliation__c" />
+    <aura:attribute name="primaryARAccountId" type="string" />
+    <aura:attribute name="primaryARCount" type="string" />
+    <aura:attribute name="ARCount" type="string" />
+    <aura:attribute name="pharmacyAccountRecord" type="Account" default="{ 'sobjectType': 'Account'}"/>
+    <aura:attribute name="showOtherCredentialsField" type="Boolean" default="false" />
+    <aura:attribute name="showOtherTitleField" type="Boolean" default="false" />
+
+
+
+    <aura:attribute name="recordtypeid" type="id" />
+    <aura:attribute name="fields" type="String[]" default="['SYN_User_Type__c','','AR_Category__c','','US_WSREMS__First_Name__c','','US_WSREMS__Last_Name__c','','Credentials__c','','Title__c','','US_WSREMS__Email__c','','US_WSREMS__Program_Picklist__c','Macitentan REMS','Program_Record_Type_Control__c','Macitentan REMS-Pharmacy_Participant_Account']" />
+    <aura:attribute name="accountRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="pharmacyArRecordLoadError" type="String"/>
+    <aura:attribute name="pharmacyStatus" type="String"/>
+    
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    
+    <div class="card-header border-0 crd-hdr-m px-0">
+        <div class="row px-3 py-3 d-flex justify-content-center align-items-center">
+            <div class="col-7" >
+                <div class=" d-flex align-items-center">
+                    <aura:if isTrue="{!v.accountRecord.Pharmacy_Type__c == 'Inpatient'}">
+                        <span class="text-theme pe-2">  <img src="/resource/MaciImages/img/rx2.png" alt="img" style="margin: 6px;width:29px;"></img></span>
+                        <aura:set attribute="else">
+                            <span class="text-theme pe-2">  <img src="/resource/MaciImages/img/rx1.png" alt="img" style="margin: 6px;width:29px;"></img></span>
+                        </aura:set>
+                    </aura:if>  
+                    
+                    <div>
+                        <h4 class="mb-0 ps-2 text-head-main"> {!v.accountRecord.Name}.</h4>
+                        <h4 class="mb-0 ps-2 text-head-main"><b>NPI:</b> {!v.accountRecord.US_WSREMS__NPI__c}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                
+    <force:recordData aura:id="remServiceLoader"
+                              recordId="{!v.recordId}"
+                              fields="Id,Name,US_WSREMS__NPI__c,US_WSREMS__Status__c,SYN_Signature_Date__c,US_WSREMS__REMS_Program__c,Pharmacy_Type__c"
+                              recordUpdated="{!c.handleRecordChanged }"
+                              targetFields="{!v.accountRecord}"
+                              targetError="{!v.recordLoadError}"
+                      />
+  
+    <aura:if isTrue="{!v.ShowScreen}">
+        <lightning:recordEditForm objectApiName="Case" recordTypeId = "{!v.recordtypeid}"
+                                  aura:id="accForm"
+                                  onload="{!c.handleOnLoad}"
+                                 
+                                  onsuccess="{!c.handleOnSuccess}"
+                                  onerror="{!c.handleOnError}">
+            <lightning:messages />
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField  aura:id="US_WSREMS__First_Name__c" fieldName="US_WSREMS__First_Name__c" required="true"/>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField  aura:id="US_WSREMS__Last_Name__c" fieldName="US_WSREMS__Last_Name__c" required="true"/>
+                </div>
+            </div>
+            
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField aura:id="Credentials__c" fieldName="Credentials__c" required="true" onchange="{!c.checkCredentials}"/>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField aura:id="Title__c" fieldName="Title__c" required="true" onchange="{!c.checkTitleCredentials}"/>
+                </div>
+            </div>
+            
+           
+                <div class="slds-grid">
+                    <aura:if isTrue="{!v.showOtherCredentialsField}">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField aura:id="Other_Credential__c" fieldName="Other_Credential__c" required="true"/>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.showOtherTitleField}">
+                         <aura:if isTrue="{!!v.showOtherCredentialsField}">
+                             <div class="slds-col slds-size_1-of-2">
+                             </div>
+                        </aura:if>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning:inputField aura:id="Other_Title__c" fieldName="Other_Title__c" required="true"/>
+                        </div>
+                    </aura:if>
+                </div>
+            
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField aura:id="US_WSREMS__Email__c" fieldName="US_WSREMS__Email__c" required="true"/>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField  aura:id="AR_Category__c" fieldName="AR_Category__c" />
+                </div>
+            </div>
+            
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField  aura:id="SYN_User_Type__c" fieldName="SYN_User_Type__c" required="true"/>
+                </div>
+                
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <label for="US_WSREMS__Date__c">Invitation Date</label>
+                    <lightning:inputField aura:id="US_WSREMS__Date__c" fieldName="US_WSREMS__Date__c" variant="label-hidden"/>
+                </div>
+                
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField aura:id="Program_Record_Type_Control__c" fieldName="Program_Record_Type_Control__c" value="Macitentan REMS-Pharmacy_Participant_Account" class="slds-hidden"/>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField aura:id="US_WSREMS__Program_Picklist__c" fieldName="US_WSREMS__Program_Picklist__c" required="true" value="Macitentan REMS" class="slds-hidden"/>
+                </div>
+              
+            </div>
+            <div class="slds-clearfix">
+                <lightning:button label="SEND INVITE" variant="brand" type="submit"  class="slds-float_right" onclick="{!c.handleOnSubmit}"/>
+            </div>        
+        </lightning:recordEditForm>
+    </aura:if> 
+</aura:component>

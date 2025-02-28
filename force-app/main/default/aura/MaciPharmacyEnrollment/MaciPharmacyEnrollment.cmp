@@ -1,0 +1,297 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Login Page { Middle context }
+-->
+<aura:component controller ="MaciPortalCustomController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="enableTwoFactoryAuthentication" type="boolean" default="false"/>
+	<aura:attribute name="username" type="string" default =""/>	
+    <aura:attribute name="password" type="string" default =""/>
+    <aura:attribute name="confirmPassword" type="string" default =""/>
+    <aura:attribute name="showpassword" type="Boolean" default="false"/>
+    <aura:attribute name="showTwoFactorAuth" type="Boolean" default="false"/>
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+    <aura:attribute name="authRepId" type="string" />
+    <lightning:navigation aura:id="navigation"/>
+    <!-- storing current program Id -->
+    <aura:attribute name="programId" type="string" default =""/>
+    
+    <!-- storing current portal profile Id -->
+    <aura:attribute name="profileId" type="string" default =""/>
+    
+    <!-- storing current portal user role -->
+    <aura:attribute name="userrole" type="string" default =""/>
+    
+    <!-- storing portal user id when user gets created at password screen -->
+    <aura:attribute name="portalUserId" type="String" default=""/>
+    
+     <!-- storing current pharmacy Type -->
+    <aura:attribute name="pharmacyType" type="string" default =""/>
+    
+    <!-- storing Prescriver data info -->
+    <aura:attribute name="oPharmyInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>  
+    
+    <aura:attribute name="authRep" type="US_WSREMS__Affiliation__c" />
+    <aura:attribute name="newUserFlag" type="boolean" default="false"/>
+    <aura:attribute name="OldUserFlag" type="boolean" default="false"/>
+    <aura:attribute name="InactiveUserFlag" type="boolean" default="false"/>
+	<aura:attribute name="confirmScreenFlag" type="boolean" default="false"/>
+
+    <!-- Storing 2 Factor Authentication Options -->
+    <aura:attribute name="options2FA" type="List" default="[
+    {'label': 'Two-Factor Authentication Opt-In', 'value': 'Opt-In'},
+    {'label': 'Two-Factor Authentication Opt-Out', 'value': 'Opt-Out'}]"/>
+
+    <aura:attribute name="value2FA" type="String"/>
+    <aura:attribute name="show2FAError" type="boolean" default="false"/>  
+    <aura:attribute name="show2FAOptOut" type="boolean" default="false"/> 
+   
+    <ltng:require styles="{!join(',',$Resource.MacitentanAssets + '/assets/css/bootstrap.min.css', 
+                           $Resource.MacitentanAssets + '/assets/css/font-awesome.min.css',
+                           $Resource.MacitentanAssets + '/assets/css/custom.css')}"
+                   
+                  
+                  scripts="{!join(',', 
+                           $Resource.MacitentanAssets + '/assets/js/bootstrap.bundle.min.js',  
+                           $Resource.MacitentanAssets + '/assets/js/jquery-3.6.0.min.js')}"
+                 /> 
+    
+    <!-- handlter declarion  -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+     <nav class="navbar navbar-top navbar-expand-lg navbar-light py-3" style="margin-top:-32px;">
+        <div class="container-fluid px-5">
+            <div class="navbar-collapse">
+                
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-0">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href=" /s/">
+                <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"></img>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    
+    <section class="sec-one-1 pb-0" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: right;height:120vh;">
+        <!--loading spinner start-->
+        <aura:if isTrue="{!v.ShowSpinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        
+        <div class="container-fluid px-5 pb-0 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <aura:if isTrue="{!v.newUserFlag}">
+                    <div class="card p-0 rounded-0 border-0 h-100">
+                        <div class="card-header border-0 crd-hdr-m bg-blue-header">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-5">
+                                    <div class="row d-flex justify-content-left align-items-center">
+                                        <div class="col-lg-1 col-sm col-1 text-end pe-3">
+                                            <i class="fa fa-file-text fa-2x heading-i"></i>
+                                        </div>
+                                        <div class="col-lg-9 col-sm col-10">
+                                            <h5 class="card-title mt-2 d-block heading-h fs-3">
+                                                Setup Password</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 modify-pro px-0">
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body llc-dv-16 pb-5">
+                            <div class="row mb-3">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold text-theme">Password</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm mx-4">
+                                <div class="col-lg-5">
+                                    <div class="row">
+                                        <div class="col-lg-1 px-0 col-sm col-1">
+                                            <i class="fa fa-user-circle pull-right pt-2 mt-4 fs-18"></i>
+                                        </div>
+                                        <div class="col-lg-10 col-sm col-8 px-1">
+                                            <label>Enter your username</label>
+                                           <lightning:input type="text" aura:id="username" placeholder="Username" class="form-control" value="{!v.authRep.US_WSREMS__Pharmacy_User__r.US_WSREMS__Email__c}" disabled="true"/>                                          
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-lg-1 px-0 col-sm col-1">
+                                            <img class="pull-right pt-2 mt-4" src="/resource/MaciImages/img/key.png" alt="key"  style="width:17px" ></img>
+                                        </div>
+                                        <div class="col-lg-10 col-sm col-8 px-1 ">
+                                            <label>Please create your password</label>
+                                            <div class="d-flex justify-content-end align-items-center">
+                                            
+                                                <lightning:input variant = "label-hidden" type="{!v.showpassword ? 'text':'password'}" class="form-control" placeholder="Password" 
+                                                                 aura:id="password_field" value="{!v.password}"/>       
+                                                 <lightning:buttonIcon  aura:id="pwrdIcon" class="slds-button slds-input__icon slds-text-color--default position-absolute me-3 passwordIcon" 
+                                                                      iconName="{!v.showpassword ? 'utility:preview':'utility:hide'}" 
+                                                                      alternativeText="Some text" onclick="{!c.togglePassword}"/>   
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 px-0 col-sm col-1">
+                                            <i class="fa fa-info pull-left pt-2 mt-4 pb-2 px-3 border-end fs-5" style="border-right: 1px solid #dee2e6!important;" title="&#x2022; be between 8 and 12 characters&#10;&#x2022; include at least one letter (a-z)&#10;&#x2022; include at least one number (0-9)&#10;&#x2022; not be the same as any of the previous 3 passwords used"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-lg-1 px-0 col-sm col-1"></div>
+                                        <div class="col-lg-10 col-sm col-8 px-1 d-flex justify-content-end align-items-center">
+                                            <lightning:input type="password" aura:id="confirmPassword" placeholder="Re-enter Password" class="form-control" value="{!v.confirmPassword}"/>
+                                        </div>
+                                    </div>
+                                                                        
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters" style="padding-top: 20px;padding-left: 70px;">
+                                <div class="slds-col" style="width: 350px;">
+                                    <div class="radioGroupLabel">
+                                        <lightning:radioGroup  name="options2FARadioGroup"
+                                                                options="{! v.options2FA }"
+                                                                value="{! v.value2FA }"
+                                                                onchange="{! c.handleFAChange }"
+                                                                
+                                                                />
+                                    </div>    
+                                    <aura:if isTrue="{!v.show2FAOptOut}">                                            
+                                            
+                                        <Span class="headingTwoFA">Opt Out? Consider the risks. If you choose to Opt Out of the 2FA, Please beware of the following risks.</Span>
+                                        <p class="detailTwoFA">
+                                            <b>- Increased Vulnerability:</b> Without 2FA, your account is more susceptible to<br/>
+                                                unauthorized access, potentially exposing your patients' PHI to malicious actors.<br/>
+                                            
+                                            <b>- Potential Data Breach:</b> In the event of a security breach, your patients' sensitive<br/>
+                                                information could be compromised, leading to legal and financial consequences.<br/>
+                                            
+                                            <b>- Loss of Trust:</b> Patients entrust you with their confidential information.<br/> A breach could erode their trust in your practice.<br/>
+                                            Note: You will be able to change your 2FA selection in your user profile screen later if you choose to do so<br/>
+                                        </p>                                                
+                                        
+                                    </aura:if> 
+                                </div>
+                                <div class="slds-col">
+                                
+                                </div>
+                                <div class="slds-col">
+                                    
+                                    <h6 class="my-0 fw-bold mb-2">Two-Factor Authentication</h6>
+                                    
+                                        <Span class="headingTwoFA">Why Opt-In for 2FA?</Span>
+                                        <p class="detailTwoFA">
+                                            <b>- Enhanced Security:</b> 2FA adds an extra layer of defense, ensuring that only authorized<br/>
+                                                users can access your account, even if your password is compromised.<br/>
+                                            
+                                            <b>- Protect Patient Confidentiality:</b> Safeguard your patients' sensitive information from<br/>
+                                                unauthorized access, preserving their trust in your practice.<br/>
+                                            
+                                            <b>- Regulatory Compliance:</b> Maintain compliance with healthcare regulations like HIPAA<br/>
+                                                by implementing robust security measures.<br/>
+                                            <br/>
+                                        </p>                                            
+                                </div>
+                                <div class="slds-col">
+                                
+                                </div>                                  
+                               
+                            </div> 
+                            <div class="col-lg-1 border-end border-dark" style="border-right: 1px solid #dee2e6!important;"></div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m mt-5 py-2">
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6" >
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </aura:if>
+                    
+                    <!-- User Exist -->
+                    <aura:if isTrue="{!v.OldUserFlag}">
+                        <!-- ******* BODY SECTION ******* -->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: 350px;">
+                            <p> Successfully, You are enrolled for new pharmacy, please use your existing credentials to access the community.</p>
+                            <br/>
+                            <p>User Name : {!v.authRep.US_WSREMS__Pharmacy_User__r.US_WSREMS__Email__c} </p>
+                            <br/>
+                            <p>Please click Next button, it will redirect to Login Page.</p>
+                           
+                             <div class="row" style=" text-align: center">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6" >
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" href="login">NEXT <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div> 
+                        </div>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.confirmScreenFlag}">
+                        <div class="card-body llc-dv-16">
+
+                            <div class="row mb-4">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold text-theme">Password</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm" style="padding-top: 5rem;">
+                                <div class="col-lg-12 text-center pt-4 pb-2">
+                                    <p style="color: #3e3e3e;font-weight: 600;">You must confirm your email to continue</p>
+
+                                    <h5 style="color: #565656;">An email has been sent to you at the following address: </h5>
+                                    <span class="mail-link fs-5" ><b>{!v.authRep.US_WSREMS__Pharmacy_User__r.US_WSREMS__Email__c}</b></span>
+
+                                    <div class="form-check d-flex justify-content-center my-3">
+                                        <input name="text-loaction" class="form-check-input" type="checkbox" value=""
+                                               id="flexCheckDefault"></input>
+                                            <h5 style="color: #565656;" class="form-check-label ms-2" for="flexCheckDefault">
+                                            I have checked my junk mail, and waited a few minutes
+                                        </h5>
+                                    </div>
+
+                                    <a id="resend-btn" class="resend-btn" onclick="{!c.resendConfirmationMail}"><i class="fa fa-refresh"></i> Resend Email</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    
+                    <!-- User Exist -->
+                    <aura:if isTrue="{!v.InactiveUserFlag}">
+                        <!-- ******* BODY SECTION ******* -->
+                        <div id="modal-content-id-1" >
+                            <br/>
+                            <p> <Center><b>Your account status is inactive, please contact the {!$Label.c.Macitentan_Containing_Products_REMS} at 1-888-572-2934.</b></Center></p>
+                            <br/>
+                        </div>
+                    </aura:if>
+                    
+                    
+                </div>
+            </div>
+        </div>
+		
+     </section>
+	
+</aura:component>

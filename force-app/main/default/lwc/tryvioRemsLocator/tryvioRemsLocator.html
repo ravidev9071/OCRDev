@@ -1,0 +1,130 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageTitle">
+            <div class="slds-text-heading_medium">TRYVIO<sup>&trade;</sup> REMS</div>
+            <div class="slds-text-heading_large"><img class="iconImg" src={iconLocator}> Prescriber/Pharmacy
+                Locator</div>
+        </div>
+        <div class="pageContainer">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+                        <div class="slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                            <div class="slds-col--padded slds-size_12-of-12">
+                                <div class="comm-content-header comm-layout-column">
+                                </div>
+                                <div class="frmContainer">
+                                    <article class="slds-card " part="card">
+                                        <div class="slds-card__header slds-grid">
+                                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                <div class="slds-media__figure"></div>
+                                                <div class="slds-media__body">
+                                                    <h2 class="slds-card__header-title">
+                                                        <span>Prescriber or Pharmacy Locator</span>
+                                                    </h2>
+                                                </div>
+                                            </header>
+                                        </div>
+                                        <div class="slds-card__body  slds-card__body_inner" part="body">
+                                            <p class="frmInstructions">Select a Participant Type, enter a Street Address, City, State, or Zip Code, and click "Search".</p>
+                                            <fieldset class="slds-form-element">
+                                                <legend class="slds-form-element__legend slds-form-element__label">
+                                                    <abbr class="slds-required" title="required">* </abbr>Certified Participant Type:
+                                                </legend>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-radio_button-group">
+                                                        <span class="slds-button slds-radio_button">
+                                                            <input type="radio" name="rbType" id="rbType1" value="Prescribers"  onchange={handleChangeRadio}>
+                                                            <label class="slds-radio_button__label" for="rbType1">
+                                                                <span class="slds-radio_faux">Prescribers</span>
+                                                            </label>
+                                                        </span>
+                                                        <span class="slds-button slds-radio_button">
+                                                            <input type="radio" name="rbType" id="rbType2" value="Pharmacies"  onchange={handleChangeRadio}>
+                                                            <label class="slds-radio_button__label" for="rbType2">
+                                                                <span class="slds-radio_faux">Pharmacies</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-form-element slds-p-left_xxx-small slds-large-size_8-of-12 slds-size_12-of-12">
+                                                    <legend class="slds-form-element__legend slds-form-element__label">
+                                                        <abbr class="slds-required" title="required">* </abbr>Street Address, City, State, or Zip Code
+                                                    </legend>
+                                                    <div class="slds-form-element__control"><input id="text-input-id-0"
+                                                            placeholder="" type="text" class="slds-input" value={address} onchange={handleAddressChange}/></div>
+                                                </div>
+                                                <div class="slds-form-element slds-p-left_xxx-small slds-large-size_4-of-12 slds-size_12-of-12">
+                                                    <legend class="slds-form-element__legend slds-form-element__label">
+                                                        <abbr class="slds-required" title="required">* </abbr>Search Radius (miles)
+                                                    </legend>
+                                                    <div class="slds-select_container">
+                                                        <select class="slds-select" id="select-01" onchange={handleRadiusChange}>
+                                                            <template for:each={radiusOptions} for:item="op">
+                                                                <option key={op.value}>{op.value}</option>
+                                                            </template>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-card__footer">
+                                            <lightning-button label="Search" variant="brand" onclick={handleSearch}></lightning-button>
+                                        </div>
+                                    </article>
+                                </div>
+                                <template if:true={showResults}>
+                                    <template if:true={showHCP}>
+                                        <h2 class="slds-text-heading_medium slds-m-top_xx-large">Certified Prescriber Locations</h2>
+                                    </template>
+                                    <template if:true={showHCS}>
+                                        <h2 class="slds-text-heading_medium slds-m-top_xx-large">Certified Pharmacy Locations</h2>
+                                    </template>
+                                    <c-tryvio-map-locator map-markers={paramMapMarkers} list-view-type="hidden" zoom-type={radius}></c-tryvio-map-locator>
+                                    <div class="locatorResults">
+                                        <div class="map" style="position: relative; overflow: hidden;">
+                                            <div class="locationList">
+                                                <template for:each={locations} for:item="location">
+                                                    <div key={location.id} class="locationItem">
+                                                        <div class="locDtls">
+                                                            <div class="locName">
+                                                                <span class="locPin"><img src={mapLocationIcon} alt="Location Pin"></span>
+                                                                {location.name}
+                                                            </div>
+                                                            <div class="locAddr">
+                                                                <div>{location.address}</div>
+                                                                <div>{location.city}</div>
+                                                                <div>{location.state}</div>
+                                                                <div>{location.zip}</div>
+                                                            </div>
+                                                            <div class="locPhone">{location.phone}</div>
+                                                        </div>
+                                                        <!--<div class="locMiles">
+                                                            {location.miles} miles<br>
+                                                            <a class="locDirections" href={location.directionsUrl} target="_blank">Directions</a>
+                                                        </div>-->
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template if:true={showError}>
+                                    <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+                                        <span class="slds-icon_container slds-icon-utility-error slds-m-right_small" title="Error">
+                                            <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+                                        </span>
+                                        <h2 class="slds-text-heading_small">{noRecordMessage}</h2>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>

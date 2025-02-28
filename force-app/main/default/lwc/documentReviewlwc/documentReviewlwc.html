@@ -1,0 +1,182 @@
+<template>
+
+	<template if:false={displayRecordCreation}>
+		<lightning-card>
+			<h3 slot="title">
+				Account Search
+			</h3>
+
+			<lightning-layout multiple-rows="true">
+				<template if:true={accFieldList}>
+					<template for:each={$.accFieldList} for:item="accFld">
+
+						<template key={accFld.US_WSREMS__Field_Name__c}
+							lwc:if={accFld.$.US_WSREMS__DataType__c.equals.Combobox}>
+
+							<lightning-layout-item key={accFld.US_WSREMS__Field_Name__c} size="6" padding="around-small">
+
+								<lightning-combobox name={accFld.US_WSREMS__Field_Name__c}
+									label={accFld.US_WSREMS__Field_Label__c} value={accFld.fieldValue}
+									placeholder={accFld.US_WSREMS__PlaceHolder__c}
+									options={accFld.US_WSREMS__Picklist_values__c} variant="label-hidden" readonly="true"
+									required={accFld.US_WSREMS__Required__c}></lightning-combobox>
+
+								<lightning-input id={accFld.US_WSREMS__Field_Name__c} type={accFld.US_WSREMS__DataType__c}
+									name={accFld.US_WSREMS__Field_Name__c} label={accFld.US_WSREMS__Field_Label__c}
+									value={accFld.fieldValue} variant="label-hidden" class="slds-hidden"
+									placeholder={accFld.US_WSREMS__PlaceHolder__c}
+									required={accFld.US_WSREMS__Required__c} onchange={handleInputChange}>
+								</lightning-input>
+							</lightning-layout-item>
+
+						</template>
+
+						<template key={accFld.US_WSREMS__Field_Name__c}
+							lwc:if={accFld.$.US_WSREMS__DataType__c.notEquals.Combobox}>
+							<lightning-layout-item key={accFld.US_WSREMS__Field_Name__c} size="6" padding="around-small">
+								<lightning-input id={accFld.US_WSREMS__Field_Name__c} type={accFld.US_WSREMS__DataType__c}
+									name={accFld.US_WSREMS__Field_Name__c} label={accFld.US_WSREMS__Field_Label__c}
+									value={accFld.fieldValue} variant="label-hidden"
+									data-field={accFld.US_WSREMS__Field_Name__c}
+									placeholder={accFld.US_WSREMS__PlaceHolder__c}
+									required={accFld.US_WSREMS__Required__c} onchange={handleInputChange}>
+								</lightning-input>
+							</lightning-layout-item>
+						</template>
+
+					</template>
+				</template>
+			</lightning-layout>
+
+			<div slot="footer">
+				<lightning-button variant="brand" label="Search" title="Search" onclick={handleSearch}
+					disabled={searchDisabled} icon-name="standard:search" class="slds-p-around_xxx-small">
+				</lightning-button>
+				<lightning-button variant="brand-outline" label="Reset" title="Reset" onclick={handleReset}
+					icon-name="action:reset_password" class="slds-p-around_xxx-small"></lightning-button>
+
+				<template if:false={retrievedAccounts}>
+					<!--	<lightning-button variant="brand-outline" label="New Service" title="Search"
+						onclick={handleNewService} icon-name="standard:account" class="slds-p-around_xxx-small">
+					</lightning-button> -->
+				
+
+				<template if:true={displayServices}>
+					<lightning-button variant="brand-outline" label="New Service" title="New Service"
+						onclick={handleNewService} icon-name="standard:account" class="slds-p-around_xxx-small">
+					</lightning-button>
+				</template>
+				<template if:false={displayServices}>
+					<lightning-button variant="brand-outline" label="New Account" title="New Account"
+						onclick={handleNewAccount} icon-name="standard:account" class="slds-p-around_xxx-small">
+					</lightning-button>
+				</template>
+				</template>
+
+
+			</div>
+
+
+
+		</lightning-card>
+
+		<template if:true={retrievedAccounts}>
+			<lightning-card>
+				<!--lightning-button variant="base" label="Collapse/Expand All" slot="actions" onclick={toggleCollapse}>
+				</lightning-button-->
+				<template if:true={expandButton}>
+					<lightning-button icon-name="utility:jump_to_bottom" slot="actions" variant="brand" label=""
+						class="butnClass" onclick={toggleCollapse}></lightning-button>
+				</template>
+				<template if:false={expandButton}>
+					<lightning-button icon-name="utility:jump_to_bottom" slot="actions" variant="brand" label=""
+						class="butnClass" onclick={toggleCollapse}></lightning-button>
+				</template>
+				<div class="infoMsg">
+					<lightning:helptext class="infoCls" content="Info"></lightning:helptext>
+					<div class="slds-text-heading_small infoBody">{label.Existing_Service_Selection_Msg}</div>
+				</div>
+<template if:true={isDocumentReview}>
+				<div>
+					<lightning-tree-grid hide-checkbox-column class="lgc-example-treegrid"
+						onrowaction={handleRowSelection} columns={gridColumns} data={retrievedAccounts} key-field="Id">
+					</lightning-tree-grid>
+				</div>
+</template>
+					<template if:false={isDocumentReview}>
+				<div>
+					<lightning-datatable
+						key-field="Id"
+						data={retrievedAccounts}
+						columns={gridColumns}
+						max-row-selection="1"
+						onrowselection={handleRowSelection}>
+					</lightning-datatable>
+				</div>
+				<div class="slds-clearfix">
+					<div class="slds-float_right slds-m-around_small" >
+						<lightning-button label="Next" variant="brand" onclick={navigateToNextPage}></lightning-button>
+					</div></div>
+					</template>
+
+			</lightning-card>
+		</template>
+
+		<template if:false={retrievedAccounts}>
+			<template if:true={displayNewAccount}>
+				<template if:false={noDataFoundAfterSearch}>
+					<div class="infoMsg">
+				<lightning:helptext class="infoCls" content="Info"></lightning:helptext>
+				<div class="slds-text-heading_small infoBody">{label.Account_Search_Message_For_Inbound_Call}</div>
+			</div>
+			</template>
+			</template>
+				<template if:false={displayNewAccount}>
+				<template if:false={noDataFoundAfterSearch}>
+				<lightning:helptext class="infoCls" content="Info"></lightning:helptext>
+				<div class="slds-text-heading_small infoBody">{label.Account_Search_Msg}</div></br>
+				<div class="slds-text-heading_small infoBody">{label.Account_Search_Message_2}</div></br>
+				<div class="slds-text-heading_small infoBody">{label.Account_Search_Message_3}</div>
+				</template>
+			</template>
+			  <template if:true={noDataFoundAfterSearch}>
+			<div class="infoMsg">
+				<lightning:helptext class="infoCls" content="Info"></lightning:helptext>
+				<div class="slds-text-heading_small infoBody">{label.No_Accounts_Search_Msg}</div>
+			</div>
+    </template>
+		</template>
+	</template>
+	<template if:false={showServiceCreation}>
+		<template if:true={displayRecordCreation}>
+			<template if:true={displayAccountCreation}>
+
+				<!--<c-stake-holder-account-form></c-stake-holder-account-form> -->
+
+			</template>
+				<template if:true={displayCaseCreation}>
+		<!--<c-case-edit-form-cmp record-id={caseId} account-id={accountId}></c-case-edit-form-cmp> -->
+	</template>
+	<template if:true={showCaseCreation}>
+	<!--<c-stake-holder-account-creation-cmp
+	  participant-type={participantString}
+      service-type="Inbound_Communication"
+      onprevious={handlePrevious}
+	  oncancel ={handleCancel}
+      account-id={accountIDstring}
+	  incontact-id={contactid}
+      current-program-id={programId}
+	  current-user-program-name={currentUserProgramName}
+    ></c-stake-holder-account-creation-cmp> -->
+		
+	</template>
+	</template>
+
+	</template>
+	<template if:true={showServiceCreation}>
+		<!--<c-new-service-enrollment onprevious={handlePrevious} participant-type={recordTypeName} account-id={accountId} program-id={programId} current-user-program-name={currentUserProgramName}></c-new-service-enrollment> -->
+	</template>
+	<template if:true={displaySpinner}>
+		<lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+	</template>
+</template>

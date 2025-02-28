@@ -1,0 +1,27 @@
+.lightning-studio{
+    color : blue;
+}
+.headerBorder {
+  height: 8px;
+  background: #002e5d;
+}
+.themeProfileMenu .slds-button-menu {
+  margin: 20; /* Adjust this if necessary */
+  padding: 20; /* Adjust this if necessary */
+  line-height: 10; /* Ensure line height does not add unwanted space */
+}
+ .activeColor {
+    text-decoration: none;
+  }
+  @media only screen and (min-width: 600px) {
+ 
+    /* make horizontal */
+    .horizontal > li {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0 20px;
+    }
+    .buttonmargin {
+        margin-left: 55px;
+    }
+}

@@ -1,0 +1,43 @@
+.THIS.card-footer{
+    background-color: #EBEBEB !important;
+}
+.THIS .popup{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 50rem;
+    min-width: 50rem;
+}
+
+.THIS .popupPadding{
+    border: 3px solid #37afb6;
+    padding: 15px;
+}
+
+.THIS .MaciBOLDREDTEXT {
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	font-size:11.0pt;
+	font-family:"Arial";
+	color:#C00000;
+}
+
+.THIS .MaciNormal {
+	font-size:11.0pt;
+	font-family:"Arial"
+}
+
+.THIS .MaciListParagraphBullet{
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:107%;
+	font-family:"Arial";
+    font-size:11.0pt;
+}
+.THIS .spinnerClass {
+    z-index: 10000;
+    position: fixed
+}

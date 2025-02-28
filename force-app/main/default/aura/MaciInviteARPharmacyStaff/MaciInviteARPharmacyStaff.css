@@ -1,0 +1,25 @@
+.THIS .card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+.THIS .py-3 {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+}
+.THIS .px-3 {
+    padding-right: 1rem!important;
+   
+}
+.THIS .align-items-center {
+   /* align-items: center!important;*/
+}
+
+.THIS .d-flex {
+    display: flex!important;
+}
+.THIS .col-7 {
+    flex: 0 0 auto;
+    width: 58.33333333%;
+}
+.THIS .card-header {
+    background-color: #eee !important;
+}

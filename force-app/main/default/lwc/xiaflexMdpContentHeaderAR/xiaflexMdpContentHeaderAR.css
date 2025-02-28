@@ -1,0 +1,48 @@
+.dummy{
+    color : black;
+}
+.displayc{
+    display : inline-flex;
+}
+.marginleft {
+    margin-left: 5%;
+}
+.menuMargin {
+        margin: 10px;
+}
+.headerBorder {
+  height: 8px;
+  background: #002e5d;
+}
+ .activeColor {
+    text-decoration: none;
+  }
+  .util-top {
+	background:none !important;
+	border-bottom: none;
+}
+.navbar-top ul li a {
+    color: #707070;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 0;
+}
+.util-top .slds-has-dividers_right>.slds-item:after{
+	color: #f26322;
+}
+a.logo img {
+    width: 500px !important;
+}
+.pageContainer {   
+    width: auto !important;
+}
+ 
+@media only screen and (min-width: 600px) {
+ 
+    /* make horizontal */
+    .horizontal > li {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0 20px;
+    }
+}

@@ -1,0 +1,71 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="SYN_SurveyQuestionAndResponse" >
+    <aura:attribute type="List" name="surveysList"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute type="Boolean" name="showTable" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute type="String" name="SurveyName"/> 
+    <aura:attribute type="String" name="Submitteduser"/>
+    <aura:attribute type="String" name="Status"/>
+    <aura:attribute type="String" name="StartDate"/> 
+    <aura:attribute type="String" name="EndDate"/>
+        
+    <lightning:card  title="Surveys History">
+        <aura:if isTrue="{!v.showTable}">
+            <div class="slds-scrollable" style="width:30SYNrem">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered " aria-label="Example table of Opportunities with vertical borders">
+                
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="SurveyName">Survey Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Submitted By">Submitted By</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="start Date">Start Date</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="End Date">End Date</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.surveysList}" var="survey" indexVar="index">
+                        <tr class="slds-hint-parent">
+                            <td data-label="Account Name">
+                                <div class="slds-truncate">{!survey.SurveyName}                                  
+                                    <span onclick="{!c.fetchQA}" id="{!(survey.SurveyName+'-'+survey.Id)}" style="padding-left: 2px;"><lightning:icon iconName="utility:chevrondown" size="x-small" alternativeText="QAS"/></span>
+                                    <span onclick="{!c.hideQAS}" id="{!(survey.SurveyName+'-'+survey.Id+'_removeButton')}" style="display:none;padding-left: 2px;" ><lightning:icon iconName="utility:close" size="x-small" alternativeText="QAS"/></span>
+                                    
+                                </div>
+                            </td>
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" >{!survey.SubmitterName}</div>
+                            </td>
+                            <td data-label="Prospecting">
+                                <div class="slds-truncate" >{!survey.Status}</div>
+                            </td>
+                            <td data-label="Confidence">
+                                <div class="slds-truncate" >{!survey.StartDate}</div>
+                            </td>
+                            <td data-label="Amount">
+                                <div class="slds-truncate" >{!survey.EndDate}</div>
+                            </td>
+                            
+                        </tr>
+                        <tr  id="{!(survey.SurveyName+'-'+survey.Id+'tr')}" style="display:none;" >
+                            <td colspan="8"  id="{!(survey.SurveyName+'-'+survey.Id+'body')}"></td>
+                        </tr>
+                    </aura:iteration>
+                    
+                </tbody>
+            </table>
+                </div>
+        </aura:if>
+        
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,43 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Contact US Page { Middle context }
+-->
+
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+    <section style="background-image: url('/resource/MaciImages/img/bg-img-1.jpeg'); height: 39vw;background-size: cover;">
+        <div class="container-fluid h-100 px-5">
+            <div class="row h-100 d-flex justify-content-center align-items-center cnt-d">
+                <div class="col-lg-6">
+                    <div class="card p-0 rounded-0 border-0 border-0">
+                        <div class="card-header" style="border-bottom: 0px"> 
+                            <h5 class="card-title mt-2 fw-bold" style="color: #484848">Contact Us</h5>
+                        </div>
+                        
+                                              
+                        <div class="card-body px-4">
+                            <ul class="list-unstyled">
+                                <li class="d-flex justify-content-left align-items-center mb-2">
+                                    <i class="fa fa-clock-o" style="margin-right: 11px;"></i> 8:00 AM to 8:00 PM ET <br></br>
+                                    Monday - Friday
+                                </li>
+
+                                <li><i class="fa fa-phone me-2 mb-3"></i> 1-888-572-2934</li>
+
+                                <li><img src="{!$Resource.MaciImages + '/img/fax.png'}" class="img-fluid  me-1" style="width: 24px;"></img>
+                                    1-833-681-0003
+                                    
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                                
+                                                       
+                    </div>
+                </div>
+            
+        </div>
+    </section>
+
+	
+</aura:component>

@@ -1,0 +1,913 @@
+<aura:component controller="SYN_MaciPatientAttestationFormCtr"
+        implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+        access="global">
+
+        <ltng:require styles="{!join(',',$Resource.MacitentanAssets + '/assets/css/bootstrap.min.css', 
+                          $Resource.MacitentanAssets + '/assets/css/font-awesome.min.css',
+                          $Resource.MacitentanAssets + '/assets/css/custom.css')}" scripts="{!join(',', 
+                           $Resource.MacitentanAssets + '/assets/js/bootstrap.bundle.min.js',  
+                           $Resource.MacitentanAssets + '/assets/js/jquery-3.6.0.min.js')}" />
+
+        <!-- Init Handler -->
+
+        <aura:method name="SaveSignature" action="{!c.saveSignatureOnClick}" description="Save Signature" />
+        <aura:method name="IsCanvasEmpty" action="{!c.IsCanvasEmpty}" description="Check Signature is done or not" />
+
+        <aura:attribute name="IsImageDrawn" type="Boolean" default="false" />
+        <aura:attribute name="signaturePad" type="Object" />
+        <aura:attribute name="ShowSpinner" type="Boolean" default="false" />
+        <aura:attribute name="DisableSignatureStatus" type="boolean" default="true" />
+        <aura:attribute name="termsFlag" type="boolean" default="false" />
+        <aura:attribute name="patient" type="Case" />
+        <aura:attribute name="isEnrolled" type="Boolean" default="true" />
+        <aura:attribute name="patientName" type="string" default="" />
+
+        <ltng:require scripts="{!$Resource.signaturePad}" afterScriptsLoaded="{!c.doInit}" />
+
+        <nav class="navbar navbar-top navbar-expand-lg navbar-light py-3" style="margin-top:-32px;">
+            <div class="container-fluid px-5">
+                <div class="navbar-collapse">
+                </div>
+            </div>
+        </nav>
+
+
+
+        <!--loading spinner start-->
+        <aura:if isTrue="{!v.ShowSpinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+
+        <section class="sec-one-1"
+            style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: center;background-attachment: fixed;">
+            <div class="container-fluid px-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <aura:if isTrue="{!v.isEnrolled}">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-white py-0" style="height: initial !important;">
+                                <div class="container-fluid pt-4 pb-0">
+                                    <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                                        <tr style="margin-top:0 !important; padding-top:0px !important;">
+                                            <td style="padding: 0 8px;border-right: 45px solid #fff;width: 1140px;">
+                                                <h5 style="margin: 0;font-size: 18px;font-weight: 900;">{!$Label.c.Macitentan_Containing_Products_REMS}
+                                                    Patient Enrollment Form</h5>
+                                                <p
+                                                    style="padding: 0px 0px 0px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                    Complete this form for ALL female patients.
+                                                </p>
+                                                <p
+                                                    style="padding: 0px 0px 0px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                    To enroll, complete this form <u>online</u> at
+                                                    www.MacitentanREMS.com <b>OR</b>&nbsp;<u>fax</u> this completed form
+                                                    to
+                                                </p>
+                                                <p
+                                                    style="padding: 0px 0px 0px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                    1-833-681-0003. Contact the {!$Label.c.Macitentan_Containing_Products_REMS} at 1-888-572-2934 with
+                                                    any questions.
+                                                </p>
+                                            </td>
+                                            <td style="width: 18%;">
+                                                <img src="{!$Resource.MaciImages + '/img/macitentan.png'}"
+                                                    class="img-fluid"
+                                                    style="width: 168px;height: 50px !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </nav>
+
+                            <div class="card px-4 p-0 rounded-0 border-0">
+                                <br />
+                                <h3 class="m-0"
+                                    style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                    <span style="border-right: 1px solid #fff;padding-right: 7px;">1</span> Patient
+                                    Information (please print)
+                                </h3>
+
+
+                                <div class="row mb-2">
+                                    <div class="col-5">
+                                        {!v.patient.US_WSREMS__First_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">First name</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        {!v.patient.US_WSREMS__Middle_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Middle initial
+                                        </h6>
+                                    </div>
+                                    <div class="col-5">
+                                        {!v.patient.US_WSREMS__Last_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Last name</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        <lightning:formattedDateTime timeZone="GMT" value="{!v.patient.US_WSREMS__DOB__c}"
+                                                month="numeric" day="numeric" year="numeric" />  &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Birth date</h6>
+                                    </div>
+                                    <div class="col-5">
+                                        {!v.patient.Primary_Language__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Primary Language
+                                        </h6>
+                                    </div>
+                                    <div class="col-5">
+                                        {!v.patient.US_WSREMS__Email__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Email address</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Primary phone #</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        {!v.patient.SYN_Alternate_Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Alternate phone #
+                                        </h6>
+                                    </div>
+                                    <div class="col-4">
+                                        {!v.patient.Best_time_to_call__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Best time to call</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        {!v.patient.SYN_Street_Address__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__City__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">City
+                                        </h6>
+                                    </div>
+                                    <div class="col-1">
+                                        {!v.patient.US_WSREMS__State__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">State</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        {!v.patient.SYN_Zip_Code__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">ZIP</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        {!v.patient.Legal_Guardian_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Legal guardian</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        {!v.patient.Legal_Guardian_Relationship__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Relationship</h6>
+                                    </div>
+                                    <div class="col-5">
+                                        {!v.patient.Legal_Guardian_Email__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Email</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.Legal_Guardian_Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Phone #</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-4">
+                                        {!v.patient.Emergency_Contact_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Emergency contact</h6>
+                                    </div>
+                                    <div class="col-5">
+                                        {!v.patient.Emergency_Contact_Relationship__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Relationship</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.Emergency_Contact_Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Phone #</h6>
+                                    </div>
+                                </div>
+
+                                <br />
+
+                                <h3 class="m-0"
+                                    style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                    <span style="border-right: 1px solid #fff;padding-right: 7px;">2</span> Female
+                                    Patient
+                                    Agreement
+                                </h3>
+                                <div class="row pharma-frm mt-2">
+                                    <div class="col-lg-12" style="padding: 0px 14px; font-size:14px !important">
+                                        <div class="px-1">
+                                            <div class="list-bullets">
+                                                <ul style="padding-left: 0.1rem;">
+                                                    <li class="d-flex">
+                                                        <i class="fa fa-circle pt-2"></i>
+                                                        <div><b>For Females Who Can Get Pregnant:</b></div>
+                                                    </li>
+                                                    <li class="d-flex">
+                                                        <i class="fa"></i>
+                                                        <div> Before I begin {!$Label.c.macitentan_containing_products} treatment, I will:
+                                                            <ul class="p-inline-s">
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>review the Guide for Female Patients.</div>
+                                                                </li>
+
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>get a pregnancy test.</div>
+                                                                </li>
+
+                                                                <li class="d-flex align-items-center">
+                                                                    <i class="fa fa-circle-o"></i>
+                                                                    <div>enroll in the REMS by completing the Patient
+                                                                        Enrollment Form with the prescriber. Enrollment
+                                                                        information will be provided to the REMS.</div>
+                                                                </li>
+                                                                <li class="d-flex align-items-center">
+                                                                    <i class="fa fa-circle-o"></i>
+                                                                    <div>receive counseling from the prescriber on the
+                                                                        risk of serious birth defects, the need to use
+                                                                        reliable contraception during {!$Label.c.macitentan_containing_products}
+                                                                        treatment and for one month after stopping
+                                                                        {!$Label.c.macitentan_containing_products} treatment, and emergency
+                                                                        contraception using the Guide for Female
+                                                                        Patients.</div>
+                                                                </li>
+                                                                <li class="d-flex align-items-center">
+                                                                    <i class="fa fa-circle-o"></i>
+                                                                    <div>communicate with the pharmacy to confirm
+                                                                        completion of pregnancy testing.
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="d-flex">
+                                                        <i class="fa "></i>
+                                                        <div>
+                                                            Before I receive each prescription of {!$Label.c.macitentan_containing_products}, I will:
+                                                            <ul class="p-inline-s">
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>receive counseling from the pharmacy on the
+                                                                        risk of serious birth defects and the need to
+                                                                        use reliable contraception during {!$Label.c.macitentan_containing_products}
+                                                                        treatment and for one month after stopping
+                                                                        {!$Label.c.macitentan_containing_products} treatment, to get monthly pregnancy
+                                                                        tests, and to immediately contact my prescriber
+                                                                        if I miss a menstrual period or suspect I am
+                                                                        pregnant.</div>
+                                                                </li>
+
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>communicate with the pharmacy to confirm
+                                                                        completion of pregnancy testing.</div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="d-flex">
+                                                        <i class="fa "></i>
+                                                        <div>
+                                                            During my treatment with {!$Label.c.macitentan_containing_products} and for one month after
+                                                            stopping treatment, I will:
+                                                            <ul class="p-inline-s">
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>use reliable contraception as described in the
+                                                                        Guide for Female Patients </div>
+                                                                </li>
+
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>get a pregnancy test</div>
+                                                                </li>
+
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>inform my prescriber immediately if I miss a
+                                                                        menstrual period or suspect that I am pregnant.
+                                                                    </div>
+                                                                </li>
+
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>agree to be contacted by the REMS Coordinating
+                                                                        Center if I become pregnant.</div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="d-flex">
+                                                        <i class="fa fa-circle pt-2"></i>
+                                                        <div>
+                                                            <b>For Pre-Pubertal Females (and her parent/guardian):</b>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex">
+                                                        <i class="fa"></i>
+                                                        <div>
+                                                            Before I begin {!$Label.c.macitentan_containing_products} treatment, I will:
+                                                            <ul class="p-inline-s">
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>
+                                                                        review the Guide for Female Patients.
+                                                                    </div>
+                                                                </li>
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>
+                                                                        enroll in the REMS by completing the Patient
+                                                                        Enrollment Form with the prescriber. Enrollment
+                                                                        information will be provided to the REMS.
+                                                                    </div>
+                                                                </li>
+
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>
+                                                                        receive counseling from the prescriber on the
+                                                                        risk of serious birth defects and to contact my
+                                                                        healthcare provider immediately if I get my
+                                                                        menstrual period, using the Guide for Female
+                                                                        Patients.
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            If I am over the age of 8 and while I am being treated with
+                                                            {!$Label.c.macitentan_containing_products}, I will be monitored regularly for a change in
+                                                            reproductive status (ability to become pregnant). I will
+                                                            tell my prescriber if my reproductive status changes.
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="d-flex">
+                                                        <i class="fa fa-circle pt-2"></i>
+                                                        <div>
+                                                            <b>For Post-Menopausal Females and Females with other
+                                                                medical reasons for permanent, irreversible
+                                                                infertility:</b>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex">
+                                                        <i class="fa"></i>
+                                                        <div>
+                                                            Before I begin {!$Label.c.macitentan_containing_products} treatment, I will:
+                                                            <ul class="p-inline-s">
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>
+                                                                        review the Guide for Female Patients.
+                                                                    </div>
+                                                                </li>
+                                                                <li class="d-flex">
+                                                                    <i class="fa fa-circle-o pt-2"></i>
+                                                                    <div>
+                                                                        enroll in the REMS by completing the Patient
+                                                                        Enrollment Form. Enrollment information will be
+                                                                        provided to the REMS.
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                            I will tell my prescriber if my reproductive status (ability
+                                                            to become pregnant) changes.
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                            <br />
+                                            <h3 class="m-0"
+                                                style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                <span style="border-right: 1px solid #fff;padding-right: 7px;">3</span>
+                                                Prescriber
+                                                Information (please print)
+                                            </h3>
+
+
+                                            <div class="row mb-2 mt-2">
+                                                <div class="col-5">
+                                                    {!v.patient.SYN_Prescriber_First_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">First name</h6>
+                                                </div>
+                                                <div class="col-2">
+                                                    {!v.patient.SYN_Prescriber_Middle_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Middle initial
+                                                    </h6>
+                                                </div>
+                                                <div class="col-5">
+                                                    {!v.patient.SYN_Prescriber_Last_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Last name</h6>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-7">
+                                                    {!v.patient.US_WSREMS__Shipping_Street__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address
+                                                    </h6>
+                                                </div>
+                                                <div class="col-5">
+                                                    {!v.patient.US_WSREMS__Shipping_City__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">City</h6>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-1">
+                                                    {!v.patient.SYN_Shipping_State__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">State
+                                                    </h6>
+                                                </div>
+                                                <div class="col-2">
+                                                    {!v.patient.US_WSREMS__Shipping_Zip_Postal_Code__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">ZIP</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.SYN_Prescriber_Phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Phone #</h6>
+                                                </div>
+                                                <div class="col-5">
+                                                    {!v.patient.US_WSREMS__NPI__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">NPI #</h6>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.SYN_Prescriber_Fax__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Fax #
+                                                    </h6>
+                                                </div>
+                                                <div class="col-9">
+                                                    {!v.patient.Office_contact_name_Primary_Office__c} &nbsp;
+                                                    <div class="border-dark border-bottom" style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Office contact and email address</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                                                <tr style="background-color: #0167BC;color: #fff;">
+                                                    <td style="padding: 0 8px;">
+                                                        <h5
+                                                            style="margin: 0;padding: 3px 20px 3px 1px;font-size: 16px;font-weight: 600;">
+                                                            <span
+                                                                style="border-right: 1px solid #fff;padding-right: 7px;">4</span>
+                                                            Prescriber
+                                                            Authorization: Check the correct female patient category
+                                                            (please see definitions of these
+                                                            terms below):
+                                                        </h5>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 0 0px;">
+                                                        <h6 style="color:red;margin: 0px;">REQUIRED (Check one category)</h6>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                            <div class="row mt-2">
+                                                <div class="col-4">
+                                                    <h6 style="margin: 0 0 10px 0px;"> <b>Female of Reproductive
+                                                            Potential</b></h6>
+                                                    <p
+                                                        style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                        <aura:if
+                                                            isTrue="{!v.patient.US_WSREMS__Patient_Risk_Category__c == 'Female of Reproductive Potential (FRP)'}">
+                                                            {!v.patient.US_WSREMS__Patient_Risk_Category__c}
+
+                                                        </aura:if>&nbsp;
+                                                    </p>
+                                                    <div style="
+                                                border-left: 0!important;
+                                                border-right: 0!important;
+                                                border-top: 0!important;
+                                                border-color: #212529!important;
+                                                border-bottom:1px solid #000;
+                                                width: 80%;
+                                                padding-top: 0;
+                                                padding-bottom: 4px;
+                                                font-size: 14px;
+                                                
+                                                "></div>
+
+                                                    <p
+                                                        style="padding: 5px 0px 2px 35px;margin: 0px;font-size: 14px;text-align: left;">
+                                                        <img src="{!$Resource.MaciImages + '/img/arrow-right.JPG'}"
+                                                            class="img-fluid"
+                                                            style="position: absolute;left: 10px;margin-top: -3px;"></img>
+                                                        If this patient is a Female of
+                                                        Reproductive Potential (which
+                                                        <b>includes</b> females who have
+                                                        undergone <b>tubal sterilization</b>),
+                                                        has a negative pregnancy test
+                                                        been completed prior to
+                                                        prescribing {!$Label.c.macitentan_containing_products}
+                                                    </p>
+
+                                                    <p
+                                                        style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                        {!v.patient.Negative_Pregnancy_Test_Completed__c}
+                                                    </p>
+
+                                                    <div style="
+                                                    border-left: 0!important;
+                                                    border-right: 0!important;
+                                                    border-top: 0!important;
+                                                    border-color: #212529!important;
+                                                    border-bottom:1px solid #000;
+                                                    width: 80%;
+                                                    padding-top: 0;
+                                                    padding-bottom: 4px;
+                                                    margin-left: 0px;
+                                                    font-size: 14px;
+                                                    "></div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <h6 style="margin: 0 0 10px 0px;"> <b>Female of Non-Reproductive
+                                                            Potential</b></h6>
+                                                    <p
+                                                        style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                        <aura:if
+                                                            isTrue="{!v.patient.US_WSREMS__Patient_Risk_Category__c == 'FNRP (Patient is pre-pubertal)' || 
+                                                                  !v.patient.US_WSREMS__Patient_Risk_Category__c == 'FNRP (Patient is post-menopausal)' ||
+                                                                  !v.patient.US_WSREMS__Patient_Risk_Category__c == 'FNRP (Other medical reasons for permanent, irreversible infertility)' }">
+
+                                                            {!v.patient.US_WSREMS__Patient_Risk_Category__c}
+                                                        </aura:if> &nbsp;
+                                                    </p>
+                                                    <div style="
+                                                    border-left: 0!important;
+                                                    border-right: 0!important;
+                                                    border-top: 0!important;
+                                                    border-color: #212529!important;
+                                                    border-bottom:1px solid #000;
+                                                    width: 95%;
+                                                    padding-top: 0;
+                                                    padding-bottom: 4px;
+                                                    font-size: 8px;
+                                                    
+                                                    "></div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p
+                                                        style="padding: 0px 0px 2px 0px;margin: 0px 0px 0px 0px;font-size: 14px;text-align: left;">
+                                                        I certify that the above therapy ordered is medically necessary
+                                                        and agree to follow the "Prescriber Requirements" indicated on
+                                                        the second page of this form. Further, I hereby authorize the
+                                                        {!$Label.c.Macitentan_Containing_Products_REMS} sponsors and/or their designated
+                                                        representative(s), to act on my behalf for the limited purposes
+                                                        of providing this prescription to the certified pharmacy for
+                                                        patient treatment purposes.
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-lg-7">
+                                                            <p
+                                                                style="font-size: 14px;padding: 0px 0px 2px 0px;margin: 0px 0px 0px 0px;">
+                                                                <img src="{!$Resource.MaciImages + '/img/star.JPG'}"
+                                                                    class="img-fluid"></img>
+
+                                                                {!v.patient.SYN_Prescriber_Signature__c}
+                                                            </p>
+                                                            <div style="
+                                                        border-left: 0!important;
+                                                        border-right: 0!important;
+                                                        border-top: 0!important;
+                                                        border-color: #212529!important;
+                                                        border-bottom:1px solid #000;
+                                                        width: 100%;
+                                                        padding-top: 0;
+                                                        padding-bottom: 4px;
+                                                        font-size: 14px;
+                                                        
+                                                        "></div>
+
+                                                            <h6
+                                                                style="margin: 0;padding: 0px 2px 2px 0px;font-size: 14px;">
+                                                                (REQUIRED FOR ALL PRESCRIBERS)</h6>
+                                                            <p
+                                                                style="padding: 1px 0px 11px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                                Prescriber Signature</p>
+
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <p
+                                                                style="margin: 0;padding: 0px 2px 2px 0px;font-size: 14px;">
+                                                                <lightning:formattedDateTime timeZone="GMT" value="{!v.patient.SYN_Prescriber_Signature_Date__c}" year="numeric" month="numeric" day="numeric" />
+                                                                <img style="visibility: hidden;"
+                                                                    src="{!$Resource.MaciImages + '/img/star.JPG'}"
+                                                                    class="img-fluid"></img>
+                                                            </p>
+
+                                                            <div style="
+                                                            border-left: 0!important;
+                                                            border-right: 0!important;
+                                                            border-top: 0!important;
+                                                            border-color: #212529!important;
+                                                            border-bottom:1px solid #000;
+                                                            width: 100%;
+                                                            padding-top: 0;
+                                                            padding-bottom: 4px;
+                                                            font-size: 14px;
+                                                            
+                                                            "></div>
+
+                                                            <h6
+                                                                style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                                Date</h6>
+
+                                                            <p
+                                                                style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                                &nbsp;</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+
+                                        <div class="row pharma-frm">
+                                            <div class="col-lg-12" style="padding: 0px 14px; font-size:14px !important">
+                                                <div class="border">
+                                                    <h3 class="m-0"
+                                                    style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                         Definitions of Reproductive Potential Status
+                                                    </h3>
+                                                    <div class="px-2">
+                                                       
+                                                        <td style="padding: 0 8px;">
+                                                            <h5
+                                                                style="margin: 0;padding: 6px 20px 3px 1px;font-size: 14px;font-weight: 600;">
+                                                                <b>Females of Reproductive Potential</b>
+                                                            </h5>
+                                                        </td>
+                                                        <tr>
+                                                            <td style="padding: 0 8px;">
+                                                                <ol
+                                                                    style="list-style: disc;margin: 8px 20px;font-size: 14px;padding-left: 15px;">
+                                                                    <li>Females of reproductive potential include girls who
+                                                                        have entered puberty and all females
+                                                                        who have a uterus and have not passed through
+                                                                        menopause (as defined below)</li>
+                                                                    <li>For the purposes of this REMS, puberty includes
+                                                                        those girls who are at least Tanner
+                                                                        Stage 3 and have not yet had a menses (premenarchal)
+                                                                    </li>
+                                                                    <li>For the purposes of this REMS, females who have
+                                                                        undergone <b>tubal sterilization</b> are
+                                                                        classified as females of <b>reproductive</b>
+                                                                        potential.</li>
+                                                                </ol>
+                                                                <h5
+                                                                    style="margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 600;">
+                                                                    <b>Females of Non-Reproductive Potential</b>
+                                                                </h5>
+                                                                <ol
+                                                                    style="list-style: disc;margin: 8px 20px;font-size: 14px;padding-left: 15px">
+                                                                    <li>Pre-pubertal Females: Females who are at Tanner
+                                                                        Stages 1 and 2 are not considered to be
+                                                                        of reproductive potential</li>
+                                                                    <li>Post-menopausal Females: Females who have passed
+                                                                        through menopause. Menopause is
+                                                                        defined as 12 months of spontaneous amenorrhea
+                                                                        (not amenorrhea induced by a medical condition or
+                                                                        medical therapy) or post-surgical from
+                                                                        bilateral oophorectomy</li>
+                                                                    <li>Females with other medical reasons for permanent,
+                                                                        irreversible infertility</li>
+                                                                </ol>
+                                                            </td>
+                                                        </tr>
+                                                        </div>
+                                                        <h3 class="m-0"
+                                                        style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                           Prescriber Requirements
+                                                        </h3>
+                                                        <div class="px-2">
+                                                        <tr>
+                                                            <td style="padding: 0 8px;">
+                                                                <h5
+                                                                    style="margin: 0;padding: 6px 20px 3px 1px;font-size: 14px;font-weight: 600;">
+                                                                    <b>For All Females</b>
+                                                                </h5>
+                                                                <ol
+                                                                    style="list-style: disc;margin: 8px 20px;font-size: 14px;padding-left: 15px">
+                                                                    <li>I acknowledge that I have counseled the patient (and
+                                                                        parent/guardian when appropriate)
+                                                                        that {!$Label.c.macitentan_containing_products} is only available through a
+                                                                        restricted distribution program under an
+                                                                        FDA-required REMS</li>
+                                                                    <li>I will evaluate the patient and agree to document
+                                                                        any change or misclassification in
+                                                                        reproductive potential status by submitting a
+                                                                        <b><i>Change in
+                                                                                Reproductive Potential Status and
+                                                                                Pre-pubertal Annual Verification
+                                                                                Form</i></b> within
+                                                                        10 business days of becoming aware of the change
+                                                                    </li>
+                                                                </ol>
+                                                                <h5
+                                                                    style="margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 600;">
+                                                                    <b>For Females of Reproductive Potential</b>
+                                                                </h5>
+                                                                <ol
+                                                                    style="list-style: disc;margin: 8px 20px;font-size: 14px;padding-left: 15px">
+                                                                    <li>I acknowledge that I have counseled the patient (and
+                                                                        parent/guardian when appropriate)
+                                                                        on the risks of embryo-fetal toxicity, the need to
+                                                                        use
+                                                                        reliable contraception during treatment and for one
+                                                                        month following treatment
+                                                                        discontinuation, and emergency contraception using
+                                                                        the
+                                                                        <b><i>Guide for Female Patients</i></b>
+                                                                    </li>
+                                                                    <li>I will order and review pregnancy tests prior to
+                                                                        initiation of {!$Label.c.macitentan_containing_products} treatment,
+                                                                        monthly during treatment, and for 1 month after
+                                                                        stopping
+                                                                        treatment in accordance with the {!$Label.c.Macitentan_Containing_Products_REMS}
+                                                                    </li>
+                                                                    <li>I will counsel the patient if she is not complying
+                                                                        with required testing, if she is not
+                                                                        using appropriate contraception, and to contact her
+                                                                        prescriber if she misses a menstrual period or
+                                                                        suspects that she is pregnant.</li>
+                                                                </ol>
+                                                                <h5
+                                                                    style="margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 600;">
+                                                                    <b><i>For Pre-pubertal Females</i></b>
+                                                                </h5>
+                                                                <ol
+                                                                    style="list-style: disc;margin: 8px 20px;font-size: 14px;padding-left: 15px">
+                                                                    <li>I acknowledge that I have counseled the patient and
+                                                                        parent/guardian on the risks of
+                                                                        {!$Label.c.macitentan_containing_products}, including the risk of embryo-fetal
+                                                                        toxicity
+                                                                        and to immediately contact her prescriber if she
+                                                                        begins to menstruate using the <b><i>Guide
+                                                                                for Female Patients</i></b></li>
+                                                                    <li>I will evaluate the patient’s reproductive potential
+                                                                        status, verify reproductive
+                                                                        potential status annually for pre-pubertal females
+                                                                        who are at
+                                                                        least 8 years of age and older, and agree to report
+                                                                        any change or misclassification in
+                                                                        reproductive potential status on a <b><i>Change in
+                                                                                Reproductive Potential Status and
+                                                                                Pre-pubertal Annual Verification
+                                                                                Form</i></b> within
+                                                                        10 business days of becoming aware of the change
+                                                                    </li>
+                                                                </ol>
+                                                            </td>
+                                                        </tr>
+    
+                                                    </div>
+
+                                                    <h3 class="m-0"
+                                                    style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                    <span style="border-right: 1px solid #fff;padding-right: 7px;">5</span>
+                                                    Fax this form to 1-833-681-0003
+                                                </h3>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                           
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12">
+                                                    <h5 style="font-size: 14px;margin: 0 0 10px 0px;">Please visit
+                                                        <b><i>www.MacitentanREMS.com</i></b> or call 1-888-572-2934 for
+                                                        more information about the {!$Label.c.Macitentan_Containing_Products_REMS}.
+                                                    </h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ms-4">
+                                                    <lightning:input name="text-agree" aura:id="termsFlag"
+                                                        type="checkbox" style="font-size: 14px"
+                                                        label=" I understand and agree to all the terms above"
+                                                        checked="{!v.termsFlag}"
+                                                        class="form-check-label m-0 customcheckbox" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ps-lg-4">
+                                                    <p class="ps-lg-3 mt-1" style="font-size: 14px">Patient Signature:
+                                                    </p>
+                                                    <p class="ps-lg-3 mt-4" style="font-size: 14px">Please use your
+                                                        mouse to sign your name,
+                                                        {!v.patientName}, in the box below:</p>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center mt-4">
+                                                <div class="col-lg-7" style="overflow:hidden;padding-right: 0;">
+                                                    <div class=" space-md border signClass">
+                                                        <canvas id="signature-pad" aura:id="signature-pad"
+                                                            class="signature-pad" style="height:50rem"></canvas>
+                                                        <canvas id='blank' aura:id="blank" class="signature-pad"
+                                                            style='display:none'></canvas>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-lg-7 mt-2 d-flex align-items-center justify-content-center">
+                                                    <aura:if isTrue="{!v.DisableSignatureStatus}">
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.saveSignatureOnClick}">SUBMIT</a>
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.clearSignatureOnClick}">CLEAR</a>
+                                                        <aura:set attribute="else">
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">SUBMIT</a>
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">CLEAR</a>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="py-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <aura:set attribute="else">
+                                <div style="height: 100vh;display: flex;justify-content: center;align-items: center;">
+                                    <p class="p-0 m-0">
+                                        <center>
+                                            <h5 class="fw-bold mb-0 text-theme color:green;">Thank you for signing the
+                                                {!$Label.c.Macitentan_Containing_Products_REMS} Patient Enrollment Form. You can request the final
+                                                signed copy of the document from your Prescriber. If you have any
+                                                questions, or would like to update your contact information, you may
+                                                call the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center at 1-888-572-2934, Monday
+                                                through Friday, 8:00 AM to 8:00 PM EST.</h5>
+                                        </center>
+                                    </p>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </aura:component>

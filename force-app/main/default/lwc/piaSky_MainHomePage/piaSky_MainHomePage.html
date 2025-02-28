@@ -1,0 +1,77 @@
+<template>
+		
+		<div class="pageContainer">	
+				<div class="themeHero">			  
+					<div class="slds-grid slds-gutters slds-wrap slds-large-nowrap" data-aura-rendered-by="93:2;a">
+						<div class="slds-col--padded has-widgets slds-medium-size--4-of-12 slds-large-size--3-of-12  slds-p-horizontal_medium comm-layout-column" data-aura-rendered-by="94:2;a">
+							<div class="logo">
+								<img src={piaskylogo}>
+							</div> 
+						</div>						
+					</div>
+				</div>
+				</div> 
+			<div class="xxxslds-border_top"></div>
+		
+		  <!-- Content after horizontal line -->
+		
+			<div class="comm-content-header comm-layout-column pageContainer" if:true={homepage}><!--render facet: 92:2;a-->
+				<div class="slds-text-heading_medium">What is a REMS?</div>
+				<p class="pag">A Risk Evaluation and Mitigation Strategy (REMS) is a safety program required by the Food and Drug Administration (FDA) to help ensure that the benefits associated with a medication outweigh its risks.</p>
+				
+				<div class="slds-text-heading_medium">What is the goal of the PIASKY REMS?</div>
+				<p class="pag">The goal of the PIASKY REMS is to mitigate the risk of serious meningococcal infections.</p>
+				<ul class="listItemDisc">
+					<li>Patients are vaccinated against meningococcal infections caused by <i>Neisseria meningitidis</i> serogroups A, C, W, Y, and B prior to starting therapy according to the current Advisory Committee on Immunization Practices (ACIP) recommendations for patients receiving complement inhibitors and receive antibacterial drug prophylaxis if needed.</li>
+					<li>Patients are aware of early signs and symptoms of meningococcal infection and the need for immediate medical evaluation.</li>
+					<li>Prescribers are aware of early signs and symptoms of meningococcal infection and the need for immediate medical evaluation.</li>
+				</ul>
+
+				<div class="slds-text-heading_medium">REMS Requirements</div>
+				<p>PIASKY is available only through a restricted distributions program under a REMS, called the PIASKY REMS, because of the risk of serious meningococcal infections.
+				<br><br>Healthcare providers must become certified in the REMS in order to prescribe PIASKY. Pharmacies must become certified in the REMS in order to dispense PIASKY.</p>
+				<div class="dividerSolid"></div>
+				<div class="slds-text-heading_medium">Indication</div>
+				<p class="pag">PIASKY (crovalimab-akkz) is a complement inhibitor indicated for the treatment of adult and pediatric patients with paroxysmal nocturnal hemoglobinuria (PNH).</p>
+
+
+				</div> 
+		<!--</template>-->
+
+		
+		
+		<!-- Contact us -->
+			<div class="comm-content-header comm-layout-column pageContainer" if:true={contactUs}>
+			<div class="slds-text-heading_large">Contact Us</div>
+			<p>If you have any questions or require additional information, please contact us using one of the methods listed below.
+			<br><br>The PIASKY REMS Contact Center is available Monday through Friday from 8am - 8pm ET.</p>
+
+			<div class="slds-grid slds-wrap slds-gutters xslds-grid_align-center">
+				 <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-large-size_6-of-12">
+					<div class="resources">
+						<div class="slds-text-heading_medium"></div>
+						<div class="resourceItem">
+							<div class="resourceIcon">
+								<img src={piaskyphone}>
+							</div>
+							<div class="resourceName">Phone: 1-866-4My-Skyy (1-866-469-7599)</div>
+						</div>	
+						<div class="resourceItem">
+							<div class="resourceIcon">
+								<img src={piaskyfax}>
+							</div>
+							<div class="resourceName">Fax: 1-833-670-4840</div>
+						</div>	
+						<div class="resourceItem">
+							<div class="resourceIcon">
+								<img src={piaskyemail}>
+							</div>
+							<div class="resourceName">Email: PIASKYREMS@REMSHelp.com</div>
+						</div>	
+					</div>
+				 </div> <!-- end col  -->
+
+			</div>  <!-- end row  -->
+		</div>
+		
+</template>

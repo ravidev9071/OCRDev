@@ -1,0 +1,25 @@
+<aura:component implements="force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller = "stakeholderEmailsDisplayList">
+    <!-- handler declarion  -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="relatedToName" type="String" />
+    <aura:attribute name="EmailMessageList" type="EmailMessage[]" />
+    <aura:attribute name="columns" type="List"/>
+    
+    <lightning:card iconName="standard:work_capacity_usage" title="Related Emails">
+        <aura:if isTrue="{!not(empty(v.EmailMessageList))}">
+            <div style="height: 150px">
+                <lightning:datatable data="{!v.EmailMessageList }" 
+                                     columns="{!v.columns }" 
+                                     keyField="Id"
+                                     showRowNumberColumn="true"
+                                     hideCheckboxColumn="true"/>
+            </div>
+            <aura:set attribute="else">
+                <div Style="text-align : center"> " There are no related emails " </div>
+            </aura:set>
+        </aura:if>
+    </lightning:card>
+    
+</aura:component>

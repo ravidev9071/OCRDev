@@ -1,0 +1,147 @@
+<template>
+  <lightning-modal-header label={modalTitle}></lightning-modal-header>
+  <lightning-modal-body>
+    <lightning-card class="slds-p-top_xx-small">
+      <template lwc:if={isLoading}>
+        <div style="height:150px;">
+          <lightning-spinner
+            alternative-text="Loading"
+            variant="brand"
+            size="large"
+          ></lightning-spinner>
+        </div>
+      </template>
+      <template lwc:else>
+        <lightning-accordion
+            allow-multiple-sections-open
+            active-section-name={activeSections}
+            class="accordian">
+            <lightning-accordion-section name="Select Filter Criteria" label="Select Filter Criteria">
+              <div style="margin-left: 3%">
+                  <fieldset class="slds-form-element">
+                    <legend class="slds-form-element__legend slds-form-element__label"></legend>
+                    <div class="slds-form-element__control">
+                    <template for:each={options}  for:item="item">
+                      <span class="slds-radio" key={item.value}>
+                        <input type="radio" id={item.value} value={item.value} name="default" onchange={handleSelected} checked={item.checked} />
+                        <label class="slds-radio__label" for={item.value}>
+                          <span class="slds-radio_faux"></span>
+                          <span class="slds-form-element__label">{item.label}</span>
+                        </label>
+                      </span>
+                    </template>
+                    </div>
+                  </fieldset> 
+                <br><br>
+              </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name={searchRecTypeInfo} label={searchRecTypeInfo} >
+              <lightning-layout>
+                <lightning-layout-item size="8">
+                  <div class="slds-grid slds-gutters div-grid">
+                    <div class="slds-col">
+                      <div>
+                        <lightning-input
+                          name="enter-search"
+                          type="search"
+                          onchange={fetchPrescriberRecord}
+                          value={inputValue}
+                          class="input-field-layout"
+                        ></lightning-input>
+                        <template if:true={showDropDown}>
+                          <div
+                            class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                            role="listbox"
+                          >
+                            <ul
+                              class="slds-listbox slds-listbox_vertical"
+                              role="presentation"
+                            >
+                              <template
+                                for:each={returnedPrescriberList}
+                                for:item="rec"
+                              >
+                                <li
+                                  key={rec.Id}
+                                  data-id={rec.Id}
+                                  data-name={rec.Name}
+                                  data-email={rec.US_WSREMS__Email__c}
+                                  data-rems={rec.US_WSREMS__REMS_Program__c}
+                                  data-number={rec.Phone}
+                                  data-remsid={rec.US_WSREMS__REMS_ID__c}
+                                  data-recordtype={rec.US_WSREMS__Record_Type_Name__c}
+                                  onclick={handlePrescriberSelection}
+                                  role="presentation"
+                                >
+                                  <span
+                                    class="slds-lookup__item-action"
+                                    role="option"
+                                  >
+                                    <span class="slds-truncate"
+                                      >{rec.Name} |
+                                      {rec.Phone} |
+                                      {rec.US_WSREMS__REMS_ID__c}</span
+                                    >
+                                  </span>
+                                </li>
+                              </template>
+                            </ul>
+                          </div>
+                        </template>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-p-around_large div-button">
+                      <lightning-button
+                        variant="brand"
+                        label={searchButtonLabel}
+                        onclick={addSelectedRecord}
+                      >
+                      </lightning-button>
+                    </div>
+                  </div>
+                </lightning-layout-item>
+              </lightning-layout>
+            </lightning-accordion-section>
+            <lightning-accordion-section name={selectedRecTypeInfo} label={selectedRecTypeInfo}>
+                <div class="slds-p-top_medium slds-p-left_xx-small">
+                  <template if:true={showTable}>
+                    <c-office-contact-mapping-child
+                      table-data={accountList}
+                      onrowselect={handleChildEvent}
+                      onrecordevent={handleRecordSelection}
+                      onsaveselected={handleSaveEvent}
+                      is-office-contact={officeContactType}
+                    >
+                    </c-office-contact-mapping-child>
+                  </template>
+                  <template if:false={showTable}>
+                    <h1>No Record Selected</h1>
+                  </template>
+                </div>
+            </lightning-accordion-section>
+        </lightning-accordion>
+      </template>
+    </lightning-card>
+  </lightning-modal-body>
+  <lightning-modal-footer>
+    <div class="slds-align_absolute-center">
+      <lightning-button label="Cancel" onclick={closeAction}></lightning-button>
+      <lightning-button
+        variant="brand"
+        label="Remove"
+        class="slds-p-left_xx-small"
+        title="Remove"
+        onclick={removeSelectedRecords}
+        disabled={disableRemove}
+      >
+      </lightning-button>
+      <lightning-button
+        variant="brand"
+        class="slds-p-left_xx-small"
+        label="Save"
+        name="Save"
+        onclick={handleRecordSubmit}
+      ></lightning-button>
+    </div>
+  </lightning-modal-footer>
+</template>

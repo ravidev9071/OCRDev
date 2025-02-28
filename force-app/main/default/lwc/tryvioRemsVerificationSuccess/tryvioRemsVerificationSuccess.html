@@ -1,0 +1,150 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageTitle">
+            <div class="slds-text-heading_medium">TRYVIO<sup>&trade;</sup> REMS</div>
+            <div class="slds-text-heading_large"><img class="iconImg" src={iconRDA}> REMS Dispense
+                Authorization</div>
+        </div>
+        <div class="pageContainer">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+                        <div class=" slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                            <div class=" slds-col--padded slds-size_12-of-12">
+                                <div data-region-name="content">
+                                    <div data-priority="" class="ui-widget">
+                                        <template if:true={certified}>	
+                                            <div class="slds-text-heading_large  slds-m-top_none">REMS Dispense Authorization Successful</div>
+                                        </template>
+                                        <template if:false={certified}>	
+                                            <div class="slds-text-heading_large  slds-m-top_none">Prescriber not found in TRYVIO REMS. Do Not Dispense.</div>
+                                        </template>
+                                        <div class="slds-m-vertical_large"></div>
+                                        <template if:true={certified}>
+                                            <div class="slds-grid slds-wrap slds-gutter">
+                                                <div
+                                                    class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_8-of-12  slds-p-right_large rixght-border">
+                                                    <div class="infoContainer">
+                                                        <div class="rdaResults success">
+                                                            <div class="rdaIcon">
+                                                                <img src={iconCheck}>
+                                                            </div>
+                                                            <template if:true={certified}>
+                                                                <p class="rdaMsg slds-text-color_success">Prescriber is Certified</p>
+                                                            </template>
+                                                            
+                                                                <!--<template if:false={certified}>
+                                                                <p class="rdaMsg slds-text-color_error">Prescriber is not Certified</p>
+                                                            </template>-->
+                                                        </div> 
+                                                        <div class="dividerGradient"></div>
+                                                        <div class="slds-p-bottom_large"></div>
+                                                        <div id="RDAGenerated" class="slds-m-vertical_large">
+                                                            <div class="containerEmphasis slds-text-align_center">
+                                                                <button class="btnCopy" aria-label="Copy to Clipboard" onclick={handleCopyClipboard}
+                                                                    title="Copy to Clipboard">
+                                                                    <img src={iconCopyToClipboard}>Copy
+                                                                </button>
+                                                                <template if:true={certified}>
+                                                                    <p class="txtEmphasis">REMS Dispense Authorization Code</p>
+                                                                    <input style="border: none;background-color: #f3f5f9;margin-left:110px;" disabled class="txtEmphasis" data-id="RDAInput" value={RDAAuthorizationCode}></input>
+                                                                        <p class="txtEmphasis"><br>OK to Dispense</p>
+                                                                </template>
+                                                                    
+                                                                    <!--<template if:false={certified}>
+                                                                    <p class="txtEmphasis">REMS Dispense Authorization Code
+                                                                        <br>
+                                                                        <br><br>Do Not Dispense
+                                                                    </p>
+                                                                    </template>-->
+                                                            </div>
+                                                            <p class="txtWarning  txtLarge slds-text-align_center">This RDA
+                                                                must be documented in your records and available for audit.
+                                                            </p>
+                                                        </div> 
+                                                        <div id="BtnGenerate"
+                                                            class="slds-hide slds-text-align_center slds-m-vertical_large">
+                                                            <button
+                                                                class="doc-copy-to-clipboard slds-button slds-button_icon-container"
+                                                                aria-label="Copy to Clipboard" title="Copy to Clipboard">
+                                                                <img src={iconCopyToClipboard}>
+                                                            </button>
+                                                            <lightning-button class="brand-button" variant="brand">
+                                                                <button id="BtnbtnGenerate"
+                                                                    onclick={handleGenerate}
+                                                                    class="slds-button slds-m-top_large slds-button_brand"
+                                                                    aria-disabled="false" type="button" part="button"
+                                                                    kx-scope="button-brand" kx-type="ripple">Generate
+                                                                    RDA</button>
+                                                            </lightning-button>
+                                                        </div>
+                                                    </div> 
+                                                </div> 
+                                                <div
+                                                    class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_4-of-12">
+                                                    <div class="RDADetails slds-m-left_medium">
+                                                        <div class="slds-text-heading_medium slds-m-top_none">Prescriber Information</div>
+                                                        <template if:true={certified}>
+                                                        <div class="status certified">Certified</div>
+                                                        </template>
+                                                        <div class="slds-form__row">
+                                                            <div class="slds-form__item" role="listitem">
+                                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                    <span class="slds-form-element__label">NPI#</span>
+                                                                    <div class="slds-form-element__control">
+                                                                        <div class="slds-form-element__static">{npi}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-form__row">
+                                                            <div class="slds-form__item" role="listitem">
+                                                                <div
+                                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                    <span class="slds-form-element__label">REMS ID</span>
+                                                                    <div class="slds-form-element__control">
+                                                                        <div class="slds-form-element__static">{remsId}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-form__row">
+                                                            <div class="slds-form__item" role="listitem">
+                                                                <div
+                                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                    <span class="slds-form-element__label">First Name</span>
+                                                                    <div class="slds-form-element__control">
+                                                                        <div class="slds-form-element__static">{firstname}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-form__row">
+                                                            <div class="slds-form__item" role="listitem">
+                                                                <div
+                                                                    class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                    <span class="slds-form-element__label">Last Name</span>
+                                                                    <div class="slds-form-element__control">
+                                                                        <div class="slds-form-element__static">{lastname}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div> <!-- end RDAINfo  -->
+                                            </div> <!-- end col  -->
+                                        </template>
+                                    </div> <!-- end row  -->
+                                    <div class="slds-p-vertical_medium"></div>
+                                </div> <!-- end widget   -->
+                            </div> <!-- end regionname-->
+                        </div>
+                        <!--end col12  -->
+                    </div> <!-- end row   -->
+                </div> <!-- end colpadded -->
+            </div> <!-- end siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea   -->
+        </div> <!-- end pageContent  -->
+    </div>
+</template>

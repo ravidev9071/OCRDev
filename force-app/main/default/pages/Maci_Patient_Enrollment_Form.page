@@ -1,0 +1,1201 @@
+<apex:page applyBodyTag="false" showHeader="false" renderAs="PDF" controller="SYN_MaciPatientEnrollmentViewFormCtr">
+
+    <head>
+        <style>
+            body {
+                margin-top: 0px !important;
+                font-family: Dialog !important;
+                padding-top: 0px !important;
+            }
+
+            h6 {
+                font-weight: 500 !important;
+            }
+
+            p {
+                text-align: justify;
+            }
+
+            @page {
+                margin: 0 !important;
+                size: letter;
+                font-family: Dialog !important;
+                padding-top: 0px !important;
+            }
+            
+            .container {
+       text-align: center;
+       font-family: "Helvetica Neue", Helvetica, Arial, Dialog;
+       color: cadetblue;
+       font-weight: 500;
+       font-size: 14px;
+      }
+        </style>
+    </head>
+    
+    
+
+    <apex:form style="margin-top:0px !important; padding-top:0px !important;height:auto;">
+
+        <body>
+
+            <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;width: 1140px;">
+                        <h5 style="margin: 0;font-size: 15px;font-weight: 800;">Macitentan REMS Patient Enrollment Form</h5>
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 11px;text-align: left;">
+                            Complete this form for ALL female patients.
+                        </p>
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 11px;text-align: left;">
+                            To enroll, complete this form <u>online</u> at www.MacitentanREMS.com <b>OR</b>  <u>fax</u> this completed form to
+                        </p>
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 11px;text-align: left;">
+                            1-833-681-0003. Contact the Macitentan REMS at 1-888-572-2934 with any questions.
+                        </p>
+                    </td>
+                    <td>
+                        <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"
+                            style="width: 168px;height: 50px !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                        <!-- <img src="macii.jpg" class="img-fluid" style="width: 168px;"></img> -->
+                    </td>
+                </tr>
+            </table>
+
+            
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #0167BC;color: #fff;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 600;">
+                            <span style="border-right: 1px solid #fff;padding-right: 7px;">1</span> Patient Information (please print)
+                        </h5>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td colspan="2" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__First_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">First name</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__Middle_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Middle initial</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__Last_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Last name</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{0, date, MM'/'dd'/'yyyy}" style="margin: 0px;font-size: 11px;font-family: Dialog !important;" 
+                         rendered="{!NOT(ISBLANK(cs.US_WSREMS__DOB__c))}"><apex:param value="{!cs.US_WSREMS__DOB__c}" /> </apex:outputText>   
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Date Of Birth</h6>
+                    </td>
+                    <td colspan="2" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Primary_Language__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Primary Language </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__Email__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Email address</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__Phone__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Primary phone # </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Alternate_Phone__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Alternate phone # </h6>
+                    </td>
+                    <td colspan="2" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Best_time_to_call__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Best time to call</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Street_Address__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Address </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__City__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">City </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__State__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">State</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Zip_Code__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">ZIP</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Legal_Guardian_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Legal guardian </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Legal_Guardian_Relationship__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Relationship </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Legal_Guardian_Email__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Email</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Legal_Guardian_Phone__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Phone #</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Emergency_Contact_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Emergency contact </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Emergency_Contact_Relationship__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Relationship </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Emergency_Contact_Phone__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Phone #</h6>
+                    </td>
+                </tr>
+            </table>
+
+
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #0167BC;color: #fff;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 600;">
+                            <span style="border-right: 1px solid #fff;padding-right: 7px;">2</span> Female Patient
+                            Agreement
+                        </h5>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr style="font-size: 9.5px;">
+                    <td>
+                        <div class="list-bullets">
+                            <ul style="margin-top: 0px;margin-bottom: 5px;position: relative;left: -18px;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle pt-2"></i>
+                                    <div><b>For Females Who Can Get Pregnant:</b></div>
+                                </li>
+                            </ul>
+
+                            <div style="padding-left: 23px;position: relative;top: -3px;;"> Before I begin macitentan treatment, I will:</div>
+                            <ul style="list-style: circle;padding-left: 45px;margin: 5px 0;margin: 0px 0;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>review the Guide for Female Patients.</div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>get a pregnancy test.</div>
+                                </li>
+
+                                <li class="d-flex align-items-center">
+                                    <i class="fa fa-circle-o"></i>
+                                    <div>enroll in the REMS by completing the Patient Enrollment Form with the
+                                        prescriber. Enrollment information will be provided to the REMS.</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <i class="fa fa-circle-o"></i>
+                                    <div>receive counseling from the prescriber on the risk of serious birth defects,
+                                        the need to use reliable contraception during macitentan treatment and for one
+                                        month after stopping macitentan treatment, and emergency contraception using the
+                                        Guide for Female Patients.</div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <i class="fa fa-circle-o"></i>
+                                    <div>communicate with the pharmacy to confirm completion of pregnancy testing.
+                                    </div>
+                                </li>
+                            </ul>
+
+
+
+
+                            <div style="padding-left: 23px;">
+                                Before I receive each prescription of macitentan, I will:
+                            </div>
+                            <ul style="list-style: circle;padding-left: 45px;margin: 5px 0;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>receive counseling from the pharmacy on the risk of serious birth defects and
+                                        the need to use reliable contraception during macitentan treatment and for one
+                                        month after stopping macitentan treatment, to get monthly pregnancy tests, and
+                                        to immediately contact my prescriber if I miss a menstrual period or suspect I
+                                        am pregnant.</div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>communicate with the pharmacy to confirm completion of pregnancy testing.</div>
+                                </li>
+                            </ul>
+
+
+
+                            <div style="padding-left: 23px;">
+                                During my treatment with macitentan and for one month after stopping treatment, I will:
+                            </div>
+                            <ul style="list-style: circle;padding-left: 45px;margin: 5px 0;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>use reliable contraception as described in the Guide for Female Patients
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>get a pregnancy test</div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>inform my prescriber immediately if I miss a menstrual period or suspect that I
+                                        am pregnant</div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>agree to be contacted by the REMS Coordinating Center if I become pregnant.
+                                    </div>
+                                </li>
+                            </ul>
+
+
+                            <ul style="margin-top: 5px;margin-bottom: 5px;position: relative;left: -18px;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle pt-2"></i>
+                                    <div>
+                                        <b>For Pre-Pubertal Females (and her parent/guardian):</b>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div style="padding-left: 23px;position: relative;top: -3px;;">
+                                Before I begin macitentan treatment, I will:
+                            </div>
+                            <ul style="list-style: circle;padding-left: 45px;margin: 0px 0;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>
+                                        review the Guide for Female Patients.
+                                    </div>
+                                </li>
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>
+                                        enroll in the REMS by completing the Patient Enrollment Form with the
+                                        prescriber. Enrollment information will be provided to the REMS.
+                                    </div>
+                                </li>
+
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>
+                                        receive counseling from the prescriber on the risk of serious birth defects and
+                                        to contact my healthcare provider immediately if I get my menstrual period,
+                                        using the Guide for Female Patients.
+                                    </div>
+                                </li>
+                            </ul>
+                            <div style="padding-left: 23px;position: relative;top: -3px;;">
+                                If I am over the age of 8 and while I am being treated with macitentan, I will be
+                                monitored regularly for a change in reproductive status (ability to become pregnant). I
+                                will tell my prescriber if my reproductive status changes.
+                            </div>
+
+                            <ul style="margin-top: 5px;margin-bottom: 5px;position: relative;left: -18px;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle pt-2"></i>
+                                    <div>
+                                        <b>For Post-Menopausal Females and Females with other medical reasons for
+                                            permanent, irreversible infertility:</b>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div style="padding-left: 23px;position: relative;top: -3px;;">
+                                Before I begin macitentan treatment, I will:
+                            </div>
+                            <ul style="list-style: circle;padding-left: 45px;margin: 0px 0;">
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>
+                                        review the Guide for Female Patients.
+                                    </div>
+                                </li>
+                                <li class="d-flex">
+                                    <i class="fa fa-circle-o pt-2"></i>
+                                    <div>
+                                        enroll in the REMS by completing the Patient Enrollment Form. Enrollment
+                                        information will be provided to the REMS.
+                                    </div>
+                                </li>
+                            </ul>
+                            <div style="padding-left: 23px;">
+                                I will tell my prescriber if my reproductive status (ability to become pregnant)
+                                changes.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" style="position: relative;
+            top: -20px;">
+                <!-- <tr>
+                    <td style="width: 21.00%;">
+                        
+                    </td>
+                    <td style="width: 21.00%;"></td>
+                    <td style="width: 67.00%;"></td>
+                </tr> -->
+                <tr>
+                    <td style="width: 53.00%;">
+                                <img src="{!$Resource.MaciImages + '/img/star.JPG'}" class="img-fluid" style="
+                                position: relative;top: 6px;"></img>
+                                <!-- <span style="width: 21.00%;color: #0167BC;font-size: 25px;">&#x2605;</span> -->
+                                <apex:outputText value="{!cs.US_WSREMS__Signature__c}"
+                                    style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                                <div style="
+                                border-left: 0!important;
+                                border-right: 0!important;
+                                border-top: 0!important;
+                                border-color: #212529!important;
+                                border-bottom:1px solid #000;
+                                width: 100%;
+                                padding-top: 0;
+                                padding-bottom: 4px;
+                                font-size: 11px;
+                                
+                                "></div>
+                                 <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">
+                                    <span style="color: #0167BC;font-weight: 600 !important;">(REQUIRED FOR ALL FEMALES)</span> <span style="font-size: 11px;">Patient or Parent/Guardian Signature</span></h6>
+                               </td>
+                                    
+                            
+                    
+                    <td style="width: 21.00%;">
+                        <span style="width: 21.00%;color: #0167BC;font-size: 33.5px;">&nbsp;</span>
+                                <apex:outputText value="{0, date, MM'/'dd'/'yyyy}" style="margin: 0px;font-size: 11px;font-family: Dialog !important;" 
+                                 rendered="{!NOT(ISBLANK(cs.US_WSREMS__Date__c))}"><apex:param value="{!cs.US_WSREMS__Date__c}" /> </apex:outputText>
+                                <div style="
+                                border-left: 0!important;
+                                border-right: 0!important;
+                                border-top: 0!important;
+                                border-color: #212529!important;
+                                border-bottom:1px solid #000;
+                                width: 100%;
+                                padding-top: 0;
+                                padding-bottom: 4px;
+                                font-size: 11px;
+                                
+                                "></div>
+                                <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">
+                                    Date</h6>
+                                <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 11px;text-align: left;">
+                                        &nbsp;</p>
+                            
+                    </td>
+    
+                        <Center>
+                           <apex:repeat value="{!attachments}" var="attachmentId">
+                           <apex:image url="{!URLFOR($Action.Attachment.Download, attachmentId)}" 
+                              style="width: 250px;height: 125px !important;margin-top:0 !important; padding-top:0px !important;border:1px solid #656565;"/>
+                           </apex:repeat>
+                       </center>
+                        
+    
+                    
+                </tr>
+            </table>
+
+            <!-- Prescriber Information (please print) -->
+        <div style="page-break-before:always">
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #0167BC;color: #fff;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 600;">
+                            <span style="border-right: 1px solid #fff;padding-right: 7px;">3</span> Prescriber
+                            Information (please print)
+                        </h5>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td colspan="2" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Prescriber_First_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">First name</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Prescriber_Middle_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Middle initial</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Prescriber_Last_Name__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Last name</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__Shipping_Street__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Address</h6>
+                    </td>
+                    <td colspan="2" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__Shipping_City__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">City </h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Shipping_State__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">State </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__Shipping_Zip_Postal_Code__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">ZIP </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Prescriber_Phone__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Phone #</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.US_WSREMS__NPI__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">NPI #</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.SYN_Prescriber_Fax__c}"
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Fax # </h6>
+                    </td>
+                    <td colspan="3" style="padding: 0 8px;">
+                        &nbsp;
+                        <apex:outputText value="{!cs.Office_contact_name_Primary_Office__c} / {!cs.Email_address__c} "
+                            style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                        <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">Office contact and email
+                            address </h6>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- 4 Prescriber Authorization: Check the correct female patient category (please see definitions of these terms below): -->
+            
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #0167BC;color: #fff;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 600;">
+                            <span style="border-right: 1px solid #fff;padding-right: 7px;">4</span> Prescriber
+                            Authorization: Check the correct female patient category (please see definitions of these
+                            terms below):
+                        </h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 0px;">
+                        <h6 style="color:red;margin: 0px;">REQUIRED (Check one category)</h6>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;width: 33.33%;">
+                        <div style="height: 100px;">
+                        <h6 style="margin: 0 0 10px 0px;"> <b>Female of Reproductive Potential</b></h6>
+                          
+                         <apex:outputText rendered="{!cs.US_WSREMS__Patient_Risk_Category__c == 'Female of Reproductive Potential (FRP)'}">
+                         <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 11px;text-align: left;"></p>
+                         <apex:outputText value="{!cs.US_WSREMS__Patient_Risk_Category__c}" style="font-size: 11px;"/>
+                         </apex:outputText>
+                            <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 80%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 11px;
+                            
+                            "></div>
+
+
+
+                        <p style="padding: 5px 0px 2px 15px;margin: 0px;font-size: 11px;text-align: left;"> 
+                           <img src="{!$Resource.MaciImages + '/img/arrow-right.JPG'}" class="img-fluid" style="position: absolute;left: 10px;margin-top: -3px;"></img> If this patient is a Female of
+                            Reproductive Potential (which
+                            <b>includes</b> females who have
+                            undergone <b>tubal sterilization</b>),
+                            has a negative pregnancy test
+                            been completed prior to
+                            prescribing macitentan
+                        </p>
+                
+                        <apex:outputText value="{!cs.Negative_Pregnancy_Test_Completed__c}"
+                         style="margin: 0px;margin-left: 15px;font-size: 11px;font-family: Dialog !important;" />
+                            <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 75%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            margin-left: 15px;
+                            font-size: 11px;
+                            "></div>
+                            </div>
+                    </td>
+                    <td style="width: 30.33%;">
+                        <div style="height: 100px;">
+                        <h6 style="margin: 0 0 10px 0px;"> <b>Female of Non-Reproductive Potential</b></h6>
+                        &nbsp;
+                        <apex:outputText rendered="{!cs.US_WSREMS__Patient_Risk_Category__c == 'FNRP (Patient is pre-pubertal)' || 
+                                                   cs.US_WSREMS__Patient_Risk_Category__c == 'FNRP (Patient is post-menopausal)' || 
+                                                   cs.US_WSREMS__Patient_Risk_Category__c == 'FNRP (Other medical reasons for permanent, irreversible infertility)'}">
+                            
+                            <apex:outputText value="{!cs.US_WSREMS__Patient_Risk_Category__c}" style="font-size: 11px;"/>
+                         </apex:outputText>
+                            
+                            <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 95%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 8px;
+                            
+                            "></div>
+                            </div>
+                    </td>
+                    <td style="width: 36.33%;">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px 0px 0px 0px;font-size: 11px;text-align: left;">
+                            I certify that the above therapy ordered is medically necessary
+                            and agree to follow the "Prescriber Requirements" indicated on
+                            the second page of this form. Further, I hereby authorize the
+                            Macitentan REMS sponsors and/or their designated
+                            representative(s), to act on my behalf for the limited purposes
+                            of providing this prescription to the certified pharmacy for
+                            patient treatment purposes.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td style="width: 64.00%;"></td>
+                    <td style="width: 24.00%;">
+                                <img src="{!$Resource.MaciImages + '/img/star.JPG'}" class="img-fluid" style="
+                                position: relative;top: 6px;"></img>
+                                <apex:outputText value="{!cs.SYN_Prescriber_Signature__c}"
+                                    style="margin: 0px;font-size: 11px;font-family: Dialog !important;" />
+                                <div style="
+                                border-left: 0!important;
+                                border-right: 0!important;
+                                border-top: 0!important;
+                                border-color: #212529!important;
+                                border-bottom:1px solid #000;
+                                width: 100%;
+                                padding-top: 0;
+                                padding-bottom: 4px;
+                                font-size: 11px;
+                                
+                                "></div>
+                                 <h6 style="margin: 0;padding: 0px 2px 2px 0px;font-size: 10px;">
+                                    (REQUIRED FOR ALL PRESCRIBERS)</h6>
+                                <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 10px;text-align: left;">
+                                    Prescriber Signature</p>
+                            
+                    </td>
+                    <td style="width: 21.00%;">
+                                <span style="width: 21.00%;color: #0167BC;font-size: 24px;">&nbsp;</span>
+                                <apex:outputText value="{0, date, MM'/'dd'/'yyyy}" style="margin: 0px;font-size: 11px;font-family: Dialog !important;" 
+                                 rendered="{!NOT(ISBLANK(cs.SYN_Prescriber_Signature_Date__c))}"><apex:param value="{!cs.SYN_Prescriber_Signature_Date__c}" /> </apex:outputText>
+                                <div style="
+                                border-left: 0!important;
+                                border-right: 0!important;
+                                border-top: 0!important;
+                                border-color: #212529!important;
+                                border-bottom:1px solid #000;
+                                width: 100%;
+                                padding-top: 0;
+                                padding-bottom: 4px;
+                                font-size: 11px;
+                                
+                                "></div>
+                                <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 11px;">
+                                    Date</h6>
+                                <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 11px;text-align: left;">
+                                        &nbsp;</p>
+                            
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;border: 1px solid #000;">
+                <tr style="background-color: #0167BC;color: #fff;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 600;">
+                            Definitions of Reproductive Potential Status</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 11px;font-weight: 600;">
+                            <b>Females of Reproductive Potential</b>
+                        </h5>
+                        <ol style="list-style: disc;margin: 0px 0;font-size: 10px;padding-left: 15px;">
+                            <li>Females of reproductive potential include girls who have entered puberty and all females
+                                who have a uterus and have not passed through
+                                menopause (as defined below)</li>
+                            <li>For the purposes of this REMS, puberty includes those girls who are at least Tanner
+                                Stage 3 and have not yet had a menses (premenarchal)</li>
+                            <li>For the purposes of this REMS, females who have undergone <b>tubal sterilization</b> are
+                                classified as females of <b>reproductive</b> potential.</li>
+                        </ol>
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 11px;font-weight: 600;">
+                            <b>Females of Non-Reproductive Potential</b>
+                        </h5>
+                        <ol style="list-style: disc;margin: 0px 0;font-size: 10px;padding-left: 15px">
+                            <li>Pre-pubertal Females: Females who are at Tanner Stages 1 and 2 are not considered to be
+                                of reproductive potential</li>
+                            <li>Post-menopausal Females: Females who have passed through menopause. Menopause is
+                                defined as 12 months of spontaneous amenorrhea
+                                (not amenorrhea induced by a medical condition or medical therapy) or post-surgical from
+                                bilateral oophorectomy</li>
+                            <li>Females with other medical reasons for permanent, irreversible infertility</li>
+                        </ol>
+                    </td>
+                </tr>
+                <tr style="background-color: #0167BC;color: #fff;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 600;">
+                            Prescriber Requirements </h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 11px;font-weight: 600;">
+                            <b>For All Females</b>
+                        </h5>
+                        <ol style="list-style: disc;margin: 0px 0;font-size: 10px;padding-left: 15px">
+                            <li>I acknowledge that I have counseled the patient (and parent/guardian when appropriate)
+                                that macitentan is only available through a
+                                restricted distribution program under an FDA-required REMS</li>
+                            <li>I will evaluate the patient and agree to document any change or misclassification in
+                                reproductive potential status by submitting a <b><i>Change in
+                                    Reproductive Potential Status and Pre-pubertal Annual Verification Form</i></b> within
+                                10 business days of becoming aware of the change</li>
+                        </ol>
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 11px;font-weight: 600;">
+                            <b>For Females of Reproductive Potential</b>
+                        </h5>
+                        <ol style="list-style: disc;margin: 0px 0;font-size: 10px;padding-left: 15px">
+                            <li>I acknowledge that I have counseled the patient (and parent/guardian when appropriate)
+                                on the risks of embryo-fetal toxicity, the need to use
+                                reliable contraception during treatment and for one month following treatment
+                                discontinuation, and emergency contraception using the
+                                <b><i>Guide for Female Patients</i></b>
+                            </li>
+                            <li>I will order and review pregnancy tests prior to initiation of macitentan treatment,
+                                monthly during treatment, and for 1 month after stopping
+                                treatment in accordance with the Macitentan REMS</li>
+                            <li>I will counsel the patient if she is not complying with required testing, if she is not
+                                using appropriate contraception, and to contact her
+                                prescriber if she misses a menstrual period or suspects that she is pregnant.</li>
+                        </ol>
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 11px;font-weight: 600;">
+                            <b><i>For Pre-pubertal Females</i></b>
+                        </h5>
+                        <ol style="list-style: disc;margin: 0px 0;font-size: 10px;padding-left: 15px">
+                            <li>I acknowledge that I have counseled the patient and parent/guardian on the risks of
+                                macitentan, including the risk of embryo-fetal toxicity
+                                and to immediately contact her prescriber if she begins to menstruate using the <b><i>Guide
+                                    for Female Patients</i></b></li>
+                            <li>I will evaluate the patient’s reproductive potential status, verify reproductive
+                                potential status annually for pre-pubertal females who are at
+                                least 8 years of age and older, and agree to report any change or misclassification in
+                                reproductive potential status on a <b><i>Change in
+                                    Reproductive Potential Status and Pre-pubertal Annual Verification Form</i></b> within
+                                10 business days of becoming aware of the change</li>
+                        </ol>
+                    </td>
+                </tr>
+             </table>
+                <table width="100%" style="margin: 6px 0px 0px 0px;"> 
+                  <tr style="background-color: #0167BC;color: #fff;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 600;">
+                            <span style="border-right: 1px solid #000;padding-right: 7px;">5</span> Fax this form to 1-833-681-0003
+                        </h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <h5 style="font-size: 11px;margin: 0 0 10px 0px;">Please visit <b><i>www.MacitentanREMS.com</i></b> or call 1-888-572-2934 for more information about the Macitentan REMS.</h5>
+                    </td>
+                </tr>
+               </table>
+        </div>
+
+             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                    crossorigin="anonymous"></script>
+        </body>
+    </apex:form>
+</apex:page>

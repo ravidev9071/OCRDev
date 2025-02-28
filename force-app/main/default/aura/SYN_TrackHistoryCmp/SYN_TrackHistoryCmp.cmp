@@ -1,0 +1,82 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller ="SYN_TrackHistoryController">
+    	<aura:attribute name="recordId" type="Id" />
+    
+    <aura:attribute name="historyList" type="Object[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  
+    
+    <lightning:card iconName="standard:work_capacity_usage" title="Document Detail History">
+         <aura:if isTrue="{!not(empty(v.historyList))}">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="File Name">Date</div>
+                        </th>                        
+                        <th class="slds-text-title_caps" scope="col">
+                        	<div class="slds-truncate" title="Created Date">Field</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                        	<div class="slds-truncate" title="File Type">User</div>
+                        </th>
+                        
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Action">Original Value</div>
+                        </th>
+                        
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Action">New Value</div>
+                        </th>
+                       
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration  items="{!v.historyList}" var="his" indexVar="index" >
+                        <tr class="slds-hint-parent">
+                            <td data-label="File Name">
+                                 <div    class="slds-truncate" title="drag3" >                                     
+                                    <lightning:formattedDateTime value="{!his.item.CreatedDate}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit"  />
+                                </div>  
+                                
+                            </td>
+                            
+                            
+                            <td data-label="Created Date"> 
+                               <div class="slds-truncate" title="File Name">{!his.Field_Label}</div>  
+                            </td>
+                            <td data-label="Size"> 
+                                <div    class="slds-truncate" title="drag4" >
+                                     {!his.item.CreatedBy.Name}
+                                </div>  
+                            </td>
+                            
+                            
+                            <td data-label="download and select Name"> 
+                                 <div    class="slds-truncate" title="drag4" >
+                                     {!his.Old_value}
+                                </div>
+                            </td>
+                            <td data-label="download and select Name"> 
+                                 <div    class="slds-truncate" title="drag4" >
+                                     {!his.New_value}
+                                </div>
+                            </td>
+                            
+                            
+
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            <aura:set attribute="else">
+                <div Style="text-align : center"> " There are no History "</div>
+            </aura:set>
+        </aura:if>
+       
+       
+    
+    </lightning:card> 
+	
+</aura:component>

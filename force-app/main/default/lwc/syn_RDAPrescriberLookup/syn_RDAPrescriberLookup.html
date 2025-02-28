@@ -1,0 +1,32 @@
+<template>
+    <lightning-layout>
+ <lightning-layout-item  size="12">
+    <lightning-record-edit-form object-api-name={childObjectApiName}>
+        <span style="color:red;">*</span>
+        <label for="fieldid"  class="slds-form-element__label slds-rich-text-editor__output">{fieldLabel}</label>
+        <lightning-input-field id="fieldid"                                 
+                               variant="label-hidden"
+                               field-name={targetFieldApiName}
+                               value={value}
+                               onchange={handleChange} 
+                               disabled={disabled}
+                               required={required}>
+        </lightning-input-field>
+        </lightning-record-edit-form>
+   </lightning-layout-item>
+
+   <lightning-layout-item padding="horizontal-large"  size="12">
+        <lightning-record-view-form record-id={value} object-api-name="Account">
+            <span style="color:red;">*</span>
+            <label  class="slds-form-element__label slds-rich-text-editor__output">DEA Number</label>
+            <lightning-output-field field-name="US_WSREMS__DEA__c" variant="label-hidden"></lightning-output-field>
+            <br/>
+            <label  class="slds-form-element__label slds-rich-text-editor__output">
+                Is the prescriber currently being monitored?
+                </label>
+            <lightning-output-field field-name="SYN_Should_patient_be_monitored__c" variant="label-hidden"></lightning-output-field>  
+</lightning-record-view-form>
+</lightning-layout-item>
+</lightning-layout>
+
+</template>

@@ -1,0 +1,510 @@
+<apex:page applyBodyTag="false" showHeader="false" renderAs="pdf" controller="MaciPrescriberEnrollmentFormController" >
+    
+    <head>
+        <apex:variable var="selectedDesignation" value="{!ac.SYN_Professional_Designation__c}" />
+        <apex:variable var="selectedPreferredmethodofcontact" value="{!ac.US_WSREMS__Preferred_Contact_Method__c}" />
+        <apex:variable var="selectedSecondaryPreferredmethodofcontact" value="{!ac.Preferred_Contact_Method_Secondary_Offic__c}" />
+		<apex:variable var="selectedAlternatecontact" value="{!ac.Alternate_Contact__c}" />        
+        <style>
+                body {
+                    margin-top: 0 !important;
+                    font-family: Dialog !important;
+                    padding-top:0px !important;
+                }
+
+                @page {
+                    margin: 0  !important;
+                    size: letter;
+                    font-family: Dialog !important;
+                    padding-top:0px !important;
+                }
+            </style>
+
+        </head>
+     <apex:form style="margin-top:0px !important; padding-top:0px !important;height:auto;">
+
+        <body style="margin-top:0px;margin-bottom:0px;">
+           
+            <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td style="border-right: 45px solid #fff;width: 1140px;">
+                        <h5 style="margin: 0;font-size: 16px;font-weight: 800;font-family: Dialog !important;">Macitentan REMS Prescriber Enrollment
+                            and Agreement Form</h5>
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 11px;font-family: Dialog !important;"> 
+                            To enroll and become certified in the REMS, complete this form <u>online</u> at www.MacitentanREMS.com
+                            <br></br>
+                            <b>OR</b> <u>fax</u> this form to 1-833-681-0003.
+                        <br></br>
+                            Contact the Macitentan REMS at 1-888-572-2934 with any questions.</p>
+                    </td>
+                    <td>
+                        <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"
+                            style="width: 168px;height: 50px !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                        <!-- <img src="macii.jpg" class="img-fluid" style="width: 168px;"></img> -->
+                    </td>
+                </tr>
+            </table>
+
+
+          
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #00133B;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="color:#fff;margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 800;font-family: Dialog !important;">
+                            Prescriber Information (please print)</h5>
+                    </td>
+                </tr>
+            </table>
+    <br/>
+            <table column="3">
+                <tr>
+                    <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 1;font-family: Dialog !important;">
+                       <apex:outputText value="{!ac.FirstName}" /><br /> 
+                        <hr
+                            style="border: none;margin: 0px 0;border-top: 0.1px solid black;width:220px;border-size:5px" />
+                        First name
+                    </td>
+                    <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                        <apex:outputText value="{!ac.MiddleName}" /><br />
+                        <hr
+                            style="border: none;margin: 0px 0;border-top: 0.1px solid black;width: 10px;padding-right: 150px;border-size:5px" />
+                        MI
+                    </td>
+                    <td style="padding-right: 180px;margin-bottom: 0;FONT-SIZE:13px;font-family: Dialog !important;">
+                        <apex:outputText value="{!ac.LastName}" /><br />
+                        <hr
+                            style="border: none;margin: 0px 0;border-top: 0.1px solid black; width: 405px;border-size:5px" />
+                        Last name
+                    </td>
+
+                </tr>
+            </table>
+          
+            <table column="3">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;"></td>
+                <td style="text-align: justify;FONT-SIZE: 13px;padding-right: 380px;margin-bottom: 0;"></td>
+                <td>
+                  <div style="margin-bottom:0;margin-TOP: 0PX;padding-right: 5px;">
+                    <td style="padding-right: 10px;FONT-SIZE:13px;font-family: Dialog !important;margin-bottom: 0;margin-TOP: -30;position:relative;top:4px;">
+                      <img src="{!IF(selectedDesignation == 'MD', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                      MD
+                    </td>
+                    <td style="padding-right: 2px;FONT-SIZE:13px;margin-bottom:0px;font-family: Dialog !important;position:relative;top:4px;">
+                      <div class="form-check mb-2">
+                        <img src="{!IF(selectedDesignation == 'NP', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                        NP
+                      </div>
+                    </td>
+                    <td style="padding-right: 10px;FONT-SIZE:13px;font-family: Dialog !important;position:relative;top:4px;">
+                      <img src="{!IF(selectedDesignation == 'PA', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                      PA
+                    </td>
+                    <td style="padding-right: 10px;FONT-SIZE:13px;font-family: Dialog !important;padding-bottom: 0;padding-TOP: 0;position:relative;top:4px;">
+                      <img src="{!IF(selectedDesignation == 'DO', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                      DO
+                    </td>
+                  </div>
+                </td>
+              </table>
+                  <table column="3" style="margin-top:-19px;font-family: Dialog !important;">
+                      <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                          <apex:outputText value="{!ac.Email_address__c}" />    
+                          <hr
+                                  style="border: none;margin: 0px 0px 0px 0px;border-top: 0.1px solid black;width:220px; border-size:5px" />
+                              Email address
+                          </td>
+                      
+                       <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                          <apex:outputText value="{!ac.US_WSREMS__NPI__c}" />    
+                          <hr
+                                  style="border: none;margin: 0px 0;border-top: 0.1px solid black;width: 10px;padding-right: 150px;border-size:5px" />
+                              NPI #
+                          </td>
+                          <td style="padding-right: 180px;margin-bottom: 0;FONT-SIZE:13px;font-family: Dialog !important;">
+                                 
+                              <hr
+                                  style="border: none;border-top: 0.1px solid black; width: 405px;border-size:5px;position:relative;top:7px;" />
+                               Professional designation
+                           </td>
+                  
+                  </table>
+
+        <table column="2">
+         <tr>
+             <td STYLE="FONT-SIZE:13px;margin-bottom: 0;width:280px; font-family: Dialog !important;">In the event you are unavailable, is there
+                 another person we can contact on your behalf?&nbsp;
+            </td>
+            <td style="FONT-SIZE:13px;margin-bottom: 0; font-family: Dialog !important;">If yes, please provide name and phone</td>
+         </tr>
+        </table>
+            <table>
+            	<td style="margin-top:0px;padding-top:0px;position:relative;top:-10px;padding-right: 10px;FONT-SIZE:13px;font-family: Dialog !important;">
+
+                  <img src="{!IF(selectedAlternatecontact == 'Yes', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;position:relative;top:-7px;" alt="checkbox" />
+                   <span style="position:relative;top:-7px;">Yes</span>
+                </td>
+                <td style="margin-top:0px;padding-top:0px;position:relative;top:-7px;padding-right: 200px;FONT-SIZE:13px;margin-bottom:0.5px;font-family: Dialog !important;">
+
+                   <img src="{!IF(selectedAlternatecontact == 'No', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;position:relative;top:-7px;" alt="checkbox" />
+                    <span style="position:relative;top:-7px;">No</span>
+                  </td>
+            	<td style="FONT-SIZE: 13px;margin-bottom: 1px;font-family: Dialog !important;"> Name<br />
+                	<apex:outputText value="{!ac.Alternate_Contact_Name__c}" />
+                    <hr style="border: none;border-top: 0.2px solid black;width:250px;margin: 0px 0;" />
+                </td>
+                <td STYLE="FONT-SIZE:13px;margin-bottom: 1px;font-family: Dialog !important; ">Phone<br />
+                    <apex:outputText value="{!ac.SYN_Alternate_Phone__c}" />
+                    <hr style="border: none;border-top: 0.2px solid black;width:100px;margin: 0px 0;" />
+                </td>
+             </table>
+             <table width="100%" style="margin: 6px 0px 0px 0px;font-family: Dialog !important;">
+                <tr style="background-color: #00133B;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="color:#fff;margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 800;"><u>Primary</u> Office Practice/Clinical Information (please print)</h5>
+                    </td>
+                </tr>
+            </table>
+    <br/>
+            <table colum="2">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Office_Practice_Clinic_Name__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:280px;border-size:5px" />
+                    Office practice/clinic name
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Affiliated_hospital__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 150px;width:308px;border-size:5px" />
+                    Affiliated hospital
+                </td>
+            </table>
+             <table column="3">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Specialty__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:150px;border-size:5px" />
+                    Speciality
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Primary_contact_name__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 90px;padding-right:200px;border-size:5px" />
+                    Office contact name
+                </td>
+                <td style="padding-right: 180px;margin: 0;FONT-SIZE:13px;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.office_contact_phone_Primary_Office__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 292px;border-size:5px" />
+                    Office contact phone
+                </td>
+
+            </table>
+           
+            <table column="3">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.US_WSREMS__Email__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:280px;border-size:5px" />
+                    Office email address
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Phone}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 10px;padding-right: 150px;border-size:5px" />
+                    Phone
+                </td>
+                <td style="padding-right: 180px;margin-bottom: 0;FONT-SIZE:13px;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Fax}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 292px;border-size:5px" />
+                    Fax
+                </td>
+             </table>
+            <table column="2">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.ShippingStreet}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:445px;border-size:5px" />
+                    Address
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.ShippingCity}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width:220px;padding-right: 70px;border-size:5px" />
+                    City
+                </td>
+    </table>
+
+            <table column="5">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;"></td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;width:280px;"></td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;width:40px;"></td>
+                <td style="FONT-SIZE:13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <div class="form-check mb-2;margin-top:12px !im portant; ">
+                      <img src="{!IF(selectedPreferredmethodofcontact == 'Phone', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                        <label for="checkbox">Phone</label>
+                    </div>
+            
+                </td>
+                <td style="FONT-SIZE:13px;margin-bottom:0.5px;font-family: Dialog !important;">
+                  <img src="{!IF(selectedPreferredmethodofcontact == 'Fax', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    <label for="checkbox">Fax</label>
+                </td>
+                <td style="padding-right: 10px;FONT-SIZE:13px;margin-bottom: 0;font-family: Dialog !important;">
+                  <img src="{!IF(selectedPreferredmethodofcontact == 'Email', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    Email
+            
+                </td>
+
+            </table>
+            <table column="3" style="margin-top:-19px;font-family: Dialog !important;">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.ShippingState}" />
+                    <hr
+                        style="border: none;margin: 0px 0px 0px 0px;border-top: 0.1px solid black;padding-right: 50px; width:150px;border-size:5px" />
+                    State
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.ShippingPostalCode}" />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 10px;padding-right: 115px;border-size:5px" />
+                    Zip
+                </td>
+                <td style="padding-right: 180px;margin-bottom: 0;FONT-SIZE:13px;font-family: Dialog !important;">    
+                    <hr
+                        style="border: none;border-top: 0.1px solid black;width: 453px;border-size:5px;position:relative;top:7px" />
+                    Preferred method of contact
+                    
+                    
+                </td>
+
+            </table>
+
+      
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #00133B;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="color:#fff;margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 800;font-family: Dialog !important;"><u>Secondary</u> Office Practice/Clinical Information (please print)</h5>
+                    </td>
+                </tr>
+            </table>
+
+    <br/>
+   <table colum="2">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                   <apex:outputText value="{!ac.Office_Practice_Clinic_Name1__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:280px;border-size:5px" />
+                    Office practice/clinic name
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Affiliated_hospital_Secondary_Offic__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 150px;width:308px;border-size:5px" />
+                    Affiliated hospital
+                </td>
+            </table>
+           
+            <table column="3">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.Specialty_Secondary_Office__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:150px;border-size:5px" />
+                    Speciality
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Secondary_contact_name__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 90px;padding-right:200px;border-size:5px" />
+                    Office contact name
+                </td>
+                <td style="padding-right: 180px;margin-bottom: 0;FONT-SIZE:13px;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.Secondary_contact_phone__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 292px;border-size:5px" />
+                    Office contact phone
+                </td>
+
+            </table>
+           
+            <table column="3">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Email_Secondary_Office__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:280px;border-size:5px" />
+                    Office email address
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.Phone_Secondary_Office__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 10px;padding-right: 150px;border-size:5px" />
+                    Phone
+                </td>
+                <td style="padding-right: 180px;margin-bottom: 0;FONT-SIZE:13px;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.Fax_Secondary_Office__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 292px;border-size:5px" />
+                    Fax
+                </td>
+
+            </table>
+            <table column="2">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.Address_1_Secondary_Office__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;padding-right: 50px; width:445px;border-size:5px" />
+                    Address
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.City_Secondary_Office__c}" /><br />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width:220px;padding-right: 70px;border-size:5px" />
+                    City
+                </td>
+            </table>
+            <p></p>
+            <table column="5">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;"></td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;width:280px;"></td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;width:40px;"></td>
+                <td style="FONT-SIZE:13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <div class="form-check mb-2;margin-top:12px !im portant; ">
+                      <img src="{!IF(selectedSecondaryPreferredmethodofcontact == 'Phone', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                        <label for="checkbox">Phone</label>
+                    </div>
+            
+                </td>
+                <td style="FONT-SIZE:13px;margin-bottom:0.5px;font-family: Dialog !important;">
+                  <img src="{!IF(selectedSecondaryPreferredmethodofcontact == 'Fax', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    <label for="checkbox">Fax</label>
+                </td>
+                <td style="padding-right: 10px;FONT-SIZE:13px;margin-bottom: 0;font-family: Dialog !important;">
+                  <img src="{!IF(selectedSecondaryPreferredmethodofcontact == 'Email', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    Email
+            
+                </td>
+
+            </table>
+            <table column="3" style="margin-top:-19px;font-family: Dialog !important;">
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                     <apex:outputText value="{!ac.State_Secondary_Office__c}" />
+                    <hr
+                        style="border: none;margin: 0px 0px 0px 0px;border-top: 0.1px solid black;padding-right: 50px; width:150px;border-size:5px" />
+                    State
+                </td>
+                <td style="text-align: justify;FONT-SIZE: 13px;margin-bottom: 0;font-family: Dialog !important;">
+                    <apex:outputText value="{!ac.Zip_Secondary_Office__c}" />
+                    <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;width: 10px;padding-right: 115px;border-size:5px" />
+                    Zip
+                </td>
+                <td style="padding-right: 180px;margin-bottom: 0;FONT-SIZE:13px;font-family: Dialog !important;">
+                      
+                    <hr
+                        style="border: none;border-top: 0.1px solid black;width: 453px;border-size:5px;position:relative;top:7px" />
+                    Preferred method of contact
+                    
+                </td>
+
+            </table>
+            <table width="100%" style="margin: 6px 0px 0px 0px;font-family: Dialog !important;">
+                <tr style="background-color: #00133B;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="color:#fff;margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 800;">Macitentan REMS Prescriber Agreement</h5>
+                    </td>
+                </tr>
+            </table> 
+
+            <div style="text-align: justify;FONT-SIZE: 13px;font-family: Dialog !important;margin-top:-11px">
+                   <p>
+                By signing below, you signify your understanding of the risks of macitentan treatment and your
+                obligation as a macitentan prescriber to educate your female patients about the Macitentan REMS (Risk
+                Evaluation and Mitigation Strategy), monitor them appropriately, and report any pregnancies to the REMS
+                Coordinating Center. Specifically, you attest to the following:
+                </p>
+                <li style="margin-top:-10px"> I have reviewed the <span style= "font-style: italic;">Prescribing Information</span>  and the <span style= "font-style: italic;">Prescriber and Pharmacy Guide </span> and agree to
+                    comply with the Macitentan REMS requirements.</li>
+               
+                <li> For all Females, I will:</li>
+                <ul style="list-style-type: circle; margin-left:57px;font-family: Dialog !important;">
+
+                    <li style="margin-top:-10px"> Assess the patient's reproductive status using the definitions in the <span style= "font-style: italic;">Prescriber and Pharmacy
+                        Guide</span> and document and submit the results using the <span style= "font-style: italic;">Patient Enrollment Form.</span></li>
+
+                    <li>Counsel the female patient that macitentan is only available through a restricted distribution
+                        program called the Macitentan REMS.</li>
+
+                    <li> Enroll all female patients by completing and submitting the <span style= "font-style: italic;">Patient Enrollment Form.</span></li>
+
+                </ul>
+                <li style="margin-top:100px"> For Females of Reproductive Potential, I will:</li>
+                <ul style="list-style-type: circle; margin-left:57px;font-family: Dialog !important;">
+
+                    <li style="margin-top:-10px">Counsel the Females of Reproductive Potential about the risk of embryo-fetal toxicity, the need
+                        to use reliable contraception during treatment and for one month following treatment
+                        discontinuation, and emergency contraception using the <span style= "font-style: italic;">Guide for Female Patients</span></li>
+
+                    <li>Assess the patient's pregnancy status by ordering and reviewing a pregnancy test before the start
+                        of treatment, monthly during treatment, and for one month after stopping treatment</li>
+
+                    <li> Counsel the patient if she is not complying with the required testing or if she is not using
+                        appropriate contraception, and to contact her prescriber if she misses a menstrual period or
+                        suspects that she is pregnant</li>
+
+                </ul>
+                <li> For Pre-pubertal Females I will:</li>
+                <ul style="list-style-type: circle; margin-left:57px;font-family: Dialog !important;">
+
+                    <li style="margin-top:-10px">Counsel the Pre-Pubertal Female patient and her parent/guardian on the risk of embryo-fetal
+                        toxicity and to immediately contact her prescriber if she begins to menstruate using the <span style= "font-style: italic;">Guide
+                        for Female Patients.</span> </li>
+
+                    <li>Regularly assess the reproductive status of each Pre-Pubertal Female during their treatment with
+                        macitentan.</li>
+
+                    <li> Document the reproductive potential status of Pre-Pubertal Females who are at least 8 years or
+                        older and submit to the REMS at least annually using the <span style= "font-style: italic;">Change in Reproductive Potential Status
+                        and Pre-pubertal Annual Verification Form.</span></li>
+
+                </ul>
+                <li> At all times, I will:</li>
+                <ul style="list-style-type: circle; margin-left:57px;font-family: Dialog !important;">
+
+                    <li style="margin-top:-10px">Report any change or misclassification in reproductive status to the REMS by submitting a <span style= "font-style: italic;">Change
+                        in Reproductive Potential Status and Pre-pubertal Annual Verification Form</span> within 10 business
+                        days of becoming aware of the change.</li>
+
+                    <li>Report any pregnancies to the REMS at 1-888-572-2934.</li>
+
+
+
+                </ul>
+
+
+                <table column="4">
+                    <tr>
+                        <td style="font-size: 11px;font-family: Dialog !important;">Signature</td>
+                        <td>
+                             <apex:outputText value="{!ac.SYN_Signature__c}" style="margin: 0px;font-size: 11px;;font-family: Dialog !important;" /><br />
+                            <hr
+                            style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 290px;" />
+                        </td>
+                        <td style="font-size: 11px;font-family: Dialog !important;">Date</td>
+                        <td>
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="margin: 0px;font-size: 11px;;font-family: Dialog !important;"><apex:param value="{!ac.SYN_Signature_Date__c}"/></apex:outputText><br/>
+                            <hr
+                           style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 410px;" />
+                        </td>
+                    </tr>
+                    <p style="text-align: justify;FONT-SIZE: 13px;font-family: Dialog !important;">
+                        <b>Please visit www.MacitentanREMS.com or call 1-888-572-2934 for more information about the
+                            Macitentan REMS</b>
+                    </p>
+                </table>
+            </div>
+        </body>
+    </apex:form>
+</apex:page>

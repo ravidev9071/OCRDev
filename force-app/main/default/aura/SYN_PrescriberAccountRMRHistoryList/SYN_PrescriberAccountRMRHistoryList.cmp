@@ -1,0 +1,52 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" 
+                controller="SYN_PatientAccountRMRHistListCntllr" access="global" >
+    <aura:attribute name="recordId" type="String" default="false" access="global"/>
+    <aura:attribute type="String" name="title"/>
+    <aura:attribute name="rows" type="Map[]"/>
+    <aura:attribute name="cols" type="Map[]"/>
+    <aura:attribute name="results" type="Map[]"/>
+    <aura:attribute name="noOfCallsToBeShown" type="Integer" default="10"/>
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:handler name="ChangePage" event="c:SYN_ChangePage" action="{!c.handlePagination}" />
+    
+    <div class="slds-text-color_error slds-text-heading_small slds-p-around_x-small" style="font-weight:600;color: #2949AD;
+    font-size: 14px; text-align:center;">{!$Label.c.SOX_PrescriberAlertHistTablText}</div>
+
+    <lightning:card   class="slds-theme_shade " >
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:case" size="small" class="slds-m-bottom_small"> </lightning:icon>
+            <span class="slds-p-left_small">{!v.title}</span>
+        </aura:set>
+        <aura:if isTrue="{!v.rows.length > 0}">
+            <div class="slds-form--stacked slds-scrollable_y" >
+                <lightning:datatable
+                                     class="slds-table_header-fixed_container slds-scrollable_x slds-border_top"
+                                     data="{!v.rows}"
+                                     columns="{!v.cols}"
+                                     keyField="Id"
+                                     hideCheckboxColumn="true"
+                                     showRowNumberColumn="false"
+                                     sortedDirection="{!v.sortedDirection}"
+                                     sortedBy="{!v.sortedBy}"
+                                     onsort="{!c.handleSort}"
+                                     />
+            </div>
+            <aura:set attribute="else">
+                <div class="slds-notify slds-notify--alert slds-theme--info slds-theme--alert-texture" role="alert">
+                    <span class="slds-assistive-text">Info</span>
+                    
+                    <h2>
+                        <lightning:icon iconName="utility:info" variant="inverse"  size="x-small" class="slds-m-right--x-small" />
+                        No prescriber history available for this prescriber record
+                    </h2>
+                </div>
+            </aura:set>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.results.length > 0}">
+            <c:SYN_Pharmacy_PaginationForDataTable aura:id="cPagination" totalRecords="{!v.results.length}" recordsPerPage="{!v.noOfCallsToBeShown}"/>
+        </aura:if>
+    </lightning:card>
+</aura:component>

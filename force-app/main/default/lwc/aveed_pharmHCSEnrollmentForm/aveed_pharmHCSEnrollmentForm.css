@@ -1,0 +1,17 @@
+.slds-form-element__control .slds-radio.horizontal {
+    display: inline-block !important;
+}
+
+.required-text {
+    color: var(--slds-g-color-error-base-40, var(--lwc-colorTextError, rgb(234, 0, 30)));
+}
+
+p.txtInstructions {
+    font-weight: 500;
+    font-size: .9rem;
+    color: #545454;
+}
+/* RT 14-10-24 styling changes */
+.tblContainer {
+    margin-top: 15px;
+}

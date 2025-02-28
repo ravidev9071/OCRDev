@@ -1,0 +1,307 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Prescriber Page { Middle context }
+-->
+
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" controller="REMSfileDownloadController">
+    <!-- Init Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="resourceList" type="List" default=""/>
+    <aura:attribute name="recordTypeDeveloperName" type="String" default=""/>
+    <aura:attribute name="programId" type="String" default=""/>
+    <aura:attribute name="portalRole" type="String" default=""/>
+    <lightning:navigation aura:id="navigation"/>
+    
+    <section class="sec-one-1 py-5 sec-mdf" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;height:40vw;">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Prescriber</h3>
+                    <div class="accordion list-unstyled" style="height: 14.7vw;overflow-y: scroll;padding-right: 30px;">
+                        <span class="target-fix" id="accordion"></span>
+                        
+                        <div>
+                            <span class="target-fix" id="accordion1"></span>
+                            <a href="#accordion1" id="open-accordion1" title="open"><i class="fa fa-angle-right"></i> How do patients enroll in the Macitentan-Containing Products REMS?</a>
+                            <a href="#accordion" id="close-accordion1" title="close"><i class="fa fa-angle-down"></i> How do patients enroll in the Macitentan-Containing Products REMS?</a> 
+                            <div class="accordion-content">
+                                <p>Female patients must enroll in the Macitentan-Containing Products REMS to receive macitentan-containing products. Male patients taking macitentan-containing products are not enrolled in the Macitentan-Containing Products REMS.</p>
+                                <p>A certified prescriber may enroll their female patient online via the Macitentan-Containing Products REMS website or by faxing a completed Patient Enrollment Form to the REMS Coordinating Center at 1-833-681-0003. Upon receipt of a completed patient enrollment form, a REMS Coordinating Center Associate will ensure that the prescriber submitting the Patient Enrollment Form is certified in the Macitentan-Containing Products REMS. Upon confirmation of a certified prescriber, the associate will enter the information into the Macitentan-Containing Products REMS system completing the patient's enrollment and linking the enrolled patient with the certified prescriber.</p>
+
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span class="target-fix" id="accordion2"></span>
+                            <a href="#accordion2" id="open-accordion2" title="open"><i class="fa fa-angle-right"></i> How do I complete a patient transfer?</a>
+                            <a href="#accordion" id="close-accordion2" title="close"><i class="fa fa-angle-down"></i> How do I complete a patient transfer?</a> 
+                            <div class="accordion-content">
+                                <p>If a patient is being transferred to your care from a different prescriber, you must submit a Patient Enrollment Form for the patient via fax to the REMS Coordinating Center.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span class="target-fix" id="accordion3"></span>
+                            <a href="#accordion3" id="open-accordion3" title="open"><i class="fa fa-angle-right"></i> How do prescribers certify by enrolling in the Macitentan-Containing Products
+                                REMS?</a>
+                            <a href="#accordion" id="close-accordion3" title="close"><i class="fa fa-angle-down"></i> How do prescribers certify by enrolling in the Macitentan-Containing Products
+                                REMS?</a> 
+                            <div class="accordion-content">
+                                <p>To become certified, a prescriber must complete and submit the <Strong>Prescriber Enrollment and
+                                    Agreement Form.</Strong> The form may be completed and submitted online via the Macitentan-Containing Products REMS
+                                    website <u>or</u> by printing and faxing a completed form to the REMS Coordinating Center at 1-833-681-0003.</p>
+                                
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span class="target-fix" id="accordion4"></span>
+                            <a href="#accordion4" id="open-accordion4" title="open"><i class="fa fa-angle-right"></i> What are the Macitentan-Containing Products REMS requirements for prescribers?</a>
+                            <a href="#accordion" id="close-accordion4" title="close"><i class="fa fa-angle-down"></i> What are the Macitentan-Containing Products REMS requirements for prescribers?</a> 
+                            <div class="accordion-content">
+                                <p class="mb-0 py-2"> <strong>Healthcare Providers who prescribe macitentan-containing products must: </strong></p>
+                                <p class="mb-0 pt-2 pb-2"> To become certified to prescribe</p>
+                                    <div class="list-bullets">
+                                        <ul class="mb-0">
+                                            <li class="d-flex align-items-center">
+                                                <i class="fa fa-circle" style="position: revert;"></i>
+                                                <div>
+                                                    Review the drug's <em class="fw-bold">Prescribing Information.</em>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex align-items-center">
+                                                <i class="fa fa-circle" style="position: revert;"></i>
+                                                <div>
+                                                    Review the <em class="fw-bold">Prescriber and Pharmacy Guide.</em>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    Enroll and become certified in the REMS by completing the Prescriber Enrollment and Agreement Form and submitting it to the Macitentan-Containing Products REMS.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                
+                                <p class="mb-0 py-2"> Before treatment initiation (first dose) </p>
+                                    <div class="list-bullets">
+                                        <ul class="mb-0">
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For all females: Assess the patient's reproductive status using the definitions in the <em class="fw-bold">Prescriber and Pharmacy Guide.</em> Document and submit the results to the Macitentan-Containing Products REMS using
+                                                    the <em class="fw-bold">Patient Enrollment Form</em>.
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For all females: Counsel the patient that the drug is only available through a restricted distribution program.
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For females of reproductive potential: Assess the patient's pregnancy status by ordering and reviewing her pregnancy test result.
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For females of reproductive potential: Counsel the patient on the risk of embryo-fetal toxicity, the need to use reliable contraception, and emergency contraception using the <em class="fw-bold">Guide
+                                                    for Female Patients. </em>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For pre-pubertal females: Counsel the patient on the risk of embryo-fetal toxicity and to immediately contact her prescriber if she begins to menstruate - using the <em class="fw-bold">Guide for Female
+                                                    Patients</em>.
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    Enroll all female patients by completing and submitting the <em class="fw-bold">Patient Enrollment Form</em> and submitting it to the Macitentan-Containing Products REMS.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                
+                                <p class="mb-0 py-2">During treatment; before each prescription </p>
+                                    <div class="list-bullets">
+                                        <ul class="mb-0">
+                                            <li class="d-flex"> 
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For females of reproductive potential: Counsel the patient if she is not complying with required testing, if she is not using appropriate contraception, and to contact her prescriber if
+                                                    she misses a menstrual period or suspects that she is pregnant.
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For females of reproductive potential: Assess the patient's pregnancy status by ordering and reviewing her pregnancy test result.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                               
+                                <p class="mb-0 py-2"> During treatment; at least annually </p>
+                                    <div class="list-bullets">
+                                        <ul class="mb-0">
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For pre-pubertal females at least age 8 years or older: Document reproductive status and submit to the Macitentan-Containing Products REMS using the  <em class="fw-bold">Change in Reproductive Potential Status and Pre-pubertal Annual Verification Form.</em>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                               
+                                <p class="mb-0 py-2"> After treatment discontinuation; one month</p>
+                                    <div class="list-bullets">
+                                        <ul class="mb-0">
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For females of reproductive potential: Assess the patient's pregnancy status by ordering and reviewing her pregnancy test result.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                
+                                <p class="mb-0 py-2"> At all times</p>
+                                    <div class="list-bullets">
+                                        <ul class="mb-0">
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    For pre-pubertal females: Assess the patient's reproductive status.
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    Report pregnancies to the REMS Coordinating Center by calling 1-888-572-2934.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                
+                                    <p class="mb-0 py-2"> At all times; within 10 business days</p>
+                                    <div class="list-bullets">
+                                        <ul class="mb-0">
+                                            <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                <div>
+                                                    Report a change or misclassification in reproductive status to the Macitentan-Containing Products REMS using the <em class="fw-bold">Change in Reproductive Potential Status and Pre-pubertal Annual Verification Form.</em>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span class="target-fix" id="accordion5"></span>
+                            <a href="#accordion5" id="open-accordion5" title="open"><i class="fa fa-angle-right"></i> How do I find a pharmacy to fill a macitentan-containing product prescription
+                                for outpatient use? </a>
+                            <a href="#accordion" id="close-accordion5" title="close"><i class="fa fa-angle-down"></i> How do I find a pharmacy to fill a macitentan-containing product prescription
+                                for outpatient use? </a> 
+                            <div class="accordion-content">
+                                <p>Pharmacies that dispense macitentan-containing products must be certified in the Macitentan-Containing Products REMS. Only certain outpatient pharmacies participate in the Macitentan-Containing Products REMS. You may need to help your patients find an outpatient pharmacy that is certified in the Macitentan-Containing Products REMS. For a list of certified outpatient pharmacies, visit <a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 13px;left: 0px !important;"><u>www.MacitentanREMS.com.</u></a> or call the REMS Coordinating Center at 1-888-572-2934. Your patient may also contact her insurance carrier for assistance in determining what pharmacies and macitentan-containing products are supported by her current insurance plan.</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span class="target-fix" id="accordion6"></span>
+                            <a href="#accordion6" id="open-accordion6" title="open"><i class="fa fa-angle-right"></i> Do healthcare providers who prescribe macitentan-containing products have to
+                                certify by enrolling in the Macitentan-Containing Products REMS? </a>
+                            <a href="#accordion" id="close-accordion6" title="close"><i class="fa fa-angle-down"></i> Do healthcare providers who prescribe macitentan-containing products have to
+                                certify by enrolling in the Macitentan-Containing Products REMS? </a> 
+                            <div class="accordion-content">
+                                <p>Healthcare providers who prescribe macitentan-containing products must be specially certified. To become certified, a prescriber must read the <Strong>Prescriber and Pharmacy Guide</Strong> and the <Strong>Prescribing Information</Strong>, certify in the Macitentan-Containing Products REMS, and agree to follow the Macitentan-Containing Products REMS prescriber requirements. Prescribers must be certified in the Macitentan-Containing Products REMS and comply with the Macitentan-Containing Products REMS requirements to prescribe macitentan-containing products.</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <span class="target-fix" id="accordion7"></span>
+                            <a href="#accordion7" id="open-accordion7" title="open"><i class="fa fa-angle-right"></i> What if a patient gets pregnant during treatment with
+                                a macitentan-containing product or within one month of discontinuation of treatment? </a>
+                            <a href="#accordion" id="close-accordion7" title="close"><i class="fa fa-angle-down"></i> What if a patient gets pregnant during treatment with
+                                a macitentan-containing product or within one month of discontinuation of treatment?</a> 
+                            <div class="accordion-content">
+                                <p>Prescribers must notify the REMS Coordinating Center at 1-888-572-2934 of any pregnancies that occur during treatment with a macitentan-containing product or within one month of discontinuation of treatment.</p>
+                            </div>
+                        </div>
+                        
+                        
+                        <div>
+                            <span class="target-fix" id="accordion8"></span>
+                            <a href="#accordion8" id="open-accordion8" title="open"><i class="fa fa-angle-right"></i> What is an RDA?</a>
+                            <a href="#accordion" id="close-accordion8" title="close"><i class="fa fa-angle-down"></i> What is an RDA?</a> 
+                            <div class="accordion-content">
+                                <p>
+                                    An RDA is a REMS Dispense Authorization and is necessary for the pharmacy to obtain in order
+                                    to fill a prescription for a macitentan-containing product for a female patient. An RDA is created once it is confirmed
+                                    that the prescriber is certified, the patient is enrolled, and for a female of reproductive
+                                    potential, a pregnancy test has been completed.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                    <div class="row find-row mt-5">
+                        <div class="col-lg-6">
+                            <h3>Find A Pharmacy</h3>
+                            <div class="row customcursor" onclick="{!c.navigateToPharmacyLocatorPage}">
+                                <div class="col-lg-10 col-sm col-10 d-flex">
+                                    <img src="{!$Resource.MaciImages + '/img/search.png'}" class="img-fluid search-img"></img>
+                                    <p class="ps-1">Find a pharmacy participating in the {!$Label.c.Macitentan_Containing_Products_REMS}</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-6">
+                            <h3>Certify</h3>
+                            <div class="row customcursor" onclick="{!c.navigateToPrescriberPage}">
+                                <div class="col-lg-10 col-sm col-10 d-flex">
+                                    <img src="{!$Resource.MaciImages + '/img/certify.png'}" class="img-fluid search-img ps-2"></img>
+                                    <p class="ps-1">Prescribers must certify by enrolling in the {!$Label.c.Macitentan_Containing_Products_REMS} and comply with the {!$Label.c.Macitentan_Containing_Products_REMS} requirements to prescribe {!$Label.c.macitentan_containing_products}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-4 cl-right">
+                    <h4>Materials for Prescribers</h4>
+                    
+                    <ul class="list-group">
+                        <aura:iteration items="{!v.resourceList}" var="rc">
+                            <li class="list-group-item border-top-0">{!rc.label}
+                                    <a href="{!rc.downloadurl}" shouldstayinownframe="true" title="Download pdf" download="download">
+                                        <i class="fa fa-download float-end"></i>
+                                    </a>
+                            </li>
+                        </aura:iteration>
+                        <li class="list-group-item border-top-0"><a href="prescriber-faqs">Prescriber FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+</aura:component>

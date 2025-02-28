@@ -1,0 +1,128 @@
+/* .THIS #sfdc_username_container{
+    margin-bottom:8px;
+    padding: 1px;
+    background-color:white;
+    border: 1px solid #CCC;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+}
+
+.THIS #sfdc_user{
+    float:left;
+    width:50px;
+    height:10px;
+    padding-top:1px;
+    padding-left:1px;
+    margin:0px;
+
+}
+
+.THIS #sfdc_lock{
+    float:left;
+    width:50px;
+    height:10px;
+    padding-top:1px;
+    padding-left:1px;
+    margin:0px;
+} */
+
+.THIS  #error {
+    text-align: center;
+    color:#FF0000;
+}
+
+.THIS  .login-icon {
+    color:#ccc;font-size:22px;
+}
+
+.THIS #sfdc_password_container{
+    padding: 1px;
+    background-color:white;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.THIS  button.sfdc_button {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #fff;
+    background-color: #FF671F;
+    border-color: #357ebd;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 10px 12px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.42857143;
+    border-radius: 2px;
+    
+}
+
+.THIS .slds-button_brand:hover{
+    background-color:#e17000;
+}
+
+.THIS button .label {
+    color: #fff;	
+}
+
+.THIS  input {
+    margin-left:10px;
+    margin-top: 3px;
+    border: 0px solid transparent;
+    border-radius : 0.2rem;
+    width: 70%;
+    -webkit-appearance: none;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+
+
+
+
+.THIS label.uiLabel-hidden {
+    display:none;
+}
+
+.THIS .rems-item-container{
+    display: grid;
+    grid-template-columns: 10% 80%;
+    background: #ffffff;
+    justify-content: start;
+    padding: 12px;
+    align-items: start;
+    justify-items: start;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+}
+
+.THIS .rems-item-large {
+    width : 100%;
+}
+
+.THIS .rems-item-small {
+    padding: 0.4rem;
+}
+
+.THIS .rems-item-container-two {
+    margin-top: 5px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+}
+ /* RT 10-10-24 styling */
+.THIS .pageContent {
+	padding: 0px 10px 60px;
+}

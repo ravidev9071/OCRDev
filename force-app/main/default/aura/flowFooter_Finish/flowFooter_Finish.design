@@ -1,0 +1,4 @@
+<design:component>
+	<design:attribute name="portalType" label="PortalType" description="Portal Name" />
+    <design:attribute name="ButtonName" label="ButtonName" description="ButtonName" />
+</design:component>

@@ -1,0 +1,38 @@
+.THIS .customHeightAdj {
+    height: 50px;
+}
+.THIS .slds-card__header{
+    color: #FFFFFF;
+    background-color: #2949AD;
+}
+.THIS .marginCss1 {
+    margin-left:5% !important;
+}
+.THIS .marginCss2 {
+    margin-left:12% !important;
+}
+.THIS .fontCss {
+    font-family : Sans-serif !important;
+}
+.THIS .btnCss {
+    float:right !important;
+    
+}
+.THIS .colsWidth{
+    width:11.66% !important
+}
+.THIS .colsWidthName{
+    width:12% !important
+}
+.THIS .colsWidth1{
+    width:11.66% !important;
+     margin-left:40% !important;
+}
+.THIS .marginCss3 {
+    margin-left:1% !important;
+    margin-right:-7% !important;
+}
+.THIS .marginCss4 {
+    margin-right:5% !important;
+    
+}

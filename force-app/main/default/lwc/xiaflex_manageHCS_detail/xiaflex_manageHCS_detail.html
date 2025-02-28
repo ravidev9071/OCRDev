@@ -1,0 +1,465 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageContainer">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+                        <div data-region-name="content">
+                            <div data-priority="" class="ui-widget">
+                                <div class="slds-text-heading_large">Manage Pharmacy / Healthcare Settings</div>
+                                <div class="slds-text-heading_medium">Manage Healthcare Providers</div>
+                                <div class="slds-m-bottom_large"></div>
+                                <div class="tileCards">
+                                    <div class="slds-card-wrapper">
+                                        <article class="slds-card">
+                                            <div class="slds-card__header slds-grid">
+                                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                    <div class="slds-media__figure">
+                                                        <span class="slds-icon_container slds-icon-standard-contact"
+                                                            title="contact">
+                                                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                                <use
+                                                                    xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact">
+                                                                </use>
+                                                            </svg>
+                                                            <span class="slds-assistive-text">contact</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="slds-media__body">
+                                                        <h2 class="slds-card__header-title">
+                                                            <span>{hcsRecord.name} 
+                                                                <template lwc:if={hcsRecord.remsStatusPending}>
+                                                                    <span class="status pending"> {hcsRecord.remsStatusPending}</span>
+                                                                </template>
+                                                                <template lwc:elseif={hcsRecord.remsStatusCertified}>
+                                                                    <span class="status certified"> {hcsRecord.remsStatusCertified}</span>
+                                                                </template>
+                                                            </span>
+                                                        </h2>
+                                                    </div>
+                                                    <div class="slds-no-flex">
+                                                            <button name={editReenroll} onclick={openEditModal} class="slds-button slds-button_neutral">Edit/Re-enroll</button>
+                                                        <button class="slds-button slds-button_destructive" onclick={handleRemovePharmaAff}>Remove
+                                                            Affiliation</button>
+                                                    </div>
+                                                </header>
+                                            </div>
+                                            <div class="slds-card__body">
+                                                <div class="slds-form__row">
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">Enrollment ID</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">{hcsRecord.enrollId}</div>
+                                                                <button class="slds-button slds-button_icon" title="">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text">DEA Number (On
+                                                                        file with distributor account</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">Setting
+                                                                Identifier(s)</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">DEA Number
+                                                                    <small>(On file with distributor account)</small>:
+                                                                    {hcsRecord.dea}, NPI: {hcsRecord.npi}</div>
+                                                                <button class="slds-button slds-button_icon" title="">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text">DEA Number (On
+                                                                        file with distributor account</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">Setting Type</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">{hcsRecord.settingType}
+                                                                </div>
+                                                                <button class="slds-button slds-button_icon"
+                                                                    title="Edit: Personalization Settings">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text">Edit:
+                                                                        Personalization Settings</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">Address Line 1</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">{hcsRecord.addressLine1}</div>
+                                                                <button class="slds-button slds-button_icon" title="">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">Address Line 2</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">{hcsRecord.addressLine2}</div>
+                                                                <button class="slds-button slds-button_icon" title="">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text">Edit:
+                                                                        Personalization Settings</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">City</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">{hcsRecord.city}
+                                                                </div>
+                                                                <button class="slds-button slds-button_icon" title="">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">State</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">{hcsRecord.state}</div>
+                                                                <button class="slds-button slds-button_icon" title="">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div
+                                                            class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                            <span class="slds-form-element__label">ZIP</span>
+                                                            <div class="slds-form-element__control">
+                                                                <div class="slds-form-element__static">{hcsRecord.zip}</div>
+                                                                <button class="slds-button slds-button_icon"
+                                                                    title="Edit: Personalization Settings">
+                                                                    <svg class="slds-button__icon slds-button__icon_hint"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                        </use>
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text">Edit:
+                                                                        Personalization Settings</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end form item  -->
+                                                    <div class="slds-form__item" role="listitem">
+                                                    </div>
+                                                </div> <!-- end form-row  -->
+                                            </div> <!-- end card body  -->
+                                        </article>
+                                        <article class="slds-card slds-card_boundary">
+                                            <div class="slds-card__header slds-grid">
+                                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                    <div class="slds-media__figure">
+                                                        <span class="slds-icon_container slds-icon-standard-contact"
+                                                            title="contact">
+                                                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                                <use
+                                                                    xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact">
+                                                                </use>
+                                                            </svg>
+                                                            <span class="slds-assistive-text">contact</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="slds-media__body">
+                                                        <h2 class="slds-card__header-title">
+
+                                                            <span>Affiliated Healthcare Providers</span>
+
+                                                        </h2>
+                                                    </div>
+                                                    <div class="slds-no-flex">
+                                                        <button name={affiliate} onclick={openAffiliateModal}
+                                                            class="slds-button slds-button_neutral">Affiliate Another
+                                                            HCP</button>
+                                                    </div>
+                                                </header>
+                                            </div>
+
+                                            <div class="slds-card__body slds-card__body_inner">
+                                                <ul class="slds-grid slds-wrap slds-grid_pull-padded">
+                                                    <template for:each={prescriber} for:item="presAcc" for:index="index">
+                                                    <li key={presAcc.Id} class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2  slds-large-size_1-of-3">
+                                                        <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+                                                            <div class="slds-media__figure">
+                                                                <span
+                                                                    class="slds-icon_container slds-icon-standard-contact"
+                                                                    title="Description of icon when needed">
+                                                                    <svg class="slds-icon slds-icon_small"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact">
+                                                                        </use>
+                                                                    </svg><span
+                                                                        class="slds-assistive-text">Contact</span>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <div
+                                                                    class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                                    <h3 class="slds-tile__title slds-truncate"
+                                                                        title="HCP 1">{presAcc.name} </h3>
+
+                                                                    <div class="slds-shrink-none">
+                                                                        <button
+                                                                            class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+                                                                            aria-haspopup="true" title="More options">
+                                                                            <svg class="slds-button__icon slds-button__icon_hint"
+                                                                                aria-hidden="true">
+                                                                                <use
+                                                                                    xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down">
+                                                                                </use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">More
+                                                                                options</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-tile__detail">
+                                                                    <template lwc:if={presAcc.remsStatusPending}>
+                                                                        <div class="status pending"> {presAcc.remsStatusPending}</div>
+                                                                    </template>
+                                                                    <template lwc:elseif={presAcc.remsStatusCertified}>
+                                                                        <div class="status certified"> {presAcc.remsStatusCertified}</div>
+                                                                    </template>
+                                                                    <p>{hcsRecord.addressLine1} {hcsRecord.addressLine2}<br>{hcsRecord.city}, {hcsRecord.state} {hcsRecord.zip} </p>
+                                                                    <div class="slds-form__row">
+                                                                        <div class="slds-form__item" role="listitem">
+                                                                            <div
+                                                                                class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                                <span
+                                                                                    class="slds-form-element__label">Enrollment
+                                                                                    ID</span>
+                                                                                <div class="slds-form-element__control">
+                                                                                    <div
+                                                                                        class="slds-form-element__static">
+                                                                                        {presAcc.enrollId}</div>
+                                                                                    <button
+                                                                                        class="slds-button slds-button_icon"
+                                                                                        title="">
+                                                                                        <svg class="slds-button__icon slds-button__icon_hint"
+                                                                                            aria-hidden="true">
+                                                                                            <use
+                                                                                                xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                                            </use>
+                                                                                        </svg>
+                                                                                        <span
+                                                                                            class="slds-assistive-text"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end form item  -->
+                                                                        <div class="slds-form__item" role="listitem">
+                                                                            <div
+                                                                                class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                                <span
+                                                                                    class="slds-form-element__label">Role</span>
+                                                                                <div class="slds-form-element__control">
+                                                                                    <div
+                                                                                        class="slds-form-element__static">
+                                                                                        {presAcc.role}</div>
+                                                                                    <button
+                                                                                        class="slds-button slds-button_icon"
+                                                                                        title="">
+                                                                                        <svg class="slds-button__icon slds-button__icon_hint"
+                                                                                            aria-hidden="true">
+                                                                                            <use
+                                                                                                xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                                            </use>
+                                                                                        </svg>
+                                                                                        <span
+                                                                                            class="slds-assistive-text"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end form item  -->
+                                                                    </div>
+                                                                </div>
+                                                                <footer class="slds-card__footer">
+                                                                    <a data-index={index} class="slds-card__footer-action" href="#" onclick={handleRemovePrescriberAff}>Remove
+                                                                        Affiliation
+                                                                        <span class="slds-assistive-text">Remove
+                                                                            Affiliation</span>
+                                                                    </a>
+
+                                                                </footer>
+
+                                                            </div>
+                                                        </article>
+                                                    </li>
+                                                    <template key={presAcc.Id} if:true={showWarningModal}>
+                                                            <section key={presAcc.Id} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02" id="ModalHCP3"
+                                                            class="slds-modal slds-fade-in-open slds-modal_medium">
+                                                                <div class="slds-modal__container">
+                                                                    <button onclick={closeModal}
+                                                                        class="slds-button slds-button_icon slds-modal__close">
+                                                                        X
+                                                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                                                        </svg>
+                                                                        <span class="slds-assistive-text">Cancel and close</span>
+                                                                    </button>
+                                                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                                                                        <div class="frmContainer">
+                                                                            <article class="slds-card " part="card">
+                                                                                <div class="slds-card__header slds-grid">
+                                                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                                                        <div class="slds-media__figure"></div>
+                                                                                        <div class="slds-media__body">
+                                                                                            <h2 class="slds-card__header-title">
+                                                                                                <span>Alert</span>
+                                                                    
+                                                                                            </h2>
+                                                                                        </div>
+                                                                                    </header>
+                                                                                </div>
+                                                                                <div class="slds-card__body  slds-card__body_inner" part="body">
+                                                                                    <p class="frmInstructions">The selected Health Care Provider {presAcc.name} is the only affiliation with
+                                                                                        this Health Care Setting {hcsRecord.name}, If you continue you Health Care Setting will be decertified.</p>
+                                                                                    <div class="slds-card__footer" part="footer">
+                                                                                        <button title="Cancel" type="button" class="slds-button slds-button_text-destructive" onclick={closeModal}>Cancel</button>
+                                                                                        <button onclick={handleConfirmWarning} class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Confirm</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </article>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    </div>
+                                                            </section>
+                                                            <div key={presAcc.Id} id="ModalBackdrop3" class="slds-backdrop xxslds-backdrop_open" role="presentation"></div>
+                                                        </template>
+                                                    </template>
+                                                </ul>
+                                            </div>
+                                            <footer class="slds-card__footer slds-hide">
+                                                <a class="slds-card__footer-action" href="#">
+                                                    View All
+                                                    <span class="slds-assistive-text">Contacts</span>
+                                                </a>
+                                            </footer>
+                                        </article>
+                                    </div>
+
+                                </div> <!-- end tileCards   -->
+
+                            </div> <!-- end ui-widget   -->
+                        </div>
+
+                    </div> <!-- end SF   -->
+                </div> <!-- end pageContent   -->
+            </div> <!-- end pageContainer   -->
+
+        </div> <!-- end main   -->
+    </div>
+    <template if:true={showAddAffiliationModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" id="ModalHCP"
+        class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <button onclick={closeModal}
+                    class="slds-button slds-button_icon slds-modal__close">
+                    X
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Affiliate Healthcare Provider</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <c-xiaflex-_prescriber-affiliate-modal acc-type="HCS" pharma-acc={hcsRecord.Id} onclosemodal={closeModal}> </c-xiaflex-_prescriber-affiliate-modal>
+                </div>
+            </div>
+        </section>
+        <div id="ModalBackdrop" class="slds-backdrop xxslds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <template if:true={showEditModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02" id="ModalHCP2"
+        class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <button onclick={closeModal}
+                    class="slds-button slds-button_icon slds-modal__close">
+                    X
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Edit / Re-enroll</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <c-xiaflex-_-a-r-_edit-reenroll acc-type="HCS" pharma-acc={hcsRecord.Id} onclosemodal={closeModal}> </c-xiaflex-_-a-r-_edit-reenroll>
+                </div>
+            </div>
+        </section>
+        <div id="ModalBackdrop2" class="slds-backdrop xxslds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+   
+</template>

@@ -1,0 +1,69 @@
+<template>
+    <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+		<div class="pageTitle prescriber">
+			<div class="slds-text-heading_medium">TRYVIO<sup>™</sup> REMS</div>
+			<div class="slds-text-heading_large"><img class="iconImg" src={iconPrescriber}> Prescribers</div>	
+		</div>		  
+		<div class="pageContainer">
+			<div class="pageContent">
+		
+
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+						<lightning-progress-indicator current-step="5" type="path" variant="base">
+							<lightning-progress-step label="Register" value="1" variant="complete"></lightning-progress-step>
+							<lightning-progress-step label="Review Materials" value="2" variant="complete"></lightning-progress-step>
+							
+							<lightning-progress-step label="Knowledge Assessment" value="3" variant="active"></lightning-progress-step>
+							<lightning-progress-step label="Complete Enrollment" value="4" variant="incomplete"></lightning-progress-step>
+							<lightning-progress-step class="slds-hide" label="Review Materials" value="5" variant="complete"></lightning-progress-step>
+						</lightning-progress-indicator>	
+						
+						<p class="slds-text-heading_medium">John Smith<br>NPI: 1234567890</p>
+						<div class="slds-border_bottom "></div>
+					
+						
+
+						<div data-region-name="content">
+							<div data-priority=""  class="ui-widget">
+								<div class="slds-text-heading_large">Review Materials</div>	
+							<!--	<p>Instructional content?</p> -->
+						
+								
+								<div class="slds-p-vertical_medium"></div>
+								<div class="infoContainer">
+									<div class="slds-text-heading_medium">TRYVIO REMS Resources for Prescribers</div>							
+									
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_9-of-12">
+												<p class="slds-m-vertical_medium">You must click on each link below and review the materials before you can proceed to the Knowledge Assessment.
+												<br>Each resource will open up in a new window for you to view and/or download.</p>
+												
+												<div class="resourcesKA">
+													<!-- <div  onclick="$('#IconChecked1').removeClass('slds-hide');"><a class="btnLinkGradient" href="#" target="_blank">Prescribing Information</a> -->
+													<span class="resourceCheck slds-hide" id="IconChecked1"><img src={iconCheck}></span></div>												
+													<!-- <div onclick="$('#BtnReviewNext').attr('disabled', false);$('#IconChecked2').removeClass('slds-hide');"><a  class="btnLinkGradient docEmphasis" href="files/REMS Prescriber and Pharmacy Guide.pdf" target="_blank">Prescriber and Pharmacy Guide</a> -->
+													<span class="resourceCheck slds-hide" id="IconChecked2"><img src={iconCheck}></span></div>
+												</div> <!-- end resourcesKA   -->
+													
+										</div> <!-- end containerINfo  -->
+									</div> <!-- end col  -->
+								</div>  <!-- end row  -->
+								
+								
+
+		
+								<div class="slds-border_top slds-m-top_xx-large"></div>
+								<lightning-button class="brand-button" variant="brand" onclick={handleNext}> 
+									 <button id="BtnReviewNext"  class=" slds-align_absolute-center slds-button slds-m-top_large slds-button_brand" disabled type="button" part="button" kx-scope="button-brand" kx-type="ripple">Next</button> -->
+								</lightning-button>							
+			
+							</div> <!-- end layout   -->
+							
+	
+					</div> <!-- end SF   -->
+				</div> <!-- end pageContent   -->
+		</div> <!-- end pageContainer   -->
+
+			</div> 
+</template>

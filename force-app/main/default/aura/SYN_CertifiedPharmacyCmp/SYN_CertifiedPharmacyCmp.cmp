@@ -1,0 +1,161 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" controller ="SYN_CertifiedPharmacyController"  >    
+    <aura:attribute name="accountList" type="Object[]" />
+    <aura:attribute name="PharmacyNameSearch" type="String" />
+    <aura:attribute name="DEASearch" type="String" />
+    <aura:attribute name="NPISearch" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+   <lightning:card>
+        <aura:set attribute="title">
+            
+           <!-- <lightning:icon iconName="utility:questions_and_answers" size="small"/>-->
+            
+            <b> Sodium Oxybate REMS Certified Pharmacies</b>
+            
+        </aura:set>
+       
+        <aura:set attribute="footer">
+             <div class="slds-grid slds-wrap ">
+                 <div class="slds-grid slds-wrap  slds-align_absolute-center">
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 label="Pharmacy Name"
+                                                 variant="label-hidden"
+                                                 value="{!v.PharmacyNameSearch}"
+                                                
+                                                 placeholder="Pharmacy Name"
+                                                 aura:id="Pharmacy Name"
+                                                 />
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 label="DEA"
+                                                 variant="label-hidden"
+                                                 value="{!v.DEASearch}"
+                                                 
+                                                 placeholder="DEA"
+                                                 aura:id="DEA"
+                                                 />
+                            </div>
+                 </div>
+                            <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 label="NPI"
+                                                 variant="label-hidden"
+                                                 value="{!v.NPISearch}"
+                                                
+                                                 placeholder="NPI"
+                                                 aura:id="NPI"
+                                                 />
+                            </div>
+                 </div>
+                 <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4">
+                            <div class="slds-text-align_center ">
+                                <div class="slds-p-horizontal--x-large ">
+                                    <div class="slds-float_left">
+                                        <lightning:button variant="brand" name="SearchBtn" label="Search" onclick="{!c.onSearchTermChange}"/>
+                                    </div>     
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+              <aura:if isTrue="{!not(empty(v.accountList))}">
+                  
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_large  " aria-label="Example table of Opportunities with striped rows">
+                    <thead>
+                        <tr class="slds-line-height_reset" scope="col">
+                            <th class="slds-text-title_bold" scope="col">
+                                <div class="slds-truncate headerFont" title="ProductName">Pharmacy Name</div>
+                            </th>
+                            <th class="slds-text-title_bold" scope="col" >
+                                <div class="slds-truncate headerFont" title="GenericName">Address</div>
+                            </th>
+                            <th class="slds-text-title_bold" scope="col">
+                                <div class="slds-truncate headerFont" title="Company">Phone Number</div>
+                            </th>
+                            <th class="slds-text-title_bold" scope="col">
+                                <div class="slds-truncate headerFont" title="Phone Number">Fax Number</div>
+                            </th>
+                           
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration  items="{!v.accountList}" var="acc" indexVar="index" >
+                            <tr class="slds-hint-parent">
+                                <td data-label="Pharmacy Name">
+                                    <div class="slds-truncate" title="prdname">{!acc.Name}</div>
+                                </td>
+                                <td class="slds-cell-wrap" data-label="Address">
+                                       <div >
+                            <aura:if isTrue="{!acc.ShippingStreet !=null }">
+                                {!acc.ShippingStreet}
+                                <br/>
+                                <aura:set attribute="else">
+                                    <br/>
+                                </aura:set>
+                            </aura:if>
+                            <aura:if isTrue="{!acc.ShippingCity !=null }">
+                                
+                                <aura:if isTrue="{!acc.ShippingState !=null }">
+                                {!acc.ShippingCity},
+                                 <aura:set attribute="else">
+                                    {!acc.ShippingCity}
+                                </aura:set> 
+                                    
+                                </aura:if>
+                                
+                                
+                            </aura:if>
+                            <aura:if isTrue="{!acc.ShippingState !=null }">
+                                
+                              {!acc.ShippingState}
+                                
+                                
+                            </aura:if>
+                            
+                            
+                            <aura:if isTrue="{!acc.ShippingPostalCode !=null }">
+                               <ui:outputText value=" "/>
+                                {!acc.ShippingPostalCode}
+                                
+                              
+                            </aura:if>
+                        </div>
+                                </td>
+                                <td data-label="Phone Number">
+                                    <div class="slds-truncate" title="compay"><lightning:formattedPhone value="{!acc.Phone}" disabled="true"></lightning:formattedPhone></div>
+                                </td>
+                                <td data-label="Prospecting">
+                                    <div class="slds-truncate" title="Prospecting">
+                                        <lightning:formattedPhone value="{!acc.Fax}" disabled="true"></lightning:formattedPhone></div>
+                                </td>
+                               
+                                
+                            </tr>
+                        </aura:iteration>
+                        
+                    </tbody>
+                </table> 
+                    <aura:set attribute="else">
+                
+                <div class="slds-notify slds-notify--alert slds-theme--info slds-theme--alert-texture" role="alert">
+                    <span class="slds-assistive-text">Info</span>
+                    
+                    <h2>
+                        <lightning:icon iconName="utility:info" variant="inverse"  size="x-small" class="slds-m-right--x-small" />
+                        No Accounts available for selected search criteria
+                    </h2>
+                </div>
+                
+            </aura:set>
+                 </aura:if>
+            </div>
+       </aura:set>
+    </lightning:card>
+    
+</aura:component>

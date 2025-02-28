@@ -1,0 +1,153 @@
+<aura:component controller="SYN_PatientSearchController" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:import library="lightning:alert" property="LightningAlert" />
+    <aura:attribute name="recordId" type="String" default="false" access="global"/>
+    <aura:attribute name="accData" type="Object" default="false" access="global"/>
+    <aura:attribute type="string" name="portalName"/>
+    <aura:attribute type="string" name="buttonLabel"/> <!-- BT-6825- 303,513,514,515 -->
+    <aura:attribute type="string" name="errorMessage"/>
+    <aura:attribute name="accountPermissionsWrapper" type="object"/>
+    <lightning:navigation aura:id="navService"/>  
+    <lightning:flow aura:id="launchPCCLFlow"/>
+	<aura:attribute name="isOpen" type="Boolean" default="false" access="private"/>
+    
+    <div class="c-container">
+	            <aura:if isTrue="{!v.isOpen}">
+                        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                        <header class="slds-modal__header slds-modal__header_empty">
+                                            <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" onclick="{!c.closeFlowModal}"/>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium">
+                                            <lightning:flow aura:id="EditPatientInfo" onstatuschange="{!c.closeModalOnFinish}"/>
+                                        </div>
+                                </div>
+                        </section>
+                                  <div class="slds-backdrop slds-backdrop_open"></div>
+          </aura:if>
+        <lightning:layout multipleRows="true">
+            
+
+            
+            <lightning:layoutItem padding="around-small" size="12">
+                
+                <aura:if isTrue="{!v.portalName == 'prescriber'}">
+                    <lightning:layout class="customHeightAdj">
+
+                        
+                        <lightning:layoutItem class="colsWidth" padding="around-small" size="1.5">
+                            <div class="page-section page-right">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field 1">Patient Name</p>
+                                    <p>{!v.accData.Name}</p>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-small" size="1">
+                            <div class="page-section page-right">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field 1">DOB</p>
+                                    <p><lightning:formattedDateTime value="{!v.accData.US_WSREMS__DOB__c}" month="numeric" day="numeric" year="numeric"/></p>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="colsWidth" padding="around-small" size="1">
+                            <div class="page-section page-main">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field2 (3)"> Phone </p>
+                                    <p><lightning:formattedphone value="{!v.accData.Phone}"></lightning:formattedphone></p>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="colsWidth" padding="around-small" size="1">
+                            <div class="page-section page-right">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field 3">REMS Status</p>
+                                    <p>{!v.accData.US_WSREMS__Status__c}</p>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    <div  class="slds-p-vertical_medium" >
+                        <!--<p><lightning:button variant="brand" label="Edit" title="Brand action" onclick="{! c.handleClick }" /></p>-->
+                        <p ><lightning:button aura:id="editinfo" label="Edit Patient Information" iconName="utility:edit" iconPosition="left"  variant="brand" onclick="{! c.handleClick }" /></p>
+                    </div>
+                </aura:if>
+                
+                
+                
+                
+                <aura:if isTrue="{!v.portalName == 'pharmacy'}">
+                    <lightning:layout class="customHeightAdj">
+ 
+                        
+                        <lightning:layoutItem class="colsWidthName" padding="around-small" size="1.5">
+                            <div class="page-section page-right">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field 1">Name</p>
+                                    <p>{!v.accData.Name}</p>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-small" size="1">
+                            <div class="page-section page-right">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field 1">DOB</p>
+                                    <p><lightning:formattedDateTime value="{!v.accData.US_WSREMS__DOB__c}" month="numeric" day="numeric" year="numeric"/></p>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="colsWidth" padding="around-small" size="1">
+                            <div class="page-section page-main">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field2 (3)"> Phone </p>
+                                    <p><lightning:formattedphone value="{!v.accData.Phone}"></lightning:formattedphone></p>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="colsWidth" padding="around-small" size="2">
+                            <div class="page-section page-right">
+                                <div class="header-column">
+                                    <p class="field-title" title="Field 3">Account Status</p>
+                                    <p>{!v.accData.US_WSREMS__Status__c}</p>
+                                </div>
+                            </div>
+                            
+                        </lightning:layoutItem>
+                        <div class="button-container slds-m-left_large">
+                            <lightning:layout multipleRows="true">
+                                <lightning:layoutItem  class="fontCss" flexibility="auto" padding="around-small">
+                                    <div class="page-section page-right">
+                                        <div class="header-column">
+                                            <!--<p><lightning:button variant="brand" label="Edit" title="Brand action" onclick="{! c.handleClick }" /></p>-->
+                                            <p ><lightning:button aura:id="RDAbutton" label="REMS Dispense Authorization" variant="brand" onclick="{! c.handleClick }" class="btnCss" /></p>
+                                        </div>
+                                    </div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem  class="fontCss" flexibility="auto" padding="around-small" >
+                                    <div class="page-section page-right">
+                                        <div class="header-column">
+                                            <!--<p><lightning:button variant="brand" label="Edit" title="Brand action" onclick="{! c.handleClick }" /></p>-->
+                                            <p ><lightning:button aura:id="pcclButton" label=" Submit Patient Counseling Checklist" variant="brand" onclick="{! c.handleClick }" class="fontCss"/></p>
+                                        </div>
+                                    </div>
+                                </lightning:layoutItem>
+       
+                            </lightning:layout>
+                        </div>
+                        
+                        
+                        
+                    </lightning:layout>
+                </aura:if>
+                
+                
+                
+            </lightning:layoutItem>
+            <!--</div> --> 
+            
+
+        </lightning:layout>
+    </div> 
+    
+</aura:component>

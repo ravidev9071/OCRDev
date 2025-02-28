@@ -1,0 +1,38 @@
+<template>
+	<div class="siteFooter" aria-hidden="false">
+		<div data-region-name="themeFooter">
+			<div >
+				<div class="forceCommunityRichText">
+					<div>
+						<div>
+							<div class="pageContainer">
+								<ul
+									class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space slds-p-vertical_small">
+								</ul>
+								<ul class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space slds-p-vertical_small">
+									<li>
+										<a href="https://www.endo.com/privacy-legal" target="_blank">Privacy Policy | </a>
+									</li>
+									<template if:true={isDisplayFiles}>
+										<template for:each={filesList} for:item="file">  
+											<div class="" key={file.value}>
+												<li class="slds-item" ><a onclick={previewHandler} data-previewurl={file.previewurl} data-id={file.value} target="_blank">{file.label} | </a> </li>
+											</div>
+										</template>
+									</template>
+									<li class="slds-item">
+										<a href="contactus">Contact Us</a>
+									</li>
+								</ul>
+								<p>&copy; 2024 Endo, Inc. All rights reserved. Malvern PA 19355
+								</p>
+							</div>
+							<!--render facet: 309:0-->
+						</div>
+						<div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

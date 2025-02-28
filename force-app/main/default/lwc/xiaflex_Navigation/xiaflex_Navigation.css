@@ -1,0 +1,24 @@
+.headerBorder {
+  height: 8px;
+  background: #002e5d;
+}
+a{
+  font-weight: normal !important;
+}
+.topnav {
+  margin: 0 60px 0 0;
+}
+.topnav ul.nav > li {   
+    margin-left: 20px;
+}
+.topAlignment{
+  margin-right: -16px;
+  margin-bottom: 10px;
+}
+@media only screen and (min-width: 600px) {
+	.topAlignment{
+    margin-top: -32px;
+    margin-bottom: 0px !important;
+    margin-right: -16px;
+  }
+}

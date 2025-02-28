@@ -1,0 +1,107 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:handler event="c:SYN_PatientAccountsLoaded" action="{!c.onAccountsLoaded}"/>
+    <lightning:navigation aura:id="navigation"/>
+    <aura:attribute name="rows" type="Map[]"/>
+    <aura:attribute name="cols" type="Map[]"/>
+    <aura:attribute name="accLst" type="Account[]"/>
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    
+    <!-- Pagination -->
+    <!-- <aura:attribute name="PaginationList" type="Account"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" /> -->
+    <!-- aura attributes to store data/values --> 
+    <aura:registerEvent name="SYN_PharmacySortEve" type="c:SYN_PharmacySortEve"/>
+    
+    <aura:attribute name="listOfAllAccounts" type="list"/> 
+   <!-- <aura:attribute name="PaginationList" type="list"/> -->
+    <aura:attribute name="selectedCount" type="integer" default="0"
+                    description="selected Records Count"/>
+   <!-- <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/> -->
+    <aura:attribute name="totalRecordsCount" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"
+                    description="number of records to be display on per page"/>
+    <aura:attribute name="currentPage" type="integer" default="1"/>
+    <aura:attribute name="totalPagesCount" type="integer"/>
+    <aura:attribute name="bNoRecordsFound" type="boolean"/>
+    <aura:handler name="ChangePage" event="c:SYN_ChangePage" action="{!c.handlePagination}" />
+    <!-- Pagination -->
+    <aura:attribute name="AccountListToBeShown" type="List"/>
+    <aura:attribute name="PaginationList" type="Account"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="noOfCallsToBeShown" type="Integer" default="10"/>
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+     <aura:attribute name="haveSearchTerm" type="Boolean"  />
+    
+    
+           <!-- <lightning:card title="Patient Result" iconName="standard:person_account">-->
+              <lightning:card   class="slds-theme_shade customfamily" >
+                <aura:set attribute="title">
+                    <lightning:icon iconName="standard:person_account" size="small" class="slds-m-bottom_small"> </lightning:icon>
+                    Patient Results
+                </aura:set>
+                <!--<aura:if isTrue="{!v.totalRecordsCount!= 0}"> -->
+                  <aura:if isTrue="{!v.rows.length > 0}">
+                    <div class="slds-form--stacked slds-scrollable_y" >
+                        <lightning:datatable
+                                             class="slds-max-medium-table_stacked slds-table_header-fixed_container slds-scrollable_x slds-border_top"
+                                             data="{!v.AccountListToBeShown}"
+                                             columns="{!v.cols}"
+                                             keyField="Id"
+                                             hideCheckboxColumn="true"
+                                             showRowNumberColumn="false"
+                                             onrowaction="{!c.onRowAction}"
+                                             sortedDirection="{!v.sortedDirection}"
+                                             sortedBy="{!v.sortedBy}"
+                                             onsort="{!c.handleSort}"
+                                             />
+                         </div>
+                        <aura:set attribute="else">
+                            
+                            <div class="slds-notify slds-notify--alert slds-theme--info slds-theme--alert-texture" role="alert">
+                                <span class="slds-assistive-text">Info</span>
+                                
+                                <h2>
+                                    <lightning:icon iconName="utility:info" variant="inverse"  size="x-small" class="slds-m-right--x-small" />
+                                    No Accounts available for selected search criteria
+                                </h2>
+                            </div>
+                        </aura:set>
+                   
+                </aura:if>
+                <!--  
+                    <lightning:button label="Previous" disabled="{!v.startPage == 0}" 
+                                      onclick="{!c.navigation}" variant="brand"
+                                      iconName='utility:back' name="previous"/>
+                    
+                    <span class="slds-badge slds-badge_lightest"
+                          style="margin-right: 10px;margin-left: 10px;">
+                        Page {!v.currentPage} out of {!v.totalPagesCount}
+                    </span>
+                    
+                 
+                    <lightning:button label="Next"
+                                  disabled="{!(v.endPage + 1) >= v.totalRecordsCount}" 
+                                  onclick="{!c.navigation}"
+                                  variant="brand"
+                                  iconName="utility:forward"
+                                  iconPosition="right"
+                                  name="next"/> -->
+                
+                <aura:if isTrue="{!v.rows.length > 0}">
+                    <c:SYN_Patient_PaginationForDataTable aura:id="cPagination" totalRecords="{!v.rows.length}" recordsPerPage="{!v.noOfCallsToBeShown}"/>
+                </aura:if>
+                
+            </lightning:card>
+            
+       
+</aura:component>

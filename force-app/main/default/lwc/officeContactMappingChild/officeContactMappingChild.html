@@ -1,0 +1,24 @@
+<template>
+	<div class="slds-scrollable_y slds-scrollable_x div-style">
+		<lightning-datatable key-field="Id" data={data} columns={columns} data-id="datatable"
+		selected-rows={selectedRows} onrowselection={handleRowSelection} >
+		</lightning-datatable>
+	</div>
+
+	<!--  Pagination Buttons Start -->
+	<div class="slds-align_absolute-center slds-p-top_x-small">
+		<lightning-button label="Previous" variant="brand" icon-name="utility:chevronleft" onclick={previousHandler}
+			>
+		</lightning-button>
+
+		<span class="slds-badge slds-badge_lightest"
+                        style="margin-right: 10px;margin-left: 10px;">
+						{totalRecountCount}-{pageSize} | Page {page} of {totalPage}
+            </span>
+
+		<lightning-button label="Next" variant="brand" icon-name="utility:chevronright" icon-position="right"
+			onclick={nextHandler} >
+		</lightning-button>
+	</div>
+	<!--  Pagination Buttons End -->
+</template>

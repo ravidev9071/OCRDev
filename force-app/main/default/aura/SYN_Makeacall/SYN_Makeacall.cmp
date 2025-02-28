@@ -1,0 +1,27 @@
+<aura:component controller="SYN_Makeacall" extensible="true" implements="force:hasSObjectName,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:isUrlAddressable" access="global">
+   
+    <aura:attribute name="recordId" type="String"  />
+    <aura:attribute name="status_message" type="String" default="" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="callWrapper" type="Object" />
+    <aura:attribute name="taskStatus" type="Object"  />
+    <aura:attribute name="tabId" type="boolean" default="false"/>
+    <aura:attribute name="WrapperObj" type="Object" />
+     <aura:attribute name="messageStatus" type="boolean" default="false"/>
+    <aura:attribute name="ContactId" type="String" default="null" />
+    <lightning:navigation aura:id="navService"/>
+    <lightning:notificationsLibrary aura:id="notifLib" />
+    
+    <aura:handler event="c:SYN_SendTabIdEvent" action="{!c.handleTabEvent}"/>
+    <aura:registerEvent name="informEvent" type="c:SYN_InformTabIdEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:if isTrue="{!v.messageStatus}">
+      <lightning:formattedText class="slds-text-color_success" value="{!v.status_message}"/>
+    <aura:set attribute="else">
+       <lightning:formattedText class="slds-text-color_destructive" value="{!v.status_message}"/>
+    </aura:set>
+  </aura:if> 
+   
+    
+</aura:component>

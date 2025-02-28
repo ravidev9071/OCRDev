@@ -1,0 +1,28 @@
+.lightning-studio{
+	color : blue;
+}
+.flexreview{
+	display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+}
+.sectionSubHeading{
+	color: #002e5d;
+    font-weight: 700;
+    font-family: "Roboto Condensed";
+    font-size: 1.5rem;
+    line-height: 1.675rem;
+    margin-top: 1rem;
+    margin-bottom: 5px;
+
+}
+
+.buttonAlign{
+    margin: auto;
+    display: table;
+    padding-top: 10px;
+}
+.handlePadding{
+    padding-left: 17px;
+}

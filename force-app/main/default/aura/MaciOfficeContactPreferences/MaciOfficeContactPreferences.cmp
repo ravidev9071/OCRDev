@@ -1,0 +1,188 @@
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="pCase" type="Case" />
+    <!--cAccount-->
+    <aura:attribute name="uCase" type="Case" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="isView" type="Boolean" default="true" />
+    <!-- storing Case Professional Designation Picklist values  -->
+    <aura:attribute name="ProfessionalDesignationMap" type="Map"/> 
+    <!-- storing current program Id -->
+    <aura:attribute name="programId" type="string" default ="a1T6u00000136aJEAQ"/>
+	<aura:attribute name="ShowSpinner" type="Boolean" default="false" />
+    <aura:attribute name="stateMap" type="Map"/>
+    <aura:attribute name="phonesize" type="string" default ="15"/>	
+   <aura:attribute name="faxsize" type="string" default ="15"/>
+
+    <!-- Storing 2 Factor Authentication Options -->
+    <aura:attribute name="options2FA" type="List" default="[
+    {'label': 'Two-Factor Authentication Opt-In', 'value': 'Opt-In'},
+    {'label': 'Two-Factor Authentication Opt-Out', 'value': 'Opt-Out'}]"/>
+
+    <aura:attribute name="value2FA" type="String" default=""/>
+    <aura:attribute name="originalValue2FA" type="String" default=""/>
+    <aura:attribute name="show2FAOptOut" type="boolean" default="false"/>
+    <aura:attribute name="show2FAOptionButton" type="boolean" default="false"/>  
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height: 115vh;">
+        <aura:if isTrue="{!v.ShowSpinner}">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+        <div class="container-fluid px-5 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card h-100 p-0 rounded-0 border-0">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-lg-12">
+                                <div class="heading-top mx-0 d-flex justify-content-between border-bottom-0"
+                                     style="margin: 0px 4px;background-color: #EBEBEB">
+                                    <div class="col-lg-6 col-sm col-8 text-start">
+                                        
+                                        <div class="row ps-3">
+                                            <div class="col-1" style="width: 39px;">
+                                                <span class="text-theme">
+                                                    <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col-9 ps-4">
+                                                <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                   {!v.pCase.US_WSREMS__First_Name__c}&nbsp;{!v.pCase.US_WSREMS__Last_Name__c}&nbsp;
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="row ps-3" style="position: relative;top: -10px;">
+                                            <div class="col-1" style="width: 39px;"></div>
+                                            <div class="col-9 ps-4">
+                                                <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                    
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                       
+                                    
+                                    </div>
+                                    <aura:if isTrue="{!v.isView}">
+                                        <div class="col-lg-6 text-end pe-4">
+                                            <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleEdit}">EDIT </a>
+                                        </div>
+                                        <aura:set attribute="else">
+                                            <div class="col-lg-6 text-end pe-4">
+                                                <a name="button-next" class="btn btn-primary-m " onclick="{!c.handleCancel}">CANCEL</a> &nbsp;&nbsp;
+                                                <a name="button-next" class="btn btn-primary-m" onclick="{!c.handleSave}">SAVE</a>
+                                            </div>
+                                        </aura:set>
+                                    </aura:if>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white-2" style="height: 20rem;padding-top: 10px;padding-bottom: 10px;">
+                        <div class="row pharma-frm" style="{!v.isView ? 'pointer-events:none;' : ''}" >
+                            <div class="col-lg-6">
+                                <div class="pe-lg-6 pe-lg-4 border-end border-dark pe-5">
+                                    <div class="form-group">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-1 px-0 col-sm col-1">
+                                                <i class="fa fa-user pull-right pt-2 mt-4"></i>
+                                            </div>
+                                            <div class="col-lg-9 col-sm col-9">
+                                                <label>First Name</label>
+                                                <lightning:input type="text" aura:id="fname" placeholder="First Name" class="px-1 form-control" value="{!v.pCase.US_WSREMS__First_Name__c}" required="true"/>
+                                               <label>Last Name</label>
+                                                <lightning:input type="text" aura:id="lname" placeholder="Last Name" class="px-1 form-control" value="{!v.pCase.US_WSREMS__Last_Name__c}" required="true"/>
+                                                
+                                            </div>
+                                        </div>
+                                    <div class="row mt-1">
+                                        <div class="col-lg-1 px-0 px-lg-0 col-sm col-1">
+                                            <i class="fa fa-envelope pull-right pt-2 mt-4 fs-18"></i>
+                                        </div>
+                                            <div class="col-lg-9 col-sm col-9">
+                                            <label>Primary Phone</label>
+                                            <lightning:input type="text" aura:id="pPhone" placeholder="(nnn) nnn-nnnn" class="px-1 form-control" value="{!v.pCase.Phone_Secondary_Office__c}" maxlength="{!v.phonesize}" onchange = "{!c.formatPhoneNumber}" required="true"/>
+                                             </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-lg-1 px-0 col-sm col-1">
+                                            <i class="fa fa-phone pull-right pt-2 mt-4 me-1"></i>
+                                        </div>
+                                            <div class="col-lg-9 col-sm col-9">
+                                            <label>Email</label>
+                                            <lightning:input type="text" aura:id="pEmail" placeholder="Email" class="px-1 form-control" value="{!v.pCase.US_WSREMS__Email_ar__c}" required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-lg-1 col-sm col-1" style="padding-right: 0.3rem;">
+                                                <label> </label>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 pe-5">
+                                <div class="form-group px-lg-5">
+                                   
+                                    <div class="row mt-1">
+                                        <div class="col-lg-1 col-sm col-1" style="padding-right: 0.3rem;">
+                                            <i class="fa fa-fax fs-18 pull-right pt-2 mt-4"></i>
+                                        </div>
+                                       
+                                    </div>
+                                     <div style="padding: 20px;">
+                                        <label>Two-Factor Authentication</label>
+                                        <div>
+                                            <Span class="headingTwoFA">Why Opt-In for 2FA?</Span>
+                                            <p class="detailTwoFA">
+                                                <b>- Enhanced Security:</b> 2FA adds an extra layer of defense, ensuring that only authorized<br/>
+                                                    users can access your account, even if your password is compromised.<br/>
+
+                                                <b>- Protect Patient Confidentiality:</b> Safeguard your patients' sensitive information from<br/>
+                                                    unauthorized access, preserving their trust in your practice.<br/>
+
+                                                <b>- Regulatory Compliance:</b> Maintain compliance with healthcare regulations like HIPAA<br/>
+                                                    by implementing robust security measures.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <div class="radioGroupLabel">
+                                                <lightning:radioGroup  name="options2FARadioGroup"
+                                                                        options="{! v.options2FA }"
+                                                                        value="{! v.value2FA }"
+                                                                        onchange="{! c.handleFAChange }"/>
+                                            </div>    
+                                            <aura:if isTrue="{!v.show2FAOptOut}">
+                                                    <Span class="headingTwoFA">Opt Out? Consider the risks. If you choose to Opt Out of the 2FA, Please beware of the following risks.</Span>
+                                                    <p class="detailTwoFA">
+                                                        <b>- Increased Vulnerability:</b> Without 2FA, your account is more susceptible to<br/>
+                                                            unauthorized access, potentially exposing your patients' PHI to malicious actors.<br/>
+
+                                                        <b>- Potential Data Breach:</b> In the event of a security breach, your patients' sensitive<br/>
+                                                            information could be compromised, leading to legal and financial consequences.<br/>
+
+                                                        <b>- Loss of Trust:</b> Patients entrust you with their confidential information.<br/> A breach could erode their trust in your practice.<br/>
+                                                        Note: You will be able to change your 2FA selection in your user profile screen later if you choose to do so<br/>
+                                                    </p> 
+
+                                            </aura:if>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+                        
+</aura:component>

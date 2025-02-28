@@ -1,0 +1,6 @@
+<aura:component controller="DocumentReviewControllerL" access="global" implements="flexipage:availableForRecordHome,lightning:isUrlAddressable,force:hasRecordId,force:lightningQuickActionWithoutHeader">
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" /> 
+    <aura:attribute name="programId" type="String"/>
+    <aura:attribute name="programLabel" type="String"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+</aura:component>

@@ -1,0 +1,352 @@
+<template>
+     <template if:true={spinner}>
+          <div>
+               <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+           </div>
+     </template>
+     <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+          <div class="pageTitle">
+               <div class="slds-text-heading_medium">TRYVIO<sup>&trade;</sup> REMS</div>
+               <div class="slds-text-heading_large"><img class="iconImg" src={iconRDA}> REMS Dispense Authorization
+               </div>
+          </div>
+          <div class="pageContainer">
+               <div class="pageContent">
+                    <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                         <div class="slds-col--padded comm-content-header comm-layout-column">
+ 
+                              <div class="slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                                   <div class="slds-col--padded slds-size_12-of-12">
+                                        <div data-region-name="content">
+                                             <div data-priority="" class="ui-widget">
+                                                  <div class="slds-m-vertical_large"></div>
+                                                  <div class="slds-grid slds-wrap slds-gutters">
+                                                       <div
+                                                            class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_5-of-12  slds-p-right_large rixght-border">
+                                                            <div class="containerFlexRDA">
+                                                                 <p class="slds-align-text_center"><b>Outpatient
+                                                                           pharmacies</b> that dispense TRYVIO must
+                                                                      obtain a REMS Dispense Authorization (RDA) to
+                                                                      verify the prescriber is certified in the REMS.
+                                                                 </p>
+                                                                 <p class="slds-align-text_center"><b>Inpatient
+                                                                           pharmacies</b> that dispense TRYVIO must
+                                                                      verify the prescriber is certified in the REMS or
+                                                                      the patient is under the supervision and care of a
+                                                                      certified prescriber.</p>
+                                                            </div>
+                                                            <div class="slds-p-vertical_large"></div>
+                                                            <p class="txtEmphasis slds-text-align_center">An RDA
+                                                                 signifies that the REMS requirement for prescriber
+                                                                 certification according to pharmacy type is met. The
+                                                                 RDA must be documented and available for audit.
+                                                                 <br><br>TRYVIO prescriptions from prescribers who are
+                                                                 not certified in the REMS will not be authorized for
+                                                                 dispense by the TRYVIO REMS.</p>
+                                                            <div class="slds-p-vertical_medium"></div>
+                                                            <p class="txtSmall">You may request an RDA online by using
+                                                                 one of the two options displayed, one of which requires
+                                                                 the prescriber's 10-digit NPI number and the other of
+                                                                 which requires the prescriber's first name, last name,
+                                                                 and state.
+                                                                 <br><br>An RDA may also be requested by calling the
+                                                                 TRYVIO REMS at <span
+                                                                      class="txtNoWrap">1-866-429-8964,</span> Monday to
+                                                                 Friday, 8 AM - 8 PM ET.</p>
+                                                       </div>
+                                                       <div
+                                                            class="slds-col slds-p-horizontal_large slds-size_12-of-12 slds-large-size_1-of-12  slds-p-right_large">
+                                                       </div>
+                                                       <div
+                                                            class="slds-col slds-p-horizontal_large slds-size_12-of-12 slds-large-size_6-of-12  slds-p-right_large">
+                                                            <div class="frmContainer">
+                                                                 <article class="slds-card " part="card">
+                                                                      <div class="slds-card__header slds-grid">
+                                                                           <header
+                                                                                class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                                                <div class="slds-media__figure"></div>
+                                                                                <div class="slds-media__body">
+                                                                                     <h2
+                                                                                          class="slds-card__header-title">
+                                                                                          <span>REMS Dispense
+                                                                                               Authorization</span>
+                                                                                     </h2>
+                                                                                </div>
+                                                                           </header>
+                                                                      </div>
+                                                                      <div class="slds-card__body  slds-card__body_inner"
+                                                                           part="body">
+                                                                           <p class="frmInstructions">Please enter the
+                                                                                information below and click "Continue".
+                                                                                <br><br><span
+                                                                                     class="slds-text-body_medium"><span
+                                                                                          class="slds-text-color_destructive">* </span>
+                                                                                     fields required</span></p>
+                                                                           <slot>
+                                                                                <div class="slds-text-heading_medium">
+                                                                                     Prescriber Information</div>
+                                                                                <fieldset class="slds-form-element">
+                                                                                     <legend
+                                                                                          class="slds-form-element__legend slds-form-element__label">
+                                                                                          <abbr class="slds-required"
+                                                                                               title="required">* </abbr>Search by:</legend>
+                                                                                     <div
+                                                                                          class="slds-form-element__control">
+                                                                                          <div
+                                                                                               class="slds-radio_button-group">
+                                                                                               <span
+                                                                                                    class="slds-button slds-radio_button">
+                                                                                                    <input type="radio"
+                                                                                                         name="rbType"
+                                                                                                         id="rbType1"
+                                                                                                         value="npi"
+                                                                                                         checked
+                                                                                                         data-id="npi" 
+                                                                                                         maxlength="10"
+                                                                                                        onclick={handleChangeRadio}>
+                                                                                                    <label
+                                                                                                         class="slds-radio_button__label"
+                                                                                                         for="rbType1">
+                                                                                                         <span
+                                                                                                              class="slds-radio_faux">Prescriber
+                                                                                                              National
+                                                                                                              Provider
+                                                                                                              Identifier
+                                                                                                              (NPI)#</span>
+                                                                                                    </label>
+                                                                                               </span>
+                                                                                               <span
+                                                                                                    class="slds-button slds-radio_button">
+                                                                                                    <input type="radio"
+                                                                                                         name="rbType"
+                                                                                                         id="rbType2"
+                                                                                                         value="name"
+                                                                                                         data-id="name" 
+                                                                                                        onclick={handleChangeRadio}>
+                                                                                                    <label
+                                                                                                         class="slds-radio_button__label"
+                                                                                                         for="rbType2">
+                                                                                                         <span
+                                                                                                              class="slds-radio_faux">Prescriber
+                                                                                                              Name</span>
+                                                                                                    </label>
+                                                                                               </span>
+                                                                                          </div>
+                                                                                     </div>
+                                                                                </fieldset>
+                                                                                <template if:true={isNPI}>
+                                                                                     <div id="SearchNPI">
+                                                                                          <div
+                                                                                               class="slds-grid   slds-wrap slds-gutters">
+                                                                                               <div
+                                                                                                    class="slds-col slds-medium-size_9-of-12 slds-large-size_12-of-12">
+                                                                                                    <lightning-input type="text" label=" National Provider Identifier (NPI)#"  value={npi} onchange={handleInputChange} data-id="npi" max-length ='10' required></lightning-input>
+                                                                                               </div>
+ 
+                                                                                          </div>
+                                                                                     </div> 
+                                                                                </template>
+                                                                                <template if:true={isName}>
+                                                                                     <div id="SearchName">
+                                                                                          <div
+                                                                                               class="slds-grid slds-wrap   slds-gutters ">
+                                                                                               <div
+                                                                                                    class="slds-col  slds-medium-size_6-of-12">
+                                                                                                    <div class="slds-form-element">
+                                                                                                         <label class="slds-form-element__label"
+                                                                                                              for="select-01"><abbr
+                                                                                                                   class="slds-required"
+                                                                                                                   title="required">*
+                                                                                                              </abbr>&nbsp;State</label>
+                                                                                                         <div class="slds-form-element__control">
+                                                                                                              <div class="slds-select_container">
+                                                                                                                   <select class="slds-select" id="select-02" onchange={handleInputChange} required data-id="state">
+                                                                                                                        <option value="">Select…</option>
+                                                                                                                        <template for:each={stateOptions} for:item="record">
+                                                                                                                             <option key={record.value} value={record.value}>{record.label}</option>
+                                                                                                                        </template>
+                                                                                                                   </select>
+                                                                                                              </div>
+                                                                                                         </div>
+                                                                                                    </div>  
+                                                                                               </div> <!-- end col   -->
+                                                                                               <div
+                                                                                                    class="slds-col slds-medium-size_6-of-12">
+                                                                                                    <lightning-input
+                                                                                                         class="search slds-form-element" label=" Last Name" value={lastname} onchange={handleInputChange} data-id="lastname" required>
+                                                                                                    </lightning-input>
+                                                                                               </div> <!-- end col  -->
+                                                                                               <div
+                                                                                                    class="slds-col slds-medium-size_6-of-12">
+                                                                                                    <lightning-input
+                                                                                                         class="search slds-form-element" label="First Name" value={firstname} onchange={handleInputChange} data-id="firstname"
+                                                                                                         lwc-66unc5l95ad-host="">
+                                                                                                         <lightning-primitive-input-simple>
+                                                                                                              <div
+                                                                                                                   part="input-text">
+                                                                                                                   <label
+                                                                                                                        class="slds-form-element__label slds-no-flex"
+                                                                                                                        for="input-11"
+                                                                                                                        part="label">First
+                                                                                                                        Name
+                                                                                                                   </label>
+                                                                                                                   <div class="slds-form-element__control slds-grow"
+                                                                                                                        part="input-container">
+                                                                                                                        <input
+                                                                                                                             class="slds-input"
+                                                                                                                             id="input-11"
+                                                                                                                             value=""
+                                                                                                                             part="input"
+                                                                                                                             placeholder=""
+                                                                                                                             type="text">
+                                                                                                                   </div>
+                                                                                                              </div>
+                                                                                                         </lightning-primitive-input-simple>
+                                                                                                    </lightning-input>
+                                                                                               </div>
+                                                                                          </div> <!-- end row  -->
+                                                                                     </div> <!-- end SearchName  -->
+                                                                                </template>
+ 
+ 
+ 
+                                                                                <template if:true={accounts}>  <!-- CHanged from showtable to account 18th June  -->
+                                                                                     <div id="PrescriberResultsName"
+                                                                                          class="tblContainer">
+ 
+                                                                                          <h2
+                                                                                               class="slds-text-heading_medium slds-m-bottom_xx-small">
+                                                                                               Prescriber Search Results
+                                                                                          </h2>
+                                                                                          <p class="txtInstructions">
+                                                                                               Select
+                                                                                               the prescriber and click
+                                                                                               "Continue".
+                                                                                               <br><br>If the prescriber
+                                                                                               you
+                                                                                               are searching for is not
+                                                                                               found
+                                                                                               in the table below,
+                                                                                               please
+                                                                                               contact the TRYVIO REMS
+                                                                                               at
+                                                                                               <span
+                                                                                                    class="txtNoWrap"> 1-866-429-8964.</span>
+                                                                                          </p>
+                                                                                          
+                                                                                     </div> <!-- end PrescResults  -->
+                                                                                
+                                                                               
+                                                                                </template>
+                                                                                <template if:true={accounts}>
+                                                                                     <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" aria-labelledby="element-with-table-label other-element-with-table-label">
+                                                                                          <thead>
+                                                                                               <tr class="slds-line-height_reset">
+                                                                                                    <th scope="col" style="width:30px;">
+                                                                                                         <div class="slds-truncate slds-assistive-text" id="column-group-header" title="Choose a row to select">Choose a row to select</div>
+                                                                                                    </th>								  
+                                                                                                    <th aria-sort="ascending" class="xxxslds-is-resizable slds-is-sortable slds-is-sorted slds-is-sorted_asc slds-cell_action-mode" scope="col">
+                                                                                                         <a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+                                                                                                              <span class="slds-assistive-text">Sort by: </span>
+                                                                                                              <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                                                                                   <span class="slds-truncate" title="Name">Last Name</span>
+                                                                                                                   <span class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                                                                        <img src={iconSortAsc}>   
+                                                                                                                        <!--      <svg class="slds-icon slds-icon-text-default slds-is-sortable__icon " aria-hidden="true">
+                                                                                                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                                                                                                                        </svg>-->
+                                                                                                                   </span>
+                                                                                                              </div>
+                                                                                                         </a>
+                                                                                                         <span class="slds-assistive-text" aria-live="polite" aria-atomic="true">Sorted ascending</span>
+                                                                                                    </th>
+                                                                                                    <th class="slds-is-sortable" scope="col">
+                                                                                                         <div class="slds-truncate" title="Address">First Name</div>
+                                                                                                    </th>
+                                                                                                         
+                                                                                                    <th class="slds-is-sortable" scope="col">
+                                                                                                         <div class="slds-truncate" title="City">City</div>
+                                                                                                    </th>
+                                                                                                    <th class="slds-is-sortable" scope="col">
+                                                                                                         <div class="slds-truncate" title="State">State</div>
+                                                                                                    </th>
+                                                                                                    <th class="slds-is-sortable" scope="col">
+                                                                                                         <div class="slds-truncate" title="Z Code">Zip Code</div>
+                                                                                                    </th>
+
+                                                                                                    <th class="slds-is-sortable" scope="col" style="width: 100px;">
+                                                                                                         <div class="slds-truncate" title="NPI">NPI</div>
+                                                                                                    </th>							
+                                                                                               </tr>
+                                                                                          </thead>
+                                                                                          <tbody>
+                                                                                               <template for:each={accounts} for:item="record">
+                                                                                                    <tr key={record.Id} class="slds-hint-parent">
+                                                                                                         <td style="padding-left: 5px;" role="gridcell" data-id={record.Id} onclick={handleRowSelection}>
+                                                                                                              <span class="slds-radio">
+                                                                                                                   <input type="radio" data-id={record.Id} data-cmp="check1" name="options" tabindex="-1" aria-labelledby="radio-button-label-01 column-group-header" value={record.Id}>
+                                                                                                                   <label class="slds-radio__label" for="rbHCS1" id="radio-button-label-01"><span class="slds-radio_faux"></span><span class="slds-form-element__label slds-assistive-text">Select item 1</span></label>
+                                                                                                              </span>
+                                                                                                         </td>
+                                                                                                         <td data-label="First Name"><div class="slds-truncate" title="">{record.LastName} </div></td>			
+                                                                                                         <td data-label="First Name"><div class="slds-truncate" title="">{record.FirstName}</div></td>														
+                                                                                                         <td data-label="City"><div class="slds-truncate" title="">{record.US_WSREMS__City__c}</div></td>
+                                                                                                         <td data-label="State"><div class="slds-truncate" title="">{record.US_WSREMS__State__c}</div></td>
+                                                                                                         <td data-label="Phone"><div class="slds-truncate" title="">{record.US_WSREMS__Zip__c}</div></td>								
+                                                                                                         <td data-label="Enrollment ID"><div class="slds-truncate" title="">{record.US_WSREMS__NPI__c}</div>
+                                                                                                         </td>								
+                                                                                                    </tr>
+                                                                                               </template>
+                                                                                          </tbody>
+                                                                                     </table>
+                                                                                </template>                                                                                    
+                                                                               
+                                                                                <div class="slds-card__footer"
+                                                                                      part="footer">
+                                                                                      <template if:false={accounts}>
+                                                                                            <lightning-button id="BtnSearch" label="Search"
+                                                                                                  class="brand-button" variant="brand" 
+                                                                                                  onclick={handleSearch}>
+                                                                                            </lightning-button>
+                                                                                      </template>
+                                                                                      <template if:true={selectedAccountId}>
+                                                                                            <lightning-button id="BtnContinue"
+                                                                                                  class="brand-button"
+                                                                                                  variant="brand"  onclick={handleContinue} label="Continue">
+                                                                                            </lightning-button>
+                                                                                      </template>
+                                                                                
+                                                                                </div>                                                                                   
+                                                                                 
+                                                                                     
+ 
+                                                                           </slot>
+                                                                      </div>
+ 
+                                                                 </article>
+                                                            </div>
+ 
+ 
+                                                       </div> <!-- end col  -->
+                                                  </div> <!-- end row  -->
+                                                  <div class="slds-p-vertical_medium"></div>
+                                                  <div class="slds-border_top slds-m-top_xx-large"></div>
+                                                  <p class="slds-p-around_xx-large slds-text-align_center">Healthcare
+                                                       providers should report suspected adverse events or product
+                                                       quality complaints associated with TRYVIO to Idorsia
+                                                       Pharmaceuticals Ltd at <span
+                                                            class="txtNoWrap">1-833-400-9611</span> or the FDA at <span
+                                                            class="txtNoWrap">1-800-FDA-1088</span> or online at <a
+                                                            href="https://www.fda.gov/medwatch"
+                                                            target="_blank">www.fda.gov/medwatch</a>.</p>
+ 
+                                             </div> <!-- end layout   -->
+                                        </div>
+                                   </div> <!-- end col -->
+                              </div> <!-- end row   -->
+                         </div> <!-- end contentHeader   -->
+                    </div> <!-- end SF   -->
+               </div> <!-- end pageContent   -->
+          </div> <!-- end pageContainer  -->
+     </div>
+ </template>

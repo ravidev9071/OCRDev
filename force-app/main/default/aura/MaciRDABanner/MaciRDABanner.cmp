@@ -1,0 +1,51 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" 
+                controller="MaciRDABanner" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="remsRecord" type="Object"/>
+    
+    <div class="slds-card-wrapper">
+        <force:recordData aura:id="remServiceLoader"
+                          recordId="{!v.recordId}"
+                          fields="US_WSREMS__Outcome__c,RDA_Authorization_Code__c"
+                          targetFields="{!v.remsRecord}"
+                          recordUpdated="{!c.recordUpdated}"/>
+        <header >
+            <h3 class="slds-text-heading_medium slds-text-align_center my-text_clr">
+                <b> RDA Status </b>
+            </h3>
+        </header>
+        
+        <article class="slds-card slds-card_boundary">
+            <div class="slds-card__body slds-card__body_inner">
+                <lightning:accordion aura:id="accordion" activeSectionName="Reasons" allowMultipleSectionsOpen="true">
+                    <lightning:accordionSection name="Reasons" label="Status">
+                        <br></br>
+                        <aura:if isTrue="{!v.remsRecord.US_WSREMS__Program_Name__c == 'TRYVIO REMS'}">
+                                    <aura:if isTrue="{!v.remsRecord.US_WSREMS__Authorization_Status__c =='Approved'}">
+                                        <p> RDA Status : <span style="color:green">{!v.remsRecord.US_WSREMS__Authorization_Status__c}</span></p>
+                                        <p>RDA Authorization Code: <span style="color:green">{!v.remsRecord.RDA_Authorization_Code__c}</span></p>
+                                        <aura:set attribute="else">
+                                            <p> RDA Status : <span style="color:green">{!v.remsRecord.US_WSREMS__Authorization_Status__c}</span></p>
+                                            <p> Authorization Status Reason <span style="color:red">{!v.remsRecord.US_WSREMS__Authorization_Status_Reason__c}</span></p>
+                                	    </aura:set>
+                            		</aura:if> 
+                            <aura:set attribute="else">
+                                    <aura:if isTrue="{!OR(v.remsRecord.US_WSREMS__Outcome__c =='Approved', v.remsRecord.US_WSREMS__Outcome__c =='Reversed')}">
+                                        <p> RDA Status : <span style="color:green">{!v.remsRecord.US_WSREMS__Outcome__c}</span></p>
+                                        <p>RDA Authorization Code: <span style="color:green">{!v.remsRecord.RDA_Authorization_Code__c}</span></p>
+                                        <aura:set attribute="else">
+                                            <p> RDA Status: <span style="color:red"></span></p>
+                                        <p>RDA Authorization Code: <span style="color:red"></span></p>
+                                	</aura:set>
+                            		</aura:if> 
+                            </aura:set>
+                        </aura:if>
+                        
+                    </lightning:accordionSection>
+                </lightning:accordion>
+            </div>
+            <footer class="slds-card__footer"></footer>
+        </article>
+    </div>
+    
+</aura:component>

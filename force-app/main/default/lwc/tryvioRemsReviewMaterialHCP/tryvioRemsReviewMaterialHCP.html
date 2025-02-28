@@ -1,0 +1,146 @@
+<template>
+	<div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+		<div class="pageTitle prescriber">
+			<div class="slds-text-heading_medium">TRYVIO<sup>™</sup> REMS</div>
+			<div class="slds-text-heading_large"><img class="iconImg" src={iconPrescriber}> Prescribers</div>
+		</div>
+		<div class="pageContainer">
+			<div class="pageContent">
+
+
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+						<lightning-progress-indicator current-step="2" type="path" variant="base">
+							<lightning-progress-step label="Register" value="1"
+								variant="complete"></lightning-progress-step>
+							<lightning-progress-step label="Review Materials" value="2" class="lighting-step"
+								variant="active"></lightning-progress-step>
+
+							<lightning-progress-step label="Knowledge Assessment" value="3"
+								variant="active"></lightning-progress-step>
+							<lightning-progress-step label="Complete Enrollment" value="4"
+								variant="incomplete"></lightning-progress-step>
+							<lightning-progress-step class="slds-hide" label="Review Materials" value="5"
+								variant="complete"></lightning-progress-step>
+						</lightning-progress-indicator>
+						<!--<lightning-progress-indicator>
+							<div class="slds-path">
+								<div class="slds-grid slds-path__track">
+									<div class="slds-grid slds-path__scroller-container justifyCenter">
+										<div role="application" class="slds-path__scroller">
+											<div class="slds-path__scroller_inner">
+												<ul role="listbox" aria-orientation="horizontal" class="slds-path__nav">
+													<slot>
+														 <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	  <lightning-primitive-icon>
+																	  <img src="files/check.svg" style="width: 25px">
+																		<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>   
+																	  </lightning-primitive-icon>
+																	  <span class="slds-assistive-text">Register</span>
+																 </span>
+																 <span class="slds-path__title">Register</span>
+															</a>
+														 </lightning-progress-step>															
+														 <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	  <lightning-primitive-icon>
+																	<img src="files/check.svg" style="width: 25px">
+																		<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg> 
+																	 </lightning-primitive-icon>
+																	  <span class="slds-assistive-text">Review Materials</span>
+																 </span>
+																 <span class="slds-path__title">Review Materials</span>
+															</a>
+														 </lightning-progress-step>
+														<lightning-progress-step role="listitem" class="slds-path__item slds-is-current">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	  <lightning-primitive-icon>
+																			<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+																	  </lightning-primitive-icon>
+																 </span>
+																 <span class="slds-path__title">Knowledge Assessment</span>
+															</a>
+														 </lightning-progress-step>   
+														 <lightning-progress-step role="listitem" class="slds-path__item slds-is-incomplete">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	<lightning-primitive-icon>
+																		<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+																	</lightning-primitive-icon>
+																</span>
+																<span class="slds-path__title">Complete Enrollment</span>
+															</a>
+														</lightning-progress-step>
+													</slot>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</lightning-progress-indicator>	-->
+
+						<p class="slds-text-heading_medium">{presname}<br>NPI: {presnpi}</p>
+						<div class="slds-border_bottom "></div>
+
+
+
+						<div data-region-name="content">
+							<div data-priority="" class="ui-widget">
+								<div class="slds-text-heading_large">Review Materials</div>
+								<!--	<p>Instructional content?</p> -->
+
+
+								<div class="slds-p-vertical_medium"></div>
+								<div class="infoContainer">
+									<div class="slds-text-heading_medium">TRYVIO REMS Resources for Prescribers</div>
+
+									<div class="slds-grid slds-wrap slds-gutters">
+										<div
+											class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_9-of-12">
+											<p class="slds-m-vertical_medium">You must click on each link below and
+												review the materials before you can proceed to the Knowledge Assessment.
+												<br>Each resource will open up in a new window for you to view and/or
+												download.
+											</p>
+
+											<div class="resourcesKA">
+												<div><a class="btnLinkGradient"
+														href="https://www.dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=dfe7a2ee-612c-4aba-834a-d68e6b59a0a6"
+														target="_blank" onclick={iconchecke1}>Prescribing
+														Information</a>
+													<span if:true={iconchecketrue1} class="resourceCheck"
+														id="IconChecked1"><img src={iconCheck}></span>
+												</div>
+												<div><a class="btnLinkGradient docEmphasis" href={guideUrl}
+														target="_blank" onclick={iconchecke2}>Prescriber and Pharmacy
+														Guide</a>
+													<span if:true={iconchecketrue2} class="resourceCheck"
+														id="IconChecked2"><img src={iconCheck}></span>
+												</div>
+											</div>
+										</div>
+									</div> <!-- end resourcesKA   -->
+
+								</div> <!-- end containerINfo  -->
+							</div> <!-- end col  -->
+						</div> <!-- end row  -->
+						<div class="slds-border_top slds-m-top_xx-large"></div>
+						<lightning-button class="brand-button slds-align_absolute-center slds-m-top_large" variant="brand" label="Next"
+							disabled={disable} onclick={handleNext}>
+						</lightning-button>
+					</div> <!-- end layout   -->
+
+
+				</div> <!-- end SF   -->
+			</div> <!-- end pageContent   -->
+		</div> <!-- end pageContainer   -->
+		<template lwc:if={displaySpinner}>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</template>
+	</div>
+</template>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            
+            <property name="value" label="Field Value" type="String" description="Value of the Field "/>
+            <property name="required" label="Required" type="Boolean" required="true" default="true" description="If true field is required"/>
+            <property name="objectName" label="Object Name" type="String" description="object API Name"/>
+            <property name="targetFieldApiName" label="Target Field Name" type="String" description="API of field that lookup is reffered"/>
+
+            <property name="fieldLabel" label="Field Label" type="String" description="Look field Name you want to display"/>
+
+            <property name="displayFieldLabelOne" label="Field Auto Populate Label 1" type="String" description="Label of the field that needs to be readonly auto populated."/>
+            <property name="displayFieldOne" label="Field Auto Populate 1" type="String" description="API of the field that needs to be readonly auto populated."/>
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

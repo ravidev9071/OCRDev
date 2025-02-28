@@ -1,0 +1,8 @@
+<aura:component implements="lightning:availableForFlowScreens">
+	
+     <lightning:layout >
+            <lightning:layoutItem class="pad">
+                <p style="height:2%"></p>
+            </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

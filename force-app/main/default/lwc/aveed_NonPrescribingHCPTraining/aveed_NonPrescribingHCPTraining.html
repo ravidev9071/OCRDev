@@ -1,0 +1,232 @@
+<template>
+	<div class="auraMsgBox auraLoadingBox" id="auraLoadingBox">
+		<div class="logo"></div>
+		<div class="spinner"></div>
+		<span>Loading</span>
+	</div>
+	<div class="themeLayoutStarterWrapper isHeroUnderHeader-false isHeaderPinned-false siteforceThemeLayoutStarter">
+		<a href="javascript:void(0);" class="forceSkipLink" data-aura-class="forceSkipLink"></a>
+		<div role="banner" class="a11y-banner">
+			<div class="header">
+				<div data-region-name="themeHeader">
+					<div data-priority="" class="ui-widget">
+						<div class="themeHeader forceCommunityThemeHeaderBase forceCommunityThemeHeaderCompact">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div role="main" tabindex="-1" class="body isPageWidthFixed-true" aria-hidden="false">
+			<div class="pageContainer">
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="comm-content-header comm-layout-column">
+						<div class="slds-text-heading_large">Non-Prescribing Healthcare Provider Training</div>
+					</div>
+					<template lwc:if={showSpinner}>
+						<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					</template>
+					<template lwc:if={userInformationToCollect}>
+						<div data-region-name="content">
+							<div class="forceCommunityRichText forceCommunityRichTextInline">
+								<div dir="ltr" class="uiOutputRichText">
+									<div class="frmContainer hcp">
+										<article class="slds-card" part="card">
+											<div class="slds-card__header slds-grid">
+												<header class="slds-media slds-media_center slds-has-flexi-truncate">
+													<div class="slds-media__figure"></div>
+													<div class="slds-media__body">
+														<h2 class="slds-card__header-title">
+															<span>Aveed<sup><small>&reg;</small></sup> REMS
+																Non-Prescribing
+																Healthcare Provider Training</span>
+														</h2>
+													</div>
+												</header>
+											</div>
+											<div class="slds-card__body slds-card__body_inner" part="body">
+												<div class="slds-text-heading_medium">Instructions</div>
+												<p>Please review the&nbsp;
+													<span class="docEmphasis">Education Program for Healthcare
+														Providers</span>
+													.&nbsp;Following review, please complete the below information and
+													submit to the REMS.
+												</p>
+												<p class="frmInstructions">
+													<span class="slds-text-body_medium"><span
+															class="slds-text-color_destructive">*</span>
+														&nbsp;fields required</span>
+												</p>
+												<div class="slds-text-heading_medium">Non-Prescribing Healthcare
+													Provider
+													Information</div>
+												<div class="slds-grid slds-wrap">
+													<div class="slds-col slds-size_1-of-2">
+														<lightning-input label=" First Name" name="FirstName"
+															onchange={handleInputChange} pattern="[a-zA-Z0-9.\-'\s]*"
+															message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+															required></lightning-input>
+														<lightning-input label=" Address Line 1" name="AddressLine1"
+															pattern="[a-zA-Z0-9.\-'\s]*"
+															message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+															onchange={handleInputChange} required></lightning-input>
+														<lightning-input label=" City" name="City"
+															pattern="[a-zA-Z0-9.\-'\s]*"
+															message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+															onchange={handleInputChange} required></lightning-input>
+														<lightning-input label=" Email" name="Email"
+															pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+															message-when-pattern-mismatch="Please enter a valid Email address."
+															onchange={handleInputChange} type="email" required>
+														</lightning-input>
+													</div>
+													<div class="slds-col slds-size_1-of-2 slds-p-left_large">
+														<lightning-input label=" Last Name" name="LastName"
+															pattern="[a-zA-Z0-9.\-'\s]*"
+															message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+															onchange={handleInputChange} required></lightning-input>
+														<lightning-input label="Address Line 2" name="AddressLine2"
+															pattern="[a-zA-Z0-9.\-'\s]*"
+															message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+															onchange={handleInputChange}></lightning-input>
+														<div class="slds-grid slds-wrap">
+															<!-- RT 14-10-24  changes -->
+															<div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-p-right_small">
+																<!-- <lightning-input label="State" name="State"
+																onchange={handleInputChange} required></lightning-input> -->
+																<lightning-combobox class="search slds-form-element"
+																	label=" State" required options={stateOptions}
+																	onchange={handleInputChange}
+																	name="State"></lightning-combobox>
+															</div>
+															<!-- RT 14-10-24 changes -->
+															<div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-p-left_small">
+																<lightning-input label=" ZIP Code" name="ZipCode"
+																	pattern="^(\d{5}|\d{5}-\d{4})$"
+																	message-when-pattern-mismatch="Please enter a valid 5-digit or a 10-character format like '12345-6789' zip."
+																	onchange={handleInputChange} required>
+																</lightning-input>
+															</div>
+														</div>
+														<lightning-input class="phoneNumber" data-id="phone"
+															label=" Phone Number" type="tel" name="Phone"
+															pattern="\(\d{3}\) \d{3}-\d{4}"
+															message-when-pattern-mismatch="Please enter a valid Phone number"
+															onchange={handleInputChange} required></lightning-input>
+													</div>
+												</div>
+
+
+												<div class="slds-grid slds-wrap slds-gutters">
+													<div class="slds-col slds-size_1-of-1">
+														<fieldset class="slds-form-element"
+															style="display: inline-block">
+															<legend
+																class="slds-form-element__legend slds-form-element__label">
+																<abbr class="slds-required" title="required">*</abbr>
+																&nbsp;Degree
+															</legend>
+															<div class="slds-form-element__control">
+																<template for:each={_degreeList} for:item="option">
+																	<span key={option.key} for:index={option.index}
+																		data-key={option.key} data-value={option.value}
+																		class={radioClass} onclick={handleClick}>
+																		<input type="radio" value={option.value}
+																			checked={option.checked}
+																			name={radioGroupName}
+																			class={option.inputClass} />
+																		<label class="slds-radio__label">
+																			<span class="slds-radio_faux"></span>
+																			<span
+																				class="slds-form-element__label">&nbsp;{option.label}</span>
+																		</label>
+																	</span>
+																</template>
+																<template lwc:if={optionNotSelected}>
+																	<div class="slds-form-element__help required-text"
+																		role="status">Complete this field.</div>
+																</template>
+															</div>
+														</fieldset>
+														<template lwc:if={showFreeTextForDegree}>
+															<div class="slds-form-element__control">
+																<div class="slds-col slds-size_1-of-2">
+																	<lightning-input type="text" name="OtherDegree"
+																		label="Other" required
+																		placeholder="Please specify"
+																		data-id="OtherDegree"
+																		onchange={handleInputChange}></lightning-input>
+																</div>
+															</div>
+														</template>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="slds-border_top slds-m-bottom_small"></div>
+											<div class="containerEmphasis">
+												<div class="slds-grid slds-wrap slds-gutters">
+													<div
+														class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_10-of-12">
+														<p class="slds-m-vertical_medium">You must click on the link to
+															view
+															the&nbsp;
+															<span class="docEmphasis">Education Program for Healthcare
+																Providers </span>
+															before you can submit this form.
+															The document will open up in a new window for you to view
+															and/or
+															download.
+														</p>
+
+														<template lwc:if={isDisplayFiles}>
+
+															<div class="resourceItem">
+																<div class="resourceName"><a class="docEmphasis"
+																		onclick={previewHandler}>{fileName}</a>
+																	<template lwc:if={showNext}>
+																		<span class="resourceCheck"
+																			id="IconChecked"><img
+																				src={iconCheck}></span>
+																	</template>
+																</div>
+															</div>
+
+														</template>
+													</div>
+												</div>
+											</div>
+											<div class="slds-card__footer" part="footer">
+												<button
+													class="slds-button slds-button_neutral slds-m-left_x-small">Cancel</button>
+												<button disabled={isSubmitDisabled}
+													class="brand-button slds-button slds-m-top_large slds-button_brand"
+													aria-disabled="false" type="button" part="button"
+													onclick={handleSubmitForm}>Submit</button>
+
+											</div>
+										</article>
+									</div>
+								</div>
+							</div>
+						</div>
+					</template>
+					<template lwc:elseif={isSuccess}>
+						<div data-region-name="content">
+							<div class="forceCommunityRichText forceCommunityRichTextInline">
+								<div dir="ltr" class="uiOutputRichText">
+									<div class="slds-text-heading_medium">Congratulations!</div>
+									<p>You&apos;ve successfully completed the AVEED REMS Education Program for
+										Healthcare
+										Providers</p>
+								</div>
+							</div>
+						</div>
+					</template>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,7 @@
+.slds-button_brand:hover{
+    --sds-c-button-brand-color-background: #e17000;
+  --sds-c-button-brand-color-border: #e17000;
+  --sds-c-button-brand-color-background-hover: #e17000;
+  --sds-c-button-brand-color-border-hover: #e17000;
+  --slds-kx-button-gradient-color:#e17000;
+}

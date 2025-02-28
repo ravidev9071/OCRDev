@@ -1,0 +1,56 @@
+<aura:component controller="DocumentReviewController" 
+    implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:isUrlAddressable,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+
+
+	<!-- Work space API instatntiation -->
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <!-- Aura intial handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <!-- private aura atributes -->
+    <aura:attribute type="string" name="recordId" access="private" description="The recordId from the URL"/>
+    <aura:attribute name="selectedProgramId" type="String" access="private" description="selcted program recordId from the URL"/>
+    <aura:attribute name="selectedProgramName" type="String" access="private" description="selected program name"/>
+    <aura:attribute name="fileurl" type="String" access="private" description="the url of the file to be loaded in iframe"/>
+    <aura:attribute type="string" name="DistObjId" access="private" description="Id of the document record"/>
+    <aura:attribute name="showspinner" type="Boolean" default="false" access="private" description="To show/hide spinner on page"/>
+    <aura:attribute name="privewScreenspinner" type="Boolean" default="false" access="private" description="to show hide spinner on iframe"/>
+    <!-- public aura atributes -->
+    <aura:attribute name="accFieldList" type="Object" access="public" description="Account feilds to be displayed for search"/>
+    
+    
+	
+    <!-- BEGIN: Aura component -->
+    <lightning:card>
+        <div>
+            <div class="grid-container">
+                <div class="grid-child purple slds-box container-margin">
+                    <div class="slds-m-around_x-small">
+                        <div class="slds-align_absolute-center">
+                            <aura:if isTrue="{!v.privewScreenspinner}">
+                                <lightning:spinner alternativeText="Loading" size="medium" />
+                            </aura:if>
+                            <iframe src="{!v.fileurl}" style="width: 100%;height: 750px "
+                                onload="{!c.iframeLoad}"></iframe>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BEGIN: LWC component for accoutn search -->
+                <div class="c-container slds-box container-margin slds-scrollable_y" style="height: 50rem;">
+                    <c:oCR_DocumentReview accFieldList="{!v.accFieldList}"></c:oCR_DocumentReview>
+                </div>
+                <!-- END: LWC component for accoutn search -->
+            </div>
+
+        </div>
+        <!-- BEGIN: Lightning spinner -->
+        <aura:if isTrue="{!v.showspinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+        <!-- END: Lightning spinner -->
+    </lightning:card>
+    <!-- END: Aura component -->
+</aura:component>

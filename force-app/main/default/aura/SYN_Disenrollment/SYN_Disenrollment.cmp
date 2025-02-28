@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+                access="global">
+	 <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+     <aura:attribute name="docDetailIdVal" type="String" access="global"/>
+     <aura:attribute name="isCaseData" type="Boolean" access="global" default="false"/>
+      <aura:attribute name="caseObj" type="Object" access="global"/>
+    <aura:attribute name="caseId" type="String" access="global"/>
+     <lightning:messageChannel type="US_WSREMS__ReviewDocumentChannel__c" aura:id="REMSReviewDocumentChannel"/>
+   <lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}"/>
+</aura:component>

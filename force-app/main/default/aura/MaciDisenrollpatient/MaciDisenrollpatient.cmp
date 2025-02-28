@@ -1,0 +1,144 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> Disenroll patient { Middle Context }
+-->
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="pAccount" type="Account" />
+    <!-- handlter declarion  -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="true" />
+    <aura:attribute name="termsFlag" type="boolean" default="false"/>
+    <!-- storing Case Disenollment Readon Picklist values  -->
+    <aura:attribute name="DissEnrollmentReasonMap" type="Map"/> 
+    
+    <aura:attribute name="DiscontinuedTherapy" type="boolean" default ="false"/>
+    <aura:attribute name="PatientDecision" type="boolean" default ="false"/>
+    <aura:attribute name="PrescriberDecision" type="boolean" default ="false"/>
+    <aura:attribute name="PatientDeath" type="boolean" default ="false"/>
+    <aura:attribute name="Duplicate" type="boolean" default ="false"/>
+    <aura:attribute name="dCase" type="Case" default="{'sobjectType':'Case',                                                        
+                                                       'State_Secondary_Office__c': ''}"/>
+    <lightning:navigation aura:id="navigation"/>
+
+
+    <aura:if isTrue="{! v.isLoading }">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;">
+        <div class="section-content container-fluid px-5" style="background: transparent;">
+                <div class="col-lg-12">
+                    <div class="card-header border-0 crd-hdr-m px-0">
+                       <div class="col-lg-12">
+                <div class="heading-top d-flex justify-content-between border-bottom-0"  style="background-color: #EBEBEB">
+                   <div class="col-lg-7 col-sm col-8 text-start">
+                        
+                        <div class="row ps-3">
+                            <div class="col-1" style="width: 39px;">
+                                <span class="text-theme">
+                                    <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                </span>
+                            </div>
+                            <div class="col-9 ps-4">
+                                <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                    {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="row ps-3" style="position: relative;top: -10px;">
+                            <div class="col-1" style="width: 39px;"></div>
+                            <div class="col-9 ps-4">
+                                <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                    NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-sm col-4 text-end pe-4">
+                        <span class=" text-muted">Program Status:&nbsp; <span class="text-theme fw-bold">Enrolled as of <span name="enrolled-number" id="enrolled-number"><lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></span> <i class="fa fa-check-circle ps-1"></i></span></span>
+                    </div>
+                </div>
+               <div class="border-bottom-0 mx-0" style="background-color: #EBEBEB">
+                  <div class="row px-1">
+                      <div class="col-lg-12 col-sm col-12 text-start">
+                    
+                            <div class="row ps-4">
+                                <div class="col-1 pe-0" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                    </span>
+                                </div>
+                                <div class="col-1" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <span class="text-theme">
+                                            <i class="fa fa-user text-info fs-1" style="position: relative;top: 6px;left: 7.5px;"></i>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="col-9 ps-4">
+                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                        {!v.pAccount.Name}</h3>
+                                </div>
+                            </div>
+                            <div class="row ps-4" style="position: relative;top: -10px;">
+                                <div class="col-1  pe-0" style="width: 39px;"></div>
+                                <div class="col-1" style="width: 39px;"></div>
+                                <div class="col-9 ps-4">
+                                    <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                        <span class="fs-6 text-black-50 fw-bold">Date of Birth: <strong style="color: #011338;"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" /></strong></span>
+                                    </span>
+                                </div>
+                            </div>
+                      </div>
+                   </div>
+                </div>
+            </div>
+                        
+                    </div>
+                </div>
+                <div class="bg-white p-4 " style="padding-bottom: 8rem !important;height: 78vh;">
+                    <div class="row d-flex">
+                        <div class="col-md-9  pe-3">
+                            <h5 class="text-theme mb-3 fw-bold">Disenroll Patient</h5>
+                            <div class="border p-4"> 
+                            <h6 class="mb-2 text-theme fw-bold">Disenroll Reason</h6>
+                                
+                                <select name="text-state" id="pd"  class="form-control" value="{!v.dCase.US_WSREMS__Deactivation_Reason__c}" onchange="{!c.handleDeactiveReasonChange}"> 
+                                    <option value="">--None--</option>
+                                    <aura:iteration items="{!v.DissEnrollmentReasonMap}" var="ind" indexVar="key" >
+                                        <option text="{!ind.value}" value="{!ind.key}" selected="{!ind.key==v.dCase.US_WSREMS__Deactivation_Reason__c}" />
+                                    </aura:iteration>
+                                </select> 
+                                <br/>
+                                <br/>
+                              <h6 class="mb-2 text-theme fw-bold">Patient Information</h6>
+                             <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="{!c.termsConidtionSelect}"></input>
+                                <label class="form-check-label ps-3" for="flexCheckDefault">
+                                  I have verified the patient's name and date of birth above and would like to disenroll the patient.
+                                </label>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pt-2">
+                           <div class="border-start ps-3">
+                            <h5 class="text-theme mb-3 ps-2 fw-bold"><i class="fa fa-info pe-2"></i> Information</h5>
+                            
+                            <p class="font-sm mb-0">Used to disenroll a patient. If applicable, report pregnancies to the {!$Label.c.Macitentan_Containing_Products_REMS} by calling 1-888-572-2934. Report adverse events to FDA by visiting www.fda.gov/medwatch or call 1-800-FDA-1088. A representative may reach out for additional questions.</p>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 pt-3" style="border-radius: 0px;">
+                    <div class=" card-footer  border-0" >
+                    <a  class="btn-theme float-end text-uppercase text-white text-decoration-none" onclick="{!c.disenrollPatient}">Disenroll Patient</a>
+                </div>
+                </div>
+        </div>
+       
+    </section>
+</aura:component>

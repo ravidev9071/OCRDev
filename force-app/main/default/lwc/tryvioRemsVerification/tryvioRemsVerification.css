@@ -1,0 +1,21 @@
+.slds-table_cell-buffer tr>th:first-child, .slds-table_cell-buffer tr>td:first-child, .slds-table--cell-buffer tr>th:first-child, .slds-table--cell-buffer tr>td:first-child {
+	padding-left: 0px;
+}
+
+.slds-table {
+    table-layout: fixed;
+}
+
+.slds-table thead th {
+    background: #164194;
+    color: white;
+}
+
+.slds-combobox__form-element.slds-input-has-icon.slds-input-has-icon_right button {
+	padding: 6px;
+    border-radius: 0px;
+}
+.slds-select_container:before {
+    border-bottom: 5px solid currentColor;
+    top: calc((var(--lwc-lineHeightButtonSmall, 1.75rem) / 2) - 6px);
+}

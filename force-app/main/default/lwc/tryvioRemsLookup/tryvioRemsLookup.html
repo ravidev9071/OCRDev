@@ -1,0 +1,256 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageTitle">
+            <div class="slds-text-heading_medium">TRYVIO<sup>&trade;</sup> REMS</div>
+            <div class="slds-text-heading_large"><img class="iconImg" src={iconLookup}> Prescriber/Pharmacy
+                Lookup</div>
+        </div>
+        <div class="pageContainer">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+                        <div class="slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                            <div class="slds-col--padded slds-size_12-of-12">
+                                <div class="comm-content-header comm-layout-column">
+                                </div>
+                                <div class="locatorContainer">
+                                    <div class="slds-grid slds-grid_align-center">
+                                        <div class="slds-col slds-size_12-of-12 slds-medium-size_8-of-12">
+                                            <div class="locatorContent">
+                                                <p>Use the Online Locator tool to search for a specific location on a
+                                                    map view.</p>
+                                                <a href="tryvioremslocator"
+                                                    class="slds-button btnLink btnGrey   slds-grid_align-center xxxslds-button_full-width"
+                                                    tabindex="0">
+                                                    <img src={iconLocation}>Online Locator for Certified
+                                                    Prescribers and Pharmacies</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="frmContainer">
+                                    <article class="slds-card " part="card">
+                                        <div class="slds-card__header slds-grid">
+                                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                <div class="slds-media__figure"></div>
+                                                <div class="slds-media__body">
+                                                    <h2 class="slds-card__header-title">
+                                                        <span>Prescriber or Pharmacy Lookup</span>
+                                                    </h2>
+                                                </div>
+                                            </header>
+                                        </div>
+                                        <div class="slds-card__body  slds-card__body_inner" part="body">
+                                            <p class="frmInstructions">Select a Participant Type and enter a Name, NPI,
+                                                State, or Zip Code to limit the search results.</p>
+                                            <fieldset class="slds-form-element">
+                                                <legend class="slds-form-element__legend slds-form-element__label">
+                                                    <abbr class="slds-required" title="required">* </abbr>Certified
+                                                    Participant Type:</legend>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-radio_button-group">
+                                                        <span class="slds-button slds-radio_button">
+                                                            <input type="radio" name="rbType" id="rbType1" value="Prescribers"  onchange={handleChangeRadio}>
+                                                            <label class="slds-radio_button__label" for="rbType1">
+                                                                <span class="slds-radio_faux">Prescribers</span>
+                                                            </label>
+                                                        </span>
+                                                        <span class="slds-button slds-radio_button">
+                                                            <input type="radio" name="rbType" id="rbType2" value="Pharmacies"  onchange={handleChangeRadio}>
+                                                            <label class="slds-radio_button__label" for="rbType2">
+                                                                <span class="slds-radio_faux">Pharmacies</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label" for="text-input-id-0"> Name,
+                                                    NPI, State, or Zip Code</label>
+                                                <div class="slds-form-element__control"><input id="text-input-id-0"
+                                                        placeholder="" type="text" class="slds-input" value={inputVal} onchange={handleChange}/></div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-card__footer" part="footer">
+                                            <slot name="footer">
+                                                <div slot="footer">
+                                                        <button
+                                                            onclick={handleSearch}
+                                                            class="slds-button  slds-button_brand" aria-disabled="false"
+                                                            type="button" part="button" kx-scope="button-brand"
+                                                            kx-type="ripple">Search</button>
+                                                </div>
+                                            </slot>
+                                        </div>
+                                    </article>
+                                </div>
+                            <template if:true={showTable}>
+                                <template if:true={showHCS}>
+                                    <div id="HCSResults" >
+                                        <div class="slds-m-top_xx-large"></div>
+                                        <h2 id="element-with-table-label"
+                                            class="slds-text-heading_medium slds-m-bottom_xx-small">Certified Pharmacies</h2>
+                                        <table
+                                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                                            aria-labelledby="element-with-table-label other-element-with-table-label">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th aria-sort="ascending"
+                                                        class="xxxslds-is-resizable slds-is-sortable slds-is-sorted slds-is-sorted_asc slds-cell_action-mode"
+                                                        scope="col">
+                                                        <a class="slds-th__action slds-text-link_reset" href="#"
+                                                            role="button" tabindex="0">
+                                                            <span class="slds-assistive-text">Sort by: </span>
+                                                            <div
+                                                                class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                                <span class="slds-truncate" title="Name">Name</span>
+                                                                <span
+                                                                    class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                    <img src={iconSortAsc}>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                        <span class="slds-assistive-text" aria-live="polite"
+                                                            aria-atomic="true">Sorted ascending</span>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="Address">Address</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="City">City</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="State">State</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="ZIP Code">ZIP Code</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="ZIP Code">Phone</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="Pharmacy Type">
+                                                            Inpatient/Outpatient</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="Pharmacy Type">Pharmacy Type</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={visibileContacts} for:item="record">
+                                                    <tr key={record.Id} class="slds-hint-parent">
+                                                        <td><div class="slds-truncate" title=" ">{record.Name}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__Address_Line_1__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__City__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__State__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__Zip__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.Phone}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.recType}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.Type}</div></td>
+                                                        <!-- Add more table cells for additional fields -->
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end results-->
+                                </template>
+                                <!--  PRESCRIBER RESULTS   -->
+                                <template if:true={showHCP}>
+                                    <div id="HCPResults">
+                                        <div class="slds-m-top_xx-large"></div>
+                                        <h2 id="element-with-table-label1"
+                                            class="slds-text-heading_medium slds-m-bottom_xx-small">Certified Prescribers
+                                        </h2>
+                                        <table
+                                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                                            aria-labelledby="element-with-table-label other-element-with-table-label">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th aria-sort="ascending"
+                                                        class="xxxslds-is-resizable slds-is-sortable slds-is-sorted slds-is-sorted_asc slds-cell_action-mode"
+                                                        scope="col">
+                                                        <a class="slds-th__action slds-text-link_reset" href="#"
+                                                            role="button" tabindex="0">
+                                                            <span class="slds-assistive-text">Sort by: </span>
+                                                            <div
+                                                                class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                                <span class="slds-truncate" title="Last Name">Last
+                                                                    Name</span>
+                                                                <span
+                                                                    class="slds-icon_container slds-icon-utility-arrowdown">
+                                                                    <img src={iconSortAsc}>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                        <span class="slds-assistive-text" aria-live="polite"
+                                                            aria-atomic="true">Sorted ascending</span>
+                                                    </th>
+                                                    <th class="slds-is-sortable slds-is-sorted slds-is-sorted_asc"
+                                                        scope="col">
+                                                        <div class="slds-truncate" title="First Name">First Name</div>
+                                                    </th>
+
+                                                    <th class="slds-is-sortable slds-is-sorted slds-is-sorted_asc"
+                                                        scope="col">
+                                                        <div class="slds-truncate" title="NPI Number">NPI Number</div>
+                                                    </th>
+
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="Address">Address</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="City">City</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="State">State</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="ZIP Code">ZIP Code</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="Phone">Phone</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={visibileContacts} for:item="record">
+                                                    <tr key={record.Id} class="slds-hint-parent">
+                                                        <td><div class="slds-truncate" title=" ">{record.LastName}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.FirstName}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__NPI__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__Address_Line_1__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__City__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__State__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.US_WSREMS__Zip__c}</div></td>
+                                                        <td><div class="slds-truncate" title=" ">{record.Phone}</div></td>
+                                                        <!-- Add more table cells for additional fields -->
+                                                    </tr>
+                                                </template>
+     
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </template>
+                                <template if:true={showPagination}>
+                                    <c-xiaflex-_-lookup-screen-pagination all-items={records} page-size="5" onupdate={updateRecords}></c-xiaflex-_-lookup-screen-pagination>  
+                                  </template>
+                            </template>
+                         <template if:true={showError}>
+                              
+                             <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+                                 <span class="slds-icon_container slds-icon-utility-error slds-m-right_small" title="Error">
+                                     <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+                                 </span>
+                                 <h2 class="slds-text-heading_small">{noRecordMessage}</h2>
+                             </div>
+                         </template>
+                            </div> <!-- end col-->
+                        </div> <!-- end row    -->
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

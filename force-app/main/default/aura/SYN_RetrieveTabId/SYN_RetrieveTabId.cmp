@@ -1,0 +1,8 @@
+<!--This component is for fetching parent Tab Id.This is placed in record detail page-->
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="tabId" type="String"/>
+    <aura:registerEvent name="SendTabIdEvent" type="c:SYN_SendTabIdEvent"/>
+    <aura:handler event="c:SYN_InformTabIdEvent" action="{!c.handleInformEvent}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.getEnclosingTabId}"/>
+   </aura:component>

@@ -1,0 +1,97 @@
+<template>
+	<template lwc:if={displaySpinner}>
+		<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+	</template>
+	<div>
+		<lightning-progress-indicator type="path" variant="base">
+			<lightning-progress-step label="Education Program" value="1" onclick={onclickFrstProgressBar}
+				class="educationProgram"></lightning-progress-step>
+			<lightning-progress-step label="Knowledge Assessment" value="2" onclick={onclickFrstProgressBar2}
+				class="knowledgeProgram"></lightning-progress-step>
+			<lightning-progress-step label="Complete Enrollment" value="3" onclick={onclickFrstProgressBar3}
+				class="completeProgram"></lightning-progress-step>
+		</lightning-progress-indicator>
+	</div>
+	<template lwc:if={showEducation}>
+		<div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+			<div class="pageContainer">
+				<div class="pageContent">
+					<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+						<div class="slds-col--padded comm-content-header comm-layout-column">
+							<div data-region-name="content">
+								<div data-priority="" class="ui-widget">
+									<div class="slds-text-heading_large">AVEED<sup>&reg;</sup> REMS Education Program
+										for Healthcare Providers</div>
+									<div class="slds-text-heading_medium">This Education Program Includes Information
+										About:</div>
+									<ul class="listItemDisc">
+										<li>AVEED REMS requirements</li>
+										<li>Serious POME reactions and anaphylaxis with AVEED injection</li>
+										<li>Proper administration of AVEED</li>
+										<li>Counseling your patient</li>
+										<li>Required Knowledge Assessment</li>
+									</ul>
+									<div class="slds-border_top slds-p-vertical_medium"></div>
+									<div class="slds-text-heading_medium">Review Materials</div>
+									<div class="slds-grid slds-wrap slds-gutters">
+										<div
+											class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_12-of-12">
+											<p class="slds-m-vertical_medium">You must click on the link to view the&nbsp;
+												<span class="docEmphasis">Education Program for Healthcare
+													Providers</span>&nbsp;before you can proceed to the Knowledge Assessment.
+												The document will open up in a new window for you to view and/or
+												download.
+											</p>
+											<template if:true={isDisplayFiles}>
+												<div class="resourceItem">
+													<div class="resourceName"><a
+															onclick={previewHandler}>{filename_educationprogram}</a>
+														<template if:true={showNext}>
+															<span class="resourceCheck" id="IconChecked"><img
+																	src={iconCheck}></span>
+														</template>
+													</div>
+												</div>
+											</template>
+										</div>
+									</div> <!-- end col  -->
+								</div> <!-- end row  -->
+								<div class="slds-border_top slds-m-top_xx-large"></div>
+								<template if:true={showNext}>
+									<lightning-button id="BtnReviewNext"
+										class=" slds-align_absolute-center slds-m-top_large brand-button"
+										variant="brand" label="Next" onclick={showConfirmation}></lightning-button>
+								</template>
+								<template if:false={showNext}>
+									<lightning-button class="slds-align_absolute-center slds-m-top_large "
+										variant="brand" disabled="true" label="Next"></lightning-button>
+								</template>
+							</div> <!-- end layout   -->
+						</div>
+					</div> <!-- end SF   -->
+				</div> <!-- end pageContent   -->
+			</div> <!-- end pageContainer   -->
+		</div> <!-- end main   -->
+	</template>
+	<template lwc:if={showConfirmationmsg}>
+		<div data-region-name="content">
+			<div data-priority="" class="ui-widget">
+				<div class="slds-text-heading_large">AVEED<sup>&reg;</sup> REMS Education Program for Healthcare
+					Providers Confirmation</div>
+
+				<div class="sxxlds-p-vertical_small"></div>
+				<div class="slds-text-heading_medium">Knowledge Assessment is required before you can complete
+					enrollment in the AVEED REMS.</div>
+
+				<div class="slds-m-top_medium"></div>
+				<p>You may proceed to <b>Knowledge Assessment</b> on the following page.</p>
+
+				<div class="slds-border_top slds-m-top_xx-large"></div>
+				<div class="slds-align_absolute-center">
+					<lightning-button class="slds-align_absolute-center slds-m-top_large brand-button" variant="brand"
+						label="Knowledge Assessment" onclick={startKA}></lightning-button>
+				</div>
+			</div> <!-- end layout   -->
+		</div>
+	</template>
+</template>

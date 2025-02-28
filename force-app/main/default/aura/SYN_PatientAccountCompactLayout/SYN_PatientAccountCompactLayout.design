@@ -1,0 +1,5 @@
+<design:component>
+		<design:attribute name="recordId" label="recordId" description="recordId" />
+    <design:attribute name="portalName" label="Please Enter Portal Name" description="" />
+    <design:attribute name="buttonLabel" label="Please Enter Button Label" description="" />
+</design:component>

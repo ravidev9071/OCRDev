@@ -1,0 +1,164 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageContent">
+            <div data-aura-rendered-by="89:2;a" class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                <div class=" slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                    <div
+                        class="slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-right_large right-border">
+                        <div class="xxxslds-col--padded comm-content-header comm-layout-column">
+                            <div class="slds-text-heading_large">Healthcare Setting &amp; Healthcare Provider Locator
+                            </div>
+                        </div>
+                        <div class="frmContainer">
+                            <article class="slds-card " part="card">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__figure"></div>
+                                        <div class="slds-media__body">
+                                            <h2 class="slds-card__header-title">
+                                                <span></span>
+                                            </h2>
+                                        </div>
+                                    </header>
+                                </div>
+                                <div class="slds-card__body  slds-card__body_inner" part="body">
+                                    <p class="frmInstructions">Select the participant type, Street Address, City,
+                                        State, or Zip Code, and click "Search".</p>
+                                    <template if:true={participantValidation}>
+                                        <div class="slds-text-body_small slds-text-color_error">Please select the
+                                            participant type to search.</div>
+                                    </template>
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-form-element__legend slds-form-element__label">
+                                            <abbr class="slds-required" title="required">* </abbr>Participant
+                                        </legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="slds-radio">
+                                                <input type="radio" id="rb-1" value="Prescribing" name="rbPart"
+                                                    label="Prescribing Healthcare" onchange={handleChangeRadio}>
+                                                <label class="slds-radio__label" for="rb-1">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">Prescribing Healthcare
+                                                        Providers</span>
+                                                </label>
+                                            </span>
+                                            <span class="slds-radio">
+                                                <input type="radio" id="rb-2" value="HealthcareSetting" name="rbPart"
+                                                    label="Healthcare Settings" onchange={handleChangeRadio}>
+                                                <label class="slds-radio__label" for="rb-2">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label">Healthcare Settings</span>
+                                                </label>
+                                            </span>
+
+                                        </div>
+                                    </fieldset>
+                                    <div class="slds-grid slds-wrap">
+                                        <!-- RT 14-10-24 changes -->
+                                        <div class="slds-form-element slds-col slds-size_12-of-12 slds-medium-size_8-of-12">
+                                            <legend class="slds-form-element__legend slds-form-element__label">
+                                                <abbr class="slds-required" title="required">* </abbr>Street Address,
+                                                City, State, or Zip Code
+                                            </legend>
+                                            <div class="">
+                                                <lightning-input id="text-input-id-0" data-cmp="addressTextBox"
+                                                    type="text"
+                                                    class="slds-col slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_12-of-12"
+                                                    value={address} onchange={handleAddressChange}></lightning-input>
+                                            </div>
+                                        </div>
+                                        <!-- RT 14-10-24 changes -->
+                                        <div class="slds-form-element slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-p-left_xxx-small">
+                                            <legend class="slds-form-element__legend slds-form-element__label">
+                                                <abbr class="slds-required" title="required">* </abbr>Search Radius
+                                            </legend>
+                                            <div class="slds-form-element">
+                                                <label class="slds-form-element__label" for="select-01"></label>
+                                                <div class="slds-form-element__control">
+                                                    <div class="slds-select_container">
+                                                        <select class="slds-select" id="select-01"
+                                                            onchange={handleRadiusChange} name="radiusfield">
+                                                            <template for:each={radiusOptions} for:item="op">
+                                                                <option key={op.value}>{op.label}</option>
+                                                            </template>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="slds-card__footer">
+                                    <lightning-button label="Search" variant="brand" onclick={handleSearch}>
+                                    </lightning-button>
+                                </div>
+                            </article>
+                        </div>
+                        <template if:true={showResults}>
+                            <template if:true={showHCP}>
+                                <h2 class="slds-text-heading_medium slds-m-top_xx-large">Certified Prescribing
+                                    Healthcare Providers
+                                </h2>
+                            </template>
+                            <template if:true={showHCS}>
+                                <h2 class="slds-text-heading_medium slds-m-top_xx-large">Certified Healthcare Setting
+                                </h2>
+                            </template>
+                            <c-aveed-map-locator map-markers={paramMapMarkers} list-view-type="hidden"
+                                zoom-type={radius}></c-aveed-map-locator>
+                            <template if:true={showHCP}>
+                                <h2 class="slds-text-heading_medium slds-m-top_xx-large">Certified Prescribing
+                                    Healthcare Providers Locations
+                                </h2>
+                            </template>
+                            <template if:true={showHCS}>
+                                <h2 class="slds-text-heading_medium slds-m-top_xx-large">Certified Healthcare Setting
+                                    Locations
+                                </h2>
+                            </template>
+                            <div class="locatorResults">
+                                <div class="map" style="position: relative; overflow: hidden;">
+                                    <div class="locationList" style="justify-content: normal !important">
+                                        <template for:each={locations} for:item="location">
+                                            <div key={location.id} class="locationItem">
+                                                <div class="locDtls">
+                                                    <div class="locName">
+                                                        <span class="locPin"><img src={locationPin}
+                                                                alt="Location Pin"></span>
+                                                        {location.name}
+                                                    </div>
+                                                    <div class="locAddr">
+                                                        <div>{location.address}</div>
+                                                        <div>{location.city}</div>
+                                                        <div>{location.state}</div>
+                                                        <div>{location.zip}</div>
+                                                    </div>
+                                                    <div class="locPhone">{location.phone}</div>
+                                                </div>
+
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:true={showError}>
+                            <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+                                <span class="slds-icon_container slds-icon-utility-error slds-m-right_small"
+                                    title="Error">
+                                    <lightning-icon icon-name="utility:error" size="small" alternative-text="Error">
+                                    </lightning-icon>
+                                </span>
+                                <h2 class="fontWhite slds-text-heading_small">{noRecordMessage}</h2>
+                            </div>
+                        </template>
+                    </div>
+
+                </div> <!-- end row    -->
+                <div class="clear" data-aura-rendered-by="62:2;a"></div>
+            </div>
+        </div>
+    </div>
+</template>

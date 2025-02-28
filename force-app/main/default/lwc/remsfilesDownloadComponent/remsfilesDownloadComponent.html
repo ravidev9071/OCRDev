@@ -1,0 +1,60 @@
+<!--
+Author      : Shikha Chaurasia
+Date        : 07-06-2022
+Description : This Component is used on community site for download file. 
+-->
+<template>
+  
+     <!-- <lightning-card title="Resources for Download">
+     <template if:true={isDisplayFiles}>
+      <div class="slds-scrollable_y" style="height:15rem;">
+        <template for:each={filesList} for:item="file">
+          <div key={file.value} class="slds-box slds-box_x-small  slds-float_right">
+            <div
+              class="slds-col slds-large-size_7-of-12 slds-medium-size_7-of-12 slds-size_12-of-12 slds-p-horizontal_small ">
+              {file.label}
+            </div>
+            <div class="slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_12-of-12 slds-p-left_x-large">
+              <a href={file.url} download>
+                <lightning-button class="slds-p-left_x-large" variant="base" icon-name="utility:download">
+                </lightning-button>
+              </a>
+            </div>
+            <div class="slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_12-of-12 slds-p-left_x-large">
+              <lightning-button icon-name="action:preview" variant="base"
+               class="slds-p-left_x-large" data-previewurl={file.previewurl} data-id={file.value}
+                onclick={previewHandler}>
+              </lightning-button>
+            </div>
+          </div>
+        </template>
+      </div>
+    </template> -->
+
+    <template if:true={isDisplayFiles}>
+      
+        <template for:each={filesList} for:item="file">
+          <div class=" slds-box rems-container" key={file.value}>
+            <div  class="rems-item ">
+              {file.label}
+            </div>
+            <div  class="rems-item-small ">
+              <a href={file.url} download>
+                <lightning-button  variant="base" icon-name="utility:download">
+                </lightning-button>
+              </a>
+              <lightning-button icon-name="action:preview" variant="base"
+                 data-previewurl={file.previewurl} data-id={file.value}
+                  onclick={previewHandler}>
+                </lightning-button>
+            </div>
+  
+          </div>
+
+        </template>
+    
+    </template>
+
+    
+  
+</template>

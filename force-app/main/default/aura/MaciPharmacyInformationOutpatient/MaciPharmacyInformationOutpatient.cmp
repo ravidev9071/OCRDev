@@ -1,0 +1,178 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> pharmacy information outpatient { Middle Context }
+-->
+
+<aura:component controller ="MaciPortalCustomController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="programId" type="string" default =""/>
+    <aura:attribute name="profileId" type="string" default =""/>
+    <aura:attribute name="userrole" type="string" default =""/>
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+    <aura:attribute name="ShowNPIInfo" type="boolean" default="false"/>
+    
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+   
+    <aura:registerEvent name="ShowOutPatinetScreens" type="c:MaciShowOutPatientPharmacyEnrollmentScreen"/>
+    
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: right;height:46vw;">
+              <!--loading spinner start-->
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+        
+        <div class="container-fluid px-5 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="card p-0 rounded-0 h-100">
+                         <div class="card-header border-0 crd-hdr-m bg-blue-header">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-5">
+                                    <div class="row d-flex justify-content-left align-items-center">
+                                        <div class="col-lg-1 col-sm col-1 text-end pe-3">
+                                            <i class="fa fa-file-text fa-2x heading-i"></i>
+                                        </div>
+                                        <div class="col-lg-9 col-sm col-10 ps-2">
+                                            <h5 class="card-title mt-2 d-block heading-h fs-3">
+                                               Pharmacy Enrollment</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 modify-pro px-0">
+                                    <div class="progressbar mb-5">
+                                        <div class="progress" id="progress"></div>
+										<div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY TYPE SELECTION </span>
+                                        </div>
+                                        <div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                          <span>INSTRUCTIONS</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AUTHORIZED REPRESENTATIVE INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span class="text-theme"><em>PASSWORD</em></span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                            <span>PHARMACY INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step last-step"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                        <aura:if isTrue="{!v.pharmacyType == 'Inpatient Pharmacy'}">
+                                            <div class="progress-block">
+                                                <div class="progress-step last-step"></div>
+                                                <span>COMPLETE</span>
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="card-body llc-dv-16">
+                            <div>
+                                <h5 class="mb-3 text-theme">Pharmacy Information</h5>
+
+                            </div>
+                            <div class="row d-flex justify-content-center ">
+                                <div class="col-lg-5 mb-3">
+                                    <div class="card-bg">
+                                        <div class="card-header">
+                                            <div class="card-section">
+                                                <img src="/resource/MaciImages/img/rx1.png" alt=""  style="margin: 6px;width:30px"></img>
+                                                <p>Outpatient pharmacy</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4>Outpatient Pharmacy</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 mb-3">
+                                    <p class="mb-0">Please provide an organizational NPI number</p>
+                                    <div class="d-flex align-items-center" style="margin: -20px 0px;">
+                                        <img src="/resource/MaciImages/img/rx1.png" alt="" style="width:18px" class="mx-3"></img>
+                                        <div class="col-md-9">
+                                           <div class="input-group">
+                                               <lightning:input type="text" aura:id="npi" placeholder="Enter NPI number" class="form-control" value="{!v.newCase.US_WSREMS__NPI__c}" maxlength="10" onchange="{!c.handleChange}"/>
+                                                   <div lightning-input_input="" class="slds-form-element__help" id="help-message-6" data-help-message="" role="alert"></div>
+                                                    <lightning:formattedText aura:id="npimsg" class="slds-hide colorClass"  value=""/>
+                                                   <button name="find-number" id="find-number"
+                                                        class="btn btn-outline-secondary rounded-0 find-number"
+                                                        type="button" onclick="{!c.findProviderInfo}">FIND</button>
+                                                    <i class="fa fa-info py-2 px-3 border-end" title="The NPI number is a unique, 10-digit identification number for covered pharmacies. The Macitentan REMS requires the pharmacy&apos;s active NPI number in order to certify in the REMS. When the NPI number is entered here and found, the Macitentan REMS retrieves the pharmacy&apos;s NPI registration information." style="border-right: 1px solid #dee2e6!important;"></i>    
+                                               </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <aura:if isTrue="{!v.ShowNPIInfo}">
+                                        <div class="col-lg-11 card-form">
+                                            <div class="card-body text-theme">
+                                                <h6 class="fw-bold mb-0">NPI Information</h6>
+                                                <p class="mb-0">{!v.newCase.US_WSREMS__Name__c}</p>
+                                                <div class="mailing-address">
+                                                    <p class="mt-2 mb-0">Mailing Address</p>
+                                                    <p id="address-line-1" class="mb-0">{!v.newCase.US_WSREMS__Address_Line_1__c}</p>
+                                                    <p id="address-line-2" class="mb-0">{!v.newCase.US_WSREMS__City__c},&nbsp;{!v.newCase.US_WSREMS__State__c}&nbsp;{!v.newCase.US_WSREMS__REMS_Zip_Code__c}</p>
+                                                </div>
+                                                <p class="mb-0">( <i class="fa fa-star"></i> = Primary )</p>
+                                                <p class="mb-5"><i class="fa fa-star"></i> - Pharmacy</p>
+                                            </div>
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </div>
+
+                        </div>
+                       <!-- <div class="card-footer border-top-0">
+                            <div class="row my-2">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <a href="authorized-representative-information" name="button-previous"
+                                            class="btn btn-secondary rounded-0 my-2">
+                                            <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                    </div> 
+                                    <div>
+                                        <a href="outpatient-pharmacy-agreement" name="button-next"
+                                            class="btn btn-primary-m my-2 pull-right rounded-0">NEXT <i
+                                                class="fa fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                         <div class="card-footer border-0 crd-hdr-m">
+                <div class="row">
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <a name="button-next" 
+                        class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i
+                            class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+	
+</aura:component>

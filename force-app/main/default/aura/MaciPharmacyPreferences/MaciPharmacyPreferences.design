@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="programId" label="Program Name" datasource="apex://REMSPortalProgramPickListCtr" />
+    <design:attribute name="pharmacyType" label="Pharmacy Type" />
+</design:component>

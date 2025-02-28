@@ -1,0 +1,141 @@
+<!--add implements="forceCommunity:availableForAllPageTypes" to surface the component in community builder-->
+<aura:component controller="REMSDigitalSiteLightningLoginForm" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="backgroundImageURL" type="String" required="false" description="" default="false" />
+    <aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    <aura:attribute name="usernameLabel" type="String" required="false" default="Username" access="global"/>
+    <aura:attribute name="passwordLabel" type="String" required="false" default="Password" access="global"/>
+    <aura:attribute name="loginButtonLabel" type="String" required="false" default="Log in" access="global"/>
+    <aura:attribute name="expid" type="String" required="false" description="The branding experience ID" />        
+    <aura:attribute name="programName" type="String" required="true" description="Program Name" access="global"/>
+    <aura:attribute name="programType" type="String" required="true" description="Program Type" access="global"/>
+    <aura:attribute name="forgotPasswordLabel" type="String" required="false" default="Forgot your password?" access="global"/>
+    <aura:attribute name="selfRegisterLabel" type="String" required="false" default="Not a member?" access="global"/>
+    <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/ForgotPassword" access="global"/>
+    <aura:attribute name="selfRegisterUrl" type="String" required="false" default="/SelfRegister" access="global"/>
+    <aura:attribute name="isUsernamePasswordEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="isSelfRegistrationEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
+    <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
+    <ltng:require styles="{!$Resource.xiaflex_customcss}"  />
+ 	<aura:attribute name="options" type="List" default="[
+    {'label': 'Prescribing Healthcare Provider', 'value': 'PR'},
+    {'label': 'Healthcare Setting Authorized Representative', 'value': 'AR'}
+    ]"/>
+    <aura:attribute name="optionsMDP" type="List" default="[
+    {'label': 'Prescribing Healthcare Provider', 'value': 'PR'},
+    {'label': 'Pharmacy/Healthcare Setting Authorized Representative', 'value': 'AR'}
+    ]"/>
+    <aura:attribute name="value" type="String" default=""/>
+
+    <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <aura:dependency resource="c:setStartUrl" type="EVENT"/>
+    <!-- Please uncomment
+    <aura:dependency resource="siteforce:registerQueryEventMap" type="EVENT"/>
+    -->
+    <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/>
+    <aura:handler event="c:setExpId" action="{!c.setExpId}"/>    
+    <aura:dependency resource="c:setExpId" type="EVENT"/> 
+    
+    <aura:renderIf isTrue="{!v.isUsernamePasswordEnabled}">
+        <div class="slds-m-left_large">
+            <div class="">
+                <div class=" slds-grid slds-gutters slds-wrap slds-large-nowrap"> 
+                    <div class=" slds-col--padded slds-size_12-of-12">	
+                        
+                        <aura:if isTrue="{!v.programType == 'REMS'}">
+                        <div class="slds-text-heading_large slds-m-left_small">
+                            Log In / Sign Up
+                        </div>
+                        <aura:set attribute="else">
+                                    <div>     </div>
+                            </aura:set>
+                        </aura:if>
+                        <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_10-of-12">
+                            
+                            <span>
+                                <aura:renderIf isTrue="{!v.showError}">
+                                    <div id="error">
+                                        <ui:outputRichText value="{!v.errorMessage}"/>
+                                    </div>
+                                </aura:renderIf>
+                            </span>  
+                            
+                            <div class="frmContainer login slds-m-vertical_large">
+                                <article class="slds-card" part="card">
+                                    <div class="slds-card__header slds-grid" style="{!'background:' + v.backgroundColor + ' url(' + $Resource.xiaflex_bgBlue +') no-repeat;background-position: center;background-size: cover;'}" >
+                                        <header
+                                                class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure"></div>
+                                            <div class="slds-media__body">
+                                                <h2 class="slds-card__header-title">
+                                                    <span>Log In</span>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                    <div class="slds-card__body slds-card__body_inner" part="body">
+                                        <p class="frmInstructions">
+                                            <span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span>
+                                                field required</span>
+                                        </p>
+                                    
+   
+
+    
+                                          <aura:if isTrue="{!v.programType == 'REMS'}">
+                                              <lightning:radioGroup name="radioButtonGroupRequired"
+                                                  label=" I am a:"
+                                                  options="{! v.options }"
+                                                  value="{!v.value}"
+                                                  type="radio"
+                                                  required="true"/>
+                                            <aura:set attribute="else">
+                                                <lightning:radioGroup name="radioButtonGroupRequired"
+                                                  label=" I am a:"
+                                                  options="{! v.optionsMDP }"
+                                                  value="{!v.value}"
+                                                  type="radio"
+                                                  required="true"/>
+                                                </aura:set>
+                                            </aura:if>
+                                        <div class="slds-form-element__control slds-grow">
+                                            
+                                            <div part="input-text">
+                                                <label  class="slds-form-element__label slds-no-flex"><abbr class="slds-required" title="required">*</abbr> Email</label>
+                                                <ui:inputText value="" aura:id="username" placeholder="{!v.usernameLabel}" keyup="{!c.onKeyUp}"
+                                                              class="slds-form-element__control slds-grow slds-input" label="Email Address" 
+                                                              labelClass="assistiveText" />
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="slds-form-element__control slds-grow">
+                                            
+                                            <div part="input-text">
+                                                <label class="slds-form-element__label slds-no-flex" ><abbr class="slds-required" title="required">*</abbr> Password</label>
+                                                <ui:inputSecret value="" aura:id="password" placeholder="{!v.passwordLabel}" keyup="{!c.onKeyUp}"
+                                                                class="slds-form-element__control slds-grow slds-input" label="Password" labelClass="assistiveText" />
+                                            </div>
+                                        </div>
+                                        <p class="txtInstructions slds-m-bottom_xx-large">
+																			<a class="forgotColor" href="{!if(v.communityForgotPasswordUrl == null, v.forgotPasswordUrl, v.communityForgotPasswordUrl)}">Forgot your password?</a></p>
+                                        <div class="slds-card__footer" part="footer">
+                                            <ui:button class="slds-button slds-m-top_large slds-button_brand" press="{!c.handleLogin}"  label="{!v.loginButtonLabel}" />
+                                        </div> 
+                                        
+                                    </div>
+                                    
+                                </article>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aura:renderIf>
+</aura:component>

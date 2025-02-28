@@ -1,0 +1,11 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="remsServicId" type="String"/>
+    <aura:attribute name="isPrevious" type="String"/>
+    <aura:attribute name="childselectedServiceId" type="String"/>
+    <aura:attribute name="childselectedREMSServiceId" type="String"/>
+    <aura:attribute name="childselectedRecordTypeName" type="String"/>
+    <aura:attribute name="childlayoutList" type="String"/>
+    <aura:attribute name="childselectedREMS" type="Object"/>
+    <aura:attribute name="childselectedId" type="String"/>
+    <aura:attribute name="childreqType" type="String"/>
+</aura:event>

@@ -1,0 +1,294 @@
+<!--
+  @File Name          : ParticipantEnrollment
+  @Description        : Aura to Implement ParticipantEnrollment functionality
+  @Author             : Wilco
+  @Apex Class         : REMSParticipantEnrollmentController
+  
+  
+  @Modification Log   :
+  Ver       Date            Author              		    Modification
+  1.0      07/20/2021      Priya (Wilco)			      Initial Implementation
+  2.0	  11/ 04/2021	   Chaitanya Nandamuri(Wilco)	  UI renovation (Section headers, Accordions , Cards)
+  3.0     02/10/2023       Chaitanya Nandamuri(Wilco)     Moving getPageLayoutforRequestorType function to helper to support Fax tranformation process
+-->
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+                access="global" controller="SYN_ParticipantEnrollmentController">
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="layoutSections" type="List" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:attribute name="fieldName" type="String" default="StageName" />
+    <aura:attribute name="objectName" type="String" default="Case" />
+    <aura:attribute name="layoutName" type="String" />
+    <aura:attribute name="caseRecordTypeId" type="String" />
+    <aura:attribute name="ActionName" type="String" />
+    <aura:attribute name="body" type="String" />
+    <aura:attribute name="requestorType" type="String" />
+    <aura:attribute name="requestorTypeBooleanPatientChecklist" type="Boolean" default="false"/> <!-- Added for BT-6825 - 33 -->
+    <aura:attribute name="condition" type="Boolean" default="false"/>
+    <aura:attribute name="REMSServiceId" type="String" />
+    <aura:attribute name="activeSections" type="List"  />
+    <aura:attribute name="remsRecord" type="Object"/>
+    <aura:attribute name="validationResult" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="requestorFName" type="String" />
+    <aura:attribute name="requestorLName" type="String" />
+    <aura:attribute name="docDetailIdVal" type="String" access="global"/>
+    <aura:attribute name="requestorStatus" type="String" /> <!--//BT-6825-253 -->  
+    <aura:attribute name="remsRecordTypeName" type="String" /> <!--//BT-6825-253 -->
+    <aura:attribute name="statusCondition" type="Boolean" default="false"/> <!--//BT-6825-253 -->
+    <aura:attribute name="errorBody" type="String" /> <!--//BT-6825-253 -->
+    <lightning:quickActionAPI aura:id="quickActionAPI" />
+    <aura:attribute name="programName" type="String" /> <!--//BT7433-62 Maci -->
+    <aura:attribute name="programNameStr" type="String" />
+    <aura:attribute name="remsPageTitle" type="String" />
+	<aura:attribute name="participantId" type="String" />
+    <aura:attribute name="currREMServiceParticipantId" type="String" />
+    <aura:attribute name="facilityId" type="String" />
+    <aura:attribute name="monitorParticipant" type="Boolean" default="false"/>
+   <aura:attribute name="caseId" type="String" access="global"/>
+    <aura:attribute name="distributionlink" type="String" access="global"/>
+    <aura:attribute name="recordId" type="String" access="global"/>
+    <aura:attribute name="calledByFaxTransfo" type="Boolean" default="false" access="global" />
+    <aura:attribute name="ButtonName" type="String" access="global" />
+    <lightning:messageChannel type="US_WSREMS__ReviewDocumentChannel__c" aura:id="REMSReviewDocumentChannel"/>
+    <aura:attribute name="programRecordType" type="String" />
+	<aura:attribute name="PharmacyName" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="options" type="List" default="[
+        {'label': 'Yes', 'value': 'Yes'},
+        {'label': 'No', 'value': 'No'},
+        ]"/>
+    <aura:attribute name="filetype" type="List" default="['.pdf','.jpeg']" />
+    <aura:attribute name="showUploader" type="Boolean" default="false" />
+     <aura:attribute name="showDiscrepanciesIdentified" type="Boolean" default="false" />
+     <aura:attribute name="DiscrepanciesIdentified" type="String"  />
+	 <aura:attribute name="attachmentChecked" type="Boolean" default="false"/>
+    <aura:attribute name="caseObj" type="Object" access="global"/>
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-card-wrapper{
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        
+        }
+        .slds-modal__container {
+        min-width: 60vw;
+        }
+    </aura:html>    
+    <lightning:card >
+        <p class="slds-p-horizontal_small">
+            <aura:if isTrue="{!v.showSpinner}">
+                <lightning:spinner />
+            </aura:if>
+            <force:recordData aura:id="remServiceLoader"
+                              recordId="{!v.recordId}"
+                              fields="US_WSREMS__REMSProgram__c ,US_WSREMS__REMSProgram__r.Name,US_WSREMS__Participant__c,US_WSREMS__Participant__r.Name,US_WSREMS__Participant__r.SYN_Facility__c "
+                              recordUpdated="{! c.handleRecordChanged }"
+                              targetFields="{!v.remsRecord}"
+                              targetError="{!v.recordLoadError}"
+                              />
+            <aura:if isTrue="{!!v.saved}">
+                <div class="slds-card-wrapper">
+                    <header>
+                        <h3 class="slds-text-heading_medium slds-text-align_center my-text_clr">
+                            
+                            <aura:if isTrue="{!v.condition}">
+                                <b>   {!v.body}  </b>
+                                <aura:set attribute="else">
+                                    <b> {!v.requestorType} Enrollment</b>
+                                </aura:set>
+                            </aura:if>
+                            
+                        </h3>
+                    </header>
+                    <article class="slds-card slds-card_boundary">
+                        <div class="slds-card__body slds-card__body_inner">     
+                            <lightning:recordEditForm aura:id="myform" onload="{!c.handleLoad}" onsubmit="{!c.handleSubmit}" recordId="{!v.caseId}"
+                                                      onsuccess="{!c.handleSuccess}" objectApiName="Case" recordTypeId = "{!v.caseRecordTypeId}" onerror = "{!c.handleError}" >
+                                <!-- the messages component is for error messages     -->
+                               <!-- <lightning:messages aura:id="OppMessage" />-->
+                                
+                                <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"  activeSectionName="{! v.activeSections }" >
+                                    
+                                    <aura:iteration items="{!v.layoutSections}" var="section">
+                                        <div class="slds-section slds-is-open">
+                                            <!--h3 class="slds-section__title">
+                                {!section.label}
+                            </h3-->
+                                            <lightning:accordionSection name="{!section.label}" label="{!section.label}">
+                                                
+                                                <div class="slds-section__content">
+                                                    <aura:if isTrue="{!and(section.label == 'Patient Information', v.layoutName == 'Case-SYN_Pre_Dispense_Layout', v.programName == 'Sodium Oxybate REMS') }">
+                                                    <aura:if isTrue="{!v.monitorParticipant}">
+                                                        <div style="color: rgb(234, 0, 30); font-size: 15px;"><b>Patient Alert: Review Risk Management Report!</b></div>
+                                                    </aura:if>
+                                                    </aura:if>
+                                                    <lightning:layout multipleRows="{!section.totalColumns > 1 }">
+                                                        
+                                                        <aura:iteration items="{!section.lstFields}" var="field">
+                                                            
+                                                            <lightning:layoutItem size="{! 12/section.totalColumns }" flexibility="auto">
+                                                                <aura:if isTrue="{!field.fieldName == 'US_WSREMS__REMS_Program__c'}">
+                                                                    <lightning:inputField aura:id="inputField" fieldName="US_WSREMS__REMS_Program__c" readonly="true" value="{!v.remsRecord.US_WSREMS__REMSProgram__c}" />
+                                                                    <aura:set attribute="else">
+                                                                        
+                                                                        
+                                                                        <aura:if isTrue="{!field.fieldName == 'US_WSREMS__Program_Picklist__c'}">
+                                                                        <!-- <aura:if isTrue="{!and(v.ActionName == 'MACI_RDA',v.programNameStr == 'Macitentan REMS')}"> -->
+                                                                                <lightning:inputField aura:id="inputField" fieldName="US_WSREMS__Program_Picklist__c" disabled="{!field.isReadOnly}" value="{!v.programNameStr}" />
+                                                                            <!-- <aura:set attribute="else">
+                                                                                 <lightning:inputField aura:id="inputField" fieldName="US_WSREMS__Program_Picklist__c" readonly="true" value="{!v.programNameStr}" />
+                                                                                </aura:set> -->
+                                                                         <!--   </aura:if> -->
+                                                                            <aura:set attribute="else">
+                                                                                
+                                                                                
+                                                                                <aura:if isTrue="{!and(field.isDatefield, !(field.isReadOnly)) }">
+                                                                                                                                                                                      
+                                                                                    <aura:if isTrue="{!field.fieldlabel == '4a. What was the most recent fill date?'}">
+                                                                                        <lightning:input aura:id="dateid" label="{!field.fieldlabel}" name="{!field.fieldName}" type="date"  dateStyle="short"
+                                                                                                         messageWhenBadInput="Your entry does not match the allowed DOB format MM/DD/YYYY" fieldLevelHelp="What was the Date of Fill (or Dispense Date) for the patient’s most recent dispense of the sodium oxybate product?"/>   
+                                                                                        <!--  <lightning:helptext content="What was the Date of Fill (or Dispense Date) for the patient’s most recent dispense of the sodium oxybate product?" /> -->
+                                                                                        <aura:set attribute="else">
+                                                                                            <aura:if isTrue="{!field.fieldlabel == 'Date Voicemail or Fax received'}">
+                                                                                                <lightning:input aura:id="dateid" label="{!field.fieldlabel}" name="{!field.fieldName}" type="date"  dateStyle="short" value="{!field.fieldValue}"
+                                                                                                                 messageWhenBadInput="Your entry does not match the allowed DOB format MM/DD/YYYY" fieldLevelHelp="If voicemail or fax, indicate the date and time the voice message was left or fax received."/>
+                                                                                                <aura:set attribute="else">
+                                                                                                    <lightning:input aura:id="dateid" label="{!field.fieldlabel}"  required="{!field.isRequired}" name="{!field.fieldName}" type="date"  dateStyle="short" value="{!field.fieldValue}"
+                                                                                                                     messageWhenBadInput="Your entry does not match the allowed date format MM/DD/YYYY"/>
+                                                                                                </aura:set>
+                                                                                            </aura:if>
+                                                                                    
+                                                                                        </aura:set>
+                                                                                    </aura:if>
+                                                                             
+                                                                            
+                                                                                    <aura:set attribute="else">
+                                                                                        <aura:if isTrue="{!(!field.isReadOnly)}">
+                                                                                             <aura:if isTrue="{!and(section.label == 'Problem', v.layoutName == 'Case-SYN_PAE_PC_MI Case Layout') }">
+                                                                                                 <aura:if isTrue="{!or(field.fieldName == 'SYN_Discrepancies_Identified__c',field.fieldName == 'If_yes_discrepancy_details__c')}">
+                                                                                                      <lightning:inputField aura:id="inputField" fieldName="{!field.fieldName}"
+                                                                                                                  required="{!field.isRequired}" class="slds-hide" />
+                                                                                                     <aura:set attribute="else">
+                                                                                                         <lightning:inputField aura:id="inputField" fieldName="{!field.fieldName}"
+                                                                                                                  required="{!field.isRequired}" onchange="{!c.handleFieldChange}"/>
+                                                                                                     </aura:set>
+                                                                                                </aura:if>
+                                                                                          
+                                                                                              <aura:set attribute="else">
+                                                                                            <lightning:inputField aura:id="inputField" fieldName="{!field.fieldName}"
+                                                                                                                  required="{!field.isRequired}" onchange="{!c.handleFieldChange}"/>
+                                                                                                </aura:set>
+                                                                                            
+                                                                                            </aura:if>
+                                                                                            <aura:set attribute="else">
+                                                                                                <!--lightning:outputField aura:id="inputField" fieldName="{!field.fieldName}" /
+                                                                                                <aura:if isTrue="{!and(v.ActionName == 'MACI_RDA',v.programNameStr == 'Macitentan REMS',field.fieldName == 'US_WSREMS__Patient_Risk_Category__c')}">
+                                                                                                    <lightning:inputField aura:id="inputField" fieldName="{!field.fieldName}" value="{!field.fieldValue}" disabled="true" />
+                                                                                                    <aura:set attribute="else"> -->
+                                                                                                    <aura:if isTrue="{!field.fieldName == 'Program_Record_Type_Control__c'}">
+                                                                                                             <lightning:inputField aura:id="inputField" fieldName="Program_Record_Type_Control__c" disabled="{!field.isReadOnly}" value="{!v.programRecordType}" class="slds-hide" />
+                                                                                                          <aura:set attribute="else">
+                                                                                                              <lightning:inputField aura:id="inputField" fieldName="{!field.fieldName}"  
+                                                                                                              value="{!field.fieldValue}"  disabled="{!field.isReadOnly}"  />
+                                                                                                           </aura:set>
+                                                                                                    </aura:if> 
+                                                                                                 <!--   </aura:set> -->
+                                                                                                <!-- </aura:if> -->
+                                                                                            </aura:set>
+                                                                                        </aura:if>
+                                                                                    </aura:set>
+                                                                                </aura:if>
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                            </lightning:layoutItem>
+                                                            
+                                                        </aura:iteration>
+														<lightning:layoutItem size="{! 12/section.totalColumns }" flexibility="auto"> 
+                                                        	<aura:if isTrue="{!and(section.label == 'Event Information', v.layoutName == 'Case-MACI PAE PC MI Case Layout') }">
+                                                            	<!--, v.programName == 'Sodium Oxybate REMS'-->
+                                                                <lightning:combobox name="progress" label="Any additional documents to attach?" value="" placeholder="Choose.." options="{! v.options }" onchange="{! c.handleOptionChange }"/>
+                                                                <aura:if isTrue="{!v.showUploader}">
+                                                                     <lightning:fileUpload label="Attach receipt"
+                                                                        name="fileUploader"
+                                                                        multiple="true"
+                                                                        accept="{!v.filetype}"
+                                                                        recordId="{!v.recordId}"
+                                                                        onuploadfinished="{!c.handleUploadFinished}"
+                                                                     />
+                                                                </aura:if>
+																<lightning:inputField aura:id="attachmentChecked" type="checkbox" fieldName="attachmentChecked__c" value="{!v.attachmentChecked}" class="slds-hidden"/>
+                                                            </aura:if>
+                                                            
+                                                            <!-- adding for sox file upload -->
+                                                            <aura:if isTrue="{!and(section.label == 'Patient', v.layoutName == 'Case-SYN_PAE_PC_MI Case Layout') }">
+                                                            	<!--, v.programName == 'Sodium Oxybate REMS'-->
+                                                                <lightning:combobox name="progress" label="Any additional documents to attach?" value="" placeholder="Choose.." options="{! v.options }" onchange="{! c.handleOptionChange }"/>
+                                                                <aura:if isTrue="{!v.showUploader}">
+                                                                     <lightning:fileUpload label=" "
+                                                                        name="fileUploader"
+                                                                        multiple="true"
+                                                                        accept="{!v.filetype}"
+                                                                        recordId="{!v.recordId}"
+                                                                        onuploadfinished="{!c.handleUploadFinished}"
+                                                                     />
+                                                                </aura:if>
+                                                            </aura:if>
+                                                             <aura:if isTrue="{!and(section.label == 'Problem', v.layoutName == 'Case-SYN_PAE_PC_MI Case Layout') }">
+                                                            	<!--, v.programName == 'Sodium Oxybate REMS'-->
+                                                               <lightning:combobox name="Discrepancies Identified" label="Discrepancies Identified" value="" placeholder="Choose.." options="{! v.options }" onchange="{! c.handleChangeInOption }"/>
+                                                                <aura:if isTrue="{!v.showDiscrepanciesIdentified}">
+                                                                    <lightning:inputField fieldName="If_yes_discrepancy_details__c" />
+                                                                   
+                                                                </aura:if>
+                                                                  <lightning:inputField fieldName="SYN_Discrepancies_Identified__c" value="{!v.DiscrepanciesIdentified}" class="slds-hidden"/>
+                                                            </aura:if>
+                                                        </lightning:layoutItem>
+                                                    </lightning:layout>
+                                                </div>
+                                            </lightning:accordionSection>    
+                                        </div>
+                                    </aura:iteration>
+                                </lightning:accordion>
+                                <footer class="slds-card__footer">
+                                    <div class="slds-align_absolute-center" style="height:5rem">
+                                        <lightning:layout verticalAlign="center" class="x-large">
+                                            <lightning:layoutItem padding="around-large">
+                                                <div class="slds-m-top_medium">
+                                                    <!-- <lightning:button disabled="{!v.disabled}" variant="brand" name="Validate" label="Validate" />-->
+                                                </div>
+                                            </lightning:layoutItem>
+                                            <lightning:layoutItem padding="around-large">
+                                                <div class="slds-m-top_medium">
+                                                    <!--<lightning:button disabled="{!v.disabled}" variant="brand" name="Save" label="Save" />-->
+                                                    <lightning:button class="slds-m-top_small" variant="brand" type="submit"
+                                                                      label="Save" />
+                                                </div>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                    </div>
+                                </footer>
+                                
+                            </lightning:recordEditForm>
+                        </div>
+                    </article>
+                </div>     
+                <aura:set attribute="else">
+                    <p>Saved!</p>
+                </aura:set>
+            </aura:if>
+        </p>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,120 @@
+<template>
+
+					
+					<div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_12-of-12 slds-p-top_xx-large" style="width: 85%;margin-top: 6%;">
+						<div class="frmRegister">
+							<div class="slds-text-heading_medium slds-m-top_none">Register to Create an Online Account</div> 
+							<div class="frmContainer">
+								<div class="slds-card" >
+									 <div class="slds-card__header slds-grid">
+										<header class="slds-media slds-media_center slds-has-flexi-truncate">
+											
+											<div class="slds-media__body">
+												<h2 class="slds-card__header-title">
+													<span>Pharmacy Staff Registration</span>
+												
+												</h2>
+											</div>
+										</header>
+									 </div>
+									<div class="slds-card__body  slds-card__body_inner" part="body">
+									<p class="frmInstructions">To create your account, enter your pharmacy identifier, and click "Continue".
+										<br>If you do not know your pharmacy identifier, please contact your PIASKY REMS Authorized Representative.
+									<br><br><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> fields required</span></p>  
+
+									<slot>
+											<!--   PRESCRIBING HEALTHCARE PROVIDER    -->
+												<div class="slds-text-heading_medium">Pharmacy Information</div>
+												 <div class="slds-grid slds-wrap">
+													 <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+													<span>	<lightning-input class="search slds-form-element continueData" value={pharmacyIdentifier} onchange={handleIdentifierChange} label=" Pharmacy Identifier" required="true">
+                                                                                 </lightning-input>
+												</span>
+													  </div>
+													  <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-top_x-large">
+														<span>	
+															<lightning-button onclick={handlePharmacySearch} variant="brand" label="Continue" id="BtnSearch"   aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple" class="slds-p-left_xx-large">
+															</lightning-button>
+														</span>
+													  </div>
+												 </div> <!-- end row  -->
+												 <div class="slds-m-bottom_small"></div>
+											<template if:true={showDetailsPharmacy} >
+												<div id="PrescriberDetails" class="">
+													<div class="slds-border_top slds-m-bottom_small"></div>												
+													<p class="txtInstructions">Please review the pharmacy.  
+													If this is correct, enter the following information and click "Submit".  If this is not your pharmacy, please contact your PIASKY REMS Authorized Representative.</p>
+													<div class="slds-m-bottom_small"></div>
+													<div class="containerInfo">
+														<div class="slds-text-heading_small"><b>{pharmacy.Name}</b>
+														<br>{pharmacy.Address_1_Secondary_Office__c}
+														<br>{pharmacy.Address_2_Secondary_Office__c}
+														<br> {pharmacy.ShippingCity}, {pharmacy.US_WSREMS__State__c} {pharmacy.ShippingPostalCode}</div>
+													</div>
+													<div class="slds-grid slds-wrap   slds-gutters ">
+														<div class="slds-col slds-medium-size_6-of-12">
+															<lightning-input class="search slds-form-element submitData" lwc-66unc5l95ad-host="" value={firstName} onchange={handleFNChange} name="FirstName" label=" First Name" required="true">
+																 
+															</lightning-input>
+														</div>
+														<div class="slds-col slds-medium-size_6-of-12">
+															<lightning-input class="search slds-form-element submitData" lwc-66unc5l95ad-host="" value={lastName} onchange={handleLNChange} name="LastName" label=" Last Name" required="true">
+																 
+															</lightning-input>
+														</div>
+													</div>	 <!-- end row  -->	
+									 
+
+									<div class="slds-grid   slds-wrap slds-gutters">
+											<div class="slds-col slds-medium-size_6-of-12">
+												<lightning-input class="search slds-form-element submitData" name="US_WSREMS__Email__c" type="email" pattern={emailPattern} message-when-pattern-mismatch="Enter a valid email address" value={email} onchange={handleEmailChange} label=" Email Address" required="true">
+													 
+												</lightning-input>
+										  </div>	
+										  <div class="slds-col slds-medium-size_6-of-12">
+												<lightning-input class="search slds-form-element submitData" name="PersonEmail" type="email" pattern={emailPattern} message-when-pattern-mismatch="Enter a valid confirm email address" value={confirmEmail} onchange={handlConfirmEmailChange} label=" Confirm Email Address" required="true">
+												</lightning-input>
+										  </div>
+										<div class="slds-col slds-medium-size_6-of-12">
+										<lightning-input class="search slds-form-element submitData phone" data-phone name="Phone" pattern={phonePattern} message-when-pattern-mismatch="Enter a valid Phone Number" label=" Phone" value={phone} onchange={handlePhoneChange} required="true">
+											  
+										</lightning-input>
+									  </div>
+								  
+								 </div>	 <!-- end row  -->	
+
+								 <template if:true={showMsg}>
+                                  <!-- <div class="message">{message}</div> -->
+                                    <div class="slds-text-color_error">{message}</div>
+                                  </template>	
+								 
+									
+								<div class="slds-m-vertical_x-large"></div>
+								<div class="slds-card__footer" part="footer">
+									<lightning-button onclick={handleSubmit} class="brand-button" variant="brand" label="Submit">
+										 <button  class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button>
+									</lightning-button>
+								 </div>	
+							 
+							</div> 
+							
+							<template if:true={showLoading}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template><!-- end HCP   -->
+						</template>			 
+                        </slot>
+						
+					</div>
+
+				</div>
+                </div>
+            
+			</div>  <!-- end frmContainer  -->
+		</div>  <!-- end register  -->
+			
+                   
+</template>

@@ -1,0 +1,253 @@
+<template>
+        
+				
+	<div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+	   <div class="pageContainer">
+		   <div class="pageContent">
+		   
+   
+				   <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					   <div class="slds-col--padded comm-content-header comm-layout-column">
+			   
+			   <div class="slds-grid slds-gutters slds-wrap slds-large-nowrap">
+				   <div class="slds-col--padded slds-size_12-of-12">						  
+						<div data-region-name="content">
+							<div data-priority=""  class="ui-widget">
+   
+					   <div class="slds-text-heading_large">REMS Dispense Authorization</div>	
+					   <div class="slds-m-vertical_large"></div>
+					   
+					   <div class="slds-grid slds-wrap slds-gutters">
+						   <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-large-size_9-of-12 slds-medium-size_12-of-12  slds-p-right_large">
+						   
+							   <div class="frmContainer">
+								   <article class="slds-card " part="card">
+									   <div class="slds-card__header slds-grid">
+										   <header class="slds-media slds-media_center slds-has-flexi-truncate">
+											   <div class="slds-media__figure"></div>
+											   <div class="slds-media__body">
+												   <h2 class="slds-card__header-title">
+													   <span></span>
+												   
+												   </h2>
+											   </div>
+										   </header>
+										</div>  
+									   <div class="slds-card__body  slds-card__body_inner" part="body">
+										   <p class="frmInstructions">Please enter the information below and click "Continue".
+										   <br><br><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> fields required</span></p>    
+   
+									 <slot>
+							   
+									   <div class="slds-text-heading_medium">Prescriber Information</div>
+									   
+									   <fieldset class="slds-form-element">
+										   <legend class="slds-form-element__legend slds-form-element__label">
+											   <abbr class="slds-required" title="required">* </abbr>Search by:</legend>
+										   <div class="slds-form-element__control">
+											   <div class="slds-radio_button-group">
+												   <span class="slds-button slds-radio_button">
+												   <input type="radio" name="rbType" id="rbType1" value="1" checked onclick={handleChangeNPI}>
+													   <label class="slds-radio_button__label" for="rbType1">
+														   <span class="slds-radio_faux">Prescriber National Provider Identifier (NPI)#</span>
+													   </label>
+												   </span>
+												   <span class="slds-button slds-radio_button">
+													   <input type="radio" name="rbType" id="rbType2" value="2" onclick={handleChangePreName}>
+													   <label class="slds-radio_button__label" for="rbType2">
+														   <span class="slds-radio_faux">Prescriber Name</span>
+													   </label>
+												   </span>
+											   </div>
+										   </div>
+									   </fieldset>
+									   
+									   
+									   
+									<template if:true={isDisplayNPIno}>
+									   <div id="SearchNPI" class="slds-show">
+										   <div class="slds-grid   slds-wrap slds-gutters">
+											 <div class="slds-col slds-medium-size_9-of-12 slds-large-size_6-of-12">
+												   <lightning-input  class="search slds-form-element" value={npiNum} onchange={handleInputChange} maxlength="10" minlength="10" 
+												   message-when-too-long ="Please enter valid NPI" message-when-too-short ="Please enter valid NPI" required="true" label=" National Provider Identifier (NPI)#">
+													   
+												   </lightning-input>
+											 </div>
+   
+										</div>
+									   </div>  <!-- end SearchNPI  -->
+									 </template>
+										<template if:true={isDisplayPreName}>
+									   <div id="SearchName" class="">
+									   <div class="slds-grid slds-wrap   slds-gutters ">
+											 <div class="slds-col slds-medium-size_4-of-12">
+											   <lightning-input class="search slds-form-element" label=" Last Name" required="true" value={lastNme} onchange={handleLNChange}>
+													
+											   </lightning-input>
+											 </div> <!-- end col  -->
+									 
+										   <div class="slds-col  slds-medium-size_4-of-12">
+											   <lightning-select class="search slds-form-element" label=" State" required="true" value={stateField} options={picklistValues} onchange={handleStateChange}>
+													
+											   </lightning-select>
+											 </div>	<!-- end col   -->
+											 <div class="slds-col slds-medium-size_4-of-12">
+											   <lightning-input class="search slds-form-element"  label="First Name" value={firstNme} onchange={handleFNChange}>
+												   
+											   </lightning-input>
+											</div>
+										 </div> <!-- end row  -->
+										 <template if:true={showPrescriberList}>
+											 <h2 id="element-with-table-label" class="slds-text-heading_medium slds-m-bottom_xx-small">Prescriber Search Results</h2>
+											   <p class="txtInstructions">Select the prescriber and click "Continue".
+											   <br><br>If the prescriber you are searching for is not found in the table below, please contact the PIASKY REMS at 1-866-4My-Skyy (1-866-469-7599).</p>										
+											   
+										 </template>
+									   <template if:true={showPrescriberList}>
+									   <div id="PrescriberResults" class="tblContainer slds-scrollable_x" style= "padding: 0px">
+										   
+											   <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-scrollable_x" style = "width: 100%;" aria-labelledby="element-with-table-label other-element-with-table-label">
+												<thead>
+													 <tr class="slds-line-height_reset">
+													   <th class="slds-text-align_right" scope="col">
+														   <div class="slds-truncate slds-assistive-text" id="column-group-header" title="Choose a row to select">Choose a row to select</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<span><div class="slds-truncate" data-title="LastName" onclick={sortByColumn} >Last Name
+																<lightning-icon icon-name={sortDirection} variant="inverse" data-title="LastName" onclick={sortByColumn} size="xx-small"></lightning-icon>
+																</div></span>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="Address">First Name</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="Address">Address</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="City">City</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="State">State</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="Z Code">Zip Code</div>
+													   </th>
+   
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="NPI">National Provider Identifier (NPI)#</div>
+													   </th>							
+													 </tr>
+												</thead>
+												<tbody>
+													<template for:each={prescriberList} for:item="prescriberAcc">
+													 <tr class="slds-hint-parent" key={prescriberAcc.Id} >
+														 <td class="slds-text-align_right" role="gridcell">
+															 <input type="radio" name="prescriberRadio" value={prescriberAcc.Id} onchange={handlePrescriberSelection} />
+														 </td>
+														 <td style="padding: 15px;" data-label="First Name">{prescriberAcc.LastName}</td>
+														 <td style="padding: 15px;" data-label="Last Name">{prescriberAcc.FirstName}</td>
+														 <td style="padding: 15px;" data-label="Address">{prescriberAcc.Address_1_Secondary_Office__c}</td>
+														 <td style="padding: 15px;" data-label="City">{prescriberAcc.ShippingCity}</td>
+														 <td style="padding: 15px;" data-label="State">{prescriberAcc.US_WSREMS__State__c}</td>                    
+														 <td style="padding: 15px;" data-label="Phone">{prescriberAcc.US_WSREMS__Zip__c}</td>
+														 <td style="padding: 15px;" data-label="Enrollment ID">{prescriberAcc.US_WSREMS__National_Provider_Identifier__c}</td>
+													   </tr>		
+   
+													   </template>
+												   </tbody>
+											   </table>	
+										   </div> 
+									   </template><!-- end PrescResults  -->									  
+									   </div>		 <!-- end SearchName  -->				
+									   </template>
+
+									   <template if:true={showNoPrescriber} >
+										   <h2 id="element-with-table-label2" class="slds-text-heading_medium slds-m-bottom_xx-small">Prescriber Search Results</h2>
+											   <p class="txtInstructions">No Search Result Found</p>
+										   <div class="tblContainer slds-scrollable_x" style= "padding: 0px">
+											   <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-scrollable_x" style = "width: 100%;" aria-labelledby="element-with-table-label other-element-with-table-label">
+												<thead>
+													 <tr class="slds-line-height_reset">
+													   <th class="slds-text-align_right" scope="col">
+														   <div class="slds-truncate slds-assistive-text" id="column-group-header2" title="Choose a row to select">Choose a row to select</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="Last Name">Last Name</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="First Name">First Name</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="Address">Address</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="City">City</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="State">State</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="Z Code">Zip Code</div>
+													   </th>
+													   <th class="slds-is-sortable" scope="col">
+															<div class="slds-truncate" title="NPI">National Provider Identifier (NPI)#</div>
+													   </th>							
+													 </tr>
+												</thead>
+											   </table>	
+										   </div>
+									   </template>
+									   
+										<div class="slds-card__footer" part="footer">
+											<template if:true={outpatientPharmacy}>
+											<template if:true={showNoPrescriberbutton} >
+												<lightning-button  variant="brand" label="Prescriber not Found" onclick={handleNullPrescriber}  aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple"></lightning-button>
+											</template>
+											</template>
+										    <lightning-button variant="brand" label="Continue" onclick={handleSearch}  disabled={disableContinue} type="button" part="button" kx-scope="button-brand" kx-type="ripple"></lightning-button>
+   
+   
+										</div>									 
+   
+							   </slot>
+								</div>
+   
+						   </article>
+						   </div>
+					   
+						   
+						   </div>  <!-- end col  -->
+						   <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-large-size_4-of-12">		
+   
+												   
+					   </div>  <!-- end col  -->
+					</div>  <!-- end row  -->
+						   
+									   
+   
+					   
+					   
+   
+										   </div> <!-- end layout   -->
+				   </div>		
+	   
+   
+			   </div> <!-- end col -->
+		   </div> <!-- end row   -->
+		   </div> <!-- end contentHeader   -->
+   
+			   </div>  <!-- end SF   -->
+					   
+   
+				   </div> <!-- end pageContent   -->
+   
+   </div> <!-- end pageContainer  -->
+   
+			  
+						
+						
+			   
+		   </div>
+	
+   
+   </template>

@@ -1,0 +1,39 @@
+<template>
+    <div class="header themeLayoutStarterWrapper isHeroUnderHeader-false isHeaderPinned-false siteforceThemeLayoutStarter"
+        data-aura-class="siteforceThemeLayoutStarter">
+        <div class="forceCommunityThemeHeaderCompact">
+            <div class="themeBottomBorder"></div>
+            <div class="util-top"> 
+                <div class=" navbar-top" style="font-weight: 700 !important;margin-right:30px ">
+                    <ul class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space" style="margin-right:40px">
+                        <li class="slds-item">
+                        <a href="https://endodocuments.com/XIAFLEX/PI" target="_blank">Full Prescribing Information</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="https://endodocuments.com/XIAFLEX_DC/MG" target="_blank">Medication Guide</a>
+                    </li>
+                     <li class="slds-item">
+                        <a  onclick={isiSection}>Important Safety Information</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_4-of-12" >	
+                        <div class="">
+                            <a href={homeUrl} class="logo">
+                                <img src={xiaflexlogo}>
+                                <span class="slds-assistive-text">REMS Digital</span>
+                            </a>
+                        </div>
+                    </div> <!-- end col  -->
+                    <div class=" slds-x-small-size_12-of-12 slds-large-size_8-of-12 head" >					
+                        <div class="navLookup">
+                                <a href="hcp-hcs-lookup" class="certified" tabindex="0">Trained Healthcare Providers or Pharmacies/Healthcare Settings Lookup</a>
+                        </div>
+                    </div> <!-- end col  -->
+                </div> <!-- end row  -->
+        </div>
+        <div class="headerBorder"></div>  
+    </div><!-- end header  -->	
+</template>

@@ -1,0 +1,282 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 28/12/2022
+Description   :- Created for Maci Portal -> Manage Office Page { Middle context }
+-->
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="programId" type="String" default=""/>
+    <aura:attribute name="pageSize" type="Integer" default="10" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="allData" type="List" />
+    <aura:attribute name="filteredData" type="List" />
+    <aura:attribute name="accList" type="Account[]" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="portalRole" type="String" default=""/>
+    <aura:attribute name="resourceList" type="List" default=""/>
+    <aura:attribute name="recordTypeDeveloperName" type="String" default=""/>
+    <aura:attribute name="pCase" type="Case" />
+    <aura:attribute name="isModalOpen" type="Boolean" default="false" />
+    
+    <lightning:navigation aura:id="navigation"/>
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    
+    <aura:attribute name="hasError" type="Boolean" default="false"/>
+    <aura:attribute name="recordId" type="String" />
+
+    
+    <div aura:id="showChildModal" ></div>
+    <!--Use aura:if tag to display/hide popup based on isModalOpen value--> 
+    <aura:if isTrue="{!v.isModalOpen}">
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+                 aria-modal="true" aria-describedby="modal-content-id-1"  
+                 class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                        Edit Office Contact
+                    </h2>
+                </header>
+                 
+                <!--Modal Body Start here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div>
+                        <!--Lightning Flow Attribute-->
+                        <lightning:flow aura:id="EditOfficeContactFlow" onstatuschange="{!c.statusChange}"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <section class="sec-one-1 pb-0" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height:100vh;">
+        <div class="container-fluid h-100 px-5 pb-0">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card h-100 p-0 rounded-0 border-0">
+                         <div class="heading-top d-flex justify-content-between border-bottom-0" style="margin: 0px 4px;background-color: #EBEBEB">
+                            <div class="col-lg-7 col-sm col-8 text-start">
+                              <div class="row ps-3">
+                                  <div class="col-1" style="width: 39px;">
+                                      <span class="text-theme">
+                                          <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                      </span>
+                                  </div>
+                                  <div class="col-9 ps-4">
+                                      <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                          {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                      </h3>
+                                  </div>
+                              </div>
+                              <div class="row ps-3" style="position: relative;top: -10px;">
+                                  <div class="col-1" style="width: 39px;"></div>
+                                  <div class="col-9 ps-4">
+                                      <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                          NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                      </span>
+                                  </div>
+                              </div>
+                             </div>
+                             <div class="col-lg-5 text-end pe-4">
+                                <span class="fs-6 text-muted">Program Status:&nbsp; 
+                                    <span class="text-theme fw-bold">Enrolled as of 
+                                        <span name="enrolled-number" id="enrolled-number">
+                                        <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" />
+                                        </span> 
+                                        &nbsp; <i class="fa fa-check-circle"></i>
+                                    </span>
+                                </span>
+                            </div>
+              
+                        </div>
+                        <div class="card-body px-4 llc-dv">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <h5 class="fw-bold">Manage Office</h5>
+                                     <h5 class="mt-3 mb-3 fw-bold">Office Name</h5>
+									<aura:if isTrue ="{!v.cAccount.ShippingStreet != null}">
+                                        <div class="row mb-1 l-29" style="font-size: 16px !important">
+                                            <div class="col-lg-1 text-end pe-0"><i class="fa fa-phone me-3"></i></div>
+                                            <div class="col-lg-11 ps-1 pe-4">
+                                                <span class="text-uppercase">{!v.cAccount.Phone}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row l-29 mb-2">
+                                            <div class="col-lg-1 text-end pe-0"><i class="fa fa-id-card-o pe-2"></i></div>
+                                            <div class="col-lg-11 ps-1">
+                                                <span>{!v.cAccount.ShippingStreet} <br></br> {!v.cAccount.ShippingCity}, {!v.cAccount.ShippingState} {!v.cAccount.ShippingPostalCode}</span>
+                                            </div>
+                                        </div>
+									</aura:if>
+                                    
+                                    <aura:if isTrue ="{!AND(v.cAccount.ShippingStreet == null,v.cAccount.Address_1_Secondary_Office__c != null)}">
+                                        <div class="row mb-1 l-29" style="font-size: 16px !important">
+                                            <div class="col-lg-1 text-end pe-0"><i class="fa fa-phone me-3"></i></div>
+                                            <div class="col-lg-11 ps-1 pe-4">
+                                                <span class="text-uppercase">{!v.cAccount.Phone_Secondary_Office__c}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row l-29 mb-2" style="font-size: 16px !important">
+                                            <div class="col-lg-1 text-end pe-0"><i class="fa fa-id-card-o pe-2"></i></div>
+                                            <div class="col-lg-11 ps-1">
+                                                <span>{!v.cAccount.Address_1_Secondary_Office__c} <br></br> {!v.cAccount.City_Secondary_Office__c}, {!v.cAccount.State_Secondary_Office__c} {!v.cAccount.Zip_Secondary_Office__c}</span>
+                                            </div>
+                                        </div>
+									</aura:if>
+
+                                   
+
+                                    <div class="row d-flex justify-content-center align-items-center cnt-d">
+    
+                                        <aura:if isTrue="{! v.isLoading }">
+                                            <lightning:spinner alternativeText="Loading" />
+                                        </aura:if>
+                                        <div class="col-lg-12">
+                                            <div class="card p-0 rounded-0 border-0">
+                                                <div class="slds-float_right">
+                                                    <a class="btn btn-primary-m mb-2" style="cursor:pointer; float:right;" onclick="{!c.openAddOfficeModal}"><i class="fa fa-plus" style="font-size:10px;color:white"></i> Add Office Contact</a>
+                                                </div>
+                                                <div class="card-header text-center dark-header">
+                                                    <h5 class="card-title mt-2">OFFICE CONTACTS 
+                                                        <a class="link-refresh" onclick="{!c.refreshtable}">REFRESH</a>
+                                                    </h5>
+                                                </div>
+                                                
+                                                <div class="card-body px-0 pt-0 pb-0">
+                                                    <div class="table-responsive">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped tbl-one mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="fw-lighter">Name</th>
+                                                                        <th class="fw-lighter">Phone</th>
+                                                                        <th class="fw-lighter">Email</th>
+                                                                        <th class="fw-lighter">Receive Communications</th>
+                                                                        <th class="fw-lighter">Current Status</th>
+                                                                        <th class="fw-lighter">Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <aura:iteration items="{!v.accList}" var="a">
+                                                                        <tr>
+                                                                            <td>{!a.Name}</td>
+                                                                            <td>{!a.Phone}</td>
+                                                                            <td>{!a.US_WSREMS__Email__c}</td>
+                                                                            <td>
+                                                                                <aura:if isTrue="{!a.Two_Factor_Authentication_Selection__c == 'Opt-In'}">
+                                                                                    <lightning:input type="checkbox" checked="true" disabled="true"/>
+                                                                                </aura:if>
+                                                                                <aura:if isTrue="{!a.Two_Factor_Authentication_Selection__c != 'Opt-In'}">
+                                                                                    <lightning:input type="checkbox" checked="false" disabled="true"/>
+                                                                                </aura:if>
+                                                                            </td>
+                                                                            <td>{!a.US_WSREMS__Status__c}</td>
+                                                                            <td class="icons">
+                                                                                <li>
+                                                                                    <a onclick="{!c.handleOpenFlow}" data-recordid="{!a.Id}" style="cursor:pointer"><i class="fa fa-pencil-square text-theme"></i></a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a onclick="" style="cursor:pointer"><i class="fa fa-trash text-theme"></i></a>
+                                                                                </li>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </aura:iteration>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tbl-list">
+                                                        <ul>
+                                                            
+                                                            <li><i class="fa fa-pencil-square"></i>&nbsp;Edit office Contact</li>
+                                                            <li><i class="fa fa-trash"></i>&nbsp;Remove Office contact</li>
+                     
+                                                           
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3 cl-right">
+                                    
+                                    
+                                    <div class="">
+                                        <h5 class="mb-2 fw-bold">Materials for Prescribers</h5>
+
+                                        <ul class="list-group list-dec">
+                                            <aura:iteration items="{!v.resourceList}" var="rc">
+                                                <li class="list-group-item border-top-0">{!rc.label}
+                                                    <a href="{!rc.downloadurl}" shouldstayinownframe="true" title="Download pdf" download="download">
+                                                        <i class="fa fa-download float-end"></i>
+                                                    </a>
+                                                </li>
+                                            </aura:iteration>
+                                            
+                                        </ul>
+                                        <!--Prescriber manage office contact changes are added by DG lines 201-208 -->
+                                        <li class="list-group-item border-top-0"><a href="Patient-enrollment">Patient Enrollment Form</a></li>
+                                        <li class="list-group-item border-top-0"><a href="Patient-enrollment">Change in Reproductive Potential Status and Pre-Pubertal Annual Verification Form</a></li>
+                                        <li class="list-group-item border-top-0"><a href="Patient-enrollment">Prescriber and Pharmacy Guide</a></li>
+                                        <li class="list-group-item border-top-0"><a href="prescriberenrollment">Prescriber Enrollment and Agreement Form</a></li>
+                                           <li class="list-group-item border-top-0"><a href="prescriber-faqs">Prescriber FAQs</a></li>
+                                        <div class="space-md"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="card-footer border-0 mt-4 py-4">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+         <aura:if isTrue="{!v.isModalPatientOpen}">
+            <!-- Modal/Popup Box starts here for Patient Signature-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><center>Send enrollment signature notification to  <b>{!v.caseDetails.US_WSREMS__Patient__r.Name} </b>   for signature? </center></p>
+                        
+                        <center>
+						<lightning:button variant="brand"
+                                          label="Yes"
+                                          title="Yes"
+                                          onclick="{!c.SendEmailToPatient}"
+                                          class="btn"/>
+                        <lightning:button variant="neutral"
+                                          label="No"
+                                          title="No"
+                                          onclick="{!c.closeModelPatient }"
+                                          class="btn"/>
+                        
+                        </center>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </section>
+</aura:component>

@@ -1,0 +1,9 @@
+.THIS .navbar-light .navbar-nav .nav-link.active {
+    color: #fff;
+    /* background: #BBE4E5; */
+    background: #9EF0EB;
+}
+
+.THIS .customcursor{
+    cursor: pointer;
+}

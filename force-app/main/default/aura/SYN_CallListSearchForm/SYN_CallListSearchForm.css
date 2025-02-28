@@ -1,0 +1,11 @@
+.THIS .fixTabHeight {
+    max-height: calc(100vh - 296px);
+}
+
+.THIS .custom-loading-text {
+    position: absolute;
+    width: 100%;
+    top: calc(50% + 3em);
+    text-align: center;
+    font-weight: bold;
+}

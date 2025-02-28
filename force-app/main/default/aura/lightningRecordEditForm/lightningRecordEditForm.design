@@ -1,0 +1,13 @@
+<design:component>
+	<design:attribute name="objectName" label= "objectName"/>
+    <design:attribute name="layoutName" label= "layoutName"/>
+    <design:attribute name="PSSfieldName" label= "PSSfieldName"/>
+    <design:attribute name="Accountid" label= "Accountid"/>
+    <design:attribute name="objectRecordId" label= "Object Record Id"/>
+    <design:attribute name="isFlow" label= "Launched from flow?"/>
+    <design:attribute name="requestorType" label= "Requestor Type"/>
+    <design:attribute name="REMSServiceId" label= "REMS Service Record Id"/>
+    <design:attribute name="enrollmentType" label= "Enrollment Type"/>
+   
+
+</design:component>

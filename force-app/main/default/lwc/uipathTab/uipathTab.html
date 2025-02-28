@@ -1,0 +1,17 @@
+<template>
+    Hello welcome
+    <template if:true={showLink}>
+
+        <a href="#" class="link-style" onclick={openTab}>
+            Open UiPath
+
+        </a>
+    </template>
+
+    <template if:true={showTab}>
+        <div class="embedded-tab">
+            <iframe src={uipathUrl} width="100%" height="600px"></iframe>
+            <button class="close-btn" onclick={closeTab}>Close Tab</button>
+        </div>
+    </template>
+</template>

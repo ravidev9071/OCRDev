@@ -1,0 +1,1121 @@
+<aura:component controller="REMSAttestationFormCtrl"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global">
+
+    <ltng:require styles="{!join(',',$Resource.MacitentanAssets + '/assets/css/bootstrap.min.css', 
+                          $Resource.MacitentanAssets + '/assets/css/font-awesome.min.css',
+                          $Resource.MacitentanAssets + '/assets/css/custom.css')}" scripts="{!join(',', 
+                           $Resource.MacitentanAssets + '/assets/js/bootstrap.bundle.min.js',  
+                           $Resource.MacitentanAssets + '/assets/js/jquery-3.6.0.min.js')}" />
+
+    <!-- Init Handler -->
+
+    <aura:method name="SaveSignature" action="{!c.saveSignatureOnClick}" description="Save Signature" />
+    <aura:method name="IsCanvasEmpty" action="{!c.IsCanvasEmpty}" description="Check Signature is done or not" />
+
+    <aura:attribute name="IsImageDrawn" type="Boolean" default="false" />
+    <aura:attribute name="signaturePad" type="Object" />
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false" />
+    <aura:attribute name="DisableSignatureStatus" type="boolean" default="true" />
+    <aura:attribute name="termsFlag" type="boolean" default="false" />
+    <aura:attribute name="patient" type="Case" />
+    <aura:attribute name="isEnrolled" type="Boolean" default="true" />
+    <aura:attribute name="patientName" type="string" default="" />
+    <aura:attribute name="participantType" type="string" default="" />
+
+
+    <ltng:require scripts="{!$Resource.signaturePad}" afterScriptsLoaded="{!c.doInit}" />
+
+    <nav class="navbar navbar-top navbar-expand-lg navbar-light py-3" style="margin-top:-32px;">
+        <div class="container-fluid px-5">
+            <div class="navbar-collapse">
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+
+    <section class="sec-one-1"
+        style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: center;background-attachment: fixed;">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <aura:if isTrue="{!v.isEnrolled}">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-white py-0"
+                            style="height: initial !important;">
+                            <div class="container-fluid pt-4 pb-0">
+                                <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                                    <tr style="margin-top:0 !important; padding-top:0px !important;">
+                                        <td style="padding: 0 8px;border-right: 45px solid #fff;width: 1140px;">
+                                            <h5 style="margin: 0;font-size: 18px;font-weight: 900;">Tryvio REMS
+                                                Enrollment Form</h5>
+                                            <p
+                                                style="padding: 0px 0px 0px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                Due to the risk of embryo-fetal toxicity for patients who can become
+                                                pregnant, pharmacies that wish to dispense TRYVIO™ must be certified in
+                                                the
+                                                TRYVIO™ REMS and agree to comply with the requirements of the program.
+                                                
+                                            </p>
+                                            <p
+                                                style="padding: 0px 0px 0px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                To enroll and become certified in the TRYVIO™ REMS,complete this form
+                                                online at
+                                                <b>www.TRYVIOREMS.com</b>&nbsp;OR&nbsp;fax this completed form
+                                                to
+                                            </p>
+                                            <p
+                                                style="padding: 0px 0px 0px 0px;margin: 0px;font-size: 14px;text-align: left;">
+                                                1-800-465-0391.Contact the TRYVIO™ REMS at 1-866-429-8964 with
+                                                any questions.
+                                            </p>
+                                        </td>
+                                        <td style="width: 18%;">
+                                            <img src="{!$Resource.tryvioIconLogo}" class="img-fluid"
+                                                style="width: 168px;height: 50px !important;margin-top:0 !important; padding-top:0px !important;"></img>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </nav>
+
+                        <aura:if isTrue="{!v.participantType == 'Prescriber'}">
+                            <div class="card px-4 p-0 rounded-0 border-0">
+                                <br />
+                                <h3 class="m-0"
+                                    style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                    <span style="border-right: 1px solid #fff;padding-right: 7px;">1</span> Prescriber
+                                    Information
+                                </h3>
+
+
+                                <div class="row mb-2">
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__First_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">First Name</h6>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__MI__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Middle Name
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__Last_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Last Name</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__NPI__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">NPI #</h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Speciality__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Speciality</h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Professional_Designation__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Professional
+                                            Designation</h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.Office_Practice_Clinic_Name__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Office Practice/Academic Institution</h6>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Address_Line_1__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address Line 1
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Address_Line_2__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address Line 2
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__City__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">City</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Prescriber_State__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">State</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Zip__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Zip
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Preferred_Contact_Method__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Preferred
+                                            Contact Method</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Office_Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Office Phone
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Ext__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Rems EXT</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Fax__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Fax
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Phone</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Email__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Email</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Comments__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Comments</h6>
+                                    </div>
+                                </div>
+
+
+                                <br />
+
+
+                                <div class="row pharma-frm mt-2">
+                                    <div class="col-lg-12" style="padding: 0px 14px; font-size:14px !important">
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                            <br />
+                                            <h3 class="m-0"
+                                                style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                <span style="border-right: 1px solid #fff;padding-right: 7px;">2</span>
+                                                Primary Office Contact Information
+
+                                            </h3>
+
+
+                                            <div class="row mb-2 mt-2">
+                                                <div class="col-5">
+                                                    {!v.patient.US_WSREMS__Prescriber_First_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        First name</h6>
+                                                </div>
+                                                <div class="col-5">
+                                                    {!v.patient.US_WSREMS__Prescriber_Last_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Last Name
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Prescriber_Email__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Email
+                                                    </h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Office_Contact_phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Office Phone</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__REMS_Prescriber_Ext__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Ext
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                            <br />
+                                            <h3 class="m-0"
+                                                style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                <span style="border-right: 1px solid #fff;padding-right: 7px;">3</span>
+                                                Secondary Office Contact Information
+
+                                            </h3>
+
+
+                                            <div class="row mb-2 mt-2">
+                                                <div class="col-5">
+                                                    {!v.patient.US_WSREMS__First_Name_Secondary_AR__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        First name</h6>
+                                                </div>
+                                                <div class="col-5">
+                                                    {!v.patient.US_WSREMS__Last_Name_Secondary_AR__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Last Name
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Participant_Email__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Email
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Office_Contact_Phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Office Phone</h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Alternate_Phone_Ext__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Ext
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Knowledge_Assessment__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Knowledge Assessment</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="card p-0 rounded-0 border-0">
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12">
+                                                    <h5 style="font-size: 14px;margin: 0 0 10px 0px;">Please visit
+                                                        <b><i>www.TRYVIOREMS.com</i></b> or call 1-866-429-8964 for
+                                                        more information about the TRYVIO™ REMS.
+                                                    </h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ms-4">
+                                                    <lightning:input name="text-agree" aura:id="termsFlag"
+                                                        type="checkbox" style="font-size: 14px"
+                                                        label=" I understand and agree to all the terms above"
+                                                        checked="{!v.termsFlag}"
+                                                        class="form-check-label m-0 customcheckbox" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ps-lg-4">
+                                                    <p class="ps-lg-3 mt-1" style="font-size: 14px">Signature:
+                                                    </p>
+                                                    <p class="ps-lg-3 mt-4" style="font-size: 14px">Please use your
+                                                        mouse to sign your name,
+                                                        {!v.patient.US_WSREMS__First_Name__c}&nbsp;{!v.patient.US_WSREMS__MI__c}&nbsp;{!v.patient.US_WSREMS__Last_Name__c}, in the box below:</p>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center mt-4">
+                                                <div class="col-lg-7" style="overflow:hidden;padding-right: 0;">
+                                                    <div class=" space-md border signClass">
+                                                        <canvas id="signature-pad" aura:id="signature-pad"
+                                                            class="signature-pad" style="height:50rem"></canvas>
+                                                        <canvas id='blank' aura:id="blank" class="signature-pad"
+                                                            style='display:none'></canvas>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-lg-7 mt-2 d-flex align-items-center justify-content-center">
+                                                    <aura:if isTrue="{!v.DisableSignatureStatus}">
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.saveSignatureOnClick}">SUBMIT</a>
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.clearSignatureOnClick}">CLEAR</a>
+                                                        <aura:set attribute="else">
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">SUBMIT</a>
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">CLEAR</a>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="py-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.participantType == 'Inpatient Pharmacy'}">
+                            <div class="card px-4 p-0 rounded-0 border-0">
+                                <br />
+                                <h3 class="m-0"
+                                    style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                    <span style="border-right: 1px solid #fff;padding-right: 7px;">1</span> Inpatient
+                                    Pharmacy
+                                    Information
+                                </h3>
+
+
+                                <div class="row mb-2">
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__Name__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Name</h6>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__NPI__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">NPI #
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__Facility_Type__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Facility Type
+                                        </h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Address_Line_1__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address Line 1
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Address_Line_2__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address Line 2
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__City__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">City</h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__State__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">State</h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Zip__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Zip
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Office_Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Office Phone
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Ext__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Ext</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Fax__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Fax</h6>
+                                    </div>
+                                </div>
+
+                                <br />
+
+                                <div class="row pharma-frm mt-2">
+                                    <div class="col-lg-12" style="padding: 0px 14px; font-size:14px !important">
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                            <br />
+                                            <h3 class="m-0"
+                                                style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                <span style="border-right: 1px solid #fff;padding-right: 7px;">2</span>
+                                                Shipping Information
+
+                                            </h3>
+
+
+                                            <div class="row mb-2 mt-2">
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__First_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        First name</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__MI__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Middle Name
+                                                    </h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Last_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Last Name
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Shipping_Address_Line_1__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Shipping Address Line 1
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Shipping_Address_Line_2__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Shipping Address Line 2</h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Participant_City__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        City
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__SLN_Issued_State__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        State
+                                                    </h6>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Zip_Code__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Zip
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Office Phone</h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Alternate_Phone_Ext__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Ext
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.Shipping_Fax__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Fax
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Comments__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Comments
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                            <br />
+                                            <h3 class="m-0"
+                                                style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                <span style="border-right: 1px solid #fff;padding-right: 7px;">3</span>
+                                                Authorized Representative Information
+                                            </h3>
+
+
+                                            <div class="row mb-2 mt-2">
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Participant_FirstName__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        First name</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Middle_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Middle name</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Participant_LastName__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Last Name
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Title__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Position/Title
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Office_Contact_phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Office Phone</h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Prescriber_Ext__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Ext
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Prescriber_Fax__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                       Fax</h6>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Participant_Phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Mobile Phone
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Email__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Email</h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Preferred_Contact_Method__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Preferred Contact Method                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="card p-0 rounded-0 border-0">
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12">
+                                                    <h5 style="font-size: 14px;margin: 0 0 10px 0px;">Please visit
+                                                        <b><i>www.TRYVIOREMS.com</i></b> or call 1-866-429-8964 for
+                                                        more information about the TRYVIO™ REMS.
+                                                    </h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ms-4">
+                                                    <lightning:input name="text-agree" aura:id="termsFlag"
+                                                        type="checkbox" style="font-size: 14px"
+                                                        label=" I understand and agree to all the terms above"
+                                                        checked="{!v.termsFlag}"
+                                                        class="form-check-label m-0 customcheckbox" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ps-lg-4">
+                                                    <p class="ps-lg-3 mt-1" style="font-size: 14px">Signature:
+                                                    </p>
+                                                    <p class="ps-lg-3 mt-4" style="font-size: 14px">Please use your
+                                                        mouse to sign your name,
+                                                        {!v.patient.US_WSREMS__Name__c}, in the box below:</p>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center mt-4">
+                                                <div class="col-lg-7" style="overflow:hidden;padding-right: 0;">
+                                                    <div class=" space-md border signClass">
+                                                        <canvas id="signature-pad" aura:id="signature-pad"
+                                                            class="signature-pad" style="height:50rem"></canvas>
+                                                        <canvas id='blank' aura:id="blank" class="signature-pad"
+                                                            style='display:none'></canvas>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-lg-7 mt-2 d-flex align-items-center justify-content-center">
+                                                    <aura:if isTrue="{!v.DisableSignatureStatus}">
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.saveSignatureOnClick}">SUBMIT</a>
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.clearSignatureOnClick}">CLEAR</a>
+                                                        <aura:set attribute="else">
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">SUBMIT</a>
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">CLEAR</a>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="py-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.participantType == 'Outpatient Pharmacy'}">
+                            <div class="card px-4 p-0 rounded-0 border-0">
+                                <br />
+                                <h3 class="m-0"
+                                    style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                    <span style="border-right: 1px solid #fff;padding-right: 7px;">1</span> Outpatient Pharmacy
+                                    Information
+                                </h3>
+
+
+                                <div class="row mb-2">
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__Name__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Name</h6>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__NPI__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">NPI #
+                                        </h6>
+                                    </div>
+
+                                    <div class="col-4">
+                                        {!v.patient.US_WSREMS__Type_of_Report__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Outpatient Pharmacy Type                                        </h6>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Address_Line_1__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address Line 1</h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Address_Line_2__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Address Line 2</h6>
+                                    </div>
+
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__City__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">City</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__State__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">State</h6>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Zip__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Zip
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Office_Phone__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Office Phone
+                                        </h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Ext__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Ext</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        {!v.patient.US_WSREMS__Fax__c} &nbsp;
+                                        <div class="border-dark border-bottom"
+                                            style="font-size: 14px;border-bottom:1px solid #000 !important;"></div>
+                                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Fax</h6>
+                                    </div>
+                                </div>
+                                <br />
+
+
+                                <div class="row pharma-frm mt-2">
+                                    <div class="col-lg-12" style="padding: 0px 14px; font-size:14px !important">
+
+                                        <div class="card p-0 rounded-0 border-0">
+                                            <br />
+                                            <h3 class="m-0"
+                                                style="background-color: #0167BC;color: #fff;padding:3px;border:3px;border-color:black;font-size: 16px !important;text-color:white;color: #FFFFFF;">
+                                                <span style="border-right: 1px solid #fff;padding-right: 7px;">2</span>
+                                                Authorized Representative Information
+
+                                            </h3>
+
+
+                                            <div class="row mb-2 mt-2">
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Participant_FirstName__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        First name</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Middle_Name__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Middle name</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Participant_LastName__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Last Name
+                                                    </h6>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Job_Title__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Position/Title
+                                                    </h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Credential__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Credentials</h6>
+                                                </div>
+                                                <div class="col-4">
+                                                    {!v.patient.US_WSREMS__Office_Contact_phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Office Phone
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__REMS_Ext__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Ext
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Participant_Fax__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">
+                                                        Fax</h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Email__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Email
+                                                    </h6>
+                                                </div>
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Participant_Phone__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Mobile Phone
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-3">
+                                                    {!v.patient.US_WSREMS__Preferred_Contact_Method__c} &nbsp;
+                                                    <div class="border-dark border-bottom"
+                                                        style="font-size: 14px;border-bottom:1px solid #000 !important;">
+                                                    </div>
+                                                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 14px;">Preferred Contact Method
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="card p-0 rounded-0 border-0">
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12">
+                                                    <h5 style="font-size: 14px;margin: 0 0 10px 0px;">Please visit
+                                                        <b><i>www.TRYVIOREMS.com</i></b> or call 1-866-429-8964 for
+                                                        more information about the TRYVIO™ REMS.
+                                                    </h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ms-4">
+                                                    <lightning:input name="text-agree" aura:id="termsFlag"
+                                                        type="checkbox" style="font-size: 14px"
+                                                        label=" I understand and agree to all the terms above"
+                                                        checked="{!v.termsFlag}"
+                                                        class="form-check-label m-0 customcheckbox" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12 ps-lg-4">
+                                                    <p class="ps-lg-3 mt-1" style="font-size: 14px">Signature:
+                                                    </p>
+                                                    <p class="ps-lg-3 mt-4" style="font-size: 14px">Please use your
+                                                        mouse to sign your name,
+                                                        {!v.patient.US_WSREMS__First_Name__c}&nbsp;{!v.patient.US_WSREMS__MI__c}&nbsp;{!v.patient.US_WSREMS__Last_Name__c}&nbsp;{!v.patient.US_WSREMS__Name__c}, in the box below:</p>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center mt-4">
+                                                <div class="col-lg-7" style="overflow:hidden;padding-right: 0;">
+                                                    <div class=" space-md border signClass">
+                                                        <canvas id="signature-pad" aura:id="signature-pad"
+                                                            class="signature-pad" style="height:50rem"></canvas>
+                                                        <canvas id='blank' aura:id="blank" class="signature-pad"
+                                                            style='display:none'></canvas>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-lg-7 mt-2 d-flex align-items-center justify-content-center">
+                                                    <aura:if isTrue="{!v.DisableSignatureStatus}">
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.saveSignatureOnClick}">SUBMIT</a>
+                                                        <a class="btn btn-primary-m mx-1 my-2"
+                                                            onclick="{!c.clearSignatureOnClick}">CLEAR</a>
+                                                        <aura:set attribute="else">
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">SUBMIT</a>
+                                                            <a class="btn btn-secondary mx-1 my-2 btn-block">CLEAR</a>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="py-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:set attribute="else">
+                            <div style="height: 100vh;display: flex;justify-content: center;align-items: center;">
+                                <p class="p-0 m-0">
+                                    <center>
+                                        <h5 class="fw-bold mb-0 text-theme color:green;">Thank you for signing the
+                                            Tryvio™ REMS.If you have any
+                                            questions, or would like to update your contact information, you may
+                                            call the Tryvio™ REMS Coordinating Center at 1-866-429-8964, Monday
+                                            through Friday, 8:00 AM to 8:00 PM EST.</h5>
+                                    </center>
+                                </p>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</aura:component>

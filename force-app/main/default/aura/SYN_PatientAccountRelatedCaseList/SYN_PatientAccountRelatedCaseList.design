@@ -1,0 +1,4 @@
+<design:component>
+	<design:attribute name="recordId" label="recordId" description="recordId" />
+    <design:attribute name="remsRecordType" label="Please Enter portal Name" description="This defines the portals Name"/>
+</design:component>

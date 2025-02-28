@@ -1,0 +1,23 @@
+<template>
+  <template if:true={accountStatus}>
+  <div align="Left" style = "padding:10px;" >
+      <span  style="font-family:Sans-serif;font-size: 18px;">Welcome {firstName} {lastName},</span>
+     <br/>
+    <br/>
+     <h5 style="font-family: Sans-serif;font-size: 16px;font-weight: bold;">To view patient account information:</h5>
+      <br/>
+      <ol>
+          <li style="font-family: Sans-serif;font-size: 14px;padding-left:34px;">1. Using the patient search below, search for the patient using two identifiers</li>
+          <li style="font-family: Sans-serif;font-size: 14px;padding-left:34px;">2. Click ‘View Record’ on the patient account you would like to manage and you will be redirected to the patient’s account </li>
+          <li style="font-family: Sans-serif;font-size: 14px;padding-left:34px;">3. On the patient's account, you can view their historical account activity including RMR alerts and history</li>
+        </ol>
+      <br/>
+    <h5 style="font-family: Sans-serif;font-size: 16px;font-weight: bold;">If you need assistance, contact the Sodium Oxybate REMS, M-F 8am-8pm EST, 1-833-769-7367.</h5>
+</div>
+</template>
+<template if:false={accountStatus}>
+  {errorMessage}
+  </template>
+
+
+</template>

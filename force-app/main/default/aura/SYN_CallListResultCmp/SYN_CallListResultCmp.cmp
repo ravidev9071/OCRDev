@@ -1,0 +1,110 @@
+<aura:component extends="c:SYN_BaseComponent"  controller="SYN_CallListSearchController">
+    
+    <aura:attribute name="showAssignToMe" type="Boolean" default="false" />
+    <aura:attribute name="disableAssignTo" type="Boolean" default="true" />
+    <aura:attribute name="isSupervisor" type="Boolean" default="false" />
+    <aura:attribute name="isAgent" type="Boolean" default="false" />
+    <aura:attribute name="callListFilterWrapper" type="Object"/>
+    <aura:attribute name="selectedProject" type="String" default="None"/>
+    <aura:attribute name="callList" type="List"/>
+    <aura:attribute name="callListToBeShown" type="List"/>
+    <aura:attribute name="noOfCallsToBeShown" type="Integer" default="20" />
+    <aura:attribute name="callListHeaders" type="List"/>
+    <aura:attribute name="callsSelected" type="List" />
+    <aura:attribute name="selectedRowIds" type="List" />
+    <aura:attribute name="noCallsFound" type="Boolean" default="false" />
+    <aura:attribute name="selectedUser" type="String"/>
+    <aura:attribute name="assignUserList" type="List"/>
+    <aura:attribute name="IsSuperUser" type="Boolean" default="false"/>
+    <aura:attribute name="loadingContent" type="String" default="Loading..." />
+    <aura:handler name="ChangePage" event="c:SYN_ChangePage" action="{!c.handlePagination}" />
+    
+    <!-- default handler -->
+    <aura:handler name="init" value="this" action="{!c.doInit}" />
+    
+    <!-- Aura Methods	-->
+    <aura:method name="showCallListResult" action="{!c.showCallListResult}" access="PUBLIC" >
+        <aura:attribute name="callListFilterwrapper" type="String" />
+        <aura:attribute name="selectedProject" type="String" />
+        <aura:attribute name="isResetValues" type="Boolean" />
+    </aura:method>
+    
+    <!-- Lightning Libraries    -->
+    <lightning:notificationsLibrary aura:id="notifLib" />
+    
+    
+    
+    <!-- Lightning Spinner  -->
+    <div aura:id="callListSpinner" class="slds-spinner_container slds-hide">
+        <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+            <span class="slds-assistive-text">{!v.loadingContent}</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+        <div class="custom-loading-text">
+            {!v.loadingContent}
+        </div>
+    </div>
+    
+    
+    <lightning:card title="REMS TASK LIST " iconName="standard:call" class="slds-theme_shade">
+        
+        <aura:set attribute="actions">
+            
+            <lightning:layout  >
+                
+                <lightning:layoutItem >
+                    
+                    <aura:if isTrue="{!v.IsSuperUser}">
+                        <lightning:select label="Assign To" value="{!v.selectedUser}" 
+                                          onchange="{! c.handleSelectedUsers}" disabled="{!v.disableAssignTo}">
+                            <option value="">None</option>
+                            <aura:iteration items="{!v.assignUserList}" var="option">
+                                <option text="{! option.label}" value="{! option.value}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </aura:if>
+                    
+                </lightning:layoutItem>
+                <!--  <lightning:button variant="brand" label="Show Next Call" title="Submit" onclick="{! c.showNextCall }" disabled="{! or(v.selectedProject == 'None', v.noCallsFound)}" />-->
+                <lightning:layoutItem padding="around-large"  >
+                    <div class="buttonstyle">
+                        
+                        <lightning:button variant="neutral" label="Assign" onclick="{!c.assignCallsHandler}" disabled="{! v.disableAssignTo}" />
+                        
+                    </div>
+                </lightning:layoutItem>
+                
+            </lightning:layout>
+            
+        </aura:set>
+        
+        <div aura:id="callListDiv" class="fixTabHeight">
+            
+            <aura:if isTrue="{! and(v.callList.length > 0, !v.noCallsFound)}">
+                <lightning:datatable aura:id="callListTable"
+                                     keyField="TaskId"
+                                     data="{! v.callListToBeShown }"
+                                     onsort = "{!c.handleSort}"
+                                     columns="{! v.callListHeaders }"
+                                     resizeColumnDisabled="{!v.isSupervisor}"
+                                     minColumnWidth="75"
+                                     hideCheckboxColumn="false"
+                                     selectedRows="{!v.selectedRowIds}"
+                                     onrowselection="{! c.updateSelectedRows}" />
+            </aura:if>
+            <aura:if isTrue="{! v.noCallsFound}">
+                <div class="slds-notify slds-notify--alert slds-theme--info slds-theme--alert-texture" role="alert">
+                    <span class="slds-assistive-text">Info</span>
+                    <h2>
+                        <lightning:icon iconName="utility:info" variant="inverse"  size="x-small" class="slds-m-right--x-small" />
+                        No Tasks available for selected filter criteria
+                    </h2>
+                </div>
+            </aura:if>
+        </div>
+        <aura:if isTrue="{!v.callList.length > 0}">
+            <c:Lightning_PaginationForDataTable aura:id="cPagination" totalRecords="{!v.callList.length}" recordsPerPage="{!v.noOfCallsToBeShown}"/>
+        </aura:if>
+    </lightning:card>
+</aura:component>

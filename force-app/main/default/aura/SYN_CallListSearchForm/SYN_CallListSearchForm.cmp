@@ -1,0 +1,77 @@
+<aura:component extends="c:SYN_BaseComponent"  controller="SYN_CallListSearchController">
+     <lightning:workspaceAPI aura:id="workspace" />
+    <!-- Attributes  -->
+	<aura:attribute name="callListFilterWrapper" type="Object"/>
+    <aura:attribute name="selectedProject" type="String"/>
+      <aura:attribute name="selectedtasktype" type="String"/>
+ <aura:attribute name="IsSuperUser" type="Boolean" default="false"/>
+    <aura:attribute name="loadingContent" type="String" default="Applying Filters..." />
+    
+    <!-- default handler -->
+    <aura:handler name="init" value="this" action="{!c.doInit}" />
+    
+    <!-- Events   -->
+    <aura:registerEvent name="CallListFilterEvent" type="c:CallListFilterEvent"/>
+
+    <!-- Lightning Libraries    -->
+    <lightning:notificationsLibrary aura:id="notifLib" />
+
+    <!-- Lightning Spinner  -->
+   <!-- <lightning:spinner aura:id="callListSpinner" variant="brand" size="large" alternativeText="Loading" />-->
+
+    <!-- Lightning Spinner  -->
+    <div aura:id="callListSpinner" class="slds-spinner_container slds-hide">
+        <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+            <span class="slds-assistive-text">{!v.loadingContent}</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+        <div class="custom-loading-text">
+            {!v.loadingContent}
+        </div>
+    </div>
+    
+    <lightning:card title="REMS TASK FILTER" iconName="standard:calibration" class="slds-theme_shade">
+        <!-- Filter Form -->
+        <ui:scrollerWrapper class="fixTabHeight">
+            <!-- Filter Form Layout -->
+            <lightning:layout horizontalAlign="left" multipleRows="true">
+                <!-- Filter For -->
+                <aura:iteration items="{! v.callListFilterWrapper.filterWrapperList}" var="filter">
+                    <aura:if isTrue="{! and(filter.isVisible, filter.filterType == 'Picklist')}">
+                        <lightning:layoutItem class="slds-p-around_xx-small" largeDeviceSize="12" mediumDeviceSize="12" smallDeviceSize="12" size="12">
+                            <lightning:select label="{! filter.filterName}" value="{! filter.selectedValue}" 
+                                              onchange="{! c.handlePicklistChange}" >
+                                <aura:iteration items="{! filter.filterValues}" var="option">
+                                    <option text="{! option.label}" value="{! option.value}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </lightning:layoutItem>
+                    </aura:if>
+                    <aura:if isTrue="{! and(filter.isVisible, filter.filterType == 'Date')}">
+                        <lightning:layoutItem class="slds-p-around_xx-small" largeDeviceSize="12" mediumDeviceSize="12" smallDeviceSize="12" size="12">
+                           
+                            <lightning:input name="togglevalue"  label="{! filter.filterName}" type="Date"  value="{! filter.selectedValue}" 
+                                onchange="{!c.handlePicklistChange}"  />
+                        </lightning:layoutItem>
+                    </aura:if>
+                    <aura:if isTrue="{! and(filter.isVisible, filter.filterType == 'Text')}">
+                        <lightning:layoutItem class="slds-p-around_xx-small" largeDeviceSize="12" mediumDeviceSize="12" smallDeviceSize="12" size="12">
+                            <lightning:input label="{! filter.filterName}" value="{! filter.selectedValue}" oncommit="{! c.handlePicklistChange}"
+                                                placeholder="type here..." fieldLevelHelp="Press enter for filtering calls." />
+                        </lightning:layoutItem>
+                    </aura:if>
+                </aura:iteration>
+            </lightning:layout>
+        </ui:scrollerWrapper>
+        <!-- End Filter Form -->
+        
+        <!-- Filter button panel -->
+        <aura:set attribute="footer">
+            <lightning:button  variant="neutral"
+                              label="Reset"
+                              onclick="{!c.clearButtonClick}"/>
+        </aura:set>
+        <!-- End Filter button panel -->
+    </lightning:card>
+</aura:component>

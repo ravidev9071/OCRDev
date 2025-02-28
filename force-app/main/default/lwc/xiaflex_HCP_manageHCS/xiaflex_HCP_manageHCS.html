@@ -1,0 +1,197 @@
+<template>
+	<div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+						<div data-region-name="content">
+							<div data-priority="" class="ui-widget">
+								<div class="slds-text-heading_large" style="font-size: 24px; font-weight: bold;">Manage Pharmacy / Healthcare Settings</div>
+								<div class="slds-m-bottom_large"></div>
+								<div class="tileCards summary">
+									<article class="slds-card slds-card_boundary slds-grid slds-wrap">
+										<div class="slds-card__header slds-size_3-of-3">
+											<header class="slds-media slds-media_center slds-has-flexi-truncate">
+												<div class="slds-media__figure">
+													<span class="slds-icon_container slds-icon-standard-contact"
+														title="contact">
+														<svg class="slds-icon slds-icon_small" aria-hidden="true">
+															<use
+																link:href="/assets/icons/standard-sprite/svg/symbols.svg#contact">
+															</use>
+														</svg>
+														<span class="slds-assistive-text">contact</span>
+													</span>
+												</div>
+												<div class="slds-media__body">
+													<h2 class="slds-card__header-title">
+														<span>Affiliated Pharmacies / Healthcare Settings</span>
+													</h2>
+												</div>
+												<div class="slds-no-flex slds-m-top_medium">
+													<a href="hcp-affiliate-hcs">
+														<button onclick={handleAnotherHCS}
+														class="slds-button slds-button_brand">Affiliate Another Pharmacy
+														/ Healthcare Setting</button>
+													</a>
+												</div>
+											</header>
+										</div>
+										<template for:each={pharmAcc} for:item="pharmAcc" for:index="index" class="">
+										
+											<div key={pharmAcc.id} class = "  slds-grid slds-wrap" style="padding: 10px;">
+											<div key={pharmAcc.id} class="slds-size_3-of-3">
+												<ul class=" slds-grid_pull-padded slds-grid slds-wrap">
+													<li class="slds-p-horizontal_small slds-size_1-of-1 slds-large-size_3-of-3" >
+														<article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+															<div class="slds-media__figure">
+																<span class="slds-icon_container slds-icon-standard-contact" title="Description of icon when needed">
+																	<svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg><span class="slds-assistive-text">Contact</span>
+																</span>
+															</div>
+															<div class="slds-media__body">
+																<div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+																	<h3 class="slds-tile__title slds-truncate" title="HCP 1" >{pharmAcc.Name} <span class="status certified">{pharmAcc.US_WSREMS__Status__c}</span></h3>
+																			  
+																	<div class="slds-shrink-none">
+																		<button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
+																			<svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true"><use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use></svg>
+																			<span class="slds-assistive-text">More options</span>
+																		</button>
+																	</div>
+																</div>
+																<div class="slds-tile__detail">
+																<p class = "parag">{pharmAcc.US_WSREMS__Address_Line_1__c} {pharmAcc.US_WSREMS__Address_Line_2__c} <br>{pharmAcc.US_WSREMS__City__c}, {pharmAcc.US_WSREMS__State__c} {pharmAcc.US_WSREMS__Zip__c} </p>
+													<div class="">
+														<div class="slds-form__item" role="listitem">
+															<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent" style="height: 55px;">
+																<span class="slds-form-element__label">Enrollment ID</span>
+																<div class="slds-form-element__control">
+																	<div class="slds-form-element__static">{pharmAcc.US_WSREMS__REMS_ID__c}</div>
+																	<button class="slds-button slds-button_icon" title="">
+																		 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																		 </svg>
+																		 <span class="slds-assistive-text"></span>
+																	</button>  
+																</div>
+															</div>
+														</div><!-- end form item  -->				
+														<div class="slds-form__item" role="listitem">
+															<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent" style="height: 73px;">
+																<span class="slds-form-element__label">Setting Identifier(s)</span>
+																<div class="slds-form-element__control">
+																	<!--div class="slds-form-element__static">DEA Number <small>(On file with distributor account)</small>: {pharmAcc.US_WSREMS__DEA__c}, NPI: {pharmAcc.US_WSREMS__National_Provider_Identifier__c}</div-->
+																	<div class="slds-form-element__static">
+																		<template if:true={pharmAcc.US_WSREMS__DEA__c}>
+																			DEA Number <small>(On file with distributor account)</small>: {pharmAcc.US_WSREMS__DEA__c}
+																			<template if:true={pharmAcc.US_WSREMS__National_Provider_Identifier__c}>, </template>
+																		</template>
+																		<template if:true={pharmAcc.US_WSREMS__National_Provider_Identifier__c}>
+																			NPI: {pharmAcc.US_WSREMS__National_Provider_Identifier__c}
+																		</template>
+																	</div>
+																	<button class="slds-button slds-button_icon" title="">
+																		 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>  
+																		 </svg>
+																		 <span class="slds-assistive-text"></span>
+																	</button>  
+																</div>
+															</div>
+														</div><!-- end form item  -->
+									  
+														 <div class="slds-form__item" role="listitem">
+															<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent" style="height:70px;">
+																<span class="slds-form-element__label">Setting Type</span>
+																<div class="slds-form-element__control">
+																	<div class="slds-form-element__static"> {pharmAcc.US_WSREMS__Healthcare_Setting_Type__c}</div>
+																	<button class="slds-button slds-button_icon" title="">
+																		 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																		 </svg>
+																		<span class="slds-assistive-text"></span>
+																	</button>  
+																</div>
+															</div>
+														 </div><!-- end form item  -->		
+														 <div class="slds-form__item" role="listitem">
+															<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																<span class="slds-form-element__label">Re-enrollment Date</span>
+																<div class="slds-form-element__control">
+																	<div class="slds-form-element__static"></div>
+																	<button class="slds-button slds-button_icon" title="">
+																		 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																					<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																		 </svg>
+																		<span class="slds-assistive-text"></span>
+																	</button>  
+																</div>
+															</div>
+														 </div><!-- end form item  -->	
+													</div>
+																</div>
+																		 
+												 <footer class="slds-card__footer" style="margin-right:15px;">		
+													<template if:true={pharmAcc.removeAffiliation}>
+														<a class="slds-card__footer-action" href="#" data-index={index} onclick={handleRemove}>Remove Affiliation
+															<span class="slds-assistive-text">Disassociate</span>
+														</a>
+													</template>
+												 </footer>   			 
+															</div>
+														</article>
+													</li>
+											
+												</ul>
+											</div>
+											</div>
+										
+										</template>
+										<footer class="slds-card__footer slds-hide">
+											<a class="slds-card__footer-action" href="#">
+												View All
+												<span class="slds-assistive-text">Contacts</span>
+											</a>
+										</footer>
+									</article>
+
+
+
+								</div> <!-- end tile cards  -->
+
+								<template if:true={showRemovalModal}>
+									<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+										aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+										<div class="slds-modal__container">
+											<header class="slds-modal__header">
+												<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+													onclick={handleCancel}>
+													<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+														size="small"></lightning-icon>
+													<span class="slds-assistive-text">Close</span>
+												</button>
+												<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Remove Affiliation</h2>
+											</header>
+											<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+												<p>By clicking Submit you will be removing your affiliation with {pharmaName}, this could disenroll you or {pharmaName} from the XIAFLEX REMS. If you have questions, you can call the Call Center 1-877-313-1235 for assistance.</p>
+											</div>
+											<footer class="slds-modal__footer">
+												<button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+												<button class="slds-button slds-button_brand" onclick={handleRemoveAffiliation}>Submit</button>
+											</footer>
+								
+										</div>
+									</section>
+									<div class="slds-backdrop slds-backdrop_open"></div>
+								</template>
+							</div> <!-- end ui-widget   -->
+						</div>
+
+					</div> <!-- end SF   -->
+				</div> <!-- end pageContent   -->
+			</div> <!-- end pageContainer   -->
+
+		</div> <!-- end main   -->
+	</div>
+</template>

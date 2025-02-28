@@ -1,0 +1,37 @@
+.slds-form-element__control .slds-radio.horizontal {
+    display: inline-block !important;
+}
+
+.required-text {
+    color: var(--slds-g-color-error-base-40, var(--lwc-colorTextError, rgb(234, 0, 30)));
+}
+
+p.txtInstructions {
+    font-weight: 500;
+    font-size: .9rem;
+    color: #545454;
+}
+
+.frmContainer.hcs .slds-card .slds-card__header {
+    background: rgb(0 122 53 / 75%);
+    background-image: linear-gradient(0deg, transparent 50%, rgba(0, 120, 52, 0.33) 50%);
+    background-size: 10px 10px;
+    background-color: rgba(0, 120, 52, 0.79);
+    padding: 15px;
+    margin-bottom: 0;
+}
+
+.slds-text-heading_medium {
+    font-weight: 700;
+    font-family: "Roboto Condensed";
+    font-size: 1.75rem;
+    line-height: 1.675rem;
+    margin-top: 1rem;
+    margin-bottom: 5px;
+}
+
+.frmContainer .slds-card__body p.frmInstructions {
+    background: #fff;
+    padding: 15px 30px;
+    margin: 0 -15px 15px;
+}

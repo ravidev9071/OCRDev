@@ -1,0 +1,4 @@
+<design:component>
+	 <design:attribute name="program" />
+     <design:attribute name="role" />
+</design:component>

@@ -1,0 +1,7 @@
+<aura:component extensible="true"  controller="SYN_MetadataVariablesService">
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+     <aura:attribute name="haveAccess" type="boolean" />
+     <aura:attribute name="errorMessage" type="String" />
+    
+	{!v.body}
+</aura:component>

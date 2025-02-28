@@ -1,0 +1,88 @@
+<aura:component controller ="MaciPortalCustomController" implements="lightning:isUrlAddressable,force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes">
+   
+    <!-- Screens related attributes -->
+    <aura:attribute name="showPrescriberCertificationScreen" type="Boolean" default="true"/>
+    <aura:attribute name="showPrescriberInfoScreen" type="Boolean" default="false"/>
+    <aura:attribute name="showPrescriberPrimaryOfficeScreen" type="Boolean" default="false"/>
+    <aura:attribute name="showPrescriberSecondaryOfficeScreen" type="Boolean" default="false"/>
+    <aura:attribute name="showPrescriberPasswordScreen" type="Boolean" default="false"/>
+    <aura:attribute name="showMaciConfirmEmailScreen" type="Boolean" default="false"/>
+    
+    <!-- storing current program Id -->
+    <aura:attribute name="programId" type="string" default =""/>
+    
+    <!-- storing current portal profile Id -->
+    <aura:attribute name="profileId" type="string" default =""/>
+    
+    <!-- storing current portal user role -->
+    <aura:attribute name="userrole" type="string" default =""/>
+    
+    <!-- storing portal user id when user gets created at password screen -->
+    <aura:attribute name="portalUserId" type="String" default=""/>
+    
+    <!-- storing Prescriver data info -->
+    <aura:attribute name="prescriberInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    
+    <!-- storing Primary Office data info -->
+    <aura:attribute name="pCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    
+    <!-- storing Secondary office data info -->
+    <aura:attribute name="sCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    
+    <!-- storing Prescriber NPI related information after viva integration  -->
+    <aura:attribute name="prescriberNPIObj" type="Map" default="{'firstName':'', 'middleName':'', 'lastName':'',
+                                                                     'addressLine1':'', 'city':'','state':'','zipCode':'','confirmEmail':''}"/>
+    
+    <!-- storing Primary Office Other Info Data, which are not commited to the data based  -->
+    <aura:attribute name="primaryOtherInfoObj" type="Map" default="{ 'firstName':'', 'lastName':'', 'confirmEmail':'','PrefrerredMethod':'','isNPILocationSelected':''}"/>
+    
+    <!-- storing Secondary Office Other Info Data, which are not commited to the data based  -->
+    <aura:attribute name="secondaryOtherInfoObj" type="Map" default="{ 'firstName':'', 'lastName':'', 'confirmEmail':'','PrefrerredMethod':'','isNPILocationSelected':''}"/>
+    
+    <!-- storing Case Status Picklist values  -->
+    <aura:attribute name="stateMap" type="Map"/> 
+
+    <!-- Show NPI Values  -->
+    <aura:attribute name="ShowNPIInfo" type="boolean" default="false"/>
+
+    <!-- storing Case Professional Designation Picklist values  -->
+    <aura:attribute name="ProfessionalDesignationMap" type="Map"/> 
+    
+    <!-- handlter declarion  -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <!-- lightning Event -->
+    <aura:handler name="ShowPrescriberScreens" event="c:MaciShowPrescriberEnrollmentScreen" action="{!c.handleShowScreen}"/>
+    
+    
+    <!-- Main Frame Starts Here -->
+    
+    
+    <aura:if isTrue="{!v.showPrescriberCertificationScreen}">
+    	<c:Maci_Prescriber_Certification />
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showPrescriberInfoScreen}">
+    	<c:Maci_Prescriber_Information newCase="{!v.prescriberInfo}" prescriberNPIObj="{!v.prescriberNPIObj}"  ShowNPIInfo="{!v.ShowNPIInfo}" ProfessionalDesignationMap="{!v.ProfessionalDesignationMap}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showPrescriberPrimaryOfficeScreen}">
+    	<c:MaciPrimaryOfficePracticeClinicalInformation  pCase="{!v.pCase}" prescriberNPIObj="{!v.prescriberNPIObj}" 
+                                                            primaryOtherInfoObj="{!v.primaryOtherInfoObj}" stateMap="{!v.stateMap}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showPrescriberSecondaryOfficeScreen}">
+    	<c:MaciSecondaryOfficePracticeClinicalInformation sCase="{!v.sCase}" prescriberNPIObj="{!v.prescriberNPIObj}" 
+                                                            secondaryOtherInfoObj="{!v.secondaryOtherInfoObj}" stateMap="{!v.stateMap}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showPrescriberPasswordScreen}">
+    	<c:MaciPrescriberPassword prescriberInfo="{!v.prescriberInfo}"  pCase="{!v.pCase}" sCase="{!v.sCase}"
+                                  programId="{!v.programId}" profileId="{!v.profileId}" userrole="{!v.userrole}" prescriberNPIObj="{!v.prescriberNPIObj}" primaryOtherInfoObj="{!v.primaryOtherInfoObj}" secondaryOtherInfoObj="{!v.secondaryOtherInfoObj}"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.showMaciConfirmEmailScreen}">
+    	<c:MaciConfirmEmail prescriberInfo="{!v.prescriberInfo}" portalUserId="{!v.portalUserId}"/>
+    </aura:if>
+	
+</aura:component>

@@ -1,0 +1,67 @@
+<aura:component controller="SYN_PatientSearchController" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="recordId" type="String" default="false" access="global"/>
+    <aura:attribute type="String" name="remsRecordType"/>
+    <lightning:navigation aura:id="navigation"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="rows" type="Map[]"/>
+    <aura:attribute name="allrows" type="Map[]"/>
+    <aura:attribute name="cols" type="Map[]"/>
+    <aura:attribute name="accLst" type="Account[]"/>
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="showPatientSearchComp" type="Boolean"/>
+    
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="noOfCallsToBeShown" type="Integer" default="10"/>
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    
+    <aura:handler name="ChangePage" event="c:SYN_ChangePage" action="{!c.handlePagination}"/>
+    
+    <aura:if isTrue="{!v.showPatientSearchComp}">
+    <fieldset class="slds-theme_default "> 
+        <form class="slds-form_stacked">
+            <lightning:card   class="slds-theme_shade " >
+                <aura:set attribute="title">
+                    <lightning:icon iconName="standard:person_account" size="small" class="slds-m-bottom_small"> </lightning:icon>
+                    {!v.remsRecordType} Activity History
+                </aura:set>
+                <aura:if isTrue="{!v.rows.length > 0}">
+                    <div class="slds-form--stacked slds-scrollable_y" >
+                        <lightning:datatable
+                                             class="slds-table_header-fixed_container slds-scrollable_x slds-border_top"
+                                             data="{!v.rows}"
+                                             columns="{!v.cols}"
+                                             keyField="Id"
+                                             hideCheckboxColumn="true"
+                                             showRowNumberColumn="false"
+                                             onrowaction="{!c.onRowAction}"
+                                             sortedDirection="{!v.sortedDirection}"
+                                             sortedBy="{!v.sortedBy}"
+                                             onsort="{!c.handleSort}"
+                                             />
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="slds-notify slds-notify--alert slds-theme--info slds-theme--alert-texture" role="alert">
+                            <span class="slds-assistive-text">Info</span>
+                            
+                            <h2>
+                                <lightning:icon iconName="utility:info" variant="inverse"  size="x-small" class="slds-m-right--x-small" />
+                                No Cases available for this patient record
+                            </h2>
+                        </div>
+                    </aura:set>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.rows.length > 0}">
+            <c:SYN_Pharmacy_PaginationForDataTable aura:id="cPagination" totalRecords="{!v.allrows.length}" recordsPerPage="{!v.noOfCallsToBeShown}"/>
+        </aura:if>
+                
+            </lightning:card>
+        </form>
+    </fieldset>
+    </aura:if>
+</aura:component>

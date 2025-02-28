@@ -1,0 +1,37 @@
+<aura:component controller ="MaciPortalCustomController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+    <aura:attribute name="ShowPharmacyNPIScreen" type="Boolean" default="true"/>
+    <aura:attribute name="ShowMailingAddressInfoScreen" type="Boolean" default="false"/>
+
+    <aura:attribute name="ShowAgreementInfoScreen" type="Boolean" default="false"/>
+    <aura:attribute name="ShowCompleteInfoScreen" type="Boolean" default="false"/>
+    
+    <aura:attribute name="pharmcInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    
+     <!-- storing Case State Picklist values  -->
+    <aura:attribute name="stateMap" type="Map"/> 
+    <lightning:navigation aura:id="navigation"/>
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    
+    <!-- lightning Event -->
+    <aura:handler name="ShowOutPatinetScreens" event="c:MaciShowOutPatientPharmacyEnrollmentScreen" action="{!c.handleShowScreen}"/>
+    <aura:if isTrue="{!v.ShowPharmacyNPIScreen}">
+        <c:MaciPharmacyInformationOutpatient newCase="{!v.pharmcInfo}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowMailingAddressInfoScreen}">
+        <c:MaciOutPatientPharmacyInformationMailing newCase="{!v.pharmcInfo}" stateMap="{!v.stateMap}"/>
+    </aura:if> 
+    
+   
+    
+     <aura:if isTrue="{!v.ShowAgreementInfoScreen}">
+        <c:MaciOutpatientPharmacyAgreement newCase="{!v.pharmcInfo}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowCompleteInfoScreen}">
+        
+        <c:MaciOutpatientPharmacyCongratulationsPage/> 
+    </aura:if>
+    
+</aura:component>

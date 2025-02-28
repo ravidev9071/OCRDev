@@ -1,0 +1,26 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="link" type="String" />
+    <aura:attribute name="Dashboardlink" type="String" />
+    <aura:attribute name="portalName" type="String" />
+    <aura:if isTrue="{!v.portalName == 'RMR'}">
+        <div>
+            <p class="pad"> If you would like to submit another Risk Management Report please click <a href="{!v.link}" target="_blank"><span style="color:#4472c4;"><u> Risk Management Report</u></span></a> or click <a href="{!v.Dashboardlink }" target="_self"><span style="color:#4472c4;"><u> here</u></span></a> to return to your dashboard.  </p>
+        </div>
+        
+    </aura:if> 
+    
+    <aura:if isTrue="{!v.portalName == 'PrescriberEnrollment'}">
+        <div>
+            <p class="pad"> If you would like to enroll patients in the Sodium Oxybate REMS, please click <a href="{!v.link}" target="_blank"><span style="color:#4472c4;"><u>Enroll Patient</u></span></a> or click <a href="{!v.Dashboardlink }" target="_self"><span style="color:#4472c4;"><u>here</u></span></a> to return to your dashboard.</p>
+        </div>
+        
+    </aura:if> 
+    
+    <aura:if isTrue="{!v.portalName == 'PatientEnrollment'}">
+        <div>
+            <p class="pad">If you would like to enroll another patient please click <a href="{!v.link}" target="_blank"><span style="color:blue;"><u>Enroll Patient </u></span></a> or click <a href="{!v.Dashboardlink }" target="_self"><span style="color:blue;"><u> here </u></span></a> to return your dashboard.</p>
+        </div>
+        
+    </aura:if> 
+    
+</aura:component>

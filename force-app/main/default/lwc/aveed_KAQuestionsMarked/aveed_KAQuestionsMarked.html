@@ -1,0 +1,68 @@
+<template>
+  <template lwc:if={isloading}>
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+  </template>
+  <lightning-progress-indicator type="path" variant="base">
+    <lightning-progress-step label="Education Program" value="1" onclick={onclickFrstProgressBar}
+      class="educationProgram"></lightning-progress-step>
+    <lightning-progress-step label="Knowledge Assessment" value="2" onclick={onclickFrstProgressBar2}
+      class="knowledgeProgram"></lightning-progress-step>
+    <lightning-progress-step label="Complete Enrollment" value="3" onclick={onclickFrstProgressBar3}
+      class="completeProgram"></lightning-progress-step>
+  </lightning-progress-indicator>
+
+  <div class="slds-border_bottom "></div>
+
+  <div data-region-name="content">
+    <div data-priority="" class="ui-widget">
+      <div class="slds-text-heading_large">AVEED<sup>&reg;</sup> REMS Knowledge Assessment</div>
+      <div class="slds-text-heading_medium">You have now completed the assessment.</div>
+      <p>Unfortunately, you did not answer all the questions correctly and have not passed the assessment.
+        <br><br>Please click "Retake Assessment" to retake and submit those questions you answered incorrectly.
+        <br>You can click "Open Education Program" to view the AVEED REMS Education Program. The document will
+        open up
+        in a new window.
+        <br><br>Attempt #<span class="kaAttemptsRemaining"></span>
+      </p>
+    </div>
+  </div>
+
+  <div class="slds-p-top_large"></div>
+  <div class="ka">
+    <div class="frmContainer">
+      <template if:true={displayCard}>
+        <div class="frmContainer">
+          <div class="slds-p-around_medium">
+            <template for:each={questions} for:item="question" for:index="index">
+              <div class={question.iscorrectanswer} key={question.type} if:true={question.showQuestion}>
+                <!-- *************** Radio Button **************** -->
+                <template if:true={question.isRadioOption}>
+                  <div class="kaHeading">Question: {question.index}</div>
+                  <p class="slds-form-element__label"><span class="slds-required">*</span>{question.labelWithSequence}
+                  </p>
+                  <lightning-radio-group name={question.Id} onchange={handleChangeEvent} data-question-id={question.Id}
+                    class="validate" options={question.picklistOptions} type="radio" required={question.required}
+                    variant="label-hidden" value={question.userValue} disabled="true">
+                  </lightning-radio-group>
+                </template>
+                <br />
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+      <!-- end question   -->
+      <div class="slds-border_top slds-m-top_xx-large"></div>
+      <div class="slds-align_absolute-center">
+        <lightning-button label="Open Education Program" variant="base"
+          class="slds-m-top_large slds-m-right_medium white-button" onclick={navigateToReviewMaterials}>
+        </lightning-button>
+        <lightning-button label="Retake Assessment" variant="brand" class="slds-m-top_large"
+          onclick={navigateToRetakeAssessment}>
+        </lightning-button>
+      </div>
+    </div> <!-- end frmContainer  -->
+  </div> <!-- end KA   -->
+  <!-- end SF   -->
+
+</template>

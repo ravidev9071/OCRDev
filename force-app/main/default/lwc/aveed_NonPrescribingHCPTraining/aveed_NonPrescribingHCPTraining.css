@@ -1,0 +1,7 @@
+.slds-form-element__control .slds-radio.horizontal {
+    display: inline-block !important;
+}
+
+.required-text {
+    color: var(--slds-g-color-error-base-40, var(--lwc-colorTextError, rgb(234, 0, 30)));
+}

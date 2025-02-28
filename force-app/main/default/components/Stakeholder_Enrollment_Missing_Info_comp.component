@@ -1,0 +1,13 @@
+<apex:component controller="SYN_PatientEnrollmentMissingInfo" access="global">
+    <!-- Get values from email template -->
+     <apex:attribute name="caseValId" assignTo="{!emailCaseId}" description="This is the account Id passed from the email template." type="Id"/>
+	Missing and/or invalid information required in order to complete your 
+    <ul>
+    <apex:repeat value="{!StakeholderEnrollmentMissingFields}" var="cse" id="theRepeat">
+            <li>
+                <apex:outputText value=" {!cse}"/>
+            </li>
+            
+    </apex:repeat>
+    </ul>
+</apex:component>

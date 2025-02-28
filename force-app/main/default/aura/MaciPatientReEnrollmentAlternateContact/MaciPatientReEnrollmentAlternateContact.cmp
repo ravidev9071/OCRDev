@@ -1,0 +1,164 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> Patient Enrollment - Alternate Contact { Middle Context }
+-->
+
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="pCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="isPatientMinor" type="boolean" default="false"/>
+    <aura:attribute name="ephonesize" type="string" default ="15"/>	
+    <aura:attribute name="alternateContactObj" type="Map" default="{'lgfirstName':'', 'lglastName':'',
+                                                                     'lgconfirmEmail':'', 'emergencyContactFirstName':'','emergencyContactLastName':'',
+                                                                   'emergencyContactRelationship':'','emergencyContactPhoneNum':''}"/>
+   <!-- handlter declarion  -->
+    
+    <aura:registerEvent name="ShowPatientEnrollmentScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height:100vh;">
+
+        <div class="container-fluid px-5 h-100">
+            <div class="row  h-100">
+                <div class="col-lg-12  h-100">
+                    <div class="card p-0 rounded-0 border-0  h-100">
+                        
+                         <div class="card-header border-0 crd-hdr-m p-0">
+
+                            <div class="row px-1 d-flex justify-content-center align-items-center">
+                                
+                                  <div class="col-lg-12">
+                                    <div class="heading-top mx-0 d-flex justify-content-between border-bottom-0"
+                                        style="margin: 0px 4px;background-color: #EBEBEB">
+                                        <div class="col-lg-7 col-sm col-6 text-start">
+                                            
+                                            <div class="row ps-3">
+                                                <div class="col-1" style="width: 39px;">
+                                                    <span class="text-theme">
+                                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="col-9 ps-4">
+                                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                       {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="row ps-3" style="position: relative;top: -10px;">
+                                                <div class="col-1" style="width: 39px;"></div>
+                                                <div class="col-9 ps-4">
+                                                    <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                        NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <div class="col-lg-5 text-end pe-4">
+                                            <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                <span class="text-theme fw-bold">Enrolled as of
+                                                    <span name="enrolled-number" id="enrolled-number">
+                                                        <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                month="numeric" day="numeric" />
+                                                    </span>
+                                                   &nbsp; <i class="fa fa-check-circle"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-7">
+                                    <h3 class="heading mb-0 fs-3 fw-lighter" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img> <i class="fa fa-file-text ps-3 pe-2"></i> Patient Reenrollment</h3>
+
+                                </div>
+                                <div class="col-lg-5">
+                                   <div class="progressbar" style="margin: 0rem 30px 2rem 25px;">
+                                        <div class="progress" id="progress"></div>
+                                            <div class="progress-block">
+                                                <div class="progress-step"></div>
+                                                <span>PATIENT</span>
+                                            </div>
+                                        	<div class="progress-block">
+                                                <div class="progress-step progress-step-active"></div>
+                                                <span class="text-theme"><em>ALTERNATE CONTACT</em></span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step"></div>
+                                                <span>REPRODUCTIVE <br></br> POTENTIAL STATUS</span>
+                                            </div>
+                                           <div class="progress-block">
+                                               <div class="progress-step last-step"></div>
+                                               <span>PATIENT AGREEMENT</span>
+                                           </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="card-body px-4 llc-dv">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold">Alternate Contact</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm mt-3">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <div class="row mt-3">
+                                        <div class="col-lg-1 px-0 col-sm col-1">
+                                                <i class="fa fa-user pull-right pt-2 mt-4"></i>
+                                            </div>
+                                            <div class="col-lg-8 col-sm col-11">
+                                                <label>Emergency Contact Name</label>
+                                                <lightning:input type="text" aura:id="lfname" placeholder="First Name" class="form-control" value="{!v.alternateContactObj.emergencyContactFirstName}"/>
+                                                <lightning:input type="text" aura:id="llname" placeholder="Last Name" class="form-control mt-2" value="{!v.alternateContactObj.emergencyContactLastName}"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-lg-1 px-0 col-sm col-1">
+                                            <img src="/resource/MaciImages/img/link.png" alt="" class="pull-right pt-2 mt-4" style="width:18px;"></img>
+                                            </div>
+                                            <div class="col-lg-8 col-sm col-11">
+                                                <label>Relationship</label>
+                                                <lightning:input type="text" aura:id="relationship" placeholder="Mother, Father..." class="form-control" value="{!v.alternateContactObj.emergencyContactRelationship}"/>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                        <div class="col-lg-1 px-0 col-sm col-1">
+                                                <i class="fa fa-phone pull-right pt-2 mt-4 me-1"></i>
+                                            </div>
+                                            <div class="col-lg-8 col-sm col-11">
+                                                <label>Phone</label>
+                                                <lightning:input type="text" aura:id="ePhone" placeholder="(nnn) nnn-nnnn" class="form-control" value="{!v.alternateContactObj.emergencyContactPhoneNum}" maxlength="{!v.ephonesize}" onchange = "{!c.formatPhoneNumber}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6 col-6">
+                                    <a name="button-previous"  class="btn btn-secondary rounded-0 my-2" onclick="{!c.handlePrevious}"> <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                    <a style="margin-left:5px;" name="button-restart" class="btn btn-secondary rounded-0 my-2" onclick="{!c.handleRefresh}">RESTART <i class="fa fa-repeat"></i></a>
+                                </div>
+                                <div class="col-lg-6 col-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+	
+</aura:component>

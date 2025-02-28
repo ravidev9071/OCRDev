@@ -1,0 +1,205 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 13/09/2022
+Description   :- Created for Maci Portal -> Prescriber Information Page { Middle Context }
+-->
+
+<aura:component controller ="MaciPortalCustomController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+   
+    <aura:attribute name="programId" type="string" default =""/>
+    <aura:attribute name="profileId" type="string" default =""/>
+    <aura:attribute name="userrole" type="string" default =""/>
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+    <aura:attribute name="ShowNPIInfo" type="boolean" default="false"/>
+    <aura:attribute name="ProfessionalDesignationMap" type="Map"/> 
+    <aura:attribute name="defaultSize" type="string" default ="15"/>
+    
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="prescriberNPIObj" type="Map" default="{ 'firstName':'', 'middleName':'', 'lastName':'',
+                                                                     'addressLine1':'', 'city':'','state':'',
+                                                               		  'zipCode':'','confirmEmail':'','Phone1':'','speciality':''}"/>
+    
+    
+    <aura:registerEvent name="ShowPrescriberScreens" type="c:MaciShowPrescriberEnrollmentScreen"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <section class="sec-one-1 pb-0" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height:100vh;">
+           <!--loading spinner start-->
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+        
+        <div class="container-fluid px-5 pb-0 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card h-100 p-0 rounded-0 border-0">
+                        <div class="card-header border-0 crd-hdr-m bg-blue-header">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-5">
+                                    <div class="row">
+                                        <div class="col-lg-11 col-sm col-10">
+                                            <h5 style="font-size: 23.93px !important;" class="heading mb-0 fw-lighter fs-3" data-aura-rendered-by="580:0"><i style="font-size: 30px" class="fa fa-file-text fa-2x pe-2" data-aura-rendered-by="581:0"></i> Prescriber Certification</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="progressbar">
+                                        <div class="progress" id="progress"></div>
+                                        
+								    	<div class="progress-block">
+                                        	<div class="progress-step progress-step-active"></div>
+                                            <span class="text-theme"><em>PRESCRIBER INFORMATION</em></span>
+                                        </div>
+                                        <div class="progress-block">
+                                              <div class="progress-step"></div>
+                                            <span>PRIMARY OFFICE PRACTICE/CLINICAL INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>SECONDARY OFFICE PRACTICE/CLINICAL INFORMATION</span>
+                                        </div>
+                                         <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                               <span>PASSWORD</span>
+                                         </div>
+                                         <div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                        <div class="progress-block">
+                                        	<div class="progress-step last-step"></div>
+                                            <span>COMPLETE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-4 llc-dv">
+
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold">Prescriber Information</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm mt-3">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label class="m-0 mb-3">Please provide an individual NPI number</label>
+                                        <div class="row">
+                                            <div class="col-lg-1 px-0 col-sm col-1 lign-items-end justify-content-end d-flex">
+                                                <i class="fa fa-user-md pull-right mt-1 me-1" style="font-size:26px;"></i>
+                                            </div>
+                                            <div class="col-lg-11 col-sm col-11 px-1">
+                                                
+                                               <div class="input-group m-0">
+                                                    <lightning:input type="text" aura:id="npi" placeholder="Enter NPI number" class="form-control" value="{!v.newCase.US_WSREMS__NPI__c}" maxlength="10" 
+                                                    onchange="{!c.handleChange}"/>
+                                                   <div lightning-input_input="" class="slds-form-element__help" id="help-message-6" data-help-message="" role="alert"></div>
+                                                    <lightning:formattedText aura:id="npimsg" class="slds-hide colorClass"  value=""/>
+                                                   <button name="find-number" id="find-number"
+                                                        class="btn btn-outline-secondary rounded-0 find-number"
+                                                        type="button" onclick="{!c.findProviderInfo}" >FIND</button>
+                                                    <i class="fa fa-info py-2 px-3 border-end" title="The NPI number is a unique, 10-digit identification number for covered prescribers. The Macitentan-Containing Products REMS requires the prescriber&apos;s active NPI number in order to certify in the REMS. When the NPI number is entered here and found, the Macitentan-Containing Products REMS retrieves the prescriber&apos;s NPI registration information."></i>    
+                                               </div>
+                                            </div>
+                                        </div>
+                                        <aura:if isTrue="{!v.ShowNPIInfo}">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm col-12">
+                                                    <div class="card card-info ms-5 my-3">
+                                                        <div class="card-body ps-2">
+                                                            <h6 class="my-0 fw-bold">NPI Information</h6>
+                                                            
+                                                                <p class="mb-0">{!v.prescriberNPIObj.firstName}&nbsp; {!v.prescriberNPIObj.lastName}</p>
+
+                                                            <div class="mailing-address">
+                                                                <p class="mt-2 mb-0">Mailing Address</p>
+                                                                
+                                                                <p id="address-line-1" class="mb-0">{!v.prescriberNPIObj.addressLine1}</p>
+                                                                <p id="address-line-2" class="mb-0">{!v.prescriberNPIObj.city},&nbsp;{!v.prescriberNPIObj.state}&nbsp;{!v.prescriberNPIObj.zipCode}</p>
+                                                            </div>
+                                                            <div class="phone-number">
+                                                                <p class="mt-2 mb-0">Phone </p>
+                                                                <p id="number-1" class="mb-0"> {!v.prescriberNPIObj.Phone1}</p>
+                                                                
+                                                            </div>
+                                                            <div class="primary-specialty">
+                                                                <p class="mt-2 mb-0">
+                                                                    <i class="fa fa-star fa-1x"></i>&nbsp;<b>= Primary Specialty</b></p>
+                                                                <p class="mb-0">
+                                                                    <i class="fa fa-star fa-1x"></i> &nbsp; {!v.prescriberNPIObj.speciality}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 border-end border-dark"></div>
+                                <div class="col-lg-6">
+                                    <div class="form-group px-lg-5">
+                                        <label class="m-0">Email</label>
+                                        <div class="row">
+                                            <div class="col-lg-1 px-0 col-sm col-1 lign-items-end justify-content-end d-flex">
+                                                <i class="fa fa-envelope pull-right pb-2 me-1"></i>
+                                            </div>
+                                            <div class="col-lg-9 col-sm col-11 px-2">
+                                                
+                                                <lightning:input type="text" aura:id="email" placeholder="Email" class="form-control" value="{!v.newCase.Email_address__c}"/>
+                                                <lightning:input type="text" aura:id="confirmemail" placeholder="Confirm Email" class="form-control mt-2" value="{!v.prescriberNPIObj.confirmEmail}"/>                                            
+                                            </div>
+                                        </div>
+
+                                        <label class="m-0">Professional Designation</label>
+                                        <div class="row">
+                                            <div class="col-lg-1 px-0 col-sm col-1">
+                                                <i class="fa fa-university pull-right pt-2 me-2"></i>
+                                            </div>
+                                            <div class="col-lg-9 col-sm col-11 px-2">
+                                                <select name="text-state" id="pd"  class="form-control" value="{!v.newCase.Professional_Designation__c}" onchange="{!c.handleProfDesgOnChange}"> 
+                                                    <option value=""></option>
+                                                    <aura:iteration items="{!v.ProfessionalDesignationMap}" var="ind" indexVar="key" >
+                                                    <option text="{!ind.value}" value="{!ind.key}" selected="{!ind.key==v.newCase.Professional_Designation__c}" />
+                                                    </aura:iteration>
+                                                </select> 	
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                 <div class="col-6">
+                                    <a name="button-previous"
+                                        class="btn btn-secondary rounded-0 my-2" onclick="{!c.handlePrevious}">
+                                        <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                    <a style="margin-left:5px;" name="button-restart"
+                                        class="btn btn-secondary rounded-0 my-2" onclick="{!c.handleRefresh}">RESTART
+                                        <i class="fa fa-repeat"></i></a>
+                                </div>
+                                <div class="col-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+	
+</aura:component>

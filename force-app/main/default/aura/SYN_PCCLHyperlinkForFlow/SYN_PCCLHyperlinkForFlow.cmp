@@ -1,0 +1,9 @@
+<aura:component implements="lightning:availableForFlowScreens">
+     <aura:attribute name="PatientID" type="String" />
+    <lightning:layout >
+        <lightning:layoutItem>
+            <p class="pad"> Prior to dispensing sodium oxybate to the patient, you are reminded to obtain a<a href="{! 
+                $Label.c.PharmacyPortalURL + '/rdaflow?PatientID=' + (v.PatientID) }" target="_blank"><span style="color:blue;"><u> REMS Dispense Authorization</u></span></a>. Contact the Sodium Oxybate REMS at 1-833-769-7367 for any questions or concerns on the submitted Patient Counseling Checklist. <br/>Please click <a href="{!$Label.c.PharmacyPortalURL}"><span style="color:blue;"><u>here</u></span></a> to return to your dashboard. </p>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

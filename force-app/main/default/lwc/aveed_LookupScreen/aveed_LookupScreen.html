@@ -1,0 +1,343 @@
+<template>
+      <div role="main" tabindex="-1" class="body isPageWidthFixed-true" data-aura-rendered-by="335:0"
+            aria-hidden="false">
+            <!--render facet: 3:2;a-->
+            <div data-aura-rendered-by="89:2;a" class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea"
+                  data-aura-class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                  <div class="xxxslds-col--padded comm-content-header comm-layout-column"
+                        data-aura-rendered-by="91:2;a">
+                        <div class="slds-text-heading_large">Healthcare Setting &amp; Healthcare Provider Lookup</div>
+                        <!--render facet: 92:2;a-->
+                  </div>
+            </div>
+
+            <div class=" slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                  <div
+                        class=" slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-right_large right-border">
+                        <div class="locatorContainer">
+                              <div class="slds-grid slds-grid_align-center">
+                                    <div class="slds-col slds-size_12-of-12 slds-medium-size_8-of-12">
+                                          <div class="locatorContent">
+                                                <p>Use the Online Locator tool to search for a specific location.</p>
+                                                <a href={locatorUrl}
+                                                      class=" slds-button btnLink btnGrey   slds-grid_align-center xxxslds-button_full-width"
+                                                      tabindex="0">
+                                                      <img src={iconLocation}>Online Locator for Certified Healthcare
+                                                      Providers or Pharmacies and Healthcare Settings</a>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="dividerSolid"></div>
+                  </div>
+            </div>
+      </div>
+
+      <div class="frmContainer slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_12-of-12">
+            <article class="slds-card" part="card">
+                  <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                              <div class="slds-media__figure"></div>
+                              <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                          <span></span>
+                                    </h2>
+                              </div>
+                        </header>
+                  </div>
+                  <div class="slds-card__body  slds-card__body_inner" part="body">
+                        <p class="frmInstructions">Select the participant type. You may also enter a Name, NPI, State,
+                              or Zip Code to limit the search results.</p>
+                        <fieldset class="slds-form-element">
+                              <template if:true={participantValidation}>
+                                    <div class="slds-text-body_small slds-text-color_error">Please select the
+                                          participant type to search.</div>
+                              </template>
+                              <legend class="slds-form-element__legend slds-form-element__label">
+                                    <abbr class="slds-required" title="required">* </abbr>Participant
+                              </legend>
+                              <div class="slds-form-element__control">
+                                    <span class="slds-radio">
+                                          <input type="radio" id="rb-1" value="Prescriber" name="rbPart"
+                                                onchange={handleParticipantSelection}>
+                                          <label class="slds-radio__label" for="rb-1">
+                                                <span class="slds-radio_faux"></span>
+                                                <span class="slds-form-element__label">Prescribing Healthcare
+                                                      Providers</span>
+                                          </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                          <input type="radio" id="rb-2" value="Health_Care_Setting" name="rbPart"
+                                                onchange={handleParticipantSelection}>
+                                          <label class="slds-radio__label" for="rb-2">
+                                                <span class="slds-radio_faux"></span>
+                                                <span class="slds-form-element__label">Healthcare Settings</span>
+                                          </label>
+                                    </span>
+                              </div>
+
+                              <div class="slds-form-element">
+                                    <label class="slds-form-element__label" for="text-input-id-0"> Name, NPI, State, or
+                                          Zip Code</label>
+                                    <div class="slds-form-element__control">
+                                          <lightning-input
+                                                class="slds-col slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_12-of-12"
+                                                type="text" variant="standard" name="searchKeyWord"
+                                                value={searchKeyWordValue} onchange={handleChange}>
+                                          </lightning-input>
+                                    </div>
+                              </div>
+                        </fieldset>
+
+                  </div>
+                  <div class="slds-card__footer" part="footer">
+                        <slot name="footer">
+                              <div slot="footer">
+                                    <lightning-button label="Search" onclick={handleSearch}
+                                          variant="brand"></lightning-button>
+                              </div>
+                        </slot>
+                  </div>
+            </article>
+      </div>
+
+      <template if:true={prescriber_records.length}>
+            <div id="HCPResults">
+                  <h2 id="element-with-table-label1" class="slds-text-heading_medium slds-m-bottom_xx-small">
+                        Certified Prescribing Healthcare Providers</h2>
+                  <div class="slds-scrollable" style="height: 40vh;">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                              aria-labelledby="element-with-table-label other-element-with-table-label">
+                              <thead>
+                                    <tr class="slds-line-height_reset">
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate">
+                                                      Last Name
+                                                      <span title="LastName">
+                                                            <lightning-icon style="cursor:pointer;" icon-name={sortIcon}
+                                                                  variant="inverse" data-title="LastName"
+                                                                  onclick={sortByColumn}
+                                                                  size="xx-small"></lightning-icon>
+                                                      </span>
+                                                </div>
+                                          </th>
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="First Name"
+                                                      style="padding-left: 1vh;">
+                                                      First Name
+                                                </div>
+                                          </th>
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="NPI Number"
+                                                      style="padding-left: 1vh;">
+                                                      NPI Number
+                                                </div>
+                                          </th>
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Address" style="padding-left: 1vh;">
+                                                      Address
+                                                </div>
+                                          </th>
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="City" style="padding-left: 1vh;">
+                                                      City
+                                                </div>
+                                          </th>
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="State" style="padding-left: 1vh;">
+                                                      State
+                                                </div>
+                                          </th>
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="ZIP Code" style="padding-left: 2vh;">
+                                                      ZIP Code
+                                                </div>
+                                          </th>
+
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Phone" style="padding-left: 2vh;">
+                                                      Phone
+                                                </div>
+                                          </th>
+
+                                          <th class="HCPResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Enrollment ID"
+                                                      style="padding-left: 1vh;">
+                                                      Enrollment ID
+                                                </div>
+                                          </th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                    <template for:each={prescriber_records} for:item="Prescriber_record">
+                                          <tr key={Prescriber_record.Id}>
+
+                                                <td data-label="LastName">
+                                                      <div class="slds-truncate"
+                                                            title={Prescriber_record.US_WSREMS__Prescriber__r.LastName}>
+                                                            {Prescriber_record.US_WSREMS__Prescriber__r.LastName}
+                                                      </div>
+                                                </td>
+                                                <td data-label="First Name">
+                                                      <div class="slds-truncate"
+                                                            title={Prescriber_record.US_WSREMS__Prescriber__r.FirstName}>
+                                                            {Prescriber_record.US_WSREMS__Prescriber__r.FirstName}
+                                                      </div>
+                                                </td>
+                                                <td data-label="NPI Number">
+                                                      <div class="slds-truncate"
+                                                            title={Prescriber_record.US_WSREMS__Prescriber__r.US_WSREMS__National_Provider_Identifier__c}>
+                                                            {Prescriber_record.US_WSREMS__Prescriber__r.US_WSREMS__National_Provider_Identifier__c}
+                                                      </div>
+                                                </td>
+                                                <td data-label="Address">
+                                                      <div class="slds-truncate" title={Prescriber_record.addressLine1}>
+                                                            {Prescriber_record.addressLine1}
+                                                            {Prescriber_record.addressLine2}
+                                                      </div>
+                                                </td>
+                                                <td data-label="City">
+                                                      <div class="slds-truncate" title={Prescriber_record.city}>
+                                                            {Prescriber_record.city}
+                                                      </div>
+                                                </td>
+                                                <td data-label="State">
+                                                      <div class="slds-truncate" title={Prescriber_record.state}>
+                                                            {Prescriber_record.state}
+                                                      </div>
+                                                </td>
+                                                <td data-label="Zip Code">
+                                                      <div class="slds-truncate" title={Prescriber_record.zip}>
+                                                            {Prescriber_record.zip}
+                                                      </div>
+                                                </td>
+                                                <td data-label="Phone">
+                                                      <div class="slds-truncate"
+                                                            title={Prescriber_record.US_WSREMS__Prescriber__r.Phone}>
+                                                            {Prescriber_record.US_WSREMS__Prescriber__r.Phone}
+                                                      </div>
+                                                </td>
+                                                <td data-label="Enrollment ID">
+                                                      <div class="slds-truncate"
+                                                            title={Prescriber_record.US_WSREMS__REMS_ID__c}>
+                                                            {Prescriber_record.US_WSREMS__Prescriber__r.US_WSREMS__REMS_ID__c}
+                                                      </div>
+                                                </td>
+                                          </tr>
+                                    </template>
+                              </tbody>
+                        </table>
+                  </div>
+            </div> <!-- end prescriber details  -->
+      </template>
+      <template if:true={records.length}>
+            <div id="HCSResults">
+                  <h2 id="element-with-table-label2" class="slds-text-heading_medium slds-m-bottom_xx-small">
+                        Certifed Healthcare Settings</h2>
+                  <div class="slds-scrollable" style="height: 40vh;">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                              aria-labelledby="element-with-table-label other-element-with-table-label">
+                              <thead>
+                                    <tr class="slds-line-height_reset">
+                                          <th class="HCSResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" style="">
+                                                      Healthcare Setting Name
+                                                      <span title="Name">
+                                                            <lightning-icon style="cursor:pointer;"
+                                                                  icon-name={sortIconHCS} variant="inverse"
+                                                                  data-title="Name" onclick={sortByColumn}
+                                                                  size="xx-small"></lightning-icon>
+                                                      </span>
+                                                </div>
+                                          </th>
+                                          <th class="HCSResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Address" style="padding-left: 1vh;">
+                                                      Address
+                                                </div>
+                                          </th>
+                                          <th class="HCSResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="City" style="padding-left: 1vh;">
+                                                      City
+                                                </div>
+                                          </th>
+                                          <th class="HCSResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="State" style="padding-left: 1vh;">
+                                                      State
+                                                </div>
+                                          </th>
+                                          <th class="HCSResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="ZIP Code" style="padding-left: 1vh;">
+                                                      ZIP Code
+                                                </div>
+                                          </th>
+                                          <th class="HCSResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Phone" style="padding-left: 1vh;">
+                                                      Phone
+                                                </div>
+                                          </th>
+                                          <th class="HCSResult slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Enrollment ID"
+                                                      style="padding-left: 2vh;">
+                                                      Enrollment ID
+                                                </div>
+                                          </th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                    <template for:each={records} for:item="record">
+                                          <tr key={record.Id}>
+
+                                                <td data-label="Name">
+                                                      <div class="slds-truncate" title={record.Name}>
+                                                            {record.Name}
+                                                      </div>
+                                                </td>
+                                                <td data-label="Address">
+                                                      <div class="slds-truncate"
+                                                            title={record.US_WSREMS__Address_Line_1__c}>
+                                                            {record.US_WSREMS__Address_Line_1__c}
+                                                            {record.US_WSREMS__Address_Line_2__c}
+                                                      </div>
+                                                </td>
+                                                <td data-label="City">
+                                                      <div class="slds-truncate" title={record.US_WSREMS__City__c}>
+                                                            {record.US_WSREMS__City__c}
+                                                      </div>
+                                                </td>
+                                                <td data-label="State">
+                                                      <div class="slds-truncate" title={record.US_WSREMS__State__c}>
+                                                            {record.US_WSREMS__State__c}
+                                                      </div>
+                                                </td>
+                                                <td data-label="ZIP Code">
+                                                      <div class="slds-truncate" title={record.US_WSREMS__Zip__c}>
+                                                            {record.US_WSREMS__Zip__c}
+                                                      </div>
+                                                </td>
+                                                <td data-label="Phone">
+                                                      <div class="slds-truncate" title={record.Phone}>
+                                                            {record.Phone}
+                                                      </div>
+                                                </td>
+                                                <td data-label="NPI">
+                                                      <div class="slds-truncate" title={record.US_WSREMS__REMS_ID__c}>
+                                                            {record.US_WSREMS__REMS_ID__c}
+                                                      </div>
+                                                </td>
+                                          </tr>
+                                    </template>
+                              </tbody>
+                        </table>
+                  </div>
+            </div> <!-- end prescriber details  -->
+      </template>
+      <template if:true={showError}>
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+                  <span class="slds-icon_container slds-icon-utility-error slds-m-right_small" title="Error">
+                        <lightning-icon icon-name="utility:error" size="small" alternative-text="Error">
+                        </lightning-icon>
+                  </span>
+                  <h2 class="fontWhite slds-text-heading_small">{noRecordMessage}</h2>
+            </div>
+      </template>
+</template>

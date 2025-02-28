@@ -1,0 +1,32 @@
+.dummy{
+    color : black;
+}
+.displayc{
+    display : inline-flex;
+}
+.marginleft {
+    margin-left: 10%;
+}
+.menuMargin {
+        margin: 10px;
+}
+.headerBorder {
+  height: 8px;
+  background: #002e5d;
+}
+ .activeColor {
+    text-decoration: none;
+  }
+ .userInfoWidth{
+    width: 14%;
+ }
+ 
+@media only screen and (min-width: 600px) {
+ 
+    /* make horizontal */
+    .horizontal > li {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0 20px;
+    }
+}

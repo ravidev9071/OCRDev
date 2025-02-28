@@ -1,0 +1,150 @@
+<template>
+    <div class="util-top">
+        <div class=”pageContainer”>  
+        <div class="navbar-top">
+            <ul class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space">
+                <li class="slds-item">
+                    <a href="https://endodocuments.com/XIAFLEX/MG">Medication Guide</a>
+                </li>
+                <li class="slds-item">
+                    <a href="https://endodocuments.com/XIAFLEX/PI">Prescribing Information</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    <div class="pageContainer">
+        <div class="pageMainHeader slds-grid">
+            <div class="slds-x-small-size_6-of-12 slds-small-size_9-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12">
+                <div class="">		
+                    <div>   
+                         <a class="logo">
+                             <img  src={xiaflexlogo}>
+                             <span class="slds-assistive-text">REMS Digital</span>
+                         </a>
+                    </div>	
+                </div> <!-- end col  -->
+                <div class=" slds-size_12-of-12 slds-small-size_9-of-12  slds-medium-size_10-of-12">
+                    <div class="userProfile">
+                        <div class="userProfileContainer">
+                            <div class="userProfileMenu">
+                        
+                            <div class="slds-form-element">
+                                <img src={iconCaretDown}>
+                                <div class="slds-form-element__control slds-hide">
+                                     <div class="slds-combobox_container">
+                                        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                                <div role="combobox"  tabindex="0"  class="slds-input_faux slds-combobox__input" id="combobox-id-58-selected-value">
+                                                    <span class="slds-truncate" id="combobox-value-id-97">Select an Option…</span>
+                                                 </div>
+                                                 <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                                                        <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                                                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                                        </svg>
+                                                 </span>
+                                            </div>
+                                              <div id="listbox-id-28" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox" aria-label="Placeholder for Dropdown Items" tabindex="0" aria-busy="false">
+                                                 <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                    <li role="presentation" class="slds-listbox__item">
+                                                          <div id="option732" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                                                             <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                                             <span class="slds-media__body">
+                                                                <span class="slds-truncate" title="Accounts">Accounts</span>
+                                                             </span>
+                                                          </div>
+                                                    </li>
+                                                 </ul>
+                                              </div>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            </div> <!-- end userProfileContainer  -->
+                            
+                        </div>	<!-- end userProfileMenu  -->
+                    </div><!-- end userProfile  -->
+    
+                </div>  <!-- end col  -->
+            </div>  <!-- end row  -->		
+                <div class="themeUtils  slds-col_bump-left">
+                        <div class="themeUtilsContainer">
+                                <div class="themeUtil themeProfileMenu">
+                                        <div data-region-name="themeHeaderProfileMenu">
+                                                <div data-priority="" class="ui-widget">
+                                                        <div>
+                                                               <div class="slds-form-element themeUtil themeProfileMenu">
+                                                                    <template if:true={isLogined}>
+                                                                                <lightning-button-menu onselect={handleOnselect}  variant="container" menu-alignment ='right' label = {userName}>
+                                                                                        <lightning-menu-item value="logout" label="Logout"></lightning-menu-item>
+                                                                                </lightning-button-menu>
+                                                                     </template>
+                                                                </div>
+
+
+
+                                                        </div>
+
+                                                </div> <!-- end uiwidget -->
+                                        </div><!-- end profileMenu  -->
+                                </div><!-- end themUtil  -->
+                        </div>
+                </div> 
+           <!-- end row  -->
+           
+        </div> <!-- end pageMainHeader  -->	
+
+<!--tabs menu items rework by pratap m -->
+ <div  id="commThemeNav" class="themeNav slds-grid slds-wrap">
+                     <div data-region-name="nav slds-size_1-of-2">
+                         <div data-priority=""  class="ui-widget slds-p-left_small">
+                             <nav class="jepsonHomeHeader commThemeCmp comm-navigation themeNavContainer navMenuType-expanded alignPanel-left forceCommunityThemeNav  doneRendering">
+                                 <ul class=" nav visible-links themeNav-align-right horizontal">
+                                     <li class=" mainNavItem  comm-navigation__top-level-item comm-navigation__menu-item " style="line-height:2.5rem;">
+                                         <a id="HCP_ManageHCS"  href="hcp-manage-hcs" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn activeColor" >Manage Pharmacy/Healthcare Settings</a>
+                                     </li>
+                                    
+                                     					
+                                     <li  class=" slds-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item" style="line-height:2.5rem;">
+                                         <a id="Resources"   href="hcp-resources" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn activeColor">Forms &amp; Resources</a>
+                                     </li>	 
+                                     <li class=" slds-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item slds-m-left_none " style="line-height:2.5rem;">
+                                         <a id="MyProfile"   href="hcp-myprofile" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn slds-m-left_none activeColor">My Profile</a>
+                                     </li>
+                                     <li>
+							<span class="icon" onclick={myFunction}>
+								<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+							</span>
+						</li>
+                                 </ul>
+                             </nav>
+                         </div>
+                     </div>
+    </div>
+        <!-- <div class="themeNav slds-grid slds-wrap slds-m-bottom_large">			
+                <div data-region-name="nav slds-size_1-of-2">	
+                    <div class="ui-widget">	
+                    <nav class="jepsonHomeHeader commThemeCmp comm-navigation themeNavContainer navMenuType-expanded alignPanel-left forceCommunityThemeNav doneRendering" id="CustomMainNav">
+                        <ul class="visible-links themeNav-align-right slds-list_horizontal" style="margin-left: 10px;">
+                            <li class=" mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+                                <a id="HCP_ManageHCS" href="hcp-manage-hcs" class="mainNavLink">Manage Pharmacy / Healthcare Settings</a>
+                            </li>
+                            <li class=" slds-p-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+                                <a id="Resources" href="hcp-resources"  class="mainNavLink">Forms & Resources</a>
+                            </li>
+                            <li class=" slds-p-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+                                <a id="MyProfile" href="hcp-myprofile" class="mainNavLink">My Profile</a>  
+                            </li>
+                            <li class=" slds-p-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item slds-m-left_none">
+                                <span class="icon" onclick={myFunction}>
+                                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                </span>
+                            </li>
+                        </ul>
+                    </nav>	
+                </div>
+            </div> 		
+            </div> 	-->	
+    </div>  <!-- end pageContainer  -->	
+    <div class="headerBorder"></div>
+</template>

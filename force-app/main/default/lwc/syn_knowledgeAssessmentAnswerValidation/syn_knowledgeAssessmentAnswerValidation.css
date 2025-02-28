@@ -1,0 +1,18 @@
+.answer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+:host {  --sds-c-accordion-summary-color-background:
+    var(--lwc-colorBackground,rgb(185, 181, 181)); }
+
+.my-text_clr{
+   color:#5876a3;
+}
+.QA-layoutItem:nth-of-type(odd) {
+    background: #dcdcdc;
+}
+.slds-accordion__list-item {
+    font-size: 15px;
+}

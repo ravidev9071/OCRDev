@@ -1,0 +1,94 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Pharmacy Certification Email Verification Page {Middel Context}
+-->
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: left;">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card p-0 rounded-0 border-0">
+                        <div class="card-header border-0 crd-hdr-m">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="row d-flex justify-content-left align-items-center">
+                                        <div class="col-lg-1 col-sm col-1 text-end pe-3">
+                                            <i class="fa fa-file-text fa-2x heading-i"></i>
+                                        </div>
+                                        <div class="col-lg-9 col-sm col-10">
+                                            <h5 class="card-title mt-2 d-block fs-4 heading-h">
+                                                Pharmacy Certification by <br></br> Enrollment</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 modify-pro">
+                      				<div class="progressbar">
+                                        <div class="progress" id="progress"></div>
+										<div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY TYPE SLECTION </span>
+                                        </div>
+                                        <div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                          <span>INSTRUCTIONS</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AUTHORIZED REPRESENTATIVE INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                            <span class="text-theme"><em>PASSWORD</em></span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step last-step"></div>
+                                           <span>COMPLETE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body llc-dv-16 pb-5">
+                            <div class="row mb-4">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold text-theme">Password</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm" style="padding-bottom: 1rem;">
+                                <div class="col-lg-12 text-center pt-4 pb-2">
+                                    <p style="color: #1e1e1e;">You must confirm your email to continue</p>
+
+                                    <h5 style="color: #565656;">An email has be sent to you at the following address:</h5>
+                                    <span class="mail-link fs-5"></span>
+
+                                    <div class="form-check d-flex justify-content-center my-3">
+                                        <input name="text-loaction" class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault"></input>
+                                            <h5 style="color: #565656;" class="form-check-label ms-2" for="flexCheckDefault">
+                                            I have checked my junk mail, and waited a few minutes
+                                            </h5>
+                                    </div>
+
+                                    <a id="resend-btn" class="resend-btn" href="#"><i class="fa fa-refresh"></i> Resend Email</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-0 crd-hdr-m py-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+       </aura:component>

@@ -1,0 +1,9 @@
+<aura:component abstract="true" extensible="true">
+
+    <aura:registerEvent name="SpinnerEvent" type="c:SYN_SwitchSpinner" />
+
+    <aura:attribute name="formFactor" type="String" default="{!$Browser.formFactor}" />
+
+    {!v.body}
+
+</aura:component>

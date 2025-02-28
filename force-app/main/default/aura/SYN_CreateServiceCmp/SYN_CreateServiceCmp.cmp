@@ -1,0 +1,10 @@
+<aura:component   implements="force:hasSObjectName,force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:isUrlAddressable" access="global">
+    
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="ServiceId" type="String" default="null" />
+    <aura:attribute name="CaseId" type="String" default="null" />
+    <lightning:navigation aura:id="navService"/>
+    <lightning:notificationsLibrary aura:id="notifLib" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+</aura:component>

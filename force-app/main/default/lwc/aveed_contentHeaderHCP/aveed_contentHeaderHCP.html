@@ -1,0 +1,61 @@
+<template>
+	<!-- RT 15-10-24 changes -->
+	<div class="slds-grid slds-wrap">
+		<div class="slds-col slds-size_1-of-1 slds-large-size_9-of-12">
+			<span> <a href={homeUrl} class="forceCommunityThemeLogo logo">
+					<img src={logo}>
+					<span class="slds-assistive-text">REMS Digital</span>
+				</a></span>
+		</div>
+		<div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+			<span>
+				
+                <template if:true={isLogined}> 
+					<div role="combobox" tabindex="0"
+																class="slds-input_faux slds-combobox__input"
+																aria-labelledby="combobox-label-id-132 combobox-id-58-selected-value"
+																id="combobox-id-58-selected-value"
+																aria-controls="listbox-id-28" aria-expanded="false"
+																aria-haspopup="listbox">
+																<label class="slds-form-element__label"
+																	for="combobox-id-58"
+																	id="combobox-label-id-132"> {userName}</label>
+
+																<lightning-button-menu onselect={handleOnselect} variant="container" menu-alignment ='right' class="slds-float_right slds-m-top_xx-small">
+																	
+                        <lightning-menu-item value="logout" label="Logout" ></lightning-menu-item>
+                    </lightning-button-menu>
+					</div>     
+                </template>
+			</span>
+		</div>
+	</div>
+	<div id="commThemeNav" class="themeNav slds-grid slds-wrap slds-p-top_large">
+		<div data-region-name="nav slds-size_1-of-2">
+			<div data-priority="" class="ui-widget">
+				<nav
+					class="jepsonHomeHeader commThemeCmp comm-navigation themeNavContainer navMenuType-expanded alignPanel-left forceCommunityThemeNav doneRendering">
+					<ul class="visible-links themeNav-align-right slds-list_horizontal">
+
+						<li class="mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+							<a id="ManageHealthCareSettings" href="hcpmanagehcs" class={manage_hcs_CSS}>Manage
+								Healthcare Settings</a>
+						</li>
+
+						<li
+							class=" slds-p-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+							<a id="Resources" href="hcp-resources" class={formsandResourcesCSS}>Forms & Resources</a>
+						</li>
+
+
+						<li
+							class=" slds-p-left_large  slds-m-left_none mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+							<a id="MyProfile" href="myprofile" class={myprofileCSS}>My Profile</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<div class="headerBorder slds-m-top_large"></div>
+</template>

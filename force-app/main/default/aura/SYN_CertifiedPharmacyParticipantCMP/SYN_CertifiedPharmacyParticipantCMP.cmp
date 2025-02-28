@@ -1,0 +1,169 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" controller ="SYN_CertifiedPharmacyParticipantCtrl"  >    
+    <aura:attribute name="accountList" type="Object[]" />
+    <aura:attribute name="PrescriberNameSearch" type="String" />
+    <aura:attribute name="DEASearch" type="String" />
+    <aura:attribute name="FName" type="String" />
+    <aura:attribute name="LName" type="String" />
+    <aura:attribute name="PhoneSearch" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- Pagination -->
+    <aura:handler name="ChangePage" event="c:SYN_ChangePage" action="{!c.handlePagination}" />
+    <aura:attribute name="AccountListToBeShown" type="List"/>
+    <aura:attribute name="PaginationList" type="Account"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="noOfCallsToBeShown" type="Integer" default="30"/>
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    <aura:attribute name="haveSearchTerm" type="Boolean"  />
+    
+    <aura:attribute name="haveAccess" type="boolean" />
+    <aura:attribute name="errorMessage" type="String" />
+    <aura:if isTrue="{!v.haveAccess}">
+        <lightning:card>
+            
+            <aura:set attribute="title">
+                <!-- <lightning:icon iconName="utility:questions_and_answers" size="small"/>-->
+                <b> Sodium Oxybate REMS Prescribers</b>
+            </aura:set>
+            
+            <div class="slds-grid slds-wrap ">
+                <div class="slds-grid slds-wrap  slds-align_absolute-center">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-6">
+                        <div class="slds-text-align_center slds-m-around--x-small">
+                            <lightning:input
+                                             label="First Name"
+                                             variant="label-hidden"
+                                         
+                                             value="{!v.FName}"
+                                             placeholder="First Name"
+                                             aura:id="FName"
+                                             />
+                        </div>
+                    </div>
+                    <div class="slds-text-align_center slds-m-around--x-small">
+                        <lightning:input
+                                         label="Last Name"
+                                         variant="label-hidden"
+                                         value="{!v.LName}"
+                                         placeholder="Last Name"
+                                         aura:id="LName"
+                                         />
+                    </div>
+                    <div class="slds-text-align_center slds-m-around--x-small">
+                        <lightning:input
+                                         label="DEA"
+                                         variant="label-hidden"
+                                         value="{!v.DEASearch}"
+                                         placeholder="DEA"
+                                         aura:id="DEA"
+                                         />
+                    </div>
+                    
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-6">
+                        <div class="slds-text-align_center slds-m-around--x-small">
+                            <lightning:input
+                                             label="Phone"
+                                             variant="label-hidden"
+                                             value="{!v.PhoneSearch}"
+                                             placeholder="Phone"
+                                             aura:id="ph"
+                                             />
+                        </div>
+                    </div>   
+                    
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-6">
+                        <div class="slds-text-align_center ">
+                            <div class="slds-p-horizontal--x-large ">
+                                <div class="slds-float_left">
+                                    <lightning:button variant="brand" name="SearchBtn" label="Search" onclick="{!c.onSearchTermChange}"/>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aura:if isTrue="{!not(empty(v.AccountListToBeShown))}">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_large " aria-label="Example table of Opportunities with striped rows">
+                        <thead>
+                            <tr class="slds-line-height_reset" scope="col">
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="First Name">First Name</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col" >
+                                    <div class="slds-truncate headerFont" title="Last Name">Last Name</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col" >
+                                    <div class="slds-truncate headerFont" title="Status">Status</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="DEA">DEA</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="Phone">Phone</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="Action">Action</div>
+                                </th>
+                                
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody  class="slds-hint-parent">
+                            <aura:iteration  items="{!v.AccountListToBeShown}" var="acc" indexVar="index" >
+                                <tr class="slds-hint-parent">
+                                    <td data-label="First Name">
+                                        <div class="slds-truncate" title="fname">{!acc.FirstName}</div>
+                                    </td>
+                                    <td data-label="Last Name">
+                                        <div class="slds-truncate" title="Lname">{!acc.LastName}</div>
+                                    </td>
+                                    <td data-label="Status">
+                                        <div class="slds-truncate" title="status">{!acc.US_WSREMS__Status__c}</div>
+                                    </td>
+                                    <td data-label="DEA">
+                                        <div class="slds-truncate" title="status">{!acc.US_WSREMS__DEA__c}</div>
+                                    </td>
+                                    <td data-label="Phone">
+                                        <div class="slds-truncate" title="status"><lightning:formattedPhone value="{!acc.Phone}" disabled="true"></lightning:formattedPhone></div>
+                                    </td>
+                                    <td data-label="Phone">
+                                        <div class="slds-truncate" title="View Record">
+                                            <button type="button" class="slds-button slds-button_brand" label="View Record" name="view_Records" onclick="{!c.navigateToDetail}" data-item="{!acc.Id}">View Record</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table> 
+                    <aura:set attribute="else">
+                        <div class="slds-notify slds-notify--alert slds-theme--info slds-theme--alert-texture" role="alert">
+                            <span class="slds-assistive-text">Info</span>
+                            <h2>
+                                <lightning:icon iconName="utility:info" variant="inverse"  size="x-small" class="slds-m-right--x-small" />
+                                No Accounts available for selected search criteria
+                            </h2>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </div>
+            <aura:if isTrue="{!v.accountList.length > 0}">
+                <c:SYN_Pharmacy_PaginationForDataTable aura:id="cPagination" totalRecords="{!v.accountList.length}" recordsPerPage="{!v.noOfCallsToBeShown}"/>
+            </aura:if>
+            
+            
+        </lightning:card>
+        <aura:set attribute="else">
+            <lightning:card>
+                <aura:set attribute="title">
+                    <!-- <lightning:icon iconName="utility:questions_and_answers" size="small"/>-->
+                     {!v.errorMessage}
+                </aura:set>
+            
+            </lightning:card>
+            <div class="emptybox"></div>
+        </aura:set>
+    </aura:if>
+    
+</aura:component>

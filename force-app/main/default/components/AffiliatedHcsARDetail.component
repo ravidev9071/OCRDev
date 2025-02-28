@@ -1,0 +1,4 @@
+<apex:component controller="GenerateAffiliationRelatedDetails" access="global">
+    <apex:attribute name="recordId" type="String" description="ID of the account record" assignTo="{!accountRecordId}" access="global"/>
+    <p>Dear {!hcsAR.FirstName} {!hcsAR.LastName},</p>
+</apex:component>

@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="pharmacyType" label="Pharmacy Type (Inpatient/Outpatient)" default=""/>
+    <design:attribute name="userType" label="Pharmacy Type (Authorized Representative/Pharmacist)" default=""/>
+    <design:attribute name="programId" label="Program Name" datasource="apex://REMSPortalProgramPickListCtr" />
+</design:component>

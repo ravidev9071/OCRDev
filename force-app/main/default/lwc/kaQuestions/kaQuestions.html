@@ -1,0 +1,327 @@
+<template>
+	<template lwc:if={displaySpinner}>
+		<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+	</template>
+	<lightning-progress-indicator type="path" variant="base">
+		<lightning-progress-step label="Education Program" value="1" onclick={onclickFrstProgressBar}
+			class="educationProgram"></lightning-progress-step>
+		<lightning-progress-step label="Knowledge Assessment" value="2" onclick={onclickFrstProgressBar2}
+			class="knowledgeProgram"></lightning-progress-step>
+		<lightning-progress-step label="Complete Enrollment" value="3" onclick={onclickFrstProgressBar3}
+			class="completeProgram"></lightning-progress-step>
+	</lightning-progress-indicator>
+	<template if:false={showResponse}>
+		<div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+			<div class="pageContainer">
+				<div class="pageContent">
+
+
+					<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+						<div class="slds-col--padded comm-content-header comm-layout-column">
+
+							<div data-region-name="content">
+								<div data-priority="" class="ui-widget">
+									<div class="slds-text-heading_large">AVEED<sup>&reg;</sup> REMS Knowledge Assessment
+									</div>
+									<p>Complete and submit all 10 questions.
+										<br><br>To become a certified healthcare provider in the AVEED REMS, you will
+										need to answer ALL questions correctly.
+									</p>
+
+									<div class="slds-p-top_large"></div>
+									<div class="frmContainer">
+										<div class="ka">
+											<div class="slds-p-around_medium">
+												<template for:each={questions} for:item="question">
+
+													<div key={question.type}>
+														<!-- *************** Date **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isDate}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-input type="date"
+																	required={question.required} class="validate"
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id}
+																	field-level-help={question.helpText}
+																	message-when-bad-input="Invalid date format."></lightning-input>
+															</template>
+														</template>
+														<!-- *************** Text **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isText}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-input type="text" id={question.type}
+																	name={question.type} variant="label-hidden"
+																	required={question.required}
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id}
+																	class="validate"></lightning-input>
+															</template>
+														</template>
+														<!-- *************** Email **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isEmail}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-input type="email" id={question.type}
+																	name={question.type} required={question.required}
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id}
+																	field-level-help={question.helpText}
+																	class="validate"
+																	pattern=".+@.+.com"></lightning-input>
+															</template>
+														</template>
+														<!-- *************** Number **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isNumber}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-input type="number" class="validate"
+																	id={question.type} name={question.type}
+																	required={question.required}
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id}
+																	field-level-help={question.helpText}></lightning-input>
+															</template>
+														</template>
+														<!-- *************** URL **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isURL}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-input type="url" class="validate"
+																	id={question.type} name={question.type}
+																	required={question.required}
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id}
+																	field-level-help={question.helpText}></lightning-input>
+															</template>
+														</template>
+														<!-- *************** Text Area  **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isTextArea}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-textarea id={question.type}
+																	name={question.type} class="validate"
+																	placeholder="type here..."
+																	required={question.required}
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id}
+																	field-level-help={question.helpText}></lightning-textarea>
+															</template>
+														</template>
+														<!-- *************** Picklist **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isPicklist}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-combobox name={question.type}
+																	options={question.picklistOptions}
+																	required={question.required}
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id} class="validate"
+																	field-level-help={question.helpText}
+																	variant="label-hidden">
+																</lightning-combobox>
+															</template>
+														</template>
+														<!-- *************** Multi Picklist **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isMultiSelectPicklist}>
+																<p class="dualBox"><span class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}
+																	<lightning-helptext class="helpText"
+																		content={question.helpText}></lightning-helptext>
+																</p>
+																<lightning-dual-listbox
+																	options={question.picklistOptions}
+																	source-label="Available Options"
+																	selected-label="Selected Options"
+																	onchange={handleMultiSelectChange} size="3"
+																	class="validate" required={question.required}
+																	data-question-id={question.Id} type="multiPicklist"
+																	field-level-help={question.helpText}
+																	variant="label-hidden"></lightning-dual-listbox>
+															</template>
+														</template>
+														<!-- *************** Boolean **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isToggle}>
+																<label
+																	class="slds-form-element__legend slds-form-element__label"><span
+																		class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}</label>
+																<lightning-helptext
+																	content={question.helpText}></lightning-helptext>
+																<lightning-input type="toggle" id={question.type}
+																	class="validate" name={question.type}
+																	required={question.required}
+																	message-toggle-active="Yes"
+																	message-toggle-inactive="No"
+																	onchange={handleChangeEvent}
+																	data-question-id={question.Id}
+																	style="margin-top:5px">
+																</lightning-input>
+															</template>
+														</template>
+														<!-- *************** Radio Button **************** -->
+														<template if:true={question.showQuestion}>
+															<div class="ka">
+
+																<div class="kaQuestion">
+																	<div class="kaHeading">Question {question.index}
+																	</div>
+																	<template if:true={question.isRadioOption}>
+																		<p class="dualBox"><span class="requireQuestion"
+																				if:true={question.required}>*</span>{question.label}
+																			<!--<lightning-helptext class="helpText" content={question.helpText}></lightning-helptext>-->
+																		</p>
+																		<lightning-radio-group name={question.Id}
+																			onchange={handleChangeEvent}
+																			data-question-id={question.Id}
+																			class="validate"
+																			options={question.picklistOptions}
+																			type="radio" required={question.required}
+																			variant="label-hidden">
+																		</lightning-radio-group>
+																	</template>
+																</div>
+
+															</div>
+														</template>
+														<!-- *************** Combo Box **************** -->
+														<template if:true={question.showQuestion}>
+															<template if:true={question.isMultiSelectOption}>
+																<p class="dualBox"><span class="requireQuestion"
+																		if:true={question.required}>*</span>{question.labelWithSequence}
+																	<lightning-helptext class="helpText"
+																		content={question.helpText}></lightning-helptext>
+																</p>
+																<lightning-checkbox-group name={question.Id}
+																	onchange={handleMultiSelectChange}
+																	data-question-id={question.Id}
+																	options={question.picklistOptions} type="comboBox"
+																	required={question.required} class="validate"
+																	variant="label-hidden">
+																</lightning-checkbox-group>
+															</template>
+														</template>
+														<br />
+													</div>
+
+												</template>
+
+
+											</div>
+
+
+											<div class="slds-border_top slds-m-top_xx-large"></div>
+											<div class="slds-align_absolute-center">
+												<lightning-button class="brand-button" label="Submit Assessment"
+													variant="brand" onclick={handleSubmit}></lightning-button>
+											</div>
+										</div> <!-- end frmContainer  -->
+									</div> <!-- end KA   -->
+								</div>
+							</div> <!-- end layout   -->
+						</div>
+
+					</div> <!-- end SF   -->
+				</div> <!-- end pageContent   -->
+			</div> <!-- end pageContainer   -->
+
+		</div> <!-- end main   -->
+	</template>
+
+	<template lwc:if={showResponse}>
+		<div data-region-name="content">
+			<div data-priority="" class="ui-widget">
+				<div class="slds-text-heading_large">AVEED<sup>&reg;</sup> REMS Knowledge Assessment</div>
+				<div class="slds-text-heading_medium">You have now completed the assessment.</div>
+				<p>Unfortunately, you did not answer all the questions correctly and have not passed the assessment.
+					<br><br>Please click "Retake Assessment" to retake and submit those questions you answered
+					incorrectly.
+					<br>You can click "Open Education Program" to view the AVEED REMS Education Program. The document
+					will open up in a new window.
+					<br><br>Attempt #<span class="kaAttemptsRemaining">1</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="slds-p-top_large"></div>
+		<div class="frmContainer">
+
+			<div class="slds-p-around_medium">
+				<template for:each={responseRecords} for:item="res">
+					<div key={res.id}>
+
+						<template if:false={res.result}>
+							<div class="ka">
+								<div class="kaQuestion kaQuestionIncorrect">
+									<div class="kaHeading">Question {res.index}</div>
+									<div class="kaQuestionIncorrect"><span
+											class="kaQuestionIncorrect requireQuestion">*</span>{res.label}</div>
+									<lightning-radio-group name={res.Id} onchange={handleChangeEvent}
+										data-question-id={res.Id} class="validate" options={res.picklistOptions}
+										value={res.responsevalue} type="radio" required=true variant="label-hidden">
+									</lightning-radio-group>
+
+								</div>
+							</div>
+						</template>
+						<template if:true={res.result}>
+							<div class="ka">
+								<div class="kaQuestion kaQuestionCorrect">
+									<div class="kaHeading">Question {res.index}</div>
+									<p class="kaQuestionCorrect"><span
+											class="kaQuestionCorrect requireQuestion">*</span>{res.label}</p>
+									<lightning-radio-group name={res.Id} onchange={handleChangeEvent}
+										data-question-id={res.Id} class="validate" options={res.picklistOptions}
+										value={res.responsevalue} type="radio" required=true variant="label-hidden">
+									</lightning-radio-group>
+								</div>
+							</div>
+						</template>
+					</div>
+
+
+				</template>
+			</div>
+
+		</div>
+	</template>
+
+</template>

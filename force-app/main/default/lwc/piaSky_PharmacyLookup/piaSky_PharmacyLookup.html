@@ -1,0 +1,102 @@
+<template>
+<div data-aura-rendered-by="89:2;a" class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea" data-aura-class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+<div class="comm-content-header comm-layout-column pageContainer" data-aura-rendered-by="91:2;a"><!--render facet: 92:2;a-->
+<div class="slds-text-heading_large">Certified Pharmacy Listing</div>
+<p class="slds-m-bottom_large"></p>
+<p>The listing below includes only pharmacies that are certified in the PIASKY REMS.</p>
+<div class="slds-m-bottom_large"></div>	  
+<template if:true={records}>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" aria-labelledby="element-with-table-label other-element-with-table-label">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th>
+                    <div class="slds-truncate" style="padding-left:18px">
+                        Name
+                        <span title="CaseNumber" >
+                            <lightning-icon style="cursor:pointer;" icon-name={sortIcon} variant="inverse" data-title="Name" onclick={sortByColumn} size="xx-small"></lightning-icon>
+                        </span>
+                    </div>
+                </th>
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate" title="">
+                    Address
+                    </div>
+               </th>
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate" title="">
+                    City
+                    </div>
+                </th>
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate" title="">
+                    State
+                    </div>
+               </th>
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate" title="">Zip Code
+                    </div>
+               </th>
+                <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate" title="">
+                    Phone Number
+                    </div>
+                </th>
+                <!-- Add more table headers for additional fields -->
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={visibleContacts} for:item="record">
+                <tr key={record.Id} class="slds-hint-parent">
+                   
+                    <td data-label="Name">
+                        <div class="slds-truncate" title={record.Name}>
+                             {record.Name}
+                        </div>
+                    </td>
+                    <td data-label="Address">
+                        <div class="slds-truncate" title={record.Address_1_Secondary_Office__c}>
+                                 {record.Address_1_Secondary_Office__c}
+                        </div>
+                    </td>
+                    <td data-label=" City">
+                        <div class="slds-truncate" title={record.ShippingCity}>
+                            {record.ShippingCity}
+                        </div>
+                    </td>
+                    <td data-label="State">
+                       <div class="slds-truncate" title={record.US_WSREMS__State__c}>
+                          {record.US_WSREMS__State__c}
+                      </div>
+                    </td>
+                    <td data-label="Zip Code">
+                        <div class="slds-truncate" title={record.ShippingPostalCode}>
+                        {record.ShippingPostalCode}
+                        </div>
+                    </td>
+                    <td data-label="Phone Number">
+                         <div class="slds-truncate" title={record.Phone}>
+                        {record.Phone}
+                         </div>
+                    </td>
+                    <!-- Add more table cells for additional fields -->
+                </tr>
+            </template>             
+        </tbody>
+    </table>
+    <template if:true={showPagination}>
+        <c-pia-sky-_-pharmacy-look-up-pagination  records={records} onupdate={updateRecords}> </c-pia-sky-_-pharmacy-look-up-pagination> 
+      </template>
+</template>
+  
+<template if:true={showError}>
+     
+    <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+        <span class="slds-icon_container slds-icon-utility-error slds-m-right_small" title="Error">
+            <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+        </span>
+        <h2 class="slds-text-heading_small">{noRecordMessage}</h2>
+    </div>
+</template>
+     </div>
+</div>
+</template>

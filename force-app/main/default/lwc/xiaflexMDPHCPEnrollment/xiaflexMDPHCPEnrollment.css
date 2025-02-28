@@ -1,0 +1,24 @@
+.text-heading {
+    color: #f26322 !important;
+    font-weight: 400 !important;
+    font-family: "Roboto Condensed";
+    font-size: 2.5rem;
+    background: url(bgLtGrey.png);
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 -15px;
+}
+
+.sectionSubHeading{
+    color: #eb5903 !important;
+}
+.txtInstructions a{
+    color:rgb(223 112 0 / 80%) important;
+}
+.signBoxWidth{
+	width: 45% !important;
+}
+.otherLeft{
+    padding-left: 5%;
+}

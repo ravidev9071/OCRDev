@@ -1,0 +1,10 @@
+.pageContainer .slds-card__header {
+    background: #0047c7;
+    padding: 30px 15px;
+    font-size: 1.75rem;
+}
+.pageContainer .slds-card__header-title {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.5rem;
+}

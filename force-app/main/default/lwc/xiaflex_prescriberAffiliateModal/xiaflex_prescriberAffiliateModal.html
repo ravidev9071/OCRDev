@@ -1,0 +1,339 @@
+<template>
+    <div class="frmContainer">
+        <article class="slds-card " part="card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure"></div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title" style="color : white !important;">
+                            <span>Healthcare Provider Information</span>
+
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body  slds-card__body_inner" part="body">
+                <p class="frmInstructions">To affiliate a Prescribing Healthcare Provider to your Healthcare
+                    Setting, please select the search type, enter the information, and click "Search".
+
+                    <br><br><span class="slds-text-body_medium"><span
+                            class="slds-text-color_destructive">*</span> fields required</span></p>
+                        <template if:true={hcpType}>
+                            <div class="slds-text-heading_medium">Pharmacy  / Healthcare Setting Information</div>								  
+                                <div class="slds-grid  slds-wrap  slds-gutters">
+                                    <div class="slds-col slds-medium-size_4-of-12  slds-large-size_6-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="select-01"><abbr class="slds-required" title="required">* </abbr>Pharmacy / Healthcare Setting</label>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                    <select class="slds-select" id="select-01" name="state" required onchange={handleSelectedPharma}>
+                                                        <template for:each={pharmAcc} for:item="pharma" for:index="optionIndex">
+                                                            <option value={pharma.Id} key={pharma.Name}>{pharma.Name}</option>
+                                                        </template>
+                                                    </select>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>											  
+                                
+                                </div>		
+                                <div class="dividerSolid"></div>
+                        </template>
+                            <slot>
+                                <div class="slds-text-heading_medium">Healthcare Provider Information</div>
+                                <fieldset class="slds-form-element">
+                                    <legend class="slds-form-element__legend slds-form-element__label">
+                                        <abbr class="slds-required" title="required">* </abbr>Search by:</legend>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-radio_button-group">
+                                            <span class="slds-button slds-radio_button">
+                                                <input type="radio" name="hcpId" id="rbType1" value="1" checked onclick={handleChangeSearchBy}>
+                                                <label class="slds-radio_button__label" for="rbType1">
+                                                    <template if:false={mdpType}>
+                                                        <span class="slds-radio_faux"> HCP Enrollment ID</span>
+                                                    </template>
+                                                    <template if:true={mdpType}>
+                                                        <span class="slds-radio_faux"> HCP Enrollment ID</span>
+                                                    </template>
+                                                </label>
+                                            </span>
+                                            <span class="slds-button slds-radio_button">
+                                                <input type="radio" name="hcpName" id="rbType2" value="2" onclick={handleChangeSearchBy}>
+                                                <label class="slds-radio_button__label" for="rbType2">
+                                                    <span class="slds-radio_faux">HCP Name</span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                
+                                <template if:true={searchById}>
+                                    <div id="SearchHCPID" class="slds-show">
+                                        <div class="slds-grid   slds-wrap slds-gutters">
+                                            <div class="slds-col slds-medium-size_9-of-12 slds-large-size_12-of-12">
+                                                <template if:true={mdpType}>
+                                                    <lightning-input  class="searchHcp slds-form-element" value="" required="true" label=" Enrollment ID">
+                                                    </lightning-input>
+                                                </template>
+                                                <template if:false={mdpType}>
+                                                    <lightning-input  class="searchHcp slds-form-element" value="" required="true" label=" Enrollment ID ">
+                                                    </lightning-input>
+                                                </template>
+                                            </div>
+
+                                        </div>
+                                    </div> <!-- end SearchNPI  -->
+                                </template>
+                                <template if:false={searchById}>
+                                    <div id="SearchName" >
+                                        <div class="slds-grid slds-wrap   slds-gutters ">
+                                            <div class="slds-col  slds-medium-size_6-of-12">
+                                                <lightning-select class="search slds-form-element" name="state" label=" State" required="true" value="" options={stateOptions} onchange={handleAccDetails}>
+											   </lightning-select>
+                                               
+                                            </div> <!-- end col   -->
+                                            <div class="slds-col slds-medium-size_6-of-12">
+                                                <lightning-input class="validate slds-form-element" name="lastName" label=" Last Name" required="true" value="" onchange={handleAccDetails}>
+													
+											   </lightning-input>
+                                            </div> <!-- end col  -->
+
+
+                                            <div class="slds-col slds-medium-size_6-of-12">
+                                                <lightning-input class="search validate slds-form-element" name="firstName" label=" First Name"  value="" onchange={handleAccDetails}>
+													
+											   </lightning-input>
+                                            </div>
+                                        </div> <!-- end row  -->
+                                    </div> <!-- end SearchName  -->
+                                </template>
+                                <template if:true={searchByIdPrescriberList}>
+                                    <div id="PrescriberResultsNPI" class="tblContainer ">
+
+                                        <h2 id="element-with-table-label"
+                                            class="slds-text-heading_medium slds-m-bottom_xx-small">Healthcare Provider
+                                            Search Results</h2>
+                                        <p class="txtInstructions">If your search results contain the Healthcare Provider
+                                            you were looking for, select and click "Affiliate" to affiliate them to your
+                                            Healthcare Setting.</p>
+                                        <table
+                                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped slds-max-medium-table_stacked-horizontal"
+                                            aria-labelledby="element-with-table-label other-element-with-table-label">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="slds-text-align_right" scope="col" style="width:3.25rem">
+                                                        <div class="slds-truncate slds-assistive-text"
+                                                            id="column-group-header" title="Choose a row to select">Choose a
+                                                            row to select</div>
+                                                    </th>
+                                                    <th aria-sort="ascending"
+                                                        class="xxxslds-is-resizable slds-is-sortable slds-is-sorted slds-is-sorted_asc slds-cell_action-mode"
+                                                        scope="col">
+                                                        <a class="slds-th__action slds-text-link_reset" href="#"
+                                                            role="button" tabindex="0">
+                                                            <span class="slds-assistive-text">Sort by: </span>
+                                                            <div
+                                                                class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                                <span class="slds-truncate" title="Name"> 
+                                                                    <template if:true={mdpType}> Enrollment Id </template> 
+                                                                    <template if:false={mdpType}> REMS # </template>
+                                                                </span>
+                                                                <span class="slds-icon_container slds-icon-utility-arrowdown" name="hcsSort" id="hcsSort" onclick={sortHCPAccountRecords}>
+																		<img src={iconSortAcc}>
+																	</span>
+                                                            </div>
+                                                        </a>
+                                                        <span class="slds-assistive-text" aria-live="polite"
+                                                            aria-atomic="true">Sorted ascending</span>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Name</div>
+                                                    </th>
+
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Stakeholder Type</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Address</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Status</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={visibileAccounts} for:item="prescriberAcc">
+                                                    <tr key={prescriberAcc.Id} class="slds-hint-parent">
+                                                        <th class="slds-text-align_right" role="gridcell" scope="row">
+															 <input type="radio" name="prescriberRadio" value={prescriberAcc.id} onchange={handlePrescriberSelection} />
+														 </th>
+
+                                                        <td data-label="REMS #" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.enrollId} </div>
+                                                        </td>
+                                                        <td data-label="Name" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.name}</div>
+                                                        </td>
+                                                        <td data-label="Stakeholder Type" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.stakeholder}</div>
+                                                        </td>
+                                                        <td data-label="Address" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.address1} {prescriberAcc.address2} {prescriberAcc.city}, {prescriberAcc.state} {prescriberAcc.zip}</div>
+                                                        </td>
+                                                        <td data-label="Status" scope="col">
+                                                            <div class="slds-truncate" title="">
+                                                                <template lwc:if={prescriberAcc.remsStatusPending}>
+                                                                    <span class="status pending">{prescriberAcc.remsStatusPending}</span>
+                                                                </template>
+                                                                <template lwc:elseif={prescriberAcc.remsStatusCertified}>
+                                                                    <span class="status certified"> {prescriberAcc.remsStatusCertified}</span>
+                                                                </template>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+
+                                            </tbody>
+                                        </table>
+                                        <template lwc:if={searchByIdPrescriberList}>
+                                            <c-xiaflex-_-lookup-screen-pagination  all-items={prescriberList} page-size="5" onupdate={updateHCPRecords} ></c-xiaflex-_-lookup-screen-pagination>  
+                                        </template>	
+                                        <template lwc:else>
+                                            <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+                                                <span class="slds-icon_container slds-icon-utility-error slds-m-right_small" title="Error">
+                                                    <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+                                                </span>
+                                                <h2 class="slds-text-heading_small">No Accounts available for selected search criteria</h2>
+                                            </div> 
+                                        </template>
+                                    </div> <!-- end PrescResults  -->
+                                </template>
+
+                                <template if:true={searchByNamePrescriberList}>
+                                    <div id="PrescriberResultsName" class="tblContainer ">
+
+                                        <h2 id="element-with-table-label1"
+                                            class="slds-text-heading_medium slds-m-bottom_xx-small">Healthcare Provider
+                                            Search Results</h2>
+                                        <p class="txtInstructions">If your search results contain the Healthcare Provider
+                                            you were looking for, click "Affiliate" to affiliate them to your Healthcare
+                                            Setting.</p>
+                                        <table
+                                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped slds-max-medium-table_stacked-horizontal"
+                                            aria-labelledby="element-with-table-label other-element-with-table-label">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="slds-text-align_right" scope="col" style="width:3.25rem">
+                                                        <div class="slds-truncate slds-assistive-text"
+                                                            id="column-group-header1" title="Choose a row to select">Choose a
+                                                            row to select</div>
+                                                    </th>
+                                                    <th aria-sort="ascending"
+                                                        class="xxxslds-is-resizable slds-is-sortable slds-is-sorted slds-is-sorted_asc slds-cell_action-mode"
+                                                        scope="col">
+                                                        <a class="slds-th__action slds-text-link_reset" href="#"
+                                                            role="button" tabindex="0">
+                                                            <span class="slds-assistive-text">Sort by: </span>
+                                                            <div
+                                                                class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                                <span class="slds-truncate" title="Name">REMS #</span>
+                                                                <span class="slds-icon_container slds-icon-utility-arrowdown" name="hcsSort" id="hcsSort2" onclick={sortHCPAccountRecords}>
+																		<img src={iconSortAcc}>
+																	</span>
+                                                            </div>
+                                                        </a>
+                                                        <span class="slds-assistive-text" aria-live="polite"
+                                                            aria-atomic="true">Sorted ascending</span>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Name</div>
+                                                    </th>
+
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Stakeholder Type</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Address</div>
+                                                    </th>
+                                                    <th class="slds-is-sortable" scope="col">
+                                                        <div class="slds-truncate" title="">Status</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={visibileAccounts} for:item="prescriberAcc">
+                                                    <tr key={prescriberAcc.id} class="slds-hint-parent">
+                                                        <th class="slds-text-align_right" role="gridcell" scope="row">
+															 <input type="radio" name="prescriberRadio" value={prescriberAcc.id} onchange={handlePrescriberSelection} />
+														 </th>
+
+                                                        <td data-label="REMS #" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.enrollId} </div>
+                                                        </td>
+                                                        <td data-label="Name" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.name}</div>
+                                                        </td>
+                                                        <td data-label="Stakeholder Type" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.stakeholder}</div>
+                                                        </td>
+                                                        <td data-label="Address" scope="col">
+                                                            <div class="slds-truncate" title="">{prescriberAcc.address1} {prescriberAcc.address2} {prescriberAcc.city}, {prescriberAcc.state} {prescriberAcc.zip}</div>
+                                                        </td>
+                                                        <td data-label="Status" scope="col">
+                                                            <div class="slds-truncate" title="">
+                                                                <template lwc:if={prescriberAcc.remsStatusPending}>
+                                                                    <span class="status pending">{prescriberAcc.remsStatusPending}</span>
+                                                                </template>
+                                                                <template lwc:elseif={prescriberAcc.remsStatusCertified}>
+                                                                    <span class="status certified"> {prescriberAcc.remsStatusCertified}</span>
+                                                                </template>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+
+                                            </tbody>
+                                        </table>
+                                        <template lwc:if={searchByNamePrescriberList}>
+                                            <c-xiaflex-_-lookup-screen-pagination  all-items={prescriberList} page-size="5" onupdate={updateHCPRecords} ></c-xiaflex-_-lookup-screen-pagination>  
+                                        </template>	
+                                        <template lwc:else>
+                                            <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+                                                <span class="slds-icon_container slds-icon-utility-error slds-m-right_small" title="Error">
+                                                    <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+                                                </span>
+                                                <h2 class="slds-text-heading_small">No Accounts available for selected search criteria</h2>
+                                            </div> 
+                                        </template>	
+                                    </div>
+                                </template>
+                                <div class="slds-card__footer" part="footer">
+
+                                    <button title="Cancel" type="button"
+                                        class="slds-button slds-button_text-destructive"
+                                        onclick={closeModal}>Cancel</button>
+                                    <template if:true={searchHcs}>
+                                        <button onclick={handleSearch}
+                                            class="slds-button slds-m-top_large slds-button_brand"
+                                            aria-disabled="false" type="button"
+                                            part="button" kx-scope="button-brand"
+                                            kx-type="ripple">Search</button>
+                                    </template>
+                                    <template if:false={searchHcs}>
+                                        <button onclick={handleAffiliate}
+                                            class="slds-button slds-m-top_large slds-button_brand"
+                                            aria-disabled="false" type="button"
+                                            part="button" kx-scope="button-brand"
+                                            kx-type="ripple">Affiliate</button>
+                                    </template>
+                                </div>
+                            </slot>          
+            </div>
+        </article>
+    </div> <!-- end enrollmentForm  -->
+
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+
+</template>

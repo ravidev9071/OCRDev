@@ -1,0 +1,445 @@
+<template>
+
+<div class="pageContainer">	</div>  <!-- end themeHero   -->
+		    <div role="main" tabindex="-1" style="xxxwidth: 1440px;width: 85%;" class="body isPageWidthFixed-true" data-aura-rendered-by="335:0" aria-hidden="false">
+                <!--render facet: 3:2;a-->
+                <div data-aura-rendered-by="89:2;a" class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea" data-aura-class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="comm-content-header comm-layout-column pageContainer" data-aura-rendered-by="91:2;a">
+						<div class="slds-text-heading_large">Online Prescriber Enrollment</div>
+						<!--render facet: 92:2;a-->
+						<p>Because of the risk of serious meningococcal infections, PIASKY<sup>&reg;</sup> (crovalimab-akkz) is available only through a restricted distribution program called the PIASKY <u>R</u>isk <u>E</u>valuation and <u>M</u>itigation <u>S</u>trategy (REMS). Healthcare providers must become certified in the REMS in order to prescribe PIASKY. </p>
+					
+						<div class="slds-text-heading_medium">To become certified in the REMS, prescribers must:</div>
+						<ol class="numItemPeriod">
+							<li>Review the PIASKY Prescribing Information,  <span class="docEmphasis">Healthcare Provider Safety Brochure</span>, <span class="docEmphasis">Patient Safety Card</span>, and <span class="docEmphasis">Patient Guide</span>.</li>
+							<li>Enroll by completing and submitting this <span class="docEmphasis">Prescriber Enrollment Form</span> to the REMS.</li>
+						</ol>
+				
+				<div class="frmContainer">
+				<div class="slds-card slds-card__header" part="card">
+					 <div class="slds-card__header slds-grid">
+						<header class="slds-media slds-media_center slds-has-flexi-truncate">
+							<div class="slds-media__figure"></div>
+							<div class="slds-media__body">
+								<h2 class="slds-card__header-title">
+									<span>Prescriber Information</span>
+								</h2>
+							</div>
+						</header>
+					 </div>
+					 <div class="slds-card__body  slds-card__body_inner" part="body">
+						<p class="frmInstructions">Please enter your National Provider Identifier (NPI)# and click "Continue".
+						<br><br><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> fields required</span></p>
+			           <template if:true={showError}>
+						   <div class="required-fields">
+						<ul>
+                        <template for:each={errorFields} for:item="field">
+                            <li key={field}>{field}</li>
+                        </template>
+                         </ul>
+						 </div>
+                       </template> 
+						  <slot>
+								<div  class="slds-m-around_small">
+									<template if:false={showAlreadyExistsMsg}>
+
+									 <div  class="slds-grid slds-wrap slds-gutters slds-grid_vertical-align-center">
+										  <div  class="slds-col slds-medium-size_9-of-12 slds-large-size_6-of-12">
+												<lightning-input  class="search slds-form-element" label=" National Provider Identifier (NPI)#" value={searchValue} onchange={searchKeyword}
+                                                 disabled={disabled} maxlength="10" minlength="10" message-when-too-long ="Please enter valid NPI" message-when-too-short ="Please enter valid NPI" required="true" >
+													 
+												</lightning-input>
+										  </div>
+										  <div class="slds-col slds-wrap slds-size_1-of-4 search-btn">
+												<lightning-button  class="brand-button " variant="brand" label="Continue" onclick={handleSearchKeyword} disabled={disabled}>
+													 <button id="BtnSearch"   class="slds-button slds-m-top_large slds-button_brand"  type="button" part="button" kx-scope="button-brand" kx-type="ripple">Continue</button>
+												</lightning-button>
+										  </div>
+									 </div>
+									 <template lwc:if={displayInvalidNpi}>
+                                     <div class="slds-text-color_error">{label.DocumentFieldWM}</div>
+
+                                   </template>
+								   </template>
+									 <div  class="slds-m-bottom_small"></div>
+									 
+								<template if:true={showDetails}>	 
+									<div id="PrescriberDetails" class="">
+									<div class="slds-border_top slds-m-bottom_small"></div>
+									<lightning-layout>
+                                              <lightning-layout-item size="12">
+									<div  class="slds-grid slds-wrap   slds-gutters ">
+										  <div  class="slds-col slds-medium-size_4-of-12">							  
+												<lightning-input  class="validate search slds-form-element" lwc-66unc5l95ad-host="" value={npiRecord.firstName} label=" First Name" name="firstName" type="text" variant="standard"
+                                    required="true" onchange={handleChange}>
+												</lightning-input>
+										  </div>
+										  <div  class="slds-col slds-medium-size_4-of-12">
+												<lightning-input  class="validate search slds-form-element" lwc-66unc5l95ad-host="" value={npiRecord.lastName} label=" Last Name"
+                                    name="lastName" type="text" variant="standard"
+                                    required="true" onchange={handleChange}>
+												</lightning-input>
+										  </div>
+										  </div>
+										  <div  class="slds-grid  slds-wrap  slds-gutters">
+										  <div  class="slds-col slds-medium-size_4-of-12">
+												<lightning-input  class="validate search slds-form-element" lwc-66unc5l95ad-host="" value={npiRecord.email} label=" Email" name="email"
+                                     type="email" variant="standard" required="true"
+                                    onchange={handleChange}>
+												</lightning-input>
+										  </div>	
+										  <div  class="slds-col slds-medium-size_4-of-12">
+											<lightning-input  class="validate search slds-form-element confirmEmail" lwc-66unc5l95ad-host="" value="" label=" Confirm Email" name="confirmEmail"
+								 type="email" variant="standard" required="true"
+								onchange={handleConfirmEmail}>
+											</lightning-input>
+									  </div>									  
+									 </div>	 <!-- end row  -->	
+									 
+									<div  class="slds-grid  slds-wrap  slds-gutters">
+										  <div  class="slds-col slds-medium-size_8-of-12">
+												<lightning-input  class="search slds-form-element" lwc-66unc5l95ad-host="" label="Clinic / Practice Name" name="clinicName" onchange={handleChange}>
+													 <lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host="" variant="standard">
+														  <div lwc-enmikoh2qu="" part="input-text">
+																<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">Clinic / Practice Name</label>
+																<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																	 <input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" id="input-311" part="input" placeholder="" type="text" />
+																</div>
+														  </div>
+													 </lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>
+									  </div>  
+									  
+									<div  class="slds-grid  slds-wrap slds-wrap slds-gutters">
+										  <div  class="slds-col slds-medium-size_6-of-12 slds-large-size_4-of-12">
+												<lightning-input  class="search slds-form-element" lwc-66unc5l95ad-host="" label=" Address Line 1"  value={npiRecord.address1} required="true" name="address1" onchange={handleChange}>
+													 <lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host="" variant="standard">
+														  <div lwc-enmikoh2qu="" part="input-text">
+																<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">
+																	<abbr class="slds-required" title="required">* </abbr>Address Line 1
+																</label>
+																<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																	 <input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" value="831 Broadway" id="input-411" part="input" placeholder="" type="text" />
+																</div>
+														  </div>
+													 </lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-wrap slds-medium-size_6-of-12 slds-large-size_4-of-12">
+												<lightning-input  class="search slds-form-element" lwc-66unc5l95ad-host="" label="Address Line 2" value={npiRecord.address2} name="address2" onchange={handleChange}>
+													 <lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host="" variant="standard">
+														  <div lwc-enmikoh2qu="" part="input-text">
+																<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">Address Line 2	</label>
+																<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																	 <input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" id="input-611" part="input" placeholder="" type="text" />
+																</div>
+														  </div>
+													 </lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>
+									  
+									 </div>	 <!-- end row  -->										
+									 
+									 <div  class="slds-grid  slds-wrap  slds-gutters">
+										  <div  class="slds-col slds-medium-size_4-of-12">
+												<lightning-input  class="search slds-form-element" lwc-66unc5l95ad-host="" label=" City"  value={npiRecord.city} required="true" name="city" onchange={handleChange}>
+													 <lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host="" variant="standard">
+														  <div lwc-enmikoh2qu="" part="input-text">
+																<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">
+																	<abbr class="slds-required" title="required">* </abbr>City
+																</label>
+																<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																	 <input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" value="Philadelphia" id="input-711" part="input" placeholder="" type="text" />
+																</div>
+														  </div>
+													 </lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-medium-size_4-of-12  slds-large-size_2-of-12">
+												<div class="slds-form-element">
+															<label class="slds-form-element__label" for="select-01"><abbr class="slds-required" title="required">* </abbr>State</label>
+															<div class="slds-form-element__control">
+																<div class="slds-select_container">
+																	<select class="slds-select" id="select-02" name="state" required value={stateVal} onchange={handleChange}>
+																			<option selected value={npiRecord.state}>{npiRecord.state}</option>
+																		<template for:each={stateOptions} for:item="option" for:index="optionIndex">
+																			<option value={option.value} key={option.value}>{option.label}</option>
+																		</template>
+																	</select>
+															</div>
+															
+															</div>
+														</div> 
+										  </div>
+										  <div  class="slds-col slds-medium-size_4-of-12  slds-large-size_2-of-12">
+												<lightning-input  class="validate search slds-form-element" lwc-66unc5l95ad-host="" label=" Zip Code" required="true" value={npiRecord.zipCode} name="zipCode" onchange={handleChange}>
+													 <lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host="" variant="standard">
+														  <div lwc-enmikoh2qu="" part="input-text">
+																<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">
+																	<abbr class="slds-required" title="required">* </abbr>Zip Code
+																</label>
+																<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																	 <input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" id="input-911" part="input" placeholder="" type="text" />
+																</div>
+														  </div>
+													 </lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>											  
+									  
+									 </div>	 <!-- end row  -->	
+									 
+									<div  class="slds-grid   slds-wrap slds-gutters">
+										<div  class="slds-col slds-medium-size_4-of-12">
+										<lightning-input  class="validate search slds-form-element" lwc-66unc5l95ad-host="" value={npiRecord.phone} label=" Phone Number" name="phone"
+                                     type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+                                    onchange={handleChange}>
+										</lightning-input>
+									  </div>
+									  <div  class="slds-col slds-medium-size_4-of-12">
+											<lightning-input  class="validate search slds-form-element" lwc-66unc5l95ad-host="" value={npiRecord.fax} label=" Fax Number" name="fax"
+                                      type="tel" variant="standard" maxlength="10" minlength="10" required="true"
+                                    onchange={handleChange}>>
+											</lightning-input>
+									  </div>
+								  
+								 </div>	 <!-- end row  -->		
+								 
+								 
+								 <div  class="slds-grid  slds-wrap  slds-gutters">
+									<div  class="slds-col slds-size_1-of-1">
+
+										<fieldset class="slds-form-element">
+											<legend class="slds-form-element__legend slds-form-element__label">
+												 <abbr class="slds-required" title="required">* </abbr>Credentials</legend>
+											<div class="slds-form-element__control">
+												<span class="slds-radio">
+													<input type="radio" id="rb-1" value="MD" name="credentials" onclick={handleChange}/>
+													<label class="slds-radio__label" for="rb-1">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">MD</span>
+													</label>
+												</span>
+												<span class="slds-radio">
+													<input type="radio" id="rb-2" value="DO" name="credentials" onclick={handleChange}/> 
+													<label class="slds-radio__label" for="rb-2">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">DO</span>
+													</label>
+												</span>
+												<span class="slds-radio">
+													<input type="radio" id="rb-3" value="APRN" name="credentials" onclick={handleChange}/> 
+													<label class="slds-radio__label" for="rb-3">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">APRN</span>
+													</label>
+												</span>
+												<span class="slds-radio">
+													<input type="radio" id="rb-4" value="PA" name="credentials" onclick={handleChange}/> 
+													<label class="slds-radio__label" for="rb-4">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">PA</span>
+													</label>
+												</span>		
+												<span class="slds-radio">
+													<input type="radio" id="rb-9" value="other" name="credentials" onclick={handleChange} />
+													<label class="slds-radio__label" for="rb-9">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Other (please specify)</span>
+													</label>
+												</span>													
+											</div>
+										</fieldset>
+									</div>
+ 								 </div>	 <!-- end row  -->									 
+								
+								 <div if:true={showOtherCredetial}>
+									<div  class="slds-grid   slds-wrap slds-gutters">
+										<div  class="slds-col slds-medium-size_4-of-12">
+										<lightning-input  class="search slds-form-element" value={npiRecord.othercredentials} label="  Credentials Other" name="othercredentials"
+										 onchange={handleChange} required="true">
+										</lightning-input>
+									  </div>
+								  
+								 </div>	 <!-- end row  -->	
+								</div> <!-- end Credentials Other   -->
+								 
+								 <div  class="slds-grid  slds-wrap  slds-gutters">
+									<div  class="slds-col slds-size_1-of-1">
+
+										<fieldset class="slds-form-element">
+											<legend class="slds-form-element__legend slds-form-element__label">
+												 <abbr class="slds-required" title="required">* </abbr>Medical Specialty</legend>
+											<div class="slds-form-element__control">
+												<span class="slds-radio">
+													<input type="radio" id="radio-181" value="Hematology/Oncology" name="specialty" onclick={handleChange}/>
+													<label class="slds-radio__label" for="radio-181">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Hematology/Oncology</span>
+													</label>
+												</span>
+												<span class="slds-radio">
+													<input type="radio" id="radio-182" value="Immunology" name="specialty" onclick={handleChange}/> 
+													<label class="slds-radio__label" for="radio-182">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Immunology</span>
+													</label>
+												</span>
+												<span class="slds-radio">
+													<input type="radio" id="radio-183" value="Internal Medicine" name="specialty" onclick={handleChange}/> 
+													<label class="slds-radio__label" for="radio-183">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Internal Medicine</span>
+													</label>
+												</span>
+												<span class="slds-radio">
+													<input type="radio" id="radio-184" value="Nephrology" name="specialty" onclick={handleChange}/> 
+													<label class="slds-radio__label" for="radio-184">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Nephrology</span>
+													</label>
+												</span>		
+												<span class="slds-radio">
+													<input type="radio" id="radio-185" value="Neurology" name="specialty" onclick={handleChange}/> 
+													<label class="slds-radio__label" for="radio-185">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Neurology</span>
+													</label>
+												</span>
+												<span class="slds-radio">
+													<input type="radio" id="radio-186" value="Rheumatology" name="specialty"  onclick={handleChange}/>
+													<label class="slds-radio__label" for="radio-186">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Rheumatology</span>
+													</label>
+												</span>	
+												<span class="slds-radio">
+													<input type="radio" id="radio-187" value="other" name="specialty" onclick={handleChange} />
+													<label class="slds-radio__label" for="radio-187">
+														<span class="slds-radio_faux"></span>
+														<span class="slds-form-element__label">Other (please specify)</span>
+													</label>
+												</span>													
+											</div>
+										</fieldset>
+									</div>
+ 								 </div>	 <!-- end row  -->	
+
+								  <div if:true={showOtherSpecialty}>
+									<div  class="slds-grid   slds-wrap slds-gutters">
+										<div  class="slds-col slds-medium-size_4-of-12">
+											<lightning-input  class="search slds-form-element" value={npiRecord.medSpecialityOther} label="  Medical Specialty Other" name="medSpecialityOther"
+											onchange={handleChange} required="true">
+											</lightning-input>
+									  </div>
+								  
+								 </div>	 <!-- end row  -->	
+								</div> <!-- end Credentials Other   -->
+								</lightning-layout-item>
+                        </lightning-layout>
+								<div class="frmAttestations">
+									<div class="slds-text-heading_medium">Prescriber's Agreement</div>
+									<p><span class="docEmphasis">By completing, signing, and submitting this form, I acknowledge and agree that:</span></p>
+									<ul class="listItemDiscs">
+										<li>I have read and understand the PIASKY Prescribing Information (Pl), <span class="docEmphasis">Healthcare Provider Safety Brochure</span>, <span class="docEmphasis">Patient Safety Card</span>, and <span class="docEmphasis">Patient Guide</span>.</li>
+										<li>I understand the:
+											<ul class="nestedListStyle">
+												<li>Risk of serious meningococcal infections associated with PIASKY.</li>
+												<li>Early signs and symptoms of meningococcal infections and the need for immediately medical evaluation.</li>
+											</ul>
+										</li>
+										<li>Before  treatment initiation, I must:
+											<ul class="nestedListStyle">
+												<li>Assess the patient for unresolved meningococcal infection.</li>
+												<li>For patients with an unresolved serious meningococcal infection: Not initiate PIASKY.</li>
+												<li>Assess the patient’s vaccination status for meningococcal serogroups A, C, W, Y, and B and vaccinate as needed according to the current Advisory Committee on Immunization Practices (ACIP) recommendations for patients receiving a complement inhibitor. </li>
+												<li>For patients who are not up to date with meningococcal vaccines at least two weeks prior to initiation of treatment and who must start PIASKY urgently: Provide the patient with a prescription for antibacterial drug prophylaxis.</li>
+												<li>Counsel the patient using the <span class="docEmphasis">Patient Safety Card</span> and <span class="docEmphasis">Patient Guide</span>. Provide a copy of these materials to the patient.</li>
+												<li>Counsel the patient on the need to carry the <span class="docEmphasis">Patient Safety Card</span> at all times and for 11 months after their last dose of PIASKY.</li>
+											</ul>
+										</li>	
+										<li>During  treatment, I must:
+											<ul class="nestedListStyle">
+												<li>Assess the patient for early signs and symptoms of meningococcal infection and evaluate immediately if infection is suspected.</li>
+												<li>Vaccinate patients as needed according to the current ACIP recommendations for meningococcal vaccinations for patients receiving a complement inhibitor.</li>
+											</ul>
+										</li>	
+										<li>At all times, I must:
+											<ul class="nestedListStyle">
+												<li>Report any adverse events suggestive of meningococcal infections, including the patient’s clinical outcomes to Genentech, Inc. at <span class="txtNoWrap">888-835-2555</span> or by email to <a href="mailto: us_drug.safety@gene.com">us_drug.safety@gene.com</a>.</li>
+
+											</ul>
+										</li>	
+										<li>I understand that if I do not maintain compliance with the requirements of the REMS, I will no longer be able to prescribe PIASKY.</li>
+										<li>I understand that the REMS and its agents or contractors may contact me to support the administration of the REMS.</li>
+										<li>I understand that Genentech or its agents or contractors may use and disclose my information in accordance with the Genentech Privacy Notice, available at <a href="https://www.gene.com/privacy-policy" target="_blank">gene.com/privacy-policy</a>, including to support the administration of the REMS.</li>
+									</ul>
+									
+									<div class="containerEmphasis">
+										<div class="slds-text-heading_medium">Prescriber Signature</div>
+										<p class="txtInstructions">Use your mouse or touchpad to sign.</p>
+										<div class="slds-m-vertical_large"></div>
+											<div class="slds-m-vertical_medium"></div>
+											<c-pia-sky_signature-pad onsignimagedata={handleSignatureCompleted}></c-pia-sky_signature-pad>
+											</div>												
+							</div>
+						<template if:true={showMsg}>
+                <!-- <div class="message">{message}</div> -->
+                <div class="slds-text-color_error">{message}</div>
+                 </template>
+									 
+					 <div class="slds-card__footer" part="footer">
+						 <slot name="footer">
+							<div  slot="footer">
+								<template if:true={showDetails}>
+							<lightning-button class="brand-button" variant = "destructive-text" label="Cancel" onclick={handleCancelKeyword}>
+							<button title="Cancel" type="button" class="slds-button slds-button_text-destructive">Cancel</button>
+							</lightning-button>
+							<lightning-button class="brand-button" variant="brand-outline" onclick={handleClear} label="Clear Signature">
+								<button id="resetSign" class="slds-button slds-m-top_large slds-button_outline-brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple" onclick={handleClear}>Clear Signature</button>
+								</lightning-button>							
+							<lightning-button class="brand-button" variant="brand" label="Submit" onclick={handleSubmitKeyword}>
+								 <button   class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button>
+							</lightning-button>
+							</template>
+							</div>
+						</slot>
+					 </div>									 
+				 									 
+									</div> <!-- end prescriber details  -->									 
+					</template>				 
+									 
+								</div>
+						  </slot>
+					 </div>
+
+				</div>
+				</div>  <!-- end enrollmentForm  -->
+				
+				
+				
+
+                        </div>
+                    </div>
+                    <div class="xxxslds-col--padded comm-content-footer comm-layout-column" data-aura-rendered-by="102:2;a"><!--render facet: 103:2;a--></div>
+                </div>
+          
+            
+        <!--render facet: 343:0--><!--render facet: 346:0--><!--render facet: 348:0--><!--render facet: 350:0--><!--render facet: 351:0--><!--render facet: 3:0--><!--render facet: 7:0-->
+        <div class="forceCommunityToastManager forceToastManager--default forceToastManager" data-aura-rendered-by="11:0" data-aura-class="forceToastManager--default forceToastManager">
+            <div data-aura-rendered-by="15:0" class="forceVisualMessageQueue" data-aura-class="forceVisualMessageQueue"><!--render facet: 13:0--><!--render facet: 17:0--></div>
+            <!--render facet: 18:0-->
+        </div>
+        <div data-aura-rendered-by="25:0" class="forceHoverPrototype" data-aura-class="forceHoverPrototype" style="top: 0px; left: -1500px; position: fixed;"><div class="scrollableContainer" data-aura-rendered-by="26:0"></div></div>
+        <!--render facet: 29:0--><!--render facet: 31:0--><!--render facet: 33:0-->
+        <div class="hideEl siteforceSpinnerManager siteforcePanelsContainer" data-aura-rendered-by="38:0" data-aura-class="siteforceSpinnerManager siteforcePanelsContainer">
+            <div class="mask" data-aura-rendered-by="39:0"></div>
+            <div class="loadingCon global siteforceLoadingBalls" data-aura-rendered-by="42:0" data-aura-class="siteforceLoadingBalls">
+                <span class="loadingBall first" data-aura-rendered-by="43:0"></span><span class="loadingBall second" data-aura-rendered-by="44:0"></span><span class="loadingBall third" data-aura-rendered-by="45:0"></span>
+                <span class="assistiveText" data-aura-rendered-by="46:0">Loading</span>
+            </div>
+        </div> 
+		<template lwc:if={displaySpinner}>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</template>
+</template>

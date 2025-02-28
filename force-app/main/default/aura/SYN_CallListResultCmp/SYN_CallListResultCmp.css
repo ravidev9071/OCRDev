@@ -1,0 +1,20 @@
+.THIS .fixTabHeight {
+    height: calc(100vh - 302px);
+}
+
+.THIS .custom-loading-text {
+    position: absolute;
+    width: 100%;
+    top: calc(50% + 3em);
+    text-align: center;
+    font-weight: bold;
+}
+.THIS .custom-box {
+    text-align: center;
+    background-color: #f4f6f9;
+    padding: 1rem;
+    border: 1px solid #d8dde6;
+}
+.THIS .buttonstyle-box {
+   margin-top : 10rem;
+}

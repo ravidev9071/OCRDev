@@ -1,0 +1,725 @@
+<template>
+    <lightning-progress-indicator type="path" variant="base">
+        <lightning-progress-step label="Education Program" value="1" class="educationProgram"></lightning-progress-step>
+        <lightning-progress-step label="Knowledge Assessment" value="2"
+            class="knowledgeProgram"></lightning-progress-step>
+        <lightning-progress-step label="Complete Enrollment" value="3"
+            class="completeProgram"></lightning-progress-step>
+    </lightning-progress-indicator>
+    <div data-region-name="content">
+        <template lwc:if={showEnrollmentForm}>
+            <template lwc:if={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </template>
+            <div data-priority="" class="ui-widget">
+                <div class="slds-text-heading_large">Complete Enrollment</div>
+                <div class="frmContainer hcp">
+                    <article class="slds-card " part="card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure"></div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span>Aveed<sup><small>&reg;</small></sup> REMS Healthcare Provider Enrollment
+                                            Form</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body  slds-card__body_inner" part="body">
+                            <div class="slds-text-heading_medium">Instructions</div>
+                            <p>AVEED is only available through the AVEED Risk Evaluation and Mitigation Strategy (REMS).
+                                In
+                                order to prescribe AVEED, a healthcare provider must:</p>
+                            <ol class="numItemPeriod">
+                                <li>Ensure that your healthcare setting is enrolled. You cannot complete certification
+                                    until
+                                    your healthcare setting is enrolled.</li>
+                                <li>Review the AVEED REMS Education Program for Healthcare Providers, including the
+                                    Prescribing Information.</li>
+                                <li>Successfully complete the AVEED REMS Knowledge Assessment.</li>
+                                <li>Complete and submit this one-time AVEED REMS Healthcare Provider Enrollment Form.
+                                </li>
+                            </ol>
+                            <p class="frmInstructions" style="font-weight: normal;"><span
+                                    class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span>
+                                    fields
+                                    required</span></p>
+                            <slot>
+                                <div class="slds-m-around_small">
+                                    <div class="slds-text-heading_medium">Healthcare Provider Information</div>
+
+                                    <div id="PrescriberDetails" class="slds-show">
+                                        <div class="slds-grid slds-wrap slds-gutters">
+                                            <div class="slds-col slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                <lightning-input class="search slds-form-element"
+                                                    label=" Prescriber NPI" required
+                                                    value={currentAccountInfo.US_WSREMS__National_Provider_Identifier__c}
+                                                    placeholder="" disabled>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                                                <lightning-input class="search slds-form-element" label=" DEA Number"
+                                                    required value={currentAccountInfo.US_WSREMS__DEA__c} placeholder=""
+                                                    disabled>
+                                                </lightning-input>
+                                            </div>
+                                        </div> <!-- end row  -->
+                                        <div class="slds-grid slds-wrap slds-gutters ">
+                                            <div class="slds-col slds-medium-size_4-of-12">
+                                                <lightning-input onchange={handleOnChangeEvt}
+                                                    class="search slds-form-element" name="firstName"
+                                                    pattern="[a-zA-Z0-9.\-'\s]*"
+                                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                                    value={currentAccountInfo.FirstName} label=" First Name" required>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_2-of-12">
+                                                <lightning-input name="MI" class="search slds-form-element"
+                                                    pattern="[a-zA-Z0-9.\-'\s]*"
+                                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                                    label="MI">
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_4-of-12">
+                                                <lightning-input onchange={handleOnChangeEvt} name="lastName"
+                                                    class="search slds-form-element" value={currentAccountInfo.LastName}
+                                                    pattern="[a-zA-Z0-9.\-'\s]*"
+                                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                                    label=" Last Name" required>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_4-of-12">
+                                                <lightning-input class="search slds-form-element"
+                                                    value={currentAccountInfo.PersonEmail} label=" Email Address"
+                                                    required disabled>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_4-of-12">
+                                                <lightning-input class="search slds-form-element"
+                                                    value={currentAccountInfo.PersonEmail}
+                                                    label=" Confirm Email Address" required disabled>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_4-of-12">
+                                                <lightning-input onchange={handleOnChangeEvt}
+                                                    class="search slds-form-element phoneNumber"
+                                                    pattern="\(\d{3}\) \d{3}-\d{4}"
+                                                    message-when-pattern-mismatch="Please enter a valid Phone number"
+                                                    value={currentAccountInfo.Phone} label=" Phone Number"
+                                                    name="phoneNumber" required>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_2-of-12">
+                                                <lightning-input onchange={handleOnChangeEvt} name="extension"
+                                                    class="search slds-form-element" label="Ext" pattern="\d*"
+                                                    message-when-pattern-mismatch="Please enter a valid Ext"
+                                                    value={currentAccountInfo.US_WSREMS__EXT__c}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-medium-size_4-of-12">
+                                                <lightning-input onchange={handleOnChangeEvt} name="faxNumber"
+                                                    class="search slds-form-element faxNumber"
+                                                    pattern="\(\d{3}\) \d{3}-\d{4}" data-id="arInputs"
+                                                    message-when-pattern-mismatch="Please enter a valid Fax number"
+                                                    value={currentAccountInfo.Fax} label=" Fax Number" required>
+                                                </lightning-input>
+                                            </div>
+                                        </div> <!-- end row  -->
+
+
+                                        <fieldset class="slds-form-element" style="display: inline-block">
+                                            <legend class="slds-form-element__legend slds-form-element__label">
+                                                <abbr class="slds-required" title="required">*</abbr>
+                                                &nbsp;Preferred Method of Communication
+                                            </legend>
+                                            <div class="slds-form-element__control">
+                                                <template for:each={contactMethods} for:item="option">
+                                                    <span key={option.key} for:index={option.index}
+                                                        data-key={option.key} data-value={option.value}
+                                                        class={radioClass} onclick={handleContactMethodClick}>
+                                                        <input type="radio" value={option.value}
+                                                            checked={option.checked} name="contactMethodRadio"
+                                                            class={option.inputClass} />
+                                                        <label class="slds-radio__label">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span
+                                                                class="slds-form-element__label">&nbsp;{option.label}</span>
+                                                        </label>
+                                                    </span>
+                                                </template>
+                                            </div>
+                                        </fieldset>
+
+                                        <div class="slds-border_top slds-m-bottom_small"></div>
+
+                                        <div class="slds-grid  slds-wrap  slds-gutters">
+                                            <div class="slds-col slds-size_1-of-1 ">
+
+                                                <fieldset class="slds-form-element" style="display: inline-block">
+                                                    <legend class="slds-form-element__legend slds-form-element__label">
+                                                        <abbr class="slds-required" title="required">*</abbr>
+                                                        &nbsp;Degree
+                                                    </legend>
+                                                    <div class="slds-form-element__control">
+                                                        <template for:each={credentialOptions} for:item="option">
+                                                            <span key={option.key} for:index={option.index}
+                                                                data-key={option.key} data-value={option.value}
+                                                                class={radioClass} onclick={handleDegreeClick}>
+                                                                <input type="radio" value={option.value}
+                                                                    checked={option.checked} name="credentialsRadio"
+                                                                    class={option.inputClass} />
+                                                                <label class="slds-radio__label">
+                                                                    <span class="slds-radio_faux"></span>
+                                                                    <span
+                                                                        class="slds-form-element__label">&nbsp;{option.label}</span>
+                                                                </label>
+                                                            </span>
+                                                        </template>
+                                                        <template lwc:if={degreeOptionNotSelected}>
+                                                            <div class="slds-form-element__help required-text"
+                                                                role="status">Complete this field.</div>
+                                                        </template>
+                                                    </div>
+                                                    <template lwc:if={showFreeTextForDegree}>
+                                                        <div class="slds-form-element__control">
+                                                            <div class="slds-col slds-size_1-of-2">
+                                                                <lightning-input onchange={handleOnChangeEvt}
+                                                                    type="text" name="othercredentials"
+                                                                    label=" Degree Other" required
+                                                                    value={prescriberRecord.othercredentials}
+                                                                    data-id="othercredentials"></lightning-input>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </fieldset>
+                                            </div>
+                                        </div> <!-- end row  -->
+
+                                        <div class="slds-grid  slds-wrap  slds-gutters">
+                                            <div class="slds-col slds-size_1-of-1">
+                                                <fieldset class="slds-form-element" style="display: inline-block">
+                                                    <legend class="slds-form-element__legend slds-form-element__label">
+                                                        <abbr class="slds-required" title="required">*</abbr>
+                                                        &nbsp;Specialty
+                                                    </legend>
+                                                    <div class="slds-form-element__control">
+                                                        <template for:each={specialtyOptions} for:item="option">
+                                                            <span key={option.key} for:index={option.index}
+                                                                data-key={option.key} data-value={option.value}
+                                                                class={radioClass} onclick={handleSpecialityClick}>
+                                                                <input type="radio" value={option.value}
+                                                                    checked={option.checked} name="specialityRadio"
+                                                                    class={option.inputClass} />
+                                                                <label class="slds-radio__label">
+                                                                    <span class="slds-radio_faux"></span>
+                                                                    <span
+                                                                        class="slds-form-element__label">&nbsp;{option.label}</span>
+                                                                </label>
+                                                            </span>
+                                                        </template>
+                                                        <template lwc:if={specialtyOptionNotSelected}>
+                                                            <div class="slds-form-element__help required-text"
+                                                                role="status">Complete this field.</div>
+                                                        </template>
+                                                    </div>
+                                                    <template lwc:if={showFreeTextForSpeciality}>
+                                                        <div class="slds-form-element__control">
+                                                            <div class="slds-col slds-size_1-of-2">
+                                                                <lightning-input onchange={handleOnChangeEvt}
+                                                                    type="text" name="specialityOther"
+                                                                    label=" Specialty Other" required
+                                                                    value={prescriberRecord.specialityOther}
+                                                                    data-id="specialityOther"></lightning-input>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </fieldset>
+                                            </div>
+                                        </div> <!-- end row  -->
+
+                                        <div class="dividerSolid"></div>
+                                        <div class="slds-text-heading_medium">Healthcare Setting Information</div>
+                                        <p class="txtInstructions">To associate a Healthcare Setting, please search to
+                                            see
+                                            if your healthcare setting already exists in the AVEED REMS.
+                                            Please provide the Enrollment ID, Healthcare Setting Name, State or Zip Code
+                                            and
+                                            click "Search". </p>
+
+                                        <div class="slds-grid slds-wrap slds-gutters">
+                                            <div class="slds-col slds-medium-size_8-of-12">
+                                                <div class="slds-form-element">
+                                                    <label class="slds-form-element__label" for="text-input-id-0">
+                                                        <abbr class="slds-required" title="required">* </abbr>Enrollment
+                                                        ID,
+                                                        Healthcare Setting Name, State, or Zip Code</label>
+                                                    <div class="slds-form-element__control"><input id="text-input-id-0"
+                                                            placeholder="" type="text" class="slds-input"
+                                                            value={searchTerm} oninput={handleSearchTerm}></div>
+                                                </div>
+                                            </div> <!-- end col  -->
+                                            <div
+                                                class="slds-col slds-wrap slds-large-size_2-of-12 search-btn  slds-m-top_xx-small">
+                                                <button class="slds-button slds-m-top_large slds-button_outline-brand"
+                                                    onclick={handleSearch}>Search</button>
+                                            </div>
+                                        </div> <!-- end row  -->
+                                        <template lwc:if={showSearchResults}>
+                                            <div id="HCSResults" class="tblContainer">
+                                                <h2 id="element-with-table-label4"
+                                                    class="slds-text-heading_medium slds-m-bottom_xx-small">Certified
+                                                    Healthcare
+                                                    Settings</h2>
+                                                <p class="txtInstructions">Select the Healthcare Setting you would like
+                                                    to
+                                                    associate to.
+                                                    <br><br>If the Healthcare Setting is not found in the table below,
+                                                    please
+                                                    check the box for "I cannot find my Healthcare Setting" below to
+                                                    enroll
+                                                    new.
+                                                </p>
+                                                <table
+                                                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped"
+                                                    aria-labelledby="element-with-table-label other-element-with-table-label">
+                                                    <thead>
+                                                        <tr class="slds-line-height_reset">
+                                                            <th class="slds-text-align_right" scope="col"
+                                                                style="width:3.25rem">
+                                                                <div class="slds-truncate slds-assistive-text"
+                                                                    id="column-group-header"
+                                                                    title="Choose a row to select">
+                                                                    Choose a row to select</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="Name">Name</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="Address">Address</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="City">City</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="State">State</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="ZIP Code">ZIP Code
+                                                                </div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="Phone">Phone</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="NPI">Enrollment ID
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template lwc:if={hasSearchResults}>
+                                                            <template for:each={searchResults} for:item="result">
+                                                                <tr class="slds-hint-parent" key={result.Id}>
+                                                                    <td class="slds-text-align_right" role="gridcell">
+                                                                        <span class="slds-radio"
+                                                                            onclick={handleSelectedRow}
+                                                                            data-id={result.Id}>
+                                                                            <input type="radio"
+                                                                                name="searchResultsRadio" tabindex="-1"
+                                                                                value={result.Id}
+                                                                                checked={result.checked} />
+                                                                            <label class="slds-radio__label"
+                                                                                for="rbHCS1"
+                                                                                id="radio-button-label-01">
+                                                                                <span class="slds-radio_faux"></span>
+                                                                                <span class="tooltip-text">Add Association</span>
+                                                                            </label>
+                                                                        </span>
+                                                                    </td>
+                                                                    <td class="slds-cell-wrap"
+                                                                        data-label="Account Name">
+                                                                        <div class="slds-truncate">{result.Name}</div>
+                                                                    </td>
+
+                                                                    <td class="slds-cell-wrap" data-label="Address">
+                                                                        <div class="slds-truncate"
+                                                                            title={result.US_WSREMS__Address_Line_1__c}>
+                                                                            {result.US_WSREMS__Address_Line_1__c}</div>
+                                                                    </td>
+                                                                    <td class="slds-cell-wrap" data-label="City">
+                                                                        <div class="slds-truncate"
+                                                                            title={result.US_WSREMS__City__c}>
+                                                                            {result.US_WSREMS__City__c}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="slds-cell-wrap" data-label="State">
+                                                                        <div class="slds-truncate"
+                                                                            title={result.US_WSREMS__State__c}>
+                                                                            {result.US_WSREMS__State__c}</div>
+                                                                    </td>
+                                                                    <td class="slds-cell-wrap" data-label="ZIP Code">
+                                                                        <div class="slds-truncate"
+                                                                            title={result.US_WSREMS__Zip__c}>
+                                                                            {result.US_WSREMS__Zip__c}</div>
+                                                                    </td>
+                                                                    <td class="slds-cell-wrap" data-label="Phone">
+                                                                        <div class="slds-truncate" title={result.Phone}>
+                                                                            {result.Phone}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="slds-cell-wrap"
+                                                                        data-label="Enrollment ID">
+                                                                        <div class="slds-truncate"
+                                                                            title={result.US_WSREMS__REMS_ID__c}>
+                                                                            {result.US_WSREMS__REMS_ID__c}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </template>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                                <template if:false={hasSearchResults}>
+                                                    <p class="txtInstructions slds-p-around_small">No results found.</p>
+                                                </template>
+
+                                                <div class="slds-m-vertical_x-large"></div>
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-checkbox">
+                                                            <input type="checkbox" name="options" id="cbNewPharmHCS"
+                                                                checked={createSettingOption}
+                                                                onchange={handleCheckSetting}>
+                                                            <label class="slds-checkbox__label" for="cbNewPharmHCS">
+                                                                <span class="slds-checkbox_faux"></span>
+                                                                <span class="slds-form-element__label">I cannot find my
+                                                                    Healthcare Setting</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <template lwc:if={createSettingOption}>
+                                                    <div id="HCSEntry">
+                                                        <div class="dividerSolid"></div>
+                                                        <h2 id="element-with-table-label"
+                                                            class="slds-text-heading_medium slds-m-bottom_xx-small">
+                                                            Healthcare Setting Information</h2>
+                                                        <p class="txtInstructions">Please provide Healthcare Setting
+                                                            information.</p>
+
+                                                        <div class="slds-grid slds-wrap">
+                                                            <div class="slds-col slds-size_1-of-1">
+                                                                <lightning-input data-id="affiliationData"
+                                                                    label=" Healthcare Setting Name" name="Name"
+                                                                    onchange={handleInputChange}
+                                                                    pattern="[a-zA-Z0-9.\-'\s]*"
+                                                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                                                    required></lightning-input>
+                                                            </div>
+                                                            <div
+                                                                class="slds-col slds-size_1-of-1 slds-small-size--1-of-2">
+                                                                <lightning-input data-id="affiliationData"
+                                                                    label=" Ship to Address 1" name="US_WSREMS__Address_Line_1__c"
+                                                                    onchange={handleInputChange}
+                                                                    pattern="[a-zA-Z0-9.\-'\s]*"
+                                                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                                                    required></lightning-input>
+                                                                <lightning-input data-id="affiliationData" label=" City"
+                                                                    name="US_WSREMS__City__c" onchange={handleInputChange}
+                                                                    pattern="[a-zA-Z0-9.\-'\s]*"
+                                                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                                                    required></lightning-input>
+                                                            </div>
+                                                            <div
+                                                                class="slds-col slds-size_1-of-1 slds-small-size--1-of-2 custom-padding-left">
+                                                                <lightning-input data-id="affiliationData"
+                                                                    label=" Ship to Address 2" name="US_WSREMS__Address_Line_2__c"
+                                                                    pattern="[a-zA-Z0-9.\-'\s]*"
+                                                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                                                    onchange={handleInputChange}></lightning-input>
+                                                                <div class="slds-grid slds-wrap">
+                                                                    <div
+                                                                        class="slds-col slds-size_1-of-1 slds-small-size--1-of-2">
+                                                                        <lightning-combobox data-id="affiliationData"
+                                                                            class="search slds-form-element"
+                                                                            label=" State" required
+                                                                            options={stateOptions}
+                                                                            onchange={handleInputChange}
+                                                                            name="US_WSREMS__State__c"></lightning-combobox>
+                                                                    </div>
+                                                                    <div
+                                                                        class="slds-col slds-size_1-of-1 slds-small-size--1-of-2 custom-padding-small-left">
+                                                                        <lightning-input data-id="affiliationData"
+                                                                            label=" ZIP Code" name="US_WSREMS__Zip__c"
+                                                                            pattern="^(\d{5}|\d{5}-\d{4})$"
+                                                                            message-when-pattern-mismatch="Please enter a valid 5-digit or a 10-character format like '12345-6789' zip."
+                                                                            onchange={handleInputChange} required>
+                                                                        </lightning-input>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                      
+                                <template lwc:if={showAssociatedHCS} >
+                                    <h2 id="element-with-table-labelhcs"
+                                    class="slds-text-heading_medium slds-m-bottom_xx-small">Associated Certified
+                                    Healthcare
+                                    Settings</h2>
+                                    <table
+                                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped"
+                                    aria-labelledby="element-with-table-label other-element-with-table-label">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-align_right" scope="col"
+                                                style="width:3.25rem">
+                                                <div class="slds-truncate slds-assistive-text"
+                                                    id="column-group-headerhcs"
+                                                    title="Choose a row to select">
+                                                    Choose a row to select</div>
+                                            </th>
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Name">Name</div>
+                                            </th>
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Address">Address</div>
+                                            </th>
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="City">City</div>
+                                            </th>
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="State">State</div>
+                                            </th>
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="ZIP Code">ZIP Code
+                                                </div>
+                                            </th>
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="Phone">Phone</div>
+                                            </th>
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" title="NPI">Enrollment ID
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template lwc:if={hasAssociatedHCSResults}>
+                                            <template for:each={associatedHCSResults} for:item="HCSresult">
+                                                <tr class="slds-hint-parent" key={HCSresult.Id}>
+                                                    <td class="slds-text-align_right" role="gridcell">
+                                                        <span class="slds-radio"
+                                                            onclick={handleAssociateHCSSelectedRow}
+                                                            data-id={HCSresult.Id}>
+                                                            <input type="radio"
+                                                                name="HCSsearchResultsRadio" tabindex="-1"
+                                                                value={HCSresult.Id}
+                                                                checked={HCSresult.checked} />
+                                                            <label class="slds-radio__label"
+                                                                for="rbHCS1"
+                                                                ><span
+                                                                    class="slds-radio_faux"></span>
+                                                                    <span class="tooltip-text">Remove Association</span>
+                                                                </label>
+                                                        </span>
+                                                    </td>
+                                                    <td class="slds-cell-wrap"
+                                                        data-label="Account Name">
+                                                        <div class="slds-truncate">{HCSresult.Name}</div>
+                                                    </td>
+
+                                                    <td class="slds-cell-wrap" data-label="Address">
+                                                        <div class="slds-truncate"
+                                                            title={HCSresult.US_WSREMS__Address_Line_1__c}>
+                                                            {HCSresult.US_WSREMS__Address_Line_1__c}</div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap" data-label="City">
+                                                        <div class="slds-truncate"
+                                                            title={HCSresult.US_WSREMS__City__c}>
+                                                            {HCSresult.US_WSREMS__City__c}
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap" data-label="State">
+                                                        <div class="slds-truncate"
+                                                            title={HCSresult.US_WSREMS__State__c}>
+                                                            {HCSresult.US_WSREMS__State__c}</div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap" data-label="ZIP Code">
+                                                        <div class="slds-truncate"
+                                                            title={HCSresult.US_WSREMS__Zip__c}>
+                                                            {HCSresult.US_WSREMS__Zip__c}</div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap" data-label="Phone">
+                                                        <div class="slds-truncate" title={HCSresult.Phone}>
+                                                            {HCSresult.Phone}
+                                                        </div>
+                                                    </td>
+                                                    <td class="slds-cell-wrap"
+                                                        data-label="Enrollment ID">
+                                                        <div class="slds-truncate"
+                                                            title={HCSresult.US_WSREMS__REMS_ID__c}>
+                                                            {HCSresult.US_WSREMS__REMS_ID__c}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </template>
+                                    </tbody>
+                                    </table>
+                            </template>
+                               
+                                        <div class="slds-p-vertical_x-large"></div>
+
+                                        <div class="slds-show">
+                                            <div class="containerEmphasis">
+                                                <p clxass="txtInstructions">Click "Affiliate to Another Healthcare
+                                                    Setting" to add additional affiliated healthcare settings, if
+                                                    necessary.</p>
+                                                <button id="BtnAnotherHCS" disabled={isAffiliateDisabled}
+                                                    class="slds-button slds-m-top_large slds-button_brand slds-button_outline-brand"
+                                                    aria-disabled="false" type="button" part="button"
+                                                    onclick={handleAnotherAffilation}>Affiliate to Another
+                                                    Healthcare Setting</button>
+                                            </div>
+                                            <div class="slds-p-bottom_large"></div>
+                                            <template lwc:if={showHCSHCPError}>
+                                                <div class="slds-form-element__help required-text slds-m-top_medium"
+                                                    role="status">Please select the HealthCare Setting for completion.
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                        <div class="dividerSolid"></div>
+                                        <div class="frmAttestations">
+                                            <div class="slds-text-heading_medium">Healthcare Provider Responsibilities
+                                            </div>
+                                            <p>By completing this form, I attest that:</p>
+                                            <ul class="listItemDisc">
+                                                <li>I understand that AVEED is only available through the AVEED REMS
+                                                    and that I must comply with the requirements in order to
+                                                    prescribe and administer AVEED.</li>
+                                                <li>I completed the AVEED REMS Education Program, including review of
+                                                    the
+                                                    AVEED Prescribing Information, and successfully completed the AVEED
+                                                    REMS
+                                                    Knowledge Assessment.</li>
+                                                <li>I understand how to inject AVEED properly.</li>
+                                                <li>I understand the risks of serious pulmonary oil microembolism (POME)
+                                                    reactions and anaphylaxis following the administration of AVEED,
+                                                    which
+                                                    have the potential to lead to serious medical consequences (e.g.,
+                                                    respiratory distress and syncope), and how to manage these risks.
+                                                </li>
+                                                <li>Prior to initiating treatment and before each injection, I agree to
+                                                    provide a copy of "What You Need To Know About AVEED Treatment: A
+                                                    Patient Guide" to each patient and review it with them to inform
+                                                    them
+                                                    about the risk of serious POME reactions and anaphylaxis and the
+                                                    need to
+                                                    remain in my healthcare setting for <b>30 minutes</b> following each
+                                                    AVEED injection. </li>
+                                                <li>I acknowledge that my healthcare setting must be a certified
+                                                    healthcare
+                                                    setting.</li>
+                                                <li>I understand that each patient must be observed in the healthcare
+                                                    setting for <b>30 minutes</b> following each AVEED injection in
+                                                    order to
+                                                    provide appropriate medical treatment in the event of serious POME
+                                                    reactions or anaphylaxis following the administration of AVEED.</li>
+                                                <li>I agree that personnel from the AVEED REMS may contact me to
+                                                    gather further information or resolve discrepancies or to provide
+                                                    other
+                                                    information related to the AVEED REMS.</li>
+                                                <li>I understand that Endo USA, Inc. (Endo), its
+                                                    agents
+                                                    and contractors, such as the distributors, may contact me via phone,
+                                                    mail or email to survey me on the effectiveness of the
+                                                    requirements for the AVEED REMS.</li>
+                                                <li>I understand the importance of reporting serious events of POME and
+                                                    anaphylaxis following AVEED treatment.</li>
+                                                <li>I attest that my healthcare setting has immediate access on-site to
+                                                    equipment and personnel trained to manage POME and anaphylaxis.</li>
+
+                                            </ul>
+
+                                        </div> <!-- end attestations   -->
+
+                                        <div class="slds-m-vertical_x-large"></div>
+                                        <div class="containerEmphasis">
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <h2 class="slds-text-heading_medium slds-m-bottom_xx-small">
+                                                        Healthcare Provider Signature</h2>
+                                                    <p class="txtInstructions">Use your mouse or touchpad to sign.</p>
+                                                    <div class="slds-m-vertical_large"></div>
+                                                    <div class="slds-m-vertical_medium"></div>
+                                                    <p class="txtInstructions">I understand that this enrollment and
+                                                        certification only applies to me, and does not apply to any
+                                                        healthcare setting that employs me or in which I may have an
+                                                        interest.</p>
+                                                    <c-rems-sign-pad
+                                                        onsignimagedata={handleSignatureCompleted}></c-rems-sign-pad>
+                                                    <template if:true={signatureRequired}>
+                                                        <div class="slds-form-element__help required-text"
+                                                            role="status">Signature required for completion.</div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-card__footer" part="footer">
+                                            <slot name="footer">
+                                                <div slot="footer">
+                                                    <button title="Cancel" type="button"
+                                                        class="brand-button slds-button slds-button_text-destructive">Cancel</button>&nbsp;&nbsp;
+                                                    <button id="resetSign" onclick={handleClear}
+                                                        class="brand-button slds-button slds-m-top_large slds-button_outline-brand"
+                                                        aria-disabled="false" type="button" part="button"
+                                                        kx-scope="button-brand" kx-type="ripple">Clear
+                                                        Signature</button>&nbsp;&nbsp;
+                                                    <button onclick={handleSubmit}
+                                                        class="brand-button slds-button slds-m-top_large slds-button_brand"
+                                                        aria-disabled="false" type="button" part="button"
+                                                        kx-scope="button-brand" kx-type="ripple">Submit</button>
+                                                </div>
+                                            </slot>
+                                        </div>
+
+                                    </div> <!-- end prescriber details  -->
+
+                                </div>
+                            </slot>
+                        </div>
+
+                    </article>
+                </div> <!-- end enrollmentForm  -->
+
+            </div> <!-- end layout   -->
+        </template>
+        <template lwc:elseif={showSuccessScreen}>
+            <div class="comm-content-header comm-layout-column">
+                <div class="slds-text-heading_large">Enrollment Form Successfully Submitted</div>
+            </div>
+            <div data-region-name="content">
+                <div class="forceCommunityRichText forceCommunityRichTextInline">
+                    <div dir="ltr" class="uiOutputRichText">
+
+                        <div class="slds-text-heading_medium">Thank you for submitting your information to enroll in the
+                            AVEED REMS.</div>
+                        <p>You will receive a confirmation via email.</p>
+
+                        <div class="slds-border_top slds-m-vertical_xx-large"></div>
+                        <div class="slds-align_absolute-center">
+                            <button onclick={handleContinue} class="slds-button slds-button_brand">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

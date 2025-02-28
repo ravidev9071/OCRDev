@@ -1,0 +1,295 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 30/01/2023
+Description   :- Created for Maci Portal -> MaciInpatientPharmacyAgreement { Middle Context }
+-->
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="SignatureStatus" type="string" default=""/>
+    <aura:attribute name="termsFlag" type="boolean" default="false"/> 
+    <aura:attribute name="DisableSignatureStatus" type="boolean" default="true"/>
+    <aura:attribute name="pharmacistInfo" type="Account" />
+   	<lightning:navigation aura:id="navigation"/>
+	<aura:attribute name="accountId" type="String" default=""/>
+    <aura:attribute name="pharmacyEnrollementCase" type="Case" /> 
+
+
+    <ltng:require scripts="{!$Resource.signaturePad}" afterScriptsLoaded="{!c.doInit}" />
+    
+    <aura:method name="SaveSignature" action="{!c.saveSignatureOnClick}" description="Save Signature" />
+    
+    <aura:method name="IsCanvasEmpty" action="{!c.IsCanvasEmpty}" description="Check Signature is done or not" />
+    
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:attribute name="IsImageDrawn" type="Boolean" default="false" />
+    <aura:attribute name="signaturePad" type="Object" /> 
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false"/>
+    <aura:registerEvent name="ShowInPatinetScreens" type="c:MaciShowInPatientPharmacyEnrollmentScreen"/>
+    
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: center;background-attachment: fixed;">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card p-0 rounded-0 border-0">
+                       
+                        <div class="card-header border-0 crd-hdr-m bg-blue-header">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-5">
+                                    <div class="row d-flex justify-content-left align-items-center">
+                                        <div class="col-lg-1 col-sm col-1 text-end pe-3">
+                                            <i class="fa fa-file-text fa-2x heading-i"></i>
+                                        </div>
+                                        <div class="col-lg-9 col-sm col-10 ps-2">
+                                            <h5 class="card-title mt-2 d-block heading-h fs-3">
+                                               Pharmacy Enrollment</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 modify-pro px-0">
+                                    <div class="progressbar mb-5">
+                                        <div class="progress" id="progress"></div>
+										<div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY TYPE SELECTION </span>
+                                        </div>
+                                        <div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                          <span>INSTRUCTIONS</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AUTHORIZED REPRESENTATIVE INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span class="text-theme"><em>PASSWORD</em></span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step last-step"></div>
+                                            <span>COMPLETE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body llc-dv-16 pb-5 bg-white-2" style="height: 45vw;">
+                            <div class="row mb-2">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold text-theme">Inpatient Pharmacy Agreement</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm px-4">
+                                <div class="col-lg-12">
+                                    <p class="mb-0">Please read and accept the following terms:</p>
+                                    <div class="border p-4">
+                                        <p class="fw-bold mb-0">Authorized Representative Agreement </p>
+                                        
+                                        <p class="m-0 p-0">I am the authorized representative designated by my
+                                            inpatient pharmacy to coordinate the activities of the {!$Label.c.Macitentan_Containing_Products_REMS}.
+                                            <b>Therefore, I must</b>:</p>
+                                        
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                               <li class="d-flex my-0">
+                                                    <i class="fa fa-circle mt-2 pt-1"></i>
+                                                    <div>
+                                                        carry out the certification process and oversee implementation of and
+                                                        compliance with the REMS on behalf of the pharmacy.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle mt-2 pt-1"></i>
+                                                    <div>
+                                                        review the Prescribing Information and <em>Prescriber and Pharmacy Guide.</em>
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle mt-2 pt-1"></i>
+                                                    <div>
+                                                        certify by enrolling in the REMS by completing the <em>Inpatient Pharmacy
+                                                        Enrollment Form</em> and submitting it to the REMS.
+                                                    </div>
+                                                </li>
+                                               <li class="d-flex my-0">
+                                                    <i class="fa fa-circle mt-2 pt-1"></i>
+                                                    <div>
+                                                        train all relevant staff in dispensing {!$Label.c.macitentan_containing_products} on the REMS
+                                                        requirements, procedures and REMS materials.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle mt-2 pt-1"></i>
+                                                    <div>
+                                                        establish processes and procedures to verify the female patient is enrolled in the REMS or will be enrolled prior to discharge, her reproductive status, and the female
+                                                        patient is under the supervision and care of a certified prescriber.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle mt-2 pt-1"></i>
+                                                    <div>
+                                                        for females of reproductive potential, establish processes and procedures to verify pregnancy testing is complete and that the patient is counseled on the risk of
+                                                        embryo-fetal toxicity, the need to use reliable contraception during treatment and for one month after stopping treatment, to get monthly pregnancy tests, and to inform
+                                                        the prescriber immediately if she misses a menstrual period or suspects she is pregnant.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <p class="fw-bold mb-0">Before dispensing:</p>
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        verify the female patient is under the supervision and care of a certified prescriber, and that she is enrolled or will be enrolled in the REMS prior to discharge through the
+                                                        processes and procedures established as a requirement of the REMS.
+                                                    </div> 
+                                                </li>
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        verify pregnancy testing is complete, and that the patient is counseled on the risk of embryo-fetal toxicity, the need to use reliable contraception during treatment and
+                                                        for one month after stopping treatment, to get monthly pregnancy tests, and to inform the prescriber immediately if she misses a menstrual period or suspects she is
+                                                        pregnant through the processes and procedures established as a requirement of the REMS for females of reproductive potential.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="fw-bold  mb-2">To maintain certification to dispense:</p>
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                                <li class="d-flex my-1">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        Have a new authorized representative certify by enrolling in the REMS by
+                                                        completing the <em>Inpatient Pharmacy Enrollment Form</em> if the
+                                                        authorized representative
+                                                        changes.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="fw-bold  mb-2">At discharge:</p>
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                     dispense no more than a 15-day's supply of {!$Label.c.macitentan_containing_products}  
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="fw-bold  mb-2">At all times:</p>
+                                        <div class="list-bullets">
+                                            <ul class="p-inline-s">
+                                                <li class="d-flex align-items-center my-0">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        not distribute, transfer, loan, or sell {!$Label.c.macitentan_containing_products}, except to certified dispensers.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center my-0">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        report any pregnancies to the REMS Coordinating Center.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center my-0">
+                                                    <i class="fa fa-circle"></i>
+                                                    <div>
+                                                        maintain records that all processes and procedures are in place and are being followed.
+                                                    </div>    
+                                                </li>
+                                                <li class="d-flex my-0">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        comply with audits by the manufacturer or a third party acting on behalf of the manufacturer to ensure all processes and procedures are in place and being followed.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p><b>Note:</b> If your inpatient pharmacy needs {!$Label.c.macitentan_containing_products} and is not certified in the {!$Label.c.macitentan_containing_products}, REMS, please go to MacitentanREMSProgram.com for immediate online
+                                            enrollment and certification or contact the REMS Coordinating Center at 1-888-572-2934, Monday through Friday 8:00AM - 8:00PM ET, for assistance in enrolling.</p>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12">
+                                            <div class="form-check" data-aura-rendered-by="262:2;a">
+                                                
+                                                <input name="text-agree" id="flexCheckDefault" type="checkbox" class="form-check-input" value="" data-aura-rendered-by="263:2;a" onclick="{!c.termsConidtionSelect}"></input>
+                                                <label for="flexCheckDefault" class="form-check-label m-0 customcheckbox" data-aura-rendered-by="264:2;a">
+                                                    I attest that I have read the Prescribing information and Prescriber and Pharmacy Guide available at MacitentanREMSProgram.com. I will ensure training of dispensing
+                                                    staff on the {!$Label.c.Macitentan_Containing_Products_REMS} procedures and materials, including the <em>Prescriber and Pharmacy Guide prior</em> to dispensing {!$Label.c.macitentan_containing_products}. I agree that this pharmacy may be
+                                                    audited by the FDA, the {!$Label.c.Macitentan_Containing_Products_REMS} sponsors, or a designated third party.  </label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12 ps-lg-4">
+                                            <p class="ps-lg-3 mt-4">Authorized Representative Signature:</p>
+                                            <p class="ps-lg-3 mt-3">Please use your mouse to sign your name,
+                                                {!v.pharmacistInfo.FirstName}&nbsp;{!v.pharmacistInfo.LastName}, in the box below:</p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="col-lg-7 overflow-hidden px-0">
+                                            <div class=" space-md border signClass">
+                                                <canvas id="signature-pad" aura:id="signature-pad" class="signature-pad w-100" style ="height:25rem"></canvas>
+                                                <canvas id='blank' aura:id="blank" class="signature-pad w-100" style='display:none'></canvas>                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 mt-4 d-flex align-items-center justify-content-center">
+                                            <aura:if isTrue="{!v.DisableSignatureStatus}">
+                                                <a class="btn btn-primary-m mx-1 my-2" onclick="{!c.saveSignatureOnClick}">SAVE</a>
+                                                <a class="btn btn-primary-m mx-1 my-2" onclick="{!c.clearSignatureOnClick}">CLEAR</a>
+                                                <aura:set attribute="else">
+                                                    <a class="btn btn-secondary mx-1 my-4 btn-block">SAVE</a>
+                                                    <a class="btn btn-secondary mx-1 my-4 btn-block">CLEAR</a>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+</aura:component>

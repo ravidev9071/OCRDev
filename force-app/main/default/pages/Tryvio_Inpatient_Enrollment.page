@@ -1,0 +1,510 @@
+<apex:page applyBodyTag="false" showHeader="false" renderAs="PDF" controller="Tryvio_InpatientPharmacyFormController" >
+    <head>
+        <apex:variable var="SelectedCredentials" value="{!caseRec.Credentials__c}" />
+        <style>
+            body {
+                margin-top: 0px !important;
+                font-family: Dialog !important;
+                padding-top:0px !important;
+            }
+            h6{
+                font-weight:500 !important;
+            }
+    
+            p{
+                text-align:justify;
+            }
+            @page {
+                margin: 0  !important;
+                size: letter;
+                font-family: Dialog !important;
+                padding-top:0px !important;
+            }
+            li {
+                color: #fd5000;
+                /* Bullet Color */
+                font-size:12px;
+            }
+            li span {
+                color: black;
+                /* Text Color */
+            }
+            span{
+                padding-right:40px;
+            }
+            .container {
+              width: 100%;
+              padding-left: 10px;
+            }
+            .column1, .column2 {
+              float: left;
+              width: 50%;
+            }           
+            .col1, .col2, .col3 {
+              float: left;
+              width: 33%;
+            }
+            .pageContent{
+                padding-right: 20px;
+            }
+        </style>
+    </head>
+     <apex:form style="margin-top:0px !important; padding-top:0px !important;height:auto;">
+        <body>
+            <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td>
+                        <img src="{!$Resource.tryvio_inpatient_header}" class="img-fluid"
+                            style="width: 100%;height: 100%; !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <table width="100%" style="margin:0 !important; padding:0px !important;">
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 12px;text-align:left;">Due to the risk of embryo-fetal toxicity for patients who can become pregnant, Inpatient pharmacies that wish to dispense TRYVIO™ must be certified in the TRYVIO™ REMS (Risk Evaluation and Mitigation Strategy) and agree to comply with the requirements of the program. An authorized representative must complete and sign this form on behalf of the Inpatient pharmacy.
+
+                        <br/><br/>To enroll and become certified in the TRYVIO™ REMS, complete this form online at <b>www.TRYVIOREMS.com</b> OR fax this completed form to 1-800-465-0391.<br/>
+                            <br/>Contact the TRYVIO™ REMS at 1-866-429-8964 with any questions.
+                        <br/>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <div style="
+                border-left: 0!important;
+                border-right: 0!important;
+                border-top: 0!important;
+                border-color: #164194!important;
+                border-bottom:2px solid #000;
+                width: 100%;
+                padding-top: 0;
+                padding-bottom: 4px;
+                font-size: 13px;">
+            </div>    
+            <div class = "container">
+                <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 15px;font-weight: 800; color: #164194;">Inpatient Pharmacy Information (* indicates required field)</h5>
+            </div>          
+            <div class = "container">
+              <div class = "column1">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Inpatient Pharmacy Name &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Name__c}" style="margin: 0px;font-size: 14px;font-family: Dialog !important;"/>
+                    <hr style="border: none;margin:0 0 0 150px;border-top: 0.1px solid black;border-size:5px;" />
+                 </p>
+              </div>
+              <div class = "column2">
+                    <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*NPI Number &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__NPI__c}" style="margin: 0px;font-size: 14px;font-family: Dialog !important;" /> 
+                        <hr style="border: none;margin:0 0 0 85px;border-top: 0.1px solid black;border-size:5px;" />
+                    </p>
+              </div>
+            </div>
+            <br/>
+            <div class = "container">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Type of Facility: &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Facility_Type__c== 'Hospital', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Hospital &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Facility_Type__c== 'Nursing Home', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Nursing Home &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Facility_Type__c== 'Rehab', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Rehab &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Facility_Type__c== 'Mental Facility', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Mental Facility &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Facility_Type__c== 'Assisted Living', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Assisted Living &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Facility_Type__c== 'Prison', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Prison &nbsp;
+                    <br/>
+                    <img src="{!IF(caseRec.US_WSREMS__Facility_Type__c== 'Other', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Other (please specify) &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Other_Credentials__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 140px;border-top: 0.1px solid black;border-size:5px;" /> 
+                </p>
+            </div>
+            
+            <div class = "container">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Address Line 1 &nbsp;
+                       <apex:outputText value="{!caseRec.US_WSREMS__Address_Line_1__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                       <hr style="border: none;margin:0 100px;border-top: 0.1px solid black;border-size:5px;" /> 
+                </p>
+             </div>
+            <div class = "container">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;"> Address Line 2 &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Address_Line_2__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 100px;border-top: 0.1px solid black;border-size:5px;" />
+              </p>                
+             </div>
+            <br/>
+            <div class = "container">
+              <div class = "col1">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*City &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__City__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                </p>
+                </div>
+                <div class = "col2">
+                      <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*State &nbsp;
+                            <apex:outputText value="{!caseRec.US_WSREMS__State__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;"/>
+                            <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                       </p>
+                 </div>
+                 <div class = "col3">
+                     <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*ZIP &nbsp;
+                            <apex:outputText value="{!caseRec.US_WSREMS__Zip__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                            <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                      </p>
+                  </div>
+            </div>
+             <br/>
+            <div class = "container">
+              <div class = "col1">
+                  <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Office Phone &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__Office_Phone__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 80px;border-top: 0.1px solid black;border-size:5px;" />
+                   </p>
+               </div>
+               <div class = "col2">
+                    <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">Ext. &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__Ext__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                     </p>
+                </div>
+                <div class = "col3">
+                     <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Fax &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__Fax__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                      </p>
+                </div>
+            </div>
+            <br/>
+             <div style="
+                border-left: 0!important;
+                border-right: 0!important;
+                border-top: 0!important;
+                border-color: #164194!important;
+                border-bottom:2px solid #000;
+                width: 100%;
+                padding-top: 0;
+                padding-bottom: 4px;
+                font-size: 13px;">
+            </div>                      
+            <div class = "container">
+                <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 15px;font-weight: 800; color: #164194;">Pharmacy Shipping Address, if different from above (*indicates required field)</h5>
+            </div>  
+            <div class = "container">
+              <div class = "col1">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*First Name &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__First_Name__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 75px;border-top: 0.1px solid black;border-size:5px;" />
+                 </p>   
+              </div>
+              <div class = "col2">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">MI &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__MI__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 15px;border-top: 0.1px solid black;border-size:5px;" />
+                </p>   
+               </div>
+                <div class = "col3">
+                     <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Last Name &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__Last_Name__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 75px;border-top: 0.1px solid black;border-size:5px;" />
+                     </p>
+                </div>
+            </div>
+            <br/>
+            <div class = "container">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Address Line 1 &nbsp;
+                       <apex:outputText value="{!caseRec.US_WSREMS__Shipping_Address_Line_1__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                       <hr style="border: none;margin:0 100px;border-top: 0.1px solid black;border-size:5px;" /> 
+                </p>
+             </div>
+            <div class = "container">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;"> Address Line 2 &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Shipping_Address_Line_2__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 100px;border-top: 0.1px solid black;border-size:5px;" />
+              </p>                
+             </div>
+            <br/>
+            <div class = "container">
+              <div class = "col1">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*City &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Participant_City__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                </p>
+                </div>
+                <div class = "col2">
+                      <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*State &nbsp;
+                            <apex:outputText value="{!caseRec.US_WSREMS__SLN_Issued_State__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;"/>
+                            <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                       </p>
+                 </div>
+                 <div class = "col3">
+                     <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*ZIP &nbsp;
+                            <apex:outputText value="{!caseRec.US_WSREMS__REMS_Zip_Code__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                            <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                      </p>
+                  </div>
+            </div>
+             <br/>
+            <div class = "container">
+              <div class = "col1">
+                  <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Office Phone &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__Phone__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 80px;border-top: 0.1px solid black;border-size:5px;" />
+                   </p>
+               </div>
+               <div class = "col2">
+                    <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">Ext. &nbsp;
+                        <apex:outputText value="{!caseRec.SYN_Ext__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                     </p>
+                </div>
+                <div class = "col3">
+                     <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Fax &nbsp;
+                        <apex:outputText value="{!caseRec.Shipping_Fax__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                      </p>
+                </div>
+            </div>
+            <br/>
+            <div style="
+                border-left: 0!important;
+                border-right: 0!important;
+                border-top: 0!important;
+                border-color: #164194!important;
+                border-bottom:2px solid #000;
+                width: 100%;
+                padding-top: 0;
+                padding-bottom: 4px;
+                font-size: 13px;">
+            </div>                      
+            <div class = "container">
+                <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 15px;font-weight: 800; color: #164194;">Authorized Representative Information and Agreement (*indicates required field)</h5>
+            </div>           
+            <div class = "container">
+              <div class = "col1">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*First Name &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Participant_FirstName__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 75px;border-top: 0.1px solid black;border-size:5px;" />
+                 </p>   
+              </div>
+              <div class = "col2">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">MI &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Middle_Name__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 15px;border-top: 0.1px solid black;border-size:5px;" />
+                </p>   
+               </div>
+                <div class = "col3">
+                     <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Last Name &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__Participant_LastName__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 75px;border-top: 0.1px solid black;border-size:5px;" />
+                     </p>
+                </div>
+            </div>
+            <br/>           
+            <div class = "container">
+                <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Position/Title &nbsp; &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Title__c== 'Hospital Pharmacist', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Hospital Pharmacist &nbsp;
+                    <img src="{!IF(caseRec.US_WSREMS__Title__c== 'Head of Pharmacy and Therapeutics (P&T) committee', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Head of Pharmacy &#38; Therapeutics (P&#38;C) Committee &nbsp;
+                    <br/>
+                    <img src="{!IF(caseRec.US_WSREMS__Title__c== 'Other', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp; Other (please specify) &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Other__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                     <hr style="border: none;margin:0px 140px;border-top: 0.1px solid black;border-size:5px;" />
+                  </p>
+            </div>
+            <br/>
+            <div class = "container">
+                <div class = "col1">
+                  <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Office Phone &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__Office_Contact_phone__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 80px;border-top: 0.1px solid black;border-size:5px;" />
+                   </p>
+                </div>
+                <div class = "col2">
+                    <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">Ext. &nbsp;
+                        <apex:outputText value="{!caseRec.US_WSREMS__REMS_Prescriber_Ext__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                    </p>
+                 </div>
+                 <div class = "col3">
+                     <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Fax &nbsp;
+                            <apex:outputText value="{!caseRec.US_WSREMS__REMS_Prescriber_Fax__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                            <hr style="border: none;margin:0 30px;border-top: 0.1px solid black;border-size:5px;" />
+                     </p>
+                  </div>
+            </div>
+            <br/>
+            <div class = "container">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">&nbsp;Mobile Phone &nbsp;
+                    <apex:outputText value="{!caseRec.US_WSREMS__Participant_Phone__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 80px;border-top: 0.1px solid black;border-size:5px;" />
+                 </p>             
+             </div>
+            <br/>
+            <div class = "container">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Preferred Method of Contact &nbsp; &nbsp;
+                        <img src="{!IF(caseRec.US_WSREMS__Preferred_Contact_Method__c== 'Office Phone', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp;Office Phone &nbsp; &nbsp;
+                        <img src="{!IF(caseRec.US_WSREMS__Preferred_Contact_Method__c== 'Email', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp;Email &nbsp; &nbsp;
+                        <img src="{!IF(caseRec.US_WSREMS__Preferred_Contact_Method__c== 'Mobile Phone', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp;Mobile Phone &nbsp; &nbsp;
+                        <img src="{!IF(caseRec.US_WSREMS__Preferred_Contact_Method__c== 'Text Message', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; left:20px; width: 10px;" alt="checkbox" />&nbsp;Text Message 
+                  </p>
+            </div>
+            <br/>           
+            <div class = "container">
+                 <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 12px;">
+                    By selecting to receive texts, you agree to receive text messages from TRYVIO REMS™.
+                </p>
+            </div>
+             <br/>
+			<div class = "container">
+                 <p style="margin: 0;padding: 0px 20px 2px 0px;font-size: 12px;">*Email &nbsp;
+                 <apex:outputText value="{!caseRec.US_WSREMS__Email__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                    <hr style="border: none;margin:0 45px;border-top: 0.1px solid black;border-size:5px;" />
+                 </p> 
+            </div>
+             <br/>
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 13px;">
+                            <h4 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 12px;font-weight: 800; color: #164194;">
+                            By signing below, you agree that you have read the <span style="text-decoration:underline;">Inpatient Pharmacy Authorized Representative Agreement</span>  on Page 2
+                            and understand your obligations as an Authorized Representative.
+                            </h4>
+                        </p>
+                    </td>
+                </tr>
+             </table>
+             <br></br>
+             <br></br>
+             <br></br>
+             <br></br>
+             <br></br>
+             <br></br>
+             <table width="100%">       
+                 
+                <tr>
+                    <td>
+                        <apex:outputText value="{!caseRec.US_WSREMS__Signature__c}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;" />
+                        <hr style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 300px;" />
+                    </td>
+                    <td>
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="margin: 0px;font-size: 13px;font-family: Dialog !important;"><apex:param value="{!caseRec.US_WSREMS__Date__c}"/></apex:outputText>
+                        <hr style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 150px;" />
+                    </td>
+                </tr>
+                <tr> 
+                    <td style="font-size: 12px;font-family: Dialog !important; color: #164194;">*Authorized Representative Signature </td>
+                    <td style="font-size: 12px;font-family: Dialog !important; color: #164194;">*Date (MM-DD-YYYY)</td>
+                </tr>
+            </table>            
+            <br/>
+            <br/>              
+            <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td>
+                        <img src="{!$Resource.tryvio_inpatient_header}" class="img-fluid"
+                            style="width: 100%;height: 100%; !important;margin-top:0 !important; padding-top:0px !important;">
+                        </img>
+                    </td>
+                </tr>
+            </table>            
+            <div class="pageContent" width="100%">                                      
+                         <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 15px;font-weight: 800; color: #164194;">Inpatient Pharmacy Authorized Representative Agreement</h5>                         
+                         <h4 style="padding: 0px 20px 0px 30px;font-size: 12px;font-weight: 800; color: #164194;">To become certified to dispense TRYVIO™, my pharmacy must:</h4> 
+                                
+                <li>
+                    <span>                      
+                        Designate an authorized representative to carry out the certification process and oversee implementation and compliance with the REMS on behalf of the pharmacy.
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        Have the authorized representative review the Prescribing Information and the<b>Prescriber and Pharmacy Guide.</b> 
+                    </span>
+                </li>
+                <li>
+                    <span>
+                       Have the authorized representative enroll in the TRYVIO™ REMS by completing and submitting the <b>Inpatient Pharmacy Enrollment Form</b> to the REMS.
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        Train all relevant staff involved in dispensing TRYVIO™ on the REMS requirements, procedures, and REMS materials.
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        Establish processes and procedures to verify the prescriber is certified or the patient is under the supervision and care of a certified prescriber.
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        Establish processes and procedures to report pregnancies to the REMS at 1-866-429-8964.
+                    </span>
+                </li>  
+                <li>
+                    <span>
+                        Establish processes and procedures to provide the <b>Risk of Birth Defects with TRYVIO™</b> to each patient each time TRYVIO™ is dispensed at patient discharge.
+                    </span>
+                </li>  
+                                      
+                        <h4 style="margin: 0;padding: 0px 20px 0px 30px;font-size: 12px;font-weight: 800; color: #164194;"><b>Before dispensing, my pharmacy must:</b></h4>
+                 
+                    <li>
+                        <span>
+                            Verify the prescriber is certified or the patient is under the supervision and care of a certified prescriber through the processes and procedures established as a requirement of the REMS.
+                        </span>
+                    </li>                   
+                                     
+                        <h4 style="margin: 0;padding: 0px 20px 0px 30px;font-size: 12px;font-weight: 800; color: #164194;"><b>To maintain certification to dispense, my pharmacy must:</b></h4>
+                   
+                <li>
+                    <span>
+                          Have a new authorized representative complete and submit an updated <b>Outpatient Pharmacy Enrollment Form</b> to the REMS if the authorized representative changes.
+                    </span>
+                </li> 
+                                      
+                        <h4 style="margin: 0;padding: 0px 20px 0px 30px;font-size: 12px;font-weight: 800; color: #164194;"><b>To maintain certification to dispense, my pharmacy must:</b></h4>
+                  
+                <li>
+                    <span>
+                          Have a new authorized representative complete and submit an updated <b>Inpatient Pharmacy Enrollment Form </b> to the TRYVIO™ REMS if the authorized representative changes.
+                    </span>
+                </li> 
+                                       
+                        <h4 style="margin: 0;padding: 0px 20px 0px 30px;font-size: 12px;font-weight: 800; color: #164194;"><b>At discharge, my pharmacy must:</b></h4>
+                   
+                <li>
+                    <span>
+                          Have a new authorized representative complete and submit an updated <b>Inpatient Pharmacy Enrollment Form </b> to the TRYVIO™ REMS if the authorized representative changes.
+                    </span>
+                </li> 
+                                      
+                        <h4 style="margin: 0;padding: 0px 20px 0px 30px;font-size: 12px;font-weight: 800; color: #164194;"><b>At all times, my pharmacy must:</b></h4>
+                  
+                <li>
+                    <span>
+                        Report pregnancies to the REMS at 1-866-429-8964.
+                    </span>
+                </li>
+                <li>
+                    <span>
+                             Not distribute, transfer, loan, or sell TRYVIO™ except to certified pharmacies.
+                    </span>
+                </li>
+                <li>
+                    <span>
+                            Maintain records that all processes and procedures are in place and are being followed.
+                    </span>
+                </li>       
+            </div>           
+            <br/>
+           <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">
+                            <h4 style="margin: 0;padding: 0px 20px 0px 30px;font-size: 12px;font-weight: 800; color: #164194;">
+                                <b>Healthcare providers should report suspected adverse events or product quality complaints associated with TRYVIO™ to Idorsia Pharmaceuticals at 1-833-400-9611 or the FDA at 1-800-FDA-1088 or online at www.fda.gov/medwatch.</b>
+                            </h4>
+                        </p>
+                    </td>
+                </tr>
+             </table>
+        </body>
+    </apex:form>
+</apex:page>

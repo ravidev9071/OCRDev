@@ -1,0 +1,97 @@
+<!--
+  @File Name          : syn_knowledgeAssessmentAnswerValidation.html
+  @Description        : LWC to Implement KAA validation functionality
+  @Author             : Wilco
+  @Group              : 
+  
+  @Modification Log   :
+  Ver       Date            Author              		    Modification
+  1.0       20/04/2022      chaitanya Nandamuri(Wilco)      BT6825-133 : Initial Implementation 
+-->
+<template>
+    <div class="slds-card-wrapper">
+        <header>
+            <h3 class="slds-text-heading_medium slds-text-align_center my-text_clr">
+                <b> Knowledge Assessment Results</b>
+            </h3>
+        </header>
+        <article class="slds-card slds-card_boundary">
+        <div class="slds-card__body slds-card__body_inner">   
+            <lightning-accordion allow-multiple-sections-open
+                        
+            active-section-name='Questions'>
+            <lightning-accordion-section name="Questions" label="Questions">
+               <lightning-layout multiple-rows>
+                <ul class="slds-m-around_medium">
+
+                   <template for:each={KAvalidationList} for:item="Question" for:index="index">
+                       <li key={Question.questionStr} class="slds-accordion__list-item " >
+                           
+                               <lightning-layout-item size="12" >
+                                <div class="question-answer-container">  
+                                Question: {Question.questionNumber}) {Question.fullQuestionStr} </br>
+                                     
+                                   <div >
+                                       <div style="float: left; padding-right : 5px; ">
+                                           <lightning-icon icon-name={Question.AnswerIconName}  variant={Question.variant} size="xx-small"></lightning-icon>
+                                       </div> 
+                                       
+                                       <div style="float: left; padding-right : 5px; "> 
+                                           Answer:  
+                                       </div>
+                                       <div> 
+                                           <p class={Question.AnswerColor} >
+                                               {Question.InitialAnswercopy}  
+                                           </p> 
+                                       </div>
+                                       
+                                   </div>
+                                   <template if:true={Question.fail}>
+                                       <div >
+                                           <div style="float: left; padding-right : 5px; ">
+                                               <lightning-icon icon-name="utility:check"  variant="success" size="xx-small"></lightning-icon>
+                                           </div> 
+                                           <div style="float: left; padding-right : 5px; "> 
+                                               Correct Answer:  
+                                           </div>
+                                           <div > 
+                                               <p class="slds-text-color_success" >
+                                                   {Question.correctAnswerStr}
+                                               </p> 
+                                           </div>
+                                       </div> 
+                                   </template>
+                                </div>
+                                </br>
+                               </lightning-layout-item>
+                             
+                         
+                       </li>
+                   </template>
+                </ul>
+
+               </lightning-layout>
+           </lightning-accordion-section>
+
+           </lightning-accordion>
+
+                        
+                            <footer class="slds-card__footer">
+                                <!--div class="slds-align_absolute-center" style="height:5rem">
+                                    <lightning-layout vertical-align="center" class="x-large">
+                                         <lightning-layout-item padding="around-large">
+                                            <div class="slds-m-top_medium">
+                                                <lightning-button class="slds-m-top_small" variant="brand" onclick={closeButton}
+                                                    label="Close" >
+                                                </lightning-button>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </div-->
+                            </footer>
+                
+            </div>
+        </article>
+    </div>
+
+</template>

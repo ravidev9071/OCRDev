@@ -1,0 +1,50 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" 
+                controller="SYN_RDArejectionReason" >
+    <aura:attribute name="remsRecord" type="Object"/>
+    <aura:attribute name="RRRList" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div class="slds-card-wrapper">
+        <force:recordData aura:id="remServiceLoader"
+                          recordId="{!v.recordId}"
+                          fields="US_WSREMS__Outcome__c,RDA_Authorization_Code__c"
+                          targetFields="{!v.remsRecord}"
+                          recordUpdated="{!c.recordUpdated}"/>
+       
+            <div class="slds-align_absolute-center">
+              
+                        <aura:if isTrue="{!v.remsRecord.US_WSREMS__Outcome__c =='Approved'}">
+                            <p> RDA Status: <span style="color:green">Approved</span></p>
+                            <p>RDA Authorization Code: <span style="color:green">{!v.remsRecord.RDA_Authorization_Code__c}</span></p>
+                            <aura:set attribute="else">
+                                <lightning:layout multipleRows="true">
+                                    <ul class="slds-m-around_medium">
+                                        <aura:iteration items="{!v.RRRList}" var="RRR">
+                                            <li class="slds-accordion__list-item">
+                                                <lightning:layoutItem size="12" >
+                                                    
+                                                    <div class="RRR-container"> 
+                                                        
+                                                        <div style="float: left; padding-right : 5px; ">
+                                                            <lightning:icon iconName="utility:error" alternativeText="RejectionReason" title="RejectionReason" size="xx-small" />
+                                                        </div>
+                                                        <div> 
+                                                            <p class="slds-text-color_error">
+                                                                {!RRR}  
+                                                            </p> 
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <br/>
+                                                </lightning:layoutItem>
+                                            </li>
+                                        </aura:iteration>
+                                    </ul>
+                                </lightning:layout>
+                            </aura:set>
+                        </aura:if> 
+                   
+            </div>
+            <footer class="slds-card__footer"></footer>
+      
+    </div>
+</aura:component>

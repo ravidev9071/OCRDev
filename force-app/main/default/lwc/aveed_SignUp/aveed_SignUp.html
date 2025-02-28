@@ -1,0 +1,72 @@
+<template>
+    <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_12-of-12" style="margin-top: 59px;">
+        <div class="frmRegister">
+            <div class="slds-text-heading_medium slds-m-top_none">Register to Create an Online Account</div> 
+            <div class="frmContainer">
+                <article class="slds-card " part="card">
+                     <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure"></div>
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <span>Sign Up</span>
+                                
+                                </h2>
+                            </div>
+                        </header>
+                     </div>
+                    <div class="slds-card__body  slds-card__body_inner" part="body">
+                    <p class="frmInstructions">To create your account, select if you are a Healthcare Setting Authorized Representative or a Prescribing Healthcare Provider, then complete the fields below.
+                    <br><br><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> fields required</span></p>  
+
+                    <slot>
+                  
+                        <p><span class="slds-text-color_destructive">*</span> <b>I am a*:</b></p>
+                        <fieldset class="slds-form-element">
+                            <lightning-radio-group name="radioGroup" 
+                            label="" options={options} value={value}
+                            type="radio" onchange={handleChange}>
+                        </lightning-radio-group>
+                        </fieldset>
+                        <p class="txtInstructions">* If you are a Healthcare Provider that also serves as the Authorized Representative for a Healthcare Setting, you will need to create a seperate account as a Healthcare Setting Authorized Representative.</p>
+                        <template if:true={isHealthcareRep}>
+                            <div id="ConfirmHCS">
+                                <div class="Confirm-hcs containerInfo">
+                                    <p class="txtInstructions">
+                                        <b>Healthcare Setting Authorized Representative:</b><br>An individual responsible for enrolling their Healthcare Setting in the AVEED REMS.  This individual may be a prescribing or non-prescriber Healthcare Provider, a Practice Manager, or any responsible individual within the Healthcare Setting suitable to attest to the enrollment requirements. 
+                                        A Healthcare Setting must be certified in the AVEED REMS and have at least one certified  prescriber associated with the facility to be able to order, receive, or administer AVEED.
+                 </p>
+                                </div>
+                             
+                            </div>
+                        </template>
+                        <template if:true={isProvider}>
+                            <div id="ConfirmHCP">
+                                <div class="containerInfo">
+                                    <p class="txtInstructions">
+                                        <b>Prescribing Healthcare Provider:</b><br>A Prescribing Healthcare Provider is responsible for prescribing AVEED and/or administering AVEED in an enrolled Healthcare Setting. 
+                                        Prescribing Healthcare Providers must be certified in the AVEED REMS to be able to prescribe AVEED.  
+                                        Prescribing Healthcare Providers cannot complete certification until their healthcare setting is enrolled.
+                 </p>
+                                </div>
+                              
+                            </div>
+                        </template>
+                        <template if:true ={isConfirm}>
+                           
+                            <button class="slds-button slds-m-top_large slds-button_full-width slds-text-align_center bgContiue" style="background-color:#e17000;color:white;" onclick={handleConfirmClick}>Confirm and Continue</button>
+                        </template>
+                        <template if:true={showHCP}>
+                            <c-aveed-_-npisearch program-name ={programName} participant-type="Prescriber" profile-name={profileName} permission-set={permissionSet} npi-notfound-warning={npiNotfoundWarning}></c-aveed-_-npisearch>
+                        </template>
+                        <template if:true={showHCS}>
+                            <c-aveed-_-h-c-s-_-sign-u-p program-name ={programName} participant-type="Pharmacy Participant" profile-name={profileName} permission-set={permissionSet}></c-aveed-_-h-c-s-_-sign-u-p>
+                        </template>
+                       
+                 </slot>       
+                 </div>
+                 </article>
+                 </div>
+                 </div>
+                 </div>
+</template>

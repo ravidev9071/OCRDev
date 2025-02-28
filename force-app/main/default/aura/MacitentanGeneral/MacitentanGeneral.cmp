@@ -1,0 +1,211 @@
+<!--
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> General Page { Middle context }
+-->
+
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+     <section class="sec-one py-5"
+        style="background-image: url('/resource/MaciImages/img/banner.jpg');background-size: cover;background-repeat: no-repeat;padding-top: 6vw!important;padding-bottom: 6vw!important;">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>{!$Label.c.Macitentan_Containing_Products_REMS} Overview: </h4>
+
+                    <div class="row mt-3">
+                        <div class="col-lg-12 list-bullets">
+                            <ul class="p-inline-0 ms-2">
+                                <li class="d-flex">
+                                        <i class="fa fa-circle pt-2"></i>
+                                    <div>
+                                        All healthcare providers must certify by enrolling in the {!$Label.c.Macitentan_Containing_Products_REMS} and comply
+                                    with
+                                    requirements to prescribe {!$Label.c.macitentan_containing_products}
+                                    </div>
+
+                                </li>
+
+                                <li class="d-flex align-items-center">
+                                    <i class="fa fa-circle"></i>
+                                    <div>
+                                        All female patients must be enrolled in the
+                                        {!$Label.c.Macitentan_Containing_Products_REMS}
+                                        to receive {!$Label.c.macitentan_containing_products}
+                                    </div>
+
+                                </li>
+
+                                <li class="d-flex align-items-center">
+                                    <i class="fa fa-circle"></i>
+                                    <div>
+                                        Females of Reproductive Potential and Pre-pubertal Females of
+                                    Non-Reproductive Potential are required to be counseled on the risks of {!$Label.c.macitentan_containing_products}
+                                    </div>
+
+                                </li>
+
+                                <li class="d-flex align-items-center">
+                                    <i class="fa fa-circle"></i>
+                                    <div>
+                                        Females of
+                                    Reproductive Potential are required to get monthly pregnancy testing
+                                    </div>
+
+                                </li>
+                                <li class="d-flex">
+                                    <i class="fa fa-circle pt-2"></i>
+                                    <div>
+                                        A limited number of certified pharmacies will dispense {!$Label.c.macitentan_containing_products} for outpatients. They must certify by
+                                    enrolling in
+                                    the {!$Label.c.Macitentan_Containing_Products_REMS} and agree to the REMS requirements
+                                    </div>
+
+                                </li>
+                                <li class="d-flex">
+                                    <i class="fa fa-circle  pt-2"></i>
+                                    <div>
+                                        Pharmacies that supply inpatient use of
+                                        {!$Label.c.macitentan_containing_products} must also be certified in the {!$Label.c.Macitentan_Containing_Products_REMS} and agreeing
+                                    to the REMS
+                                    requirements
+                                    </div>
+
+                                </li>
+                            </ul>
+
+                            <p>Macitentan is an endothelin receptor antagonist (ERA) indicated for the treatment of
+                                pulmonary arterial hypertension (PAH, WHO Group I) to reduce the risks of disease
+                                progression and
+                                hospitalization for PAH.</p>
+                            <p>Effectiveness was established in a long-term study in PAH patients with predominantly WHO
+                                Functional
+                                Class II-III symptoms treated for an average of 2 years. Patients had idiopathic and
+                                heritable PAH
+                                (57%), PAH caused by connective tissue disorders (31%), and PAH caused by congenital
+                                heart disease
+                                with repaired shunts (8%).</p>
+                             <p>OPSYNVI&reg; is a combination of {!$Label.c.macitentan_containing_products}, an endothelin receptor antagonist(ERA), and
+                                tadalafil, a phosphodiesterase 5 inhibitor (PDE5i) indicated for the long term treatment of pulmonary arterial
+                                hypertension (PAH, WHO Group I) in adult patients of WHO functional class (FC) II-III(1.1).</p>
+                            <p>Tadalfil is a phosphodieterase 5 (PDE5) inhibitor indicated for the traetment of pulmonary arterial hypertension
+                                (PAH, WHO Group 1) to improve exercise ability.</p>
+                            <p>Efficacy of OPSYNVI&reg; was established in a study in PAH patients with WHO Functional Class II-III treated for 16-weeks.
+                                Patients treated with OPSYNVI&reg; had idiopathic and heritable PAH (54.2%). PAH caused by connective tissue
+                                disorders (33.6%), heritable PAG (3.7%), PAH associated with HIV infection (3.7%), PAH associated with congenital
+                                heart disease (2.8%), Drug-and-toxin induced (0.9%) and PAH associated with congenital heart disease (0.9%).</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+        <section class="py-5 bg-white" style="background-image: url(/resource/MaciImages/img/bg-img-1.png);background-size: contain;padding-top: 6vw!important;padding-bottom: 6vw!important;">
+
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card p-0">
+                        <div class="card-body px-4">
+                            <div class="row gnrl-f-dr" style="padding: 14px 0px 7px 0px;">
+                                <div class="col-lg-12 text-center">
+                                    <h4>PRODUCTS</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 px-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-borderless ">
+                                            <thead style="background-color: #011338;
+                                            color: #fff;">
+                                                <tr>
+                                                    <th>Product Name</th>
+                                                    <th>Company</th>
+                                                    <th>Telephone</th>
+                                                    <th>NDC Code</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-space">
+                                                <tr>
+                                                    <td>OPSUMIT</td>
+                                                    <td>Actelion Pharmaceuticals US, Inc., a Johnson &amp; Johnson Company</td>
+                                                    <td>1-800-526-7736</td>
+                                                    <td>66215-501-15, 10 mg blister of 15 tablets</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>OPSUMIT</td>
+                                                    <td>Actelion Pharmaceuticals US, Inc., a Johnson &amp; Johnson Company</td>
+                                                    <td>1-800-526-7736</td>
+                                                    <td>66215-501-30, 10 mg bottle of 30 tablets</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>OPSYNVI</td>
+                                                    <td>Actelion Pharmaceuticals US, Inc., a Johnson &amp; Johnson Company</td>
+                                                    <td>1-800-526-7736</td>
+                                                    <td>66215-812-07, 10 mg/20 mg bottle of 7 tablets</td>
+                                                </tr> <tr>
+                                                    <td>OPSYNVI</td>
+                                                    <td>Actelion Pharmaceuticals US, Inc., a Johnson &amp; Johnson Company</td>
+                                                    <td>1-800-526-7736</td>
+                                                    <td>66215-812-08, 10 mg/20 mg blister of 7 tablets</td>
+                                                </tr> <tr>
+                                                    <td>OPSYNVI</td>
+                                                    <td>Actelion Pharmaceuticals US, Inc., a Johnson &amp; Johnson Company</td>
+                                                    <td>1-800-526-7736</td>
+                                                    <td>66215-812-30, 10 mg/20 mg bottle of 30 tablets</td>
+                                                </tr> <tr>
+                                                    <td>OPSYNVI</td>
+                                                    <td>Actelion Pharmaceuticals US, Inc., a Johnson &amp; Johnson Company</td>
+                                                    <td>1-800-526-7736</td>
+                                                    <td>66215-814-10, 10 mg/40 mg blister of 15 tablets</td>
+                                                </tr> <tr>
+                                                    <td>OPSYNVI</td>
+                                                    <td>Actelion Pharmaceuticals US, Inc., a Johnson &amp; Johnson Company</td>
+                                                    <td>1-800-526-7736</td>
+                                                    <td>66215-814-30, 10 mg/40 mg bottle of 30 tablets</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                           <!--
+                            <div class="row pt-2">
+                                <div class="col-lg-2 text-left">
+                                    <h6>placebo b</h6>
+                                </div>
+                                <div class="col-lg-2 text-left">
+                                    <h6>Comany 2</h6>
+                                </div>
+                                <div class="col-lg-2 text-left">
+                                    <h6>1-zzz-zzz-zzzz</h6>
+                                </div>
+                                <div class="col-lg-6 text-left">
+                                    <h6>bbbbb-bbbb-1 - 5mg bottle of 30 tablets</h6>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-lg-2 text-left">
+                                    <h6>placebo b</h6>
+                                </div>
+                                <div class="col-lg-2 text-left">
+                                    <h6>Comany 2</h6>
+                                </div>
+                                <div class="col-lg-2 text-left">
+                                    <h6>1-zzz-zzz-zzzz</h6>
+                                </div>
+                                <div class="col-lg-6 text-left">
+                                    <h6>bbbbb-bbbb-2 - 10mg bottle of 30 tablets</h6>
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</aura:component>

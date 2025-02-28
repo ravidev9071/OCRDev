@@ -1,0 +1,53 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Footer { Common for all the pages }
+-->
+
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+ <aura:attribute name="TermsURL" type="String" default="" />
+ <aura:attribute name="contactusURL" type="String" default=""/>
+ <aura:attribute name="baseUrl" type="String" default=""/> 
+    
+ <aura:attribute name="isLoginURL" type="Boolean" default="false" />
+    <lightning:navigation aura:id="navigation"/>
+     <footer style="margin-top:auto !important;">
+    	<section class="sec-footer py-0">
+        <div class="container-fluid px-lg-5 py-3">
+            <div class="row">
+                <div class="col-lg-3 text-lg-start ps-lg-3 ps-4 customcursor" >
+                    <img src="{!$Resource.MaciImages + '/img/footer-logo.png'}" class="img-fluid mt-3 ps-lg-0 ps-2" style = "width:180px;">
+                    </img>
+                </div>
+                <div class="col-lg-9 text-end text-center-sm">
+                    <ul class="list-unstyled list-inline pt-4">
+                        
+                        <li class="list-inline-item border-end pe-2"><a href="{!$Resource.Privacy_Policy}" target="_blank">PRIVACY POLICY </a></li>
+                        <li class="list-inline-item border-end pe-2"><a href="{!$Resource.Terms_Of_Use}" target="_blank">TERMS OF USE  </a></li>
+                        <aura:if isTrue="{!v.isLoginURL}">
+    <li  class="list-inline-item"><a href ="{!v.contactusURL}">CONTACT US </a></li>
+    <aura:set attribute="else">
+     <li class="list-inline-item"><a onclick="{!c.navigateToContactUsPage}">CONTACT US </a></li>
+    </aura:set>
+  </aura:if> 
+
+                    </ul>
+                </div>
+				<div style="font-family: 'MyriadPro', arial; text-align:center; color:#FFFFFF; font-size: 16px;margin-top: -30px;">
+                <ul class="list-unstyled list-inline pt-4">
+                    <p>Report pregnancies to the {!$Label.c.Macitentan_Containing_Products_REMS} by calling 1-888-572-2934.<br></br>
+                    Report adverse events to FDA by visiting <li class="list-inline-item"><a style= "font-size: 16px" href="https://www.fda.gov/medwatch" >www.fda.gov/medwatch</a></li> or call 1-800-FDA-1088.
+                    </p>
+               </ul>
+               </div>
+            </div>
+        </div>
+    </section>
+    </footer>
+  
+    <ltng:require scripts="{!join(',', 
+                           $Resource.MacitentanAssets + '/assets/js/jquery-3.6.0.min.js',  
+                           $Resource.MacitentanAssets + '/assets/js/bootstrap.bundle.min.js',
+                           $Resource.MacitentanAssets + '/assets/js/custom.js')}"
+                  afterScriptsLoaded="{!c.scriptsLoaded}" />
+</aura:component>

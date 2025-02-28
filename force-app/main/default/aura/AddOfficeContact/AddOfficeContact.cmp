@@ -1,0 +1,226 @@
+<aura:component controller="AddOfficeContactController">
+	<!-- Attriute to show header Text -->
+	<aura:attribute name="headerText" type="String" default="default Header" />
+    <aura:attribute name="isSearchDisabled" type="Boolean" default="true"/>
+    <aura:attribute name="isSubmitDisabled" type="Boolean" default="true"/>
+    <aura:attribute type="Account[]" name="acctList"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="errorMessage" type="String" />
+    <aura:attribute name="isAccount" type="Boolean" />
+    
+    <aura:attribute type="Account" name="acctRec"/>
+    
+    
+    <aura:attribute name="isFieldDisabled" type="Boolean" default="false"/>
+    <aura:attribute name="displayContactCreation" type="Boolean" default="false"/>
+    <aura:attribute name="displayExistingContact" type="Boolean" default="false"/>
+    
+    <aura:attribute name="displayWarning" type="Boolean" default="false"/>
+    <aura:attribute name="displayError" type="Boolean" default="false"/>
+    <aura:attribute name="displaySuccess" type="Boolean" default="false"/>
+    <aura:attribute name="displaySpinner" type="Boolean" default="false"/>
+    
+    
+    
+    
+    <aura:attribute name="firstName" type="String" />
+    <aura:attribute name="lastName" type="String" />
+    <aura:attribute name="email" type="String" />
+    <aura:attribute name="warningTheme" type="String" />
+	<!-- Modal Code -->
+	<div class="demo-only" style="height: 600px;">
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		    <div class="slds-modal__container">
+		    	<!-- Modal Header -->
+			    <header class="slds-modal__header">
+			        <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" size="large" variant="bare" alternativeText="Close" onclick="{! c.closeModal }"/>
+			        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.headerText}</h2>
+			     </header>
+			     <!-- Main Body of Modal -->
+                <lightning:card>
+                    <div class="slds-p-around_medium" style="font-size: 0.75rem;color: #696969;">
+                        <div class="slds-notify ao-banner slds-theme_info">
+                           Office Contact Information
+                        </div>
+                        <br/>
+                        Please enter Office Contact First Name, Last Name, Email Address and click on "SEARCH" 
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning:input label="First Name" disabled="{!v.isFieldDisabled}" required="true" name="firstName" aura:id="firstName" onchange="{!c.handleInputChange}"/>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning:input label="Last Name" disabled="{!v.isFieldDisabled}" required="true" name="lastName" aura:id="lastName" onchange="{!c.handleInputChange}"/>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning:input label="Email Address" disabled="{!v.isFieldDisabled}" required="true" name="email" aura:id="email" onchange="{!c.handleInputChange}"/>
+                                </div>
+                            </div>
+                        	
+                        	<br/>
+                        	* Required Fields
+                            <div class="slds-grid slds-m-top_medium slds-grid_align-end">
+                                <lightning:button label="Search" onclick="{!c.handleSearch}" disabled="{!v.isSearchDisabled}" />
+                            </div>
+                            <aura:if isTrue="{!v.errorMessage}">
+                                <div class="{!v.warningTheme}">
+                                    <aura:if isTrue="{!v.displayWarning }">
+                                        <lightning:icon iconName="utility:warning"  size="small" alternativeText="warning" title="warning" />
+                                    	&nbsp;
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!v.displayError }">
+                                        <lightning:icon iconName="utility:error"  size="small" alternativeText="error" title="error" />
+                                    	&nbsp;
+                                    </aura:if>
+                                    
+                                    <aura:if isTrue="{!v.displaySuccess }">
+                                        <lightning:icon iconName="action:approval"  size="small" alternativeText="success" title="success" />
+                                    	&nbsp;
+                                    </aura:if>
+                                    {!v.errorMessage}
+                                </div>
+                            </aura:if>
+                        </div>
+                    
+                    <aura:if isTrue="{!v.displayExistingContact}">
+                        <table class="table table-striped tbl-one mb-0" aria-label="Example table of Opportunities with striped rows">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        
+                                            <th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="FIRST NAME">FIRST NAME</div>
+                                        	</th>
+                                        
+                                        	<th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="LAST NAME">LAST NAME</div>
+                                        	</th>
+                                        
+                                        	<th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="EMAIL">EMAIL</div>
+                                        	</th>
+                                        
+                                        <th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="Phone">Phone</div>
+                                        	</th>
+                                        
+                                        <th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="affi">Afiliate Selected Office Contact</div>
+                                        	</th>
+                                        
+                                        <th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="opt">OPT-IN to Notifications</div>
+                                        	</th>
+                                        
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    
+                                    <!--<aura:iteration items="{!v.acctList}" var="acctRec">-->
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="FIRST NAME">
+                                            {!v.acctRec.FirstName}
+                                        </td>
+                                        
+                                        <td data-label="LAST NAME">
+                                            {!v.acctRec.LastName}
+                                        </td>
+                                        
+                                        <td data-label="EMAIL">
+                                            {!v.acctRec.US_WSREMS__Email__c}
+                                        </td>
+                                        
+                                        <td data-label="Phone">
+											{!v.acctRec.Phone}                                   
+                                        </td>
+                                        
+                                        <td data-label="affi">
+											<lightning:input variant="label-hidden" aura:id="create-affiliation" type="checkbox" checked="true" label="Basic option" name="input1"/>                                 
+                                        </td>
+                                        
+                                        <td data-label="opt">
+											<lightning:input type="checkbox" aura:id="create-optin"  checked="{!v.acctRec.Two_Factor_Authentication_Selection__c == 'Opt-In'}"/>                                   
+                                        </td>
+                                    </tr>
+                                    <!--</aura:iteration>-->
+                                </tbody>
+                            </table>
+                        
+                        <div class="slds-p-around_medium">
+                                
+                            <div class="slds-grid slds-m-top_medium slds-grid_align-end">
+                                <lightning:button label="New Search" onclick="{!c.handleNewSearch}" />
+                                <lightning:button label="Submit" onclick="{!c.handleAffiliationSubmit}"  disabled="{!v.isSubmitDisabled}" />
+                            </div>
+                        </div>
+                    </aura:if>
+                   
+                    
+                    <aura:if isTrue="{!v.displayContactCreation}">
+                        <div class="slds-p-around_medium">
+                            
+                            <table class="table table-striped tbl-one mb-0" aria-label="Example table of Opportunities with striped rows">
+
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        
+                                            <th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="FIRST NAME">FIRST NAME</div>
+                                        	</th>
+                                        
+                                        	<th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="LAST NAME">LAST NAME</div>
+                                        	</th>
+                                        
+                                        	<th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="EMAIL">EMAIL</div>
+                                        	</th>
+                                        
+                                        <th class="fw-lighter" scope="col">
+                                            	<div class="slds-truncate" title="Phone">Phone</div>
+                                        	</th>
+                                        
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="FIRST NAME">
+                                            {!v.firstName}
+                                        </td>
+                                        
+                                        <td data-label="LAST NAME">
+                                            {!v.lastName}
+                                        </td>
+                                        
+                                        <td data-label="EMAIL">
+                                            {!v.email}
+                                        </td>
+                                        
+                                        <td data-label="Phone">
+											<lightning:input required="true" variant="label-hidden" type="tel" maxlength="10"  aura:id="create-phone" label="Phone field with pattern matching" name="phone3" />                                       
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            
+                            <div class="slds-p-around_medium">
+                                
+                            <div class="slds-grid slds-m-top_medium slds-grid_align-end">
+                                <lightning:button label="New Search" onclick="{!c.handleNewSearch}" />
+                                <lightning:button label="Submit" onclick="{!c.handleContactSubmit}"  disabled="{!v.isSubmitDisabled}" />
+                            </div>
+                        </div>
+                        </div>
+                    </aura:if>
+                </lightning:card>
+		    </div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+        
+        <aura:if isTrue="{!v.displaySpinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+	</div>
+</aura:component>

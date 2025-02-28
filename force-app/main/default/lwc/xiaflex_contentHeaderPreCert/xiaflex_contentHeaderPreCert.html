@@ -1,0 +1,52 @@
+<template>
+        <div class="util-top">
+                <!--style margin added by Pratap for mobile compatability in div and ul -->
+                <div class="pageContainer">
+                 <div class="navbar-top" style="font-weight: 700 !important;margin-right:30px ">
+                    <ul class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space" style="margin-right:40px">
+                        <li class="slds-item">
+                                <a href="https://endodocuments.com/XIAFLEX/MG" target="_blank">Medication Guide</a>
+                        </li>
+                        <li class="slds-item">
+                                <a href="https://endodocuments.com/XIAFLEX/PI" target="_blank">Prescribing Information</a>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+                <div class="themeHeaderInner centerAlignLogo-false showNavMenuOnLeft-true slds-grid slds-wrap">
+                        <!--slds-medium-size_6-of-12 added by Pratap for mobile -->
+                <div class="slds-x-small-size_6-of-12 slds-small-size_9-of-12 slds-medium-size_9-of-12 slds-large-size_9-of-12">
+                        <a href="review-material" class="forceCommunityThemeLogo logo">
+                                <img src={xiaflexlogo}>
+                                <span class="slds-assistive-text">REMS Digital</span>
+                        </a>
+                </div>
+               
+ 
+                <div class="themeUtils ">
+                        <div class="themeUtilsContainer">
+                                <div class="themeUtil themeProfileMenu" >
+                                        <div data-region-name="themeHeaderProfileMenu">
+                                                <div data-priority="" class="ui-widget">
+                                                        <div>
+                                                                <div class="slds-form-element themeUtil themeProfileMenu">
+                                                                        <template if:true={isLogined}>
+                                                                                <lightning-button-menu class = "buttonmargin" onselect={handleOnselect}  variant="container" menu-alignment ='right' label = {userName}>
+                                                                                        <lightning-menu-item value="logout" label="Logout"></lightning-menu-item>
+                                                                                </lightning-button-menu>
+                                                                </template>
+ 
+                                                                </div>
+ 
+ 
+ 
+                                                        </div>
+ 
+                                                </div> <!-- end uiwidget -->
+                                        </div><!-- end profileMenu  -->
+                                </div><!-- end themUtil  -->
+                        </div>
+                </div>
+                </div>
+</template>

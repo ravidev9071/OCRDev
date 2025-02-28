@@ -1,0 +1,349 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> Patient Enrollment - Patient Information { Middle Context }
+-->
+
+<aura:component controller ="MaciPortalCustomController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="cAccount" type="Account" />
+     <!--Office Contact Changes-->
+    <aura:attribute name="isOfficeContact" type="Boolean" default="false" />
+    <aura:attribute name="prescriberName" type="String" default=""/>
+    <aura:attribute name="prescriberNPI" type="String" default=""/>
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="stateMap" type="Map"/> 
+    <aura:attribute name="morning" type="boolean" default ="false"/>
+    <aura:attribute name="afternoon" type="boolean" default ="false"/>
+    <aura:attribute name="evening" type="boolean" default ="false"/>
+    <aura:attribute name="confirmEmail" type="string" default =""/>
+    <aura:attribute name="isPatientMinor" type="boolean" default ="false"/>
+    <aura:attribute name="pphonesize" type="string" default ="15"/>
+    <aura:attribute name="aphonesize" type="string" default ="15"/>
+	<aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+
+    <aura:registerEvent name="ShowPatientEnrollmentScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowOCInstructionScreen" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowPatientInformationScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowAlternativeContactScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowOCPatientInformationScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowPatientInformation" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowOCPatientEnrollmentScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height: 50vw;">
+
+        <div class="container-fluid px-5 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card h-100 p-0 rounded-0 border-0">
+                        <div class="card-header border-0 crd-hdr-m px-0" style="background-color: #EBEBEB;">
+                            <div class="row d-flex justify-content-center align-items-center" >
+                                <div class="col-lg-12">
+                                    <div class="heading-top mx-0 d-flex justify-content-between border-bottom-0"
+                                        style="margin: 0px 4px;background-color: #EBEBEB">
+                                        <div class="col-lg-7 col-sm col-6 text-start">
+                                            
+                                            <div class="row ps-3">
+                                                <div class="col-1" style="width: 39px;">
+                                                    <span class="text-theme">
+                                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                                    </span>
+                                                </div>
+                                                <!--<div class="col-9 ps-4">
+                                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                       {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                                    </h3>
+                                                </div>-->
+                                                <aura:if isTrue="{!v.isOfficeContact}">
+                                                    <div class="col-9 ps-4">
+                                                        <h3 class="mb-0 fs-3" style="margin-top: 12px;"> 
+                                                            Office Contact : {!v.cAccount.Name}
+                                                        </h3>
+                                                        
+                                                    </div>
+                                                    <aura:set attribute="else">
+                                                        <div class="col-9 ps-4">
+                                                            <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                                {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                                            </h3>
+                                                        </div>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+
+                                            <aura:if isTrue="{!v.isOfficeContact}">
+                                                <div class="col-lg-7">
+                                                    <h3 class="heading mb-0 fs-3 fw-lighter" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img><span class="text-theme"><i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;margin-left: 10px;">   </i></span> <p style="display:inline; margin-left:15px;">{!v.prescriberName}</p></h3>
+                                                    <div class="row ps-3" style="position: relative;top: -10px;">
+                                                        <div class="col-1" style="width: 39px;"></div>
+                                                        <div class="col-9 ps-4">
+                                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                                NPI: {!v.prescriberNPI}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 <aura:set attribute="else">
+                                                    <div class="row ps-3" style="position: relative;top: -10px;">
+                                                        <div class="col-1" style="width: 39px;"></div>
+                                                        <div class="col-9 ps-4">
+                                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                                NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                            
+                                        <div class="col-lg-5 text-end pe-4">
+                                            <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                <span class="text-theme fw-bold">Enrolled as of
+                                                    <span name="enrolled-number" id="enrolled-number">
+                                                        <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                month="numeric" day="numeric" />
+                                                    </span>
+                                                   &nbsp; <i class="fa fa-check-circle"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center align-items-center" style="margin-top:-30px;">
+                                <div class="col-lg-7">
+                                    <h3 class="heading mb-0 fs-3 fw-lighter" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img> <i class="fa fa-file-text ps-3 pe-2"></i> Patient Enrollment</h3>
+
+                                </div>
+                                <div class="col-lg-5">
+                                   <div class="progressbar" style="margin: 0rem 30px 2rem 25px;">
+                                        <div class="progress" id="progress"></div>
+                                            <div class="progress-block">
+                                                <div class="progress-step progress-step-active"></div>
+                                                <span>PATIENT</span>
+                                            </div>
+                                        	<div class="progress-block">
+                                                <div class="progress-step"></div>
+                                                <span class="text-theme"><em>ALTERNATE CONTACT</em></span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step "></div>
+                                                <span>REPRODUCTIVE <br></br> POTENTIAL STATUS</span>
+                                            </div>
+                                           <div class="progress-block">
+                                               <div class="progress-step last-step"></div>
+                                               <span>PATIENT AGREEMENT</span>
+                                           </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-4 llc-dv">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold">Patient Information</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm" style="margin-left: -40px;">
+                                <div class="col-lg-6">
+                                    <div class="pe-lg-6 pe-lg-4 border-end border-dark">
+                                        <div class="form-group">
+                                            <div class="row mt-1">
+                                                <div class="col-lg-1 px-0 col-sm col-1">
+                                                    <i class="fa fa-user pull-right pt-2 mt-4"></i>
+                                                </div>
+                                                <div class="col-lg-9 col-sm col-9">
+                                                    <label>Name</label>
+                                                    
+                                                    <lightning:input type="text" aura:id="fname" placeholder="First Name" class="form-control" value="{!v.newCase.US_WSREMS__First_Name__c}"/>
+                                                    <lightning:input type="text" aura:id="lname" placeholder="Last Name" class="form-control mt-2" value="{!v.newCase.US_WSREMS__Last_Name__c}"/>
+
+                                                </div>
+                                                <div class="col-lg-2 col-sm col-2 ps-0">
+                                                    <label class="m-0">M.I.</label>
+                                                    
+                                                    <lightning:input type="text" aura:id="mname" placeholder="M.I." class="form-control" value="{!v.newCase.US_WSREMS__Middle_Name__c}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                            <div class="col-lg-1 px-0 col-sm col-1">
+                                                    <i class="fa fa-home pull-right pt-2 mt-4"></i>
+                                                </div>
+                                                <div class="col-lg-11 col-sm col-11">
+                                                    <label class="my-2">Address</label>
+                                                    
+                                                    <lightning:input type="text" aura:id="aLine1" placeholder="Address Line 1" class="form-control mb-1" value="{!v.newCase.US_WSREMS__Address_Line_1__c}"/>
+                                                    <lightning:input type="text" aura:id="aLine2" placeholder="Address Line 2" class="form-control mb-1" value="{!v.newCase.US_WSREMS__Address_Line_2__c}"/>
+
+                                                    
+                                            
+                                                        
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-lg-4 mb-1 pe-lg-0">
+                                                                    
+                                                                    <lightning:input type="text" aura:id="city" placeholder="City" class="form-control" value="{!v.newCase.US_WSREMS__City__c}"/>
+                                                                </div>
+                                                                <div class="col-lg-4 mb-1 pe-lg-0">
+                                                                    
+                                                                    <select name="text-state" id="primaryState"  class="form-control" value="{!v.newCase.US_WSREMS__State__c}" onchange="{!c.handleStateOnChange}"> 
+                                                                        <option value="">State</option>
+                                                                        <aura:iteration items="{!v.stateMap}" var="ind" indexVar="key" >
+                                                                            <option text="{!ind.value}" value="{!ind.key}" selected="{!ind.key==v.newCase.US_WSREMS__State__c}" />
+                                                                        </aura:iteration>
+                                                                    </select> 	
+                                                                </div>
+                                                                <div class="col-lg-4 mb-1">
+                                                                    
+                                                                    <lightning:input type="text" aura:id="zCode" placeholder="ZIP Code" class="form-control" value="{!v.newCase.US_WSREMS__REMS_Zip_Code__c}" maxlength="5"/>
+                                                                </div>
+                                                            </div>
+                                                
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-1 pe-0 col-sm col-1">
+                                                    <i class="fa fa-birthday-cake pull-right pt-2 mt-4" style="font-size:17px;"></i>
+                                                </div>
+                                                <div class="col-lg-4 col-sm col-11">
+                                                    <label>Date of Birth</label>
+                                                    
+                                                    <lightning:input type="date" aura:id="dob" placeholder="Date Of Birth" class="form-control" style="inline-height :37%" value="{!v.newCase.US_WSREMS__DOB__c}" dateStyle="short" />
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                            <div class="col-lg-1 pe-0 col-sm col-1">
+                                                <img src="/resource/MaciImages/img/globe.png" alt="" style="width:18px;" class="pull-right pt-2 mt-4"></img>
+                                                </div>
+                                                <div class="col-lg-7 col-sm col-11">
+                                                    <label>Primary Language</label>
+                                                    
+                                                    <lightning:input type="text" aura:id="pLanguage" placeholder="Primary Language" class="form-control" value="{!v.newCase.Primary_Language__c}"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="form-group px-lg-5">
+
+
+                                        <div class="row mt-1">
+                                            <div class="col-lg-1 px-0 px-lg-0 col-sm col-1">
+                                                <i class="fa fa-envelope pull-right pt-2 mt-4 fs-18"></i>
+                                            </div>
+                                            <div class="col-lg-8 col-sm col-11">
+                                                <label>Email</label>
+                                                
+                                                <lightning:input type="text" aura:id="pEmail" placeholder="Email" class="form-control" value="{!v.newCase.US_WSREMS__Email__c}"/>
+                                                <lightning:input type="text" aura:id="cEmail" placeholder="Confirm Email" class="form-control mt-2" value="{!v.confirmEmail}"/>
+
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                           <div class="col-lg-1 px-0 col-sm col-1">
+                                                <i class="fa fa-phone pull-right pt-2 mt-4 me-1"></i>
+                                            </div>
+                                            <div class="col-lg-8 col-sm col-11">
+                                                <label>Primary Phone</label>
+                                                
+                                              
+                                                <lightning:input type="text" aura:id="pPhone" placeholder="(nnn) nnn-nnnn" class="form-control" value="{!v.newCase.US_WSREMS__Phone__c}" maxlength="{!v.pphonesize}" onchange = "{!c.formatPrimaryNumber}"/>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-1">
+                                          <div class="col-lg-1 col-sm col-1" style="padding-right: 0.3rem;">
+                                                <i class="fa fa-mobile pull-right pt-2 mt-4"></i>
+                                            </div>
+                                            <div class="col-lg-8 col-sm col-11">
+                                                <label>Alternate Phone</label>
+                                                
+                                                <lightning:input type="text" aura:id="aPhone" placeholder="(nnn) nnn-nnnn" class="form-control" value="{!v.newCase.SYN_Alternate_Phone__c}" maxlength="{!v.aphonesize}" onchange = "{!c.formatAlternateNumber}"/>
+                                            </div>
+                                        </div>
+
+                                       <div class="row mt-4">
+                                            <div class="col-lg-1 px-lg-0 col-sm col-1">
+                                                <img src="/resource/MaciImages/img/clock.png" alt="" class="h5-icon"></img>
+                                            </div>
+                                            <div class="col-lg-11 col-sm col-11">
+                                                <label>Best time to call </label>
+                                                <div class="row pt-1">
+                                                    <div class="col-lg-12 d-flex">
+                                                        <div class="form-check pe-3">
+                                                            
+                                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                                   id="flexRadioDefault1" checked="{!v.morning}" onclick="{!c.morningSelect}"></input>
+                                                            <label class="form-check-label m-0" for="flexRadioDefault1">
+                                                                Morning
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check pe-3">
+                                                            
+                                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                                   id="flexRadioDefault2" checked="{!v.afternoon}" onclick="{!c.afternoonSelect}"></input>
+                                                            <label class="form-check-label m-0" for="flexRadioDefault2">
+                                                                Afternoon
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check pe-3">
+                                                            
+                                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                                   id="flexRadioDefault3" checked="{!v.evening}" onclick="{!c.eveningSelect}"></input>
+                                                            <label class="form-check-label m-0" for="flexRadioDefault3">
+                                                                Evening
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.isOfficeContact}">
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6 col-6">
+                                    <a name="button-previous" class="btn btn-secondary rounded-0 my-2 mb-1" onclick="{!c.handlePrevious}">
+                                        <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                    <a style="margin-left:5px;" name="button-restart" class="btn btn-secondary rounded-0 my-2 mb-1" onclick="{!c.handleRefresh}">RESTART
+                                        <i class="fa fa-repeat"></i></a>
+                                </div>
+                                <div class="col-lg-6 col-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 mb-1 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i
+                                            class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="card-footer border-0 crd-hdr-m">
+                                <div class="row">
+                                    <div class="col-lg-6 col-6">
+                                        <a name="button-previous" class="btn btn-secondary rounded-0 my-2 mb-1" onclick="{!c.handlePrescriberPrevious}">
+                                            <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                        <a style="margin-left:5px;" name="button-restart" class="btn btn-secondary rounded-0 my-2 mb-1" onclick="{!c.handlePrescriberRefresh}">RESTART
+                                            <i class="fa fa-repeat"></i></a>
+                                    </div>
+                                    <div class="col-lg-6 col-6">
+                                        <a name="button-next" class="btn btn-primary-m my-2 mb-1 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i
+                                                class="fa fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:set>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>

@@ -1,0 +1,243 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 13/09/2022
+Description   :- Created for Maci Portal -> Verify Prescriber { Middle context }
+-->
+
+
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller ="SYN_ManagePharamcyController" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="authRepAccount" type="Account" /> 
+    <aura:attribute name="pharmacy" type="Account" />
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="PrescriberNPI" type="String" />
+    <aura:attribute name="PatientFN" type="String" />
+    <aura:attribute name="PatientMN" type="String" />
+    <aura:attribute name="PatientLN" type="String" />
+    <aura:attribute name="PatientDOB" type="date" />
+    <aura:attribute name="prescriberAccount" type="Account" /> 
+    <aura:attribute name="patientAccount" type="Account" /> 
+    <aura:attribute name="isValidPrescriber" type="Boolean" default="false" />
+    <aura:attribute name="isValidPatient" type="Boolean"  default="false" />
+    <aura:attribute name="isNotValidPrescriber" type="Boolean"  />
+    <aura:attribute name="isNotValidPatient" type="Boolean"  />
+    <aura:attribute name="programId" type="string" default =""/> 
+    <aura:attribute name="isPrescriberDataPresent" type="Boolean"  default="true"/>
+    <aura:attribute name="isPatientDataPresent" type="Boolean"  default="true"/>
+    <aura:attribute name="isPrescriberandPatientData" type="Boolean"  default="false"/>
+    <aura:attribute name="isPrescriberData" type="Boolean"  default="false"/>
+    <aura:attribute name="isPatientData" type="Boolean"  default="false"/>
+    <aura:attribute name="isverifydata" type="Boolean"  default="true"/>
+    <aura:attribute name="patientDataCheckBool" type="Boolean" default="false"/>
+    <aura:attribute name="ShowNPI" type="Boolean" default="true" />
+    <lightning:navigation aura:id="navigation"/>
+    
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: center;">
+        <div class="section-content container-fluid px-5 " style="background: transparent;height:100%;">
+            <div class="card-header border-0 crd-hdr-m px-0 pt-2 pb-2">
+                <div class="heading-top justify-content-around border-0">
+                    <div class="col-lg-7">
+                        <div class="d-flex align-items-center">
+                            <span class="text-theme pe-2 "> <img src="/resource/MaciImages/img/rx2.png"
+                                                                 class="img-fluid rx1-img" alt="img"></img></span>
+                            <div>
+                                <h4 class="mb-0 ps-2 text-head-main"> {!v.pharmacy.Name}</h4>
+                                <span name="Pharmacy-NPI-Number" class=" ms-2 text-black-50 fw-bold mt-n1">NPI:
+                                    {!v.pharmacy.US_WSREMS__NPI__c}</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-4 text-end">
+                        <span class="fs-6 text-muted">Program Status:&nbsp; <span class="text-theme fw-bold">Enrolled as
+                            of <span name="enrolled-number" id="enrolled-number"><lightning:formattedDateTime timeZone="GMT" value="{!v.authRepAccount.Date_Enrolled__c}" month="numeric" day="numeric" year="numeric" /></span> <i
+                                                                                                                                                                                                                          class="fa fa-check-circle ps-1"></i></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-4 " style="height: 54vw;">
+                <div class="row d-flex">
+                    
+                    <div class="col-md-8 ">
+                        <div class="">
+                            <h5 class="text-theme fw-bold">Verify Prescriber Certification and Patient Enrollment </h5>
+                            <aura:if isTrue="{!not(OR(OR(v.isValidPatient,v.isValidPrescriber),AND(v.isNotValidPatient,v.isNotValidPrescriber)))}">
+                                <label class="text-theme">Enter the prescriber's individual NPI#</label>
+                            </aura:if>
+                            <aura:if isTrue="{!OR(OR(v.isValidPatient,v.isValidPrescriber),AND(v.isNotValidPatient,v.isNotValidPrescriber))}">
+                                <label class="text-theme fw-bold form-heading w-100"  >Prescriber</label>
+                            </aura:if>
+                            <aura:if isTrue="{!v.ShowNPI}">
+                                <div class="row">
+                                    <div class="col-lg-3 mb-2">
+                                        <lightning:input type="text" aura:id="pnpi" placeholder="Enter NPI#" class="form-control col-lg-3 mb-2" value="{!v.PrescriberNPI}" maxlength="10" disabled="{!!v.isverifydata}"/>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!not(v.ShowNPI)}">
+                                <div class="row">
+                                    <div class="col-lg-3 mb-2" style="text-transform: uppercase; margin-top:-10px;" >
+                                        <label for="first_name">{!v.prescriberAccount.FirstName}&nbsp;{!v.prescriberAccount.LastName}</label>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            
+                            
+                            <div>
+                                <aura:if isTrue="{!not(OR(OR(v.isValidPatient,v.isValidPrescriber),AND(v.isNotValidPatient,v.isNotValidPrescriber)))}">
+                                    <p class="mb-4 text-theme">Enter the patient's name and date of birth </p>
+                                </aura:if>
+                                <aura:if isTrue="{!OR(OR(v.isValidPatient,v.isValidPrescriber),AND(v.isNotValidPatient,v.isNotValidPrescriber))}">
+                                    <p class="mb-4 text-theme fw-bold fw-bold form-heading w-100 mb-2">Patient Information </p>
+                                </aura:if>
+                                <div class="row" style="margin-top:-10px;">
+                                    <div class="col-lg-3 mb-2">
+                                        <label for="first_name" >First Name</label>
+                                        
+                                        <lightning:input type="text" aura:id="fn" placeholder="First Name" class="form-control" value="{!v.PatientFN}" disabled="{!!v.isverifydata}"/>
+                                    </div>
+                                    <div class="col-lg-1 mb-2 px-lg-1">
+                                        <label for="">M.I.</label>
+                                        
+                                        <lightning:input type="text" aura:id="mi" placeholder="M.I." class="form-control" value="{!v.PatientMN}" disabled="{!!v.isverifydata}"/>
+                                    </div>
+                                    <div class="col-lg-3 mb-2 pe-lg-1">
+                                        <label for="last_name">Last Name</label>
+                                        
+                                        <lightning:input type="text" aura:id="ln" placeholder="Last Name" class="form-control" value="{!v.PatientLN}" disabled="{!!v.isverifydata}"/>
+                                    </div>
+                                    <div class="col-lg-3 mb-2">
+                                        <label for="dob">Date of Birth</label>
+                                        
+                                        <lightning:input type="date" aura:id="dob" placeholder="Date Of Birth" class="form-control" style="inline-height :37%" value="{!v.PatientDOB}" dateStyle="short" disabled="{!!v.isverifydata}"/>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.isverifydata}">
+                                    <div class="">
+                                        <a class="btn btn-primary-m float-end text-uppercase" onclick="{!c.VerifyPrescriberPatientInfo}">Verify</a>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!!v.isverifydata}">
+                                    <div>
+                                        <a class="btn btn-secondary rounded-0 text-uppercase me-3" onclick="{!c.navigateToDashboard}"><i class="fa fa-arrow-left"></i>Previous</a>
+                                        <a class="btn btn-primary-m float-end text-uppercase" onclick="{!c.refreshCurrentPage}">Continue</a>
+                                    </div>
+                                </aura:if>
+                                
+                            </div>
+                        </div>
+                        <c:Maci_Prescriber_locator programId="{!v.programId}"></c:Maci_Prescriber_locator>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="border-start ps-2">
+                            <h5 class="text-theme mb-3 ps-2 fw-bold"><i class="fa fa-info pe-2"></i> Information</h5>
+                            <aura:if isTrue="{!v.isverifydata}">
+                                <p>Verify the female patient is under the supervision and care of a certified prescriber, and that she is enrolled or will be enrolled in the REMS Program prior to discharge</p>
+                            </aura:if>
+                            <aura:if isTrue="{!v.isPrescriberData}">
+                                <div class="d-flex align-items-center pt-3">
+                                    <div style="background: #ff1616;border-radius: 50%;display: flex;padding: 3.5px 5px;font-size: 14px;margin-right: 6px;">
+                                        <i class="fa fa-times text-white" style="position: relative;top: 0px;right: 0.2px;"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted font-sm mb-0">Prescriber is not certified in REMS</p>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.isPatientData}">
+                                <div class="d-flex align-items-center pt-3">
+                                    <div style="background: #ff1616;border-radius: 50%;display: flex;padding: 3.5px 5px;font-size: 14px;margin-right: 6px;">
+                                        <i class="fa fa-times text-white" style="position: relative;top: 0px;right: 0.2px;"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted font-sm mb-0">Patient is not enrolled in REMS, please make sure patient is enrolled in REMS prior to discharge.</p>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.isPrescriberandPatientData}">
+                                <div class="d-flex align-items-center pt-3">
+                                    <div style="background: #ff1616;border-radius: 50%;display: flex;padding: 3.5px 5px;font-size: 14px;margin-right: 6px;">
+                                        <i class="fa fa-times text-white" style="position: relative;top: 0px;right: 0.2px;"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted font-sm mb-0">Prescriber and Patient Data Not Found</p>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.isValidPrescriber}">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div>
+                                        <i class="fa fa-check-circle text-success pe-2 fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted font-sm mb-0">Prescriber is certified in REMS</p>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.isNotValidPrescriber}">
+                                <div class="d-flex align-items-center pt-3">
+                                    <div style="background: #ff1616;border-radius: 50%;display: flex;padding: 3.5px 5px;font-size: 14px;margin-right: 6px;">
+                                        <i class="fa fa-times text-white" style="position: relative;top: 0px;right: 0.2px;"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted font-sm mb-0">Prescriber is not certified in REMS</p>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.isValidPatient}">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <i class="fa fa-check-circle text-success pe-2 fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted font-sm mb-0">Patient is enrolled in REMS</p>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            
+                            
+                            <aura:if isTrue="{!v.isNotValidPatient}">
+                                <div class="d-flex align-items-center pt-3">
+                                    <div style="background: #ff1616;border-radius: 50%;display: flex;padding: 3.5px 5px;font-size: 14px;margin-right: 6px;">
+                                        <i class="fa fa-times text-white" style="position: relative;top: 0px;right: 0.2px;"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted font-sm mb-0">Patient is not enrolled in REMS, please make sure patient is enrolled in REMS prior to discharge.</p>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.isValidPatient}">
+                                <div class="mt-4 mb-5" style="margin-left:30px;">
+                                    <p class="p-0 m-0">Patient ID: {!v.patientAccount.SYN_Ref_Id__c} </p>
+                                    <p class="p-0 m-0">Reproductive Status: <aura:if isTrue="{!v.patientAccount.US_WSREMS__Patient_Risk_Category__c == 'Female of Reproductive Potential (FRP)'}">
+                                        FRP (Female of Reproductive Potential)
+                                        <aura:set attribute="else">
+                                            {!v.patientAccount.US_WSREMS__Patient_Risk_Category__c}
+                                        </aura:set>
+                                        </aura:if>
+                                    </p>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer border-0 crd-hdr-m py-4">
+                <div class="row">
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6"></div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </section>
+    
+    
+    
+</aura:component>

@@ -1,0 +1,469 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> Reproductive Potential Status { Middle Context }
+-->
+
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="prescribers" type="List" default=""/>
+    <aura:attribute name="prescriberName" type="String" default=""/>
+    <aura:attribute name="prescriberNPI" type="String" default=""/>
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="pCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="rCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="lCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+     <aura:attribute name="caseDetail" type="Case" default="{ 'sobjectType': 'Case'}"/>
+ 
+    <!--Added attribute to Identify whether it is Office Contact or Not -->
+    <aura:attribute name="isOfficeContact" type="Boolean" default="false" />
+    <aura:attribute name="isFromOfficeContact" type="Boolean" default="false" />
+    
+    <aura:attribute name="programId" type="string"/>
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+    <aura:attribute name="FemalesofReproductivePotentialValue" type="boolean" default="false"/>
+    <aura:attribute name="PrepubertalFemaleValue" type="boolean" default="false"/>
+    <aura:attribute name="PostmenopausalFemaleValue" type="boolean" default="false"/>
+    <aura:attribute name="OtherMedicalValue" type="boolean" default="false"/>
+    <aura:attribute name="PregnancyYes" type="boolean" default="false"/>
+    <aura:attribute name="PregnancyNo" type="boolean" default="false"/>
+    <aura:attribute name="isCertify" type="boolean" default="false"/>
+    <aura:attribute name="isPatientMinor" type="boolean" default ="false"/>
+    <aura:attribute name="isModalOpenRPS" type="Boolean" default="false" />
+    
+    <aura:registerEvent name="ShowPatientEnrollmentScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    
+    
+    <section class="sec-one-1 bg-white-2" style="height:95vh;background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;background-attachment: fixed;">
+        <aura:if isTrue="{! v.ShowSpinner }">
+            <lightning:spinner alternativeText="Loading" class="spinnerClass"/>
+        </aura:if>
+        <div class="container-fluid h-100 px-5">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card p-0 h-100 rounded-0 border-0">
+                         <aura:if isTrue="{!v.isFromOfficeContact}">
+                        
+                          <aura:set attribute="else">
+                        <div class="card-header border-0 crd-hdr-m px-0" style="background-color: #EBEBEB;">
+                            <div class="row d-flex justify-content-center align-items-center" >
+                                <div class="col-lg-12">
+                                    <div class="heading-top mx-0 d-flex justify-content-between border-bottom-0"
+                                         style="margin: 0px 4px;background-color: #EBEBEB">
+                                        <div class="col-lg-7 col-sm col-6 text-start">
+                                            
+                                            <div class="row ps-3">
+                                                <div class="col-1" style="width: 39px;">
+                                                    <span class="text-theme">
+                                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                                    </span>
+                                                </div>
+                                                <aura:if isTrue="{!v.isOfficeContact}">
+                                                    <div class="col-9 ps-4">
+                                                        <h3 class="mb-0 fs-3" style="margin-top: 12px;"> 
+                                                            Office Contact : {!v.cAccount.Name}
+                                                        </h3>
+                                                        
+                                                    </div>
+                                                    <aura:set attribute="else">
+                                                        <div class="col-9 ps-4">
+                                                            <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                                {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                                            </h3>
+                                                        </div>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                            <aura:if isTrue="{!v.isOfficeContact}">
+                                             <div class="col-lg-7">
+                                                    <h3 class="heading mb-0 fs-3 fw-lighter" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img><span class="text-theme"><i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;margin-left: 10px;">   </i></span> <p style="display:inline; margin-left:15px;">{!v.prescriberName}</p></h3>
+                                                    <div class="row ps-3" style="position: relative;top: -10px;">
+                                                        <div class="col-1" style="width: 39px;"></div>
+                                                        <div class="col-9 ps-4">
+                                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                                NPI: {!v.prescriberNPI}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <div class="row ps-3" style="position: relative;top: -10px;">
+                                                        <div class="col-1" style="width: 39px;"></div>
+                                                        <div class="col-9 ps-4">
+                                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                                NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </aura:set>  
+                                            </aura:if>                                            
+                                        </div>
+                                        <div class="col-lg-5 text-end pe-4">
+                                            <aura:if isTrue="{!v.isOfficeContact}">
+                                                <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                    <span class="text-theme fw-bold">Active as of
+                                                        <span name="enrolled-number" id="enrolled-number">
+                                                            <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                                                         month="numeric" day="numeric" />
+                                                        </span>
+                                                        &nbsp; <i class="fa fa-check-circle"></i>
+                                                    </span>
+                                                </span>
+                                                <aura:set attribute="else">
+                                                    <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                        <span class="text-theme fw-bold">Enrolled as of
+                                                            <span name="enrolled-number" id="enrolled-number">
+                                                                <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                                                             month="numeric" day="numeric" />
+                                                            </span>
+                                                            &nbsp; <i class="fa fa-check-circle"></i>
+                                                        </span>
+                                                    </span>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center align-items-center" style="margin-top:-30px;">
+                                <div class="col-lg-7">
+                                    <h3 class="heading mb-0 fs-3 fw-lighter" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img> <i class="fa fa-file-text ps-3 pe-2"></i> Patient Enrollment</h3>
+                                    
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="progressbar" style="margin: 0rem 30px 2rem 25px;">
+                                        <div class="progress" id="progress"></div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PATIENT</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span class="text-theme"><em>ALTERNATE CONTACT</em></span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                            <span>REPRODUCTIVE <br></br> POTENTIAL STATUS</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step last-step"></div>
+                                            <span>PATIENT AGREEMENT</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                             </aura:set>
+                             </aura:if>
+                        <div class="card-body px-4 llc-dv bg-white" style="padding-left: 22px !important;">
+                            
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold mb-3">Reproductive Potential Status</h5>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <p class="fw-bold mb-0">Select the female patient's current reproductive status below</p>
+                                    <div class="border p-4">
+                                        <p class="mb-0"><span>Females of Reproductive Potential:</span></p>
+                                        <div class="row">
+                                            
+                                            <div class="col-lg-12 ps-0">
+                                                <div class="form-check ms-3 ps-5">
+                                                    <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                           id="Females-of-Reproductive-Potential" checked="{!v.FemalesofReproductivePotentialValue}" onclick="{!c.FemaleOfReproductivePotentialSelect}"></input>
+                                                    
+                                                    <label class="fw-bold m-0" style="margin-left: 2rem!important;">Females of Reproductive Potential </label>
+                                                </div>
+                                                <div class="list-bullets ms-5">
+                                                    <ul class="p-inline-s ms-5">
+                                                        <li  class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                Females of reproductive potential include girls who have entered
+                                                                puberty and all females who have a uterus and have not passed
+                                                                through menopause.
+                                                                Menopause is defined as 12 months of spontaneous amenorrhea (not
+                                                                amenorrhea induced by a medical condition or medical therapy) or
+                                                                post-surgical from
+                                                                bilateral oophorectomy.
+                                                            </div>
+                                                        </li>
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                For the purposes of this REMS, puberty includes those girls who
+                                                                are at least Tanner Stage 3 and have not yet had a menses
+                                                                (premenarchal).
+                                                            </div>
+                                                        </li>
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                For the purposes of this REMS, females who have undergone
+                                                                <b>tubal
+                                                                    sterilization</b> are classified as females of
+                                                                <b>reproductive</b>
+                                                                potential.
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <label class="fw-bold mb-0 m-0">Females of Non-Reproductive Potential:</label>
+                                            <div class="col-lg-12 my-2">
+                                                <div class="form-check ms-4">
+                                                    
+                                                    <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                           id="PrepubertalFemal" checked="{!v.PrepubertalFemaleValue}" onclick="{!c.PrepubertalFemaleSelect}"></input>
+                                                    
+                                                    <label class="form-check-label ps-4" for="PrepubertalFemal">
+                                                        <b>Pre-pubertal Female:</b> includes females who are at Tanner
+                                                        Stages 1
+                                                        and 2 are not considered to be of reproductive potential
+                                                    </label>
+                                                </div>
+                                                <div class="form-check ms-4">
+                                                    
+                                                    <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                           id="PostmenopausalFemale" checked="{!v.PostmenopausalFemaleValue}" onclick="{!c.PostmenopausalFemaleSelect}"></input>
+                                                    
+                                                    <label class="form-check-label ps-4" for="PostmenopausalFemale">
+                                                        <b>Post-menopausal Female</b> - females who have passed through
+                                                        menopause. Menopause is defined as 12 months of spontaneous
+                                                        amenorrhea (not amenorrhea induced by a medical condition or
+                                                        medical therapy) or postsurgical from bilateral oophorectomy
+                                                    </label>
+                                                </div>
+                                                <div class="form-check ms-4">
+                                                    
+                                                    <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                           id="Othermedical" checked="{!v.OtherMedicalValue}" onclick="{!c.OtherMedicalSelect}"></input>
+                                                    
+                                                    <label class="form-check-label ps-4" for="Othermedical">
+                                                        Other medical reasons for permanent, irreversible infertility.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 2 -->
+                                    <div class="border p-4 mt-3">
+                                        <div class="row" Id="div2">
+                                            <label class="fw-bold m-0">Pregnancy Test</label>
+                                            <div class="col-lg-12">
+                                                <p>A negative pregnancy test has been confirmed prior to prescribing
+                                                    {!$Label.c.macitentan_containing_products}</p>
+                                                <div class="form-check ms-4">
+                                                    
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                           id="PregnancyTestYes" checked="{!v.PregnancyYes}" onclick="{!c.PregnancyYesSelect}"></input>
+                                                    
+                                                    <label class="form-check-label ps-4" for="PregnancyTestYes">
+                                                        Yes
+                                                    </label>
+                                                </div>
+                                                <div class="form-check ms-4">
+                                                    
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                           id="PregnancyTestNo" checked="{!v.PregnancyNo}" onclick="{!c.PregnancyNoSelect}"></input>
+                                                    
+                                                    <label class="form-check-label ps-4" for="PregnancyTestNo">
+                                                        No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 3 -->
+                                    <div class="border p-4 mt-3">
+                                        <p class="mb-0"><span>Prescriber Requirements</span></p>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label class="fw-bold m-0">For All Females:</label>
+                                                <div class="list-bullets">
+                                                    <ul class="p-inline-s">
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                I acknowledge that I have counseled the patient (and
+                                                                parent/guardian when appropriate) that {!$Label.c.macitentan_containing_products} is only
+                                                                available through a restricted distribution program under
+                                                                an FDA-required REMS.
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                I will evaluate the patient and agree to document any change or
+                                                                misclassification in reproductive potential status by submitting
+                                                                a <strong><em>Change in Reproductive Potential Status and Pre-Pubertal
+                                                                Annual Verification Form</em></strong> within 10
+                                                                business days of becoming aware of the change
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <label class="fw-bold m-0">For Females of Reproductive Potential</label>
+                                            <div class="col-lg-12">
+                                                <div class="list-bullets">
+                                                    <ul class="p-inline-s">
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                I acknowledge that I have counseled the patient (and
+                                                                parent/guardian when appropriate) on the risks of {!$Label.c.macitentan_containing_products},
+                                                                including the risk of serious birth defects, and that I
+                                                                have reviewed the <strong> <em>Guide for Female Patients</em> </strong> with the
+                                                                patient (and
+                                                                parent/guardian when appropriate).
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                I will order and review pregnancy tests prior to initiation of
+                                                                {!$Label.c.macitentan_containing_products} treatment, monthly during treatment and for one month
+                                                                after stopping treatment in accordance
+                                                                with the {!$Label.c.Macitentan_Containing_Products_REMS}
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="fw-bold m-0">For Pre-Pubertal Females </label>
+                                            <div class="col-lg-12">
+                                                <div class="list-bullets">
+                                                    <ul class="p-inline-s">
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                I acknowledge that I have counseled the patient and
+                                                                parent/guardian on the risks of {!$Label.c.macitentan_containing_products}, including the risk
+                                                                of serious birth defects, and that I have reviewed the
+                                                                <strong> <em>Guide for Female Patients </em></strong> with the patient and
+                                                                parent/guardian.
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                I will evaluate the patient's reproductive potential status,
+                                                                verify reproductive potential status annually for Pre-pubertal
+                                                                Females who are at least eight years of age and
+                                                                older, and agree to report any change or misclassification in
+                                                                reproductive potential status on a <strong><em>Change in Reproductive
+                                                                Potential Status and Pre Pubertal Annual Verification
+                                                                Form</em></strong>  within 10 business days of becoming aware of the change
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 3 -->
+                                   <aura:if isTrue="{!v.isOfficeContact}">
+                                 <aura:set attribute="else">
+                                    <div class="border p-4 mt-3">
+                                        <div class="row">
+                                            <label class="fw-bold m-0">Certification</label>
+                                            <div class="col-lg-1 d-flex justify-content-center align-items-center">
+                                                <div class="mb-3 form-check">
+                                                    
+                                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault"
+                                                           id="Certification" checked="{!v.isCertify}" onclick="{!c.CertifySelect}"></input>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-11 ps-0">
+                                                I certify that the above therapy ordered is medically necessary and
+                                                agree to follow the "Prescriber Requirements" as outlined above. Further,
+                                                I hearby authorize the {!$Label.c.Macitentan_Containing_Products_REMS} sponsors and/or their designated
+                                                representative(s), to act on my behalf for the limited purposes of
+                                                providing this prescription to the certified outpatient pharmacy for
+                                                patient treatment purposes.
+                                            </div>
+                                        </div>
+                                    </div>
+                                          </aura:set>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </div>
+                         <aura:if isTrue="{!v.isFromOfficeContact}">
+                              <div class="card-footer border-0 crd-hdr-m">
+                                <div class="row">
+                        <div class="col-lg-6">
+                                    </div>
+                                  
+                               <div class="col-lg-6">
+                                <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0 " onclick="{!c.handleNext}">SUBMIT</a>
+                                <aura:if isTrue="{!v.isModalOpenRPS}">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0 slds-m-right_medium " onclick="{!c.handleCancel}">CANCEL</a>
+                                </aura:if>   
+                                </div>
+                             </div>
+                             </div>
+                       
+                          <aura:set attribute="else">
+                        <aura:if isTrue="{!v.isOfficeContact}">
+                        <div class="card-footer border-0 crd-hdr-m">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <a name="button-previous" 
+                                           class="btn btn-secondary rounded-0 my-2" onclick="{!c.handlePrevious}">
+                                            <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                        <a style="margin-left:5px;" name="button-restart" 
+                                           class="btn btn-secondary rounded-0 my-2" onclick="{!c.handleRefresh}">RESTART
+                                            <i class="fa fa-repeat"></i></a>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <a name="button-next" 
+                                           class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">SUBMIT</a>
+                                    </div>
+                                </div>
+                         </div>
+                        <aura:set attribute="else">                            
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <a name="button-previous" 
+                                       class="btn btn-secondary rounded-0 my-2" onclick="{!c.handlePrescriberPrevious}">
+                                        <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                    <a style="margin-left:5px;" name="button-restart" 
+                                       class="btn btn-secondary rounded-0 my-2" onclick="{!c.handleRefresh}">RESTART
+                                        <i class="fa fa-repeat"></i></a>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a name="button-next" 
+                                       class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">SUBMIT</a>
+                                </div>
+                            </div>
+                        </div>
+                        </aura:set>
+                       </aura:if>
+                             </aura:set>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</aura:component>

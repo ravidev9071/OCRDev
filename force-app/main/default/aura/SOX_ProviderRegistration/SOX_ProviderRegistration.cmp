@@ -1,0 +1,282 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="isLandingPage" type="Boolean" default="true"/>
+    <aura:attribute name="hideScreen1" type="Boolean" default="false"/>
+    <aura:attribute name="ShowSaveBtn" type="Boolean" default="True" />
+    <aura:attribute name="flag" type="boolean" default="false"/>
+    <aura:if isTrue="{!v.isLandingPage}">
+        <div align="center">
+            <!-- BOXED AREA -->
+            <fieldset class="slds-box slds-theme_default slds-container_large">
+                 <aura:if isTrue="{!v.flag}">
+                <form class="slds-form_stacked">
+                 
+                    <h2 class="rclass1 slds-page-header__title"><span class="rspanclass1">......</span><b>For assistance, please contact the Sodium Oxybate REMS Program Support Team 1-833-709-7367.</b></h2>
+                    <div aura:id="messageIdform" class="message slds-form-element__control slds-hide">Please fill the required fields!</div>
+                    <br></br>
+                    <h2 class="rclass1 slds-page-header__title"><span class="rspanclass1">......</span><b>Prescriber Information</b></h2>
+                  
+                    <table>
+                        <tr>
+                            <td>
+                                <lightning:input aura:id="inpFirstnm" label="First Name"
+                                                 name="firstname"
+                                                 type="text" value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"
+                                                 /> 
+                                
+                            </td>
+                           <td>  
+                                <lightning:input aura:id="inpMddlnm" label="Middle Name"
+                                                 name="lastname"
+                                                 type="text"
+                                                 value=""
+                                                 required="false"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/> 
+                            </td>
+                            <td>  
+                                <lightning:input aura:id="inpLastnm" label="Last Name"
+                                                 name="lastname"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/> 
+                            </td>
+                        </tr>
+                        <tr>
+                        <td>
+	<lightning:input aura:id="inpDEA" label="DEA Number"
+					 name="deaNum"
+					 type="text"
+					 value=""
+					 required="true"
+					 placeholder=""
+					 messageWhenValueMissing="Please fill this field"/>
+</td>
+<td>
+<lightning:input aura:id="inpLicense" label="State License Number"
+					 name="LicNum"
+					 type="text"
+					 value=""
+					 required="true"
+					 placeholder=""
+					 messageWhenValueMissing="Please fill this field"/>
+</td>
+
+<td>
+	<lightning:input aura:id="inpNPI" label="NPI Number"
+					 name="npiNum"
+					 type="text"
+					 value=""
+					 required="true"
+					 placeholder=""
+					 messageWhenValueMissing="Please fill this field"/>
+</td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td>
+                                 <lightning:select aura:id="profDesignation" name="select1" label="Prof. Designation" required="true" class="rclass">
+                                    <option>Select</option>
+                                     <option>MD</option> 
+                                    <option>DO</option>
+                                    <option>PA</option>
+                                    <option>NP</option>	
+                                </lightning:select>  
+                            </td>
+                            <td>
+                                 <lightning:select aura:id="prescSpec" name="select1" label="Prescriber Specialty" required="true" class="rclass">
+                                    <option>Select</option>
+                                     <option>Neurology</option> 
+                                    <option>Sleep Medicine</option>
+                                    <option>Psychiatry</option>
+                                    <option>Other</option>	
+                                </lightning:select>    
+                            </td>  
+                             <td>  
+                                <lightning:input aura:id="inpEmail" label="Email Address"
+                                                 name="email"
+                                                 type="email"
+                                                 required="true"
+                                                 value=""
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <lightning:input aura:id="inpPhone" label="Phone Number"
+                                                 name="Phone"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                           </td>
+                            <td>  
+                                <lightning:select aura:id="selectSubRole" name="select1" label="Preferred Method of Contact" required="true" class="rclass">
+                                    <option>Select</option> 
+                                    <option>Email</option>
+                                    <option>Mail</option>
+                                    <option>Phone</option>
+                                </lightning:select> 
+                            </td>
+                        </tr>
+                        
+                        <br></br>
+                        <h2 class="rclass1 slds-page-header__title"><span class="rspanclass1">......</span><b>Facility Information</b></h2>
+                        <tr>
+                            <td>
+                            <lightning:input aura:id="inpLicense" label="Facility Name"
+                                                     name="LicNum"
+                                                     type="text"
+                                                     value=""
+                                                     required="true"
+                                                     placeholder=""
+                                                     messageWhenValueMissing="Please fill this field"/>
+                            </td>
+                        </tr>
+                        <tr>
+                         
+                        <td>
+                            <lightning:input aura:id="inpStreet" label="Address"
+                                                 name="Addr"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                           </td>
+                           <td>
+                               <lightning:input aura:id="inpCity" label="City"
+                                                 name="City"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                           </td>
+                           <td>
+                            <lightning:input aura:id="inpState" label="State"
+                                                 name="State"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                           </td>
+                        </tr>
+                       
+                        <tr>
+                            <td>
+                               <lightning:input aura:id="inpZip" label="Zip"
+                                                 name="zip"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                           </td>
+                       <!-- <td>
+                            <lightning:input aura:id="inpPhone" label="Phone Number"
+                                                 name="Phone"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                           </td>-->
+                            <td>
+                            <lightning:input aura:id="inpFax" label="Fax"
+                                                 name="FaxN"
+                                                 type="text"
+                                                 value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                            </td>
+                            <!--
+                           <td>
+                               <lightning:input aura:id="inpExt" label="Ext"
+                                                 name="Ext"
+                                                 type="text"
+                                                 value=""
+                                                 required="false"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/>
+                           </td>
+-->
+                        </tr>
+                        <!--<tr>
+                        
+                            <td>  
+                                <lightning:input aura:id="inpEmail" label="Email Address"
+                                                 name="email"
+                                                 type="email"
+                                                 required="true"
+                                                 value=""
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"/> 
+                            </td>
+                            <td>  
+                                <lightning:select aura:id="selectSubRole" name="select1" label="Preferred Method of Contact" required="true" class="rclass">
+                                    <option>Select</option> 
+                                    <option>Email</option>
+                                    <option>Mail</option>
+                                    <option>Phone</option>
+                                </lightning:select> 
+                            </td>
+                        </tr>-->
+                        
+                     <!--
+                         <tr>
+                             <td>
+                             <lightning:input aura:id="inpFirstnm" label="Office Contact Name"
+                                                 name="OffConname"
+                                                 type="text" value=""
+                                                 required="true"
+                                                 placeholder=""
+                                                 messageWhenValueMissing="Please fill this field"
+                                                 />
+                                
+                                 </td>
+                        <td> 
+                                <lightning:input aura:id="check" label="Office Contact Phone"
+                                                 name="phone"
+                                                 type="phone"
+                                                 required="false"
+                                                 value=""
+                                                 placeholder=""
+                                                 pattern="^(\s*\d\s*){10}$" maxlength="10" minlength="10" 
+                                                 messageWhenPatternMismatch="Phone number should contain 10 digits"
+                                                 messageWhenBadInput='Phone number should contain 10 digits'
+                                                 messageWhenValueMissing="Please fill this field"/> 
+                            </td>
+                        </tr>  -->                    
+                    </table>
+                    <div class="slds-p-horizontal--x-small slds-m-top_medium slds-float_right">
+                                        <lightning:button class="btnFont" variant="brand" name="DupCheck" label="Check for Duplicates" disabled="false" onclick="{!c.CheckForDuplicates}"/>
+                        <aura:if isTrue="{!v.ShowSaveBtn}" >
+                                                    <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="Save"
+                                                                      label="Save" onclick="{!c.CheckForDuplicates}" />
+                                                </aura:if> 
+                                </div>
+                   
+                </form>
+                      <aura:set attribute="else">
+                <p class="headerFont"><b>Please contact the Sodium Oxybate REMS at 1-833-769-7367 to initiate pharmacy participant enrollment or for additional information.</b> </p>
+        </aura:set>
+                </aura:if>
+                
+            </fieldset> 
+        </div>
+    </aura:if>
+    
+
+    
+</aura:component>

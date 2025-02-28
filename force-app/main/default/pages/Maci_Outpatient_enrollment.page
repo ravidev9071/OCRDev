@@ -1,0 +1,567 @@
+<apex:page applyBodyTag="false" showHeader="false" renderAs="PDF" controller="SYN_OutpatientPharmacyFormController" >
+    
+    <head>
+        <apex:variable var="SelectedCredentials" value="{!ac.Credentials__c}" />
+        
+        <style>
+            body {
+                margin-top: 0px !important;
+                font-family: Dialog !important;
+                padding-top:0px !important;
+            }
+            h6{
+                font-weight:500 !important;
+            }
+            p{
+                text-align:justify;
+            }
+
+            @page {
+                margin: 0  !important;
+                size: letter;
+                font-family: Dialog !important;
+                padding-top:0px !important;
+            }
+        </style>
+    </head>
+
+     <apex:form style="margin-top:0px !important; padding-top:0px !important;height:auto;">
+
+        <body>
+
+            <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;width: 1140px;">
+                        <h5 style="margin: 0;font-size: 16px;font-weight: 800;">Macitentan REMS Outpatient Pharmacy Enrollment Form</h5>
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 12px;text-align: left;">To enroll and become certified in the REMS, complete this form <u>online</u> at
+                            <br></br>
+                            www.MacitentanREMS.com <b>OR</b> <u>fax</u> this completed form to 1-833-681-0003.
+                            <br></br>
+                            Contact the Macitentan REMS at 1-888-572-2934 with any questions.
+                        </p>
+                    </td>
+                    <td>
+                        <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"
+                            style="width: 168px;height: 50px; !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                        <!-- <img src="macii.jpg" class="img-fluid" style="width: 168px;"></img> -->
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" style="margin:0 !important; padding:0px !important;">
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 12px;text-align:justify;">Due to the risk of embryo-fetal
+                            toxicity for female patients, macitentan is available only through a restricted program
+                            called the Macitentan REMS
+                            <br></br>
+                            (Risk Evaluation and Mitigation Strategy). Outpatient pharmacies that wish to stock this
+                            product must certify by enrolling in the Macitentan REMS
+                            <br></br>
+                            and agree to comply with the requirements of the program. An Authorized Representative must
+                            complete and submit this form on behalf of the
+                            outpatient pharmacy.</p>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #92D14F;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 16px;font-weight: 800;">Outpatient
+                            Pharmacy Information (please print)</h5>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <apex:outputText value="{!ac.SYN_Pharmacy__r.Name}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                         <div style="
+                            border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 13px;
+                            
+                            "></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Name</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                         <apex:outputText value="{!ac.US_WSREMS__NPI__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                            border-right: 0!important;
+                            border-top: 0!important;
+                            border-color: #212529!important;
+                            border-bottom:1px solid #000;
+                            width: 100%;
+                            padding-top: 0;
+                            padding-bottom: 4px;
+                            font-size: 13px;
+                            
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">National Provider
+                            Identifier(NPI#)</h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <apex:outputText value="{!ac.SYN_Street_Address__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Address</h6>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;">
+                        <apex:outputText value="{!ac.US_WSREMS__City__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">City</h6>
+                    </td>
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;">
+                        <apex:outputText value="{!ac.US_WSREMS__State__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">State</h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        <apex:outputText value="{!ac.SYN_Zip_Code__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">ZIP</h6>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;">
+                        <apex:outputText value="{!ac.US_WSREMS__Phone_Pharmacyaddress__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Phone# </h6>
+                    </td>
+                    <td style="padding: 0 8px;">
+                        <apex:outputText value="{!ac.US_WSREMS__Fax__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Fax# </h6>
+                    </td>
+                </tr>
+            </table>
+
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #92D14F;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 800;">Authorized
+                            Representative Information (please print)</h5>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+
+                <td style="position:relative;top:45px;padding: 0 8px;border-right: 45px solid #fff;width:50%;">
+                   <apex:outputText value="{!ac.SYN_Authorized_Rep__r.Name}" style="margin-top:10px;margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                    <div class="frm-ctrl" style="
+                    border-left: 0!important;
+                    border-right: 0!important;
+                    border-top: 0!important;
+                    border-color: #212529!important;
+                    border-bottom:1px solid #000;
+                    width: 100%;
+                    padding-top: 0;
+                    padding-bottom: 4px;
+                    font-size: 13px;
+                                                
+                    " value=""></div>
+                    <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Name</h6>
+                </td>
+
+                <!-- <td style="text-align: justify;FONT-SIZE: 13px; padding:0px 20px 2px 0px; margin-bottom: 0;">
+                    <hr
+                        style="border: none; border-top: 1px solid black;height: 0.5px; width: 270px; margin: 10px 0;margin-bottom: 0px;border-size:5px" />
+                    Name
+                </td> -->
+
+                <td style="position:relative;top:-27px;width:50%;text-align: justify;FONT-SIZE: 13px;border-right: 1px solid #ffff;margin-bottom: 10px;">                   
+                    Credentials
+                 </td>
+            </table>
+            <table style="position:relative;top:-17px;" width="100%">
+
+                <td style="padding: 0 8px;border-right:320px solid #fff;">
+
+                    <h6 style="margin: 0;padding: 0px 20px 2px 20px;font-size: 13px;"></h6>
+                </td>
+                <td style="FONT-SIZE:13px;margin-top: 0;">
+
+                    <img src="{!IF(SelectedCredentials == 'RPh', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    RPh
+
+                </td>
+                <td style="padding-right: 10px;FONT-SIZE:13px;margin-top: 0;">
+
+                    <img src="{!IF(SelectedCredentials == 'PharmD', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    PharmD
+                </td>
+                <td style="padding-right: 10px;FONT-SIZE:13px;margin-top: 0;">
+
+                    <img src="{!IF(SelectedCredentials == 'BCPS', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                   BCPS
+                </td>
+                <td style="padding-right: 10px;FONT-SIZE:13px;margin-top: 0;">
+
+                    <img src="{!IF(SelectedCredentials == 'Other', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    Other:
+                </td>
+                <td>
+                    <apex:outputText value="" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                    <hr
+                        style="border: none; border-top: 1px solid black;height: 0.5px; width: 125px; margin: 10px 0; margin-bottom: 0px;border-size:5px" />
+                </td>
+
+            </table>
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;width:50%;">
+                        <apex:outputText value="{!ac.SYN_Job_Title__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Position/Title</h6>
+                    </td>
+                    <td style="padding: 0 8px;width:50%;">
+                        <apex:outputText value="{!ac.US_WSREMS__Email__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Authorized Representative
+                            email</h6>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;width:50%;">
+                       <apex:outputText value="{!ac.US_WSREMS__Phone__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Authorized Representative
+                            Phone # </h6>
+                    </td>
+                    <td style="padding: 0 8px;width:50%;">
+                        <apex:outputText value="{!ac.Fax_Secondary_Office__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" />
+                        <div class="frm-ctrl" style="
+                        border-left: 0!important;
+                        border-right: 0!important;
+                        border-top: 0!important;
+                        border-color: #212529!important;
+                        border-bottom:1px solid #000;
+                        width: 100%;
+                        padding-top: 0;
+                        padding-bottom: 4px;
+                        font-size: 13px;
+                        
+                        " value=""></div>
+                        <h6 style="margin: 0;padding: 0px 20px 2px 0px;font-size: 13px;">Fax</h6>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" style="margin: 6px 0px 0px 0px;">
+                <tr style="background-color: #92D14F;">
+                    <td style="padding: 0 8px;">
+                        <h5 style="margin: 0;padding: 3px 20px 3px 1px;font-size: 14px;font-weight: 800;">Authorized
+                            Representative Agreement</h5>
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">I am the authorized
+                            representative designated by my outpatient pharmacy to coordinate the activities of the
+                            Macitentan REMS. <b>Therefore, I must:</b></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0 8px;">
+
+                        <table>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Carry out the
+                                        certification process and
+                                        oversee implementation of and compliance with the REMS on behalf of the
+                                        pharmacy</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Review the Prescribing Information and <i>Prescriber and Pharmacy Guide</i>.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Certify by
+                                        enrolling in
+                                        the REMS by
+                                        completing the <i>Outpatient Pharmacy Enrollment Form and submitting</i> it to
+                                        the
+                                        REMS.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Train all relevant
+                                        staff
+                                        involved in
+                                        dispensing on the REMS requirements, procedures, and REMS materials.</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 13px;"><b>Before dispensing, the
+                                outpatient pharmacy must:</b></p>
+
+                        <table>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 33px;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Obtain a REMS
+                                        Dispense
+                                        Authorization (RDA) from the Macitentan REMS Coordinating Center or the
+                                        Macitentan REMS website that verifies female patients are
+                                        enrolled, the reproductive status has not changed, the prescriber is certified,
+                                        and pregnancy test is completed for females of reproductive potential - or the
+                                        prescriber authorizes the dispensing.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 33px;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Counsel females of
+                                        reproductive potential on the risk of embryo-fetal toxicity, the need to use
+                                        reliable contraception during treatment and for one month after
+                                        stopping treatment, to get monthly pregnancy tests, and to inform her prescriber
+                                        immediately if she misses a menstrual period or suspects she is pregnant</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Dispense no more
+                                        than a
+                                        30-days' supply for females of reproductive potential</p>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 13px;"><b>To maintain certification to
+                                dispense:</b></p>
+
+                        <table>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 17px;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Have a new
+                                        authorized
+                                        representative certify
+                                        by enrolling in the REMS by completing the
+                                        Outpatient Pharmacy Enrollment Form if the authorized representative
+                                        changes.</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;"><b>At all times, the outpatient
+                                pharmacy must:</b></p>
+
+                        <table>
+                            <tr style="line-height: 1.1;">
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Report pregnancies
+                                        to the REMS.</p>
+                                </td>
+                            </tr>
+                            <tr style="line-height: 1.1;">
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Not distribute,
+                                        transfer, loan, or sell
+                                        macitentan, except to certified dispensers.</p>
+                                </td>
+                            </tr>
+                            <tr style="line-height: 1.1;">
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Maintain and submit
+                                        records of daily product
+                                        dispensing data for all females.</p>
+                                </td>
+                            </tr>
+                            <tr style="line-height: 1.1;">
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Maintain records
+                                        that all processes and
+                                        procedures are in place and being followed.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;">•</td>
+                                <td style="margin: 0;padding-bottom: 0;padding-top: 0;padding-left: 15px;">
+                                    <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;">Comply with audits
+                                        carried out by the
+                                        manufacturers or a third party acting on behalf of the manufacturers to ensure
+                                        that
+                                        all processes and procedures are in
+                                        place and are being followed</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+            <table width="100%">
+                <tr>
+                    <td style="font-size: 14px;font-family: Dialog !important;">Signature</td>
+                    <td>
+                         <apex:outputText value="{!ac.US_WSREMS__Signature__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" /><br />
+                        <hr
+                        style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 290px;" />
+                    </td>
+                    <td style="font-size: 14px;font-family: Dialog !important;">Date</td>
+                    <td>
+                        <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;"><apex:param value="{!ac.US_WSREMS__Date__c}"/></apex:outputText>
+                        <hr
+                       style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 410px;" />
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <table width="100%">
+                <tr>
+                    <td style="padding: 0 8px;border-right: 45px solid #fff;">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;"><b>Please visit
+                                www.MacitentanREMS.com or call 1-888-572-2934 for more information about the Macitentan
+                                REMS</b></p>
+                    </td>
+                </tr>
+            </table>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+        </body>
+    </apex:form>
+</apex:page>

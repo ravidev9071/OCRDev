@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event to inform parent component to switch on/off the spinner">
+    <aura:attribute type="Boolean" name="on" default="false" />
+    <aura:attribute type="Boolean" name="off" default="false" />
+</aura:event>

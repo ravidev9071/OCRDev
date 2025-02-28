@@ -1,0 +1,13 @@
+@media (min-width: 48em) {
+    .THIS .slds-modal__container {
+        margin: 0 auto;
+        width: 50%;
+        /* max-width: 40rem; */
+        min-width: 60rem;
+    }
+}
+
+.THIS .ao-banner {
+    font-size: 1rem;
+    padding: 1rem;
+}

@@ -1,0 +1,108 @@
+<template>
+    <template if:false={showAlreadyExistsMsg}>
+        <!--BEGIN: Search -->
+        <div class="frmHeadingSmall">
+            Prescribing Healthcare
+            Provider Information
+        </div>
+        <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-medium-size_9-of-12 slds-large-size_6-of-12">
+                <lightning-input class="search" value={searchValue} label=" Prescriber NPI" onchange={searchKeyword}
+                    required="true" disabled={disabled} maxlength="10" minlength="10"
+                    message-when-too-long="Please enter valid NPI" message-when-too-short="Please enter valid NPI"
+                    onmouseover={handleMouseIn} onmouseout={handleMouseOut}
+                    message-when-value-missing=" "></lightning-input>
+                <p>{messageNPI}</p>
+            </div>
+
+            <div class="slds-col slds-wrap slds-size_1-of-4 search-btn slds-m-top_large">
+                <lightning-button label="Continue" class="slds-button_brand" onclick={handleSearchKeyword}
+                    variant="brand" disabled={disabled}></lightning-button>
+            </div>
+        </div>
+        <!--END: Search -->
+
+        <template lwc:if={displayInvalidNpi}>
+            <div class="slds-text-color_error">{label.DocumentFieldWM}</div>
+
+        </template>
+
+    </template>
+
+    <div class="slds-m-bottom_small">
+        <template if:true={showDetails}>
+            <div class="slds-border_top slds-m-bottom_small">
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input class="validate" value={npiRecord.firstName} label=" First Name" name="firstName"
+                        type="text" variant="standard" required="true" onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input class="validate" value={npiRecord.lastName} label=" Last Name" name="lastName"
+                        type="text" variant="standard" required="true" onchange={handleChange}></lightning-input>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input class="validate" value={DEA} label=" DEA Number" name="DEANUmber" type="text"
+                        variant="standard" maxlength="9" required="true" onchange={handleChange}></lightning-input>
+                </div>
+            </div>
+            <div class="slds-border_top slds-m-bottom_small">
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-medium-size_6-of-12">
+
+                    <lightning-input class="validate" value={npiRecord.email} label=" Email" name="email" type="email"
+                        variant="standard" required="true" onchange={handleChangeEmail}></lightning-input>
+                </div>
+                <div class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input class="search slds-form-element submitData" name="PersonEmail" type="email"
+                        pattern={emailPattern} message-when-pattern-mismatch="Enter a valid confirm email address"
+                        value={confirmEmail} onchange={handlConfirmEmailChange} label=" Confirm Email Address"
+                        required="true">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input class="validate" value={npiRecord.phone} label=" Phone" name="phone" type="tel"
+                        variant="standard" required="true" maxlength="10" minlength="10"
+                        onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input value={npiRecord.fax} label=" Fax" name="fax" class="validate" required="true"
+                        type="tel" variant="standard" maxlength="10" minlength="10"
+                        onchange={handleChange}></lightning-input>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-medium-size_8-of-12">
+                    <lightning-radio-group name="PMC" label=" Preferred Method of Communication" options={options}
+                        value={preferedContactMethodVlaue} onchange={handleChange} class="validate" type="radio"
+                        required></lightning-radio-group>
+                </div>
+            </div>
+            <br />
+
+        </template>
+    </div>
+    <template if:true={showMsg}>
+        <!-- <div class="message">{message}</div> -->
+        <div class="slds-text-color_error">{message}</div>
+    </template>
+
+    <div slot="footer">
+        <template if:true={showDetails}>
+            <lightning-button label="Submit" onclick={handleSubmitKeyword} variant="brand"
+                class="submit-button"></lightning-button>
+
+        </template>
+    </div>
+    <template if:true={showLoading}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+</template>

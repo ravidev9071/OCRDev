@@ -1,0 +1,13 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens" >
+    <aura:attribute name="portalType" type="String" />
+    <aura:attribute name="ButtonName" type="String" />
+	  <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+     
+     
+      <div class="slds-float_right">
+         <lightning:button aura:id="BACK" label="{!v.ButtonName}"
+                 variant="Brand" onclick="{!c.onButtonPressed}" />
+        
+      </div>
+    </div>
+</aura:component>

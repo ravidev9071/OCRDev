@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="ShowRecTypesOption" type="Boolean"/>
+    <aura:attribute name="ShowRecType" type="Boolean"/>
+</aura:event>

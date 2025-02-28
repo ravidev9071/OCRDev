@@ -1,0 +1,189 @@
+<apex:page controller="SYN_SearchCustomerOnInboundCall"  action="{!searchAccount1}" id="Inboundpage" >
+    <script src ="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"/>   
+    <apex:pageMessages ></apex:pageMessages>
+    
+    <apex:includeScript value="/support/console/54.0/integration.js"/>
+    
+    <apex:form id="InboundCall">
+        <apex:inputHidden id="selectedAccountId" value="{!selectedAcc}" ></apex:inputHidden>
+        <apex:inputHidden id="selectedAccIdAuto" value="{!selectedAccAuto}" ></apex:inputHidden>
+        <apex:pageBlock title="Inbound Call Participant Search" id="searchPB">  
+            <apex:pageBlockSection columns="2" id="searchPBS" >
+                <apex:inputText value="{!searchKeyName}" html-placeholder="Search by Name"/>
+                <apex:inputText value="{!searchKeyPhone}" html-placeholder="Search by Phone"/>
+                <apex:inputText value="{!searchKeyEmail}" html-placeholder="Search by Email"/>
+               <!-- <apex:input type="date"   value="{!searchKeyDOB}" label="Search by DOB" lang="en-us" />-->
+                
+               <apex:inputField value="{!accObj.US_WSREMS__DOB__c}" id="calYearPicker" html-placeholder="Search by DOB" label="" showDatePicker="true" style="width:100px"/>
+                
+                <apex:inputText value="{!searchKeyDEA}" html-placeholder="Search by DEA"/>
+                <apex:inputText value="{!searchKeyNPI}" html-placeholder="Search by NPI"/>
+                
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Search" onClick="search();return false;"/>
+                 <apex:commandButton value="Create New Account" action="{!createAccount}"/>
+            </apex:pageBlockButtons>
+            <apex:actionFunction name="search" action="{!search}" reRender="topTable"/>
+        </apex:pageBlock>
+        <apex:pageBlock title="Account Search Results" id="topTable">
+          <h1>
+              <apex:outputText value="No matching accounts" rendered="{!accwrapperList.size==0}" />
+            </h1>  
+            <apex:pageBlockTable value="{!accwrapperList}" var="a"  id="pbId" rendered="{!hasRecords}">
+                 
+                <apex:column >
+                    
+                    <apex:outputpanel >
+                           <input  type="radio" name="actid"  onclick="captureAccountId('{!a.accRecord.id}')" />                        
+                  <!--  <apex:actionSupport event="onclick" action="{!selectcon}" reRender="pbId"  >  
+                         
+                        <apex:param name="accId" value="{!a.accRecord.id}"  >
+                        </apex:param>
+                    </apex:actionSupport>-->
+               
+                    </apex:outputpanel>
+            </apex:column>
+                <apex:column >
+                <apex:outputLink value="/{!a.accRecord.id}" >{!a.accRecord.Name}</apex:outputLink>
+            </apex:column>
+           
+            <!--  <apex:column headerValue="REMS Program" value="{!a.accRecord.US_WSREMS__REMS_Program__r.Name}"/> -->
+            <apex:column headerValue="Type" value="{!a.accRecord.RecordType.name}"/>
+            <apex:column headerValue="Status" value="{!a.accRecord.US_WSREMS__Status__c}"/>
+            <apex:column headerValue="First Name" value="{!a.accRecord.FirstName}"/>
+            <apex:column headerValue="Last Name" value="{!a.accRecord.LastName}"/>
+            <apex:column headerValue="Phone" value="{!a.accRecord.Phone}"/>
+            <apex:column headerValue="DOB" value="{!a.accRecord.US_WSREMS__DOB__c}"/>
+            
+            <apex:column headerValue="DEA" value="{!a.accRecord.US_WSREMS__DEA__c}"/>
+            <apex:column headerValue="Street" value="{!a.accRecord.ShippingStreet}"/>
+            <apex:column headerValue="City" value="{!a.accRecord.ShippingCity}"/>
+            <apex:column headerValue="State" value="{!a.accRecord.ShippingState}"/>
+            <apex:column headerValue="Zip" value="{!a.accRecord.ShippingPostalCode}"/>
+            
+        </apex:pageBlockTable>
+        
+        <!-- <div align="center" draggable="false" >
+<apex:commandButton value="Next" action="{!showSelected}"/>
+</div>-->
+        <apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Next"  onClick="showSelected();return false;" reRender="none"/>
+        </apex:pageBlockButtons>
+        
+    </apex:pageBlock>    
+        <apex:outputText value="No matching accounts" rendered="{!accountList.size==0}" />
+    <apex:pageBlock title="Phone Number Match Search Results" id="pb" rendered="{!accountList.size>0}">  
+        <apex:pageBlockTable value="{!accountList}" var="actObj">
+          
+            <apex:column > 
+                
+                
+                
+                <apex:outputpanel >
+                      <input  type="radio" name="actautoid"  onclick="captureAccountAutoId('{!actObj.cAccount.Id}')" /> 
+                    <!--<apex:actionsupport action="{!selectcon_Auto}" event="onclick" rerender="pb">  
+                        <input type="radio" />     
+                        <apex:param name="index_auto" value="{!cnt_auto}"/>
+                        <apex:param name="conid_auto" value="{!actObj.cAccount.Id}"/>
+                    </apex:actionsupport>-->
+                </apex:outputpanel>
+                
+            </apex:column>
+            <apex:column >
+                <apex:outputLink value="/{!actObj.cAccount.id}" >{!actObj.cAccount.Name}</apex:outputLink>
+            </apex:column>
+           
+             <!--  <apex:column headerValue="REMS Program" value="{!actObj.cAccount.US_WSREMS__REMS_Program__r.Name}"/> -->
+             <apex:column headerValue="Type" value="{!actObj.cAccount.RecordType.name}"/>
+             <apex:column headerValue="Status" value="{!actObj.cAccount.US_WSREMS__Status__c}"/>
+            <apex:column headerValue="First Name" value="{!actObj.cAccount.FirstName}"/>
+            <apex:column headerValue="Last Name" value="{!actObj.cAccount.LastName}"/>
+            <apex:column headerValue="Phone" value="{!actObj.cAccount.Phone}"/>
+            <apex:column headerValue="DOB" value="{!actObj.cAccount.US_WSREMS__DOB__c}"/>
+            <apex:column headerValue="DEA" value="{!actObj.cAccount.US_WSREMS__DEA__c}"/>
+            <apex:column headerValue="Street" value="{!actObj.cAccount.ShippingStreet}"/>
+            <apex:column headerValue="City" value="{!actObj.cAccount.ShippingCity}"/>
+            <apex:column headerValue="State" value="{!actObj.cAccount.ShippingState}"/>
+            <apex:column headerValue="Zip" value="{!actObj.cAccount.ShippingPostalCode}"/>
+        </apex:pageBlockTable> 
+        <apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Next" onClick="createService();return false;" reRender="none"/>
+        </apex:pageBlockButtons> 
+    </apex:pageBlock>
+    <apex:actionFunction name="createService" action="{!createService}" rerender="none" onComplete="testOpenSubtabByPrimaryTabName('{!caseId}','{!serviceId}','{!caseNumber}','{!serviceNumber}');return false;"/>
+    <apex:actionFunction name="showSelected" action="{!showSelected}" rerender="none" onComplete="testOpenSubtabByPrimaryTabNameSearch('{!caseIdSec}','{!serviceIdSec}','{!caseNumberSec}','{!serviceNumberSec}');return false;"/>    
+</apex:form>
+    <script >
+     $(window).load(function (){
+    var d = new Date();
+    var vdate = document.getElementById("Inboundpage:InboundCall:searchPB:searchPBS:calYearPicker").innerHTML = d.getFullYear();
+      $("#calYearPicker").html('')
+      for(var i=1950; i<= vdate+1; i++){
+        $("#calYearPicker").append("<option value= '"+ i +"'>"+i+"</option>")
+      }
+    });
+    
+    /* function createAccount(){
+        alert('Hi');
+        sforce.console.openPrimaryTab(null, '/lightning/cmp/c__NewAccountViaCase', true,'New Account' );
+        }*/
+     function testOpenPrimaryTab() {
+            
+       
+     }
+     var caseIdVar = '';
+     var caseNumberVar = '';
+     function testOpenSubtabByPrimaryTabName(caseId,serviceId,caseNumber,serviceNumber) {
+            //First open a primary tab by name        
+         caseIdVar = caseId;
+         caseNumberVar= caseNumber;
+         sforce.console.openPrimaryTab(null, '/'+serviceId, true, serviceNumber, openSubtab, serviceNumber);
+        
+        }
+        
+        var openSubtab = function openSubtab(result) {            
+            // alert('In Tab');
+            var primaryTabId = result.id;
+            sforce.console.openSubtab(primaryTabId , '/lightning/cmp/c__SYN_InboundOutboundCaseCmp?c__caserecordId='+caseIdVar, true, 
+                caseNumberVar, null, null, caseNumberVar);
+           
+        };
+    
+     var caseIdVarsearch = '';
+     var caseNumberVarsearch = '';
+     function testOpenSubtabByPrimaryTabNameSearch(caseIdsec,serviceIdsec,caseNumbersec,serviceNumbersec) {
+            //First open a primary tab by name    
+        
+         caseIdVarsearch = caseIdsec;
+         caseNumberVarsearch = caseNumbersec;
+         
+         sforce.console.openPrimaryTab(null, '/'+serviceIdsec, true, serviceNumbersec, openSubtabSec, serviceNumbersec);
+         
+        
+        }
+        
+     var openSubtabSec = function openSubtabSec(result) {            
+         
+         console.log('result'+result.id);
+           var primaryTabIdsec = result.id;
+            sforce.console.openSubtab(primaryTabIdsec , '/lightning/cmp/c__SYN_InboundOutboundCaseCmp?c__caserecordId='+caseIdVarsearch, true, 
+                caseNumberVarsearch, null, null, caseNumberVarsearch);
+           
+        };
+    
+    
+    
+        
+   
+        
+   
+    function captureAccountId(selectedAccId){
+        document.getElementById('Inboundpage:InboundCall:selectedAccountId').value=selectedAccId;
+        }
+    function captureAccountAutoId(selectedAccAutoId){
+        document.getElementById('Inboundpage:InboundCall:selectedAccIdAuto').value=selectedAccAutoId;
+        }
+    
+    </script>
+</apex:page>

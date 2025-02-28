@@ -1,0 +1,300 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 13/09/2022
+Description   :- Created for Maci Portal -> Pharmacy Manage Home Page { Middle context }
+-->
+
+
+<aura:component controller="SYN_ManagePharamcyController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<!-- Init Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="resourceList" type="List" default=""/>
+    <aura:attribute name="recordTypeDeveloperName" type="String" default=""/>
+    <aura:attribute name="programId" type="String" default=""/>
+    <aura:attribute name="ProgramName" type="String" default=""/>
+    <aura:attribute name="portalRole" type="String" default=""/>
+    <aura:attribute name="pharmacist" type="Account" /> 
+	<aura:attribute name="pharmacy" type="Account" />
+   <!-- table related Attributes -->
+    <aura:attribute name="allData" type="List" />
+    <aura:attribute name="filteredData" type="List" />
+    <aura:attribute name="pageSize" type="Integer" default="10" />
+    <aura:attribute name="pageSizeOptions" type="Integer[]" default="10,15,20,25,50,100" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="affiliationList" type="US_WSREMS__Affiliation__c[]" />
+    <aura:attribute name="searchTerm" type="String"/>
+    <aura:attribute name="showNextbuttonbar" type="Boolean" default="false" />
+    <aura:attribute name="pharmacyPhone" type="String"/>
+    <aura:attribute name="showActions" type="Boolean" default="true" />
+    <aura:attribute name="isModalOpen" type="Boolean" default="false" />
+    <aura:attribute name="isReactivateModalOpen" type="Boolean" default="false" />
+    <aura:attribute name="deleterecordid" type="String"/>
+    <!--RT 2376 changes -->
+    <aura:attribute name="reActivateUserName" type="String"/>
+    <aura:attribute name="reActivateUserId" type="String"/>
+     <!--RT 2376 changes -->
+    <aura:attribute name="showInviteAuthorizedRepButton" type="Boolean" default="true" />
+    
+    <lightning:navigation aura:id="navigation"/>
+    
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: center;height:150vh;">
+        <aura:if isTrue="{! v.isLoading }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+        <div class="container-fluid px-5 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card p-0 rounded-0 border-0 h-100">
+                        <div class="card-header border-0 crd-hdr-m p-0">
+                            <div class="row px-4 py-3 d-flex justify-content-center align-items-center">
+                                <div class="col-7">
+                                    <div class=" d-flex align-items-center">
+                                        <span class="text-theme pe-2">  <img src="/resource/MaciImages/img/rx1.png" alt="img" style="margin: 6px;width:29px;"></img></span>
+                                        <div>
+                                        <h4 class="mb-0 ps-2 text-head-main"> {!v.pharmacy.Name}</h4>
+                                        <span name="Pharmacy-NPI-Number"  class="text-black-50 fw-bold ms-2">NPI: {!v.pharmacy.US_WSREMS__NPI__c}</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-5 text-end">
+                                    <span class="fs-6 text-muted">Program Status:&nbsp; <span
+                                            class="text-theme fw-bold">Enrolled as of <span name="enrolled-number" id="enrolled-number"><lightning:formattedDateTime timeZone="GMT" value="{!v.pharmacist.Date_Enrolled__c}" month="numeric" day="numeric" year="numeric" /></span> <i
+                                                class="fa fa-check-circle ps-1"></i></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-4 llc-dv">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <h5 class="fw-bold">Manage Pharmacy</h5>
+
+                                    <h5 class="mt-3 mb-3 fw-bold">Outpatient Pharmacy</h5>
+
+                                    <div class="row mb-1 l-29">
+                                        <div class="col-1 text-end pe-0"><i class="fa fa-phone me-3"></i></div>
+                                        <div class="col-11 ps-1 pe-4">
+                                            <span class="text-uppercase">{!v.pharmacyPhone} <br></br>
+                                            {!v.pharmacy.Address_1_Secondary_Office__c}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2 l-29">
+                                        <div class="col-1 text-end pe-0"><i class="fa fa-id-card-o pe-2"></i></div>
+                                        <div class="col-11 ps-1">
+                                            <span class="text-uppercase">Pharmacy Enrollments <br></br> {!v.pharmacy.City_Secondary_Office__c}, {!v.pharmacy.State_Secondary_Office__c}&nbsp;{!v.pharmacy.Zip_Secondary_Office__c}</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row d-flex justify-content-center align-items-center cnt-d">
+                                        <div class="col-lg-12">
+                                            <div class="card p-0 rounded-0 border-0">
+                                                <div class="card-header text-center dark-header">
+                                                    <h5 class="card-title mt-2">ASSIGNED PHARMACISTS 
+                                                        <a class="link-refresh" onclick="{!c.refreshtable}">REFRESH</a>
+                                                    </h5>
+                                                </div>
+                                                <div class="card-body px-0 pt-0 pb-0">
+                                                    <table class="table table-striped tbl-one mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Current Status</th>
+                                                                <th>Status Date</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            
+                                                            <aura:iteration items="{!v.affiliationList}" var="a" indexVar="index">
+                                                                
+                                                                <tr>
+                                                                    <td>
+                                                                        <aura:if isTrue="{!(a.US_WSREMS__UserType__c  == 'Authorized Representative')}">
+                                                                            	<img src="{!$Resource.MaciImages + '/img/authorized-icon.png'}" class="img-fluid" style="width: 11px;"></img>
+                                                                            <aura:set attribute="else">
+                                                                             	<img src="{!$Resource.MaciImages + '/img/staff.png'}" class="img-fluid"  style="width: 11px;"></img>
+                                                                            </aura:set>
+                                                                        </aura:if> 
+                                                                        &nbsp;{!a.US_WSREMS__Pharmacy_User__r.Name}
+                                                                    </td>
+                                                                    <td>{!a.Status__c}</td>
+                                                                    <aura:if isTrue="{!a.Status__c != 'Pending'}">
+                                                                    <td><lightning:formattedDateTime value="{!a.US_WSREMS__Start_Date__c}" timeZone="GMT" month="numeric" day="numeric" year="numeric" /></td>
+                                                                    <aura:set attribute="else">
+                                                                        <td></td>
+                                                                    </aura:set>
+                                                                    </aura:if>
+                                                                    <td>
+                                                                        <aura:if isTrue="{!v.showActions}">
+                                                                            <aura:if isTrue="{!AND(a.US_WSREMS__Pharmacy_User__c != v.pharmacist.Id, a.Status__c != 'Inactive',v.showActions)}"> 
+                                                                                <lightning:input type="text" aura:id="removePharmacyId" style="display:none" value="{!a.Id}"/>
+                                                                                <aura:if isTrue="{!a.Status__c == 'Pending'}"> 
+                                                                                    <i class="fa fa-envelope customcursor" style="font-size:12px !important;" onclick="{!c.reSendInvitation}" data-record="{!index}" data-row="{!a.Id}"></i> &nbsp;     
+                                                                                </aura:if>
+                                                                                <aura:if isTrue="{!a.AR_Category__c != 'Primary'}"> 
+                                                                                    <i class="fa fa-trash customcursor" onclick="{!c.showConfirmMessage}" data-row="{!a.Id}"></i>
+                                                                                </aura:if>
+                                                                                
+                                                                            </aura:if> 
+                                                                            <!--RT25-09-24 - 2376 changes -->
+                                                                            <aura:if isTrue="{!AND(a.US_WSREMS__Pharmacy_User__c != v.pharmacist.Id, a.Status__c == 'Inactive')}">
+                                                                                <aura:if isTrue="{!(a.US_WSREMS__UserType__c  == 'Pharmacy Staff')}">
+                                                                                    <a onclick="{!c.showReactivateConfirmation}" data-id="{!a.Id}" data-row="{!a.US_WSREMS__Pharmacy_User__r.Name}"><img src="{!$Resource.MaciImages + '/img/clipboard.png'}" alt="img" style="width: 9px; margin-top: -4px;margin-right: 1px; "></img></a>  
+                                                                                </aura:if>
+                                                                            </aura:if>
+                                                                            <!-- RT  changes -->
+                                                                        </aura:if>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                            </aura:iteration>
+                                                        </tbody>
+                                                    </table>
+                                                    <table class="table tbl-two mb-0">
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td  class="fs-13 w-21"><img src="{!$Resource.MaciImages + '/img/authorized-icon.png'}" class="img-fluid w-11"></img> Authorized Representative</td>
+                                                                <td  class="fs-13 w-14 px-0"><img src="{!$Resource.MaciImages + '/img/staff.png'}" class="img-fluid w-11"></img> Pharmacy Staff</td>
+                                                                <td  class="fs-13 px-0"><i class="fa fa-envelope" style="font-size:12px !important;"></i> Resend Invite</td>
+                                                                <td class="fs-13 text-end"><img src="{!$Resource.MaciImages + '/img/clipboard.png'}" alt="img" style="width: 9px; margin-top: -4px;margin-right: 1px; "></img> Re-Activate Pharmacy staff</td>
+                                                                <td class="fs-13 text-end"><i class="fa fa-trash fs-13"></i> Remove Pharmacy Staff</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                                <aura:if isTrue="{!v.showNextbuttonbar}"> 
+                                                    <div style=" height: 10px;"></div>
+                                                    <p align="right">
+                                                        <div>
+                                                            <lightning:button
+                                                                              label="Previous"
+                                                                              iconName="utility:chevronleft"
+                                                                              iconPosition="left"
+                                                                              onclick="{! c.onPrev }"
+                                                                              disabled="{! v.currentPageNumber == 1 }" />
+                                                            
+                                                            <span class="slds-var-p-horizontal_x-small">
+                                                                Page {! (v.currentPageNumber) } of {! (v.totalPages) }
+                                                            </span>
+                                                            
+                                                            <lightning:button
+                                                                              label="Next"
+                                                                              iconName="utility:chevronright"
+                                                                              iconPosition="right"
+                                                                              onclick="{! c.onNext }"
+                                                                              disabled="{! v.currentPageNumber == v.totalPages }" />
+                                                        </div>
+                                                    </p>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3 cl-right">
+                                    <h5 class="pb-2">Patient Actions</h5>
+                                    <a href="search-patientinformation" class="btn btn-primary-m pull-right w-100 mb-3 px-1"> <i class="fa fa-user" aria-hidden="true"></i> Enter Patients
+                                        Information</a>
+                                    <a href="rda-1" class="btn btn-primary-m pull-right w-100 mb-3 px-1"><i class="fa fa-check-circle" aria-hidden="true"></i> OBTAIN AN RDA</a>
+									
+									<aura:if isTrue="{!v.showActions}">
+										<h5 class="pb-2">Pharmacy Actions</h5>
+										<aura:if isTrue="{!v.showInviteAuthorizedRepButton}">
+											<a href="invite-outpatient-authorized-pharmacist" class="btn btn-primary-m pull-right w-100 mb-3 px-1" style="line-height:14px;"><i class="fa fa-envelope"></i> Invite Authorized
+												<br></br>   Representative</a>
+										</aura:if>
+										<a href="invite-outpatient-staff-pharmacist" class="btn btn-primary-m pull-right w-100 mb-3 px-1"><i class="fa fa-envelope"></i> Invite Pharmacy
+											Staff</a>
+									</aura:if>
+										
+                                     <a href="prescriber-locator" class="btn btn-primary-m pull-right w-100 mb-3 px-1"><i class="fa fa-search"></i> Prescriber Locator</a>
+                                     <!-- RT24-09-24 - 2349 changes -->
+                                     <a  onclick="{!c.navigateToHistory}"  class="btn btn-primary-m pull-right w-100 mb-3 px-1"><i class="fa fa-check-circle" style="margin-right: 3px;"></i>RDA History</a>
+                                     <!-- RT changes -->
+                                    <div class="px-1">
+                                        <h5 class="fw-bold">Materials for Pharmacies</h5>
+
+                                        <ul class="list-group list-dec">
+                                            <aura:iteration items="{!v.resourceList}" var="rc">
+                                                
+                                                <li class="list-group-item border-top-0 ps-0"> {!rc.label}
+                                                    <a href="{!rc.downloadurl}" shouldstayinownframe="true" title="Download pdf" download="download">
+                                                        <i class="fa fa-download float-end"></i>
+                                                    </a>
+                                                </li>
+                                            </aura:iteration>
+                                            <li class="list-group-item border-top-0 px-0"><a href="pharmacy-faqs">Pharmacy FAQs</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <aura:if isTrue="{!v.isModalOpen}">
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b><center>Are you sure you want to remove?</center></b></p>
+                        
+                        <center>
+						<lightning:button variant="brand"
+                                          label="Yes"
+                                          title="Yes"
+                                          onclick="{!c.deletePharmacyStaff}"
+                                          class="btn"/>
+                        <lightning:button variant="neutral"
+                                          label="No"
+                                          title="No"
+                                          onclick="{!c.closeModel }"
+                                          class="btn"/>
+                        
+                        </center>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+
+        <!--RT25-09-24 - 2376 changes -->
+        <aura:if isTrue="{!v.isReactivateModalOpen}">
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b><center>Reactivate User {!v.reActivateUserName}?</center></b></p>
+                        
+                        <center>
+						<lightning:button variant="brand"
+                                          label="Yes"
+                                          title="Yes"
+                                          onclick="{!c.activatePharmacyStaff}"
+                                          class="btn"/>
+                        <lightning:button variant="neutral"
+                                          label="No"
+                                          title="No"
+                                          onclick="{!c.closeModel }"
+                                          class="btn"/>
+                        
+                        </center>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    <!--RT changes-->
+    </section>
+</aura:component>

@@ -1,0 +1,6 @@
+:host {  --sds-c-accordion-summary-color-background:
+     var(--lwc-colorBackground,rgb(185, 181, 181)); }
+
+.my-text_clr{
+    color:#5876a3;
+}

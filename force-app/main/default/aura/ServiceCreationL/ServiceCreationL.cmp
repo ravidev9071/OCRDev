@@ -1,0 +1,236 @@
+<aura:component controller="DocumentReviewControllerL"
+                implements="flexipage:availableForRecordHome,lightning:isUrlAddressable,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:attribute name="programId" type="String" />
+    <aura:attribute name="programName" type="String" />
+    <aura:attribute name="remsObj" type="Object" />
+    <aura:attribute name="selectedServiceId" type="String" />
+    <aura:attribute name="selectedServiceName" type="String" />
+    <aura:attribute name="previousRemsObj" type="Object" />
+    <aura:attribute name="selectedREMSServiceId" type="String" />
+    <aura:attribute name="selectedREMSServiceName" type="String" />
+    <aura:attribute name="recievedDetailDocumentId" type="String" />
+    <aura:attribute name="selectedRecordTypeName" type="String" />
+    <aura:attribute name="layoutList" type="List" />
+    <aura:attribute name="recordTypes" type="List" />
+    <aura:attribute name="recordTypeNameMap" type="Object" />
+    <aura:attribute name="showRecodEditform" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.fetchRecordTypes}" />
+    <aura:registerEvent name="remsServiceEvt" type="c:ServiceCreationEventL" />
+    <aura:attribute name="activeSections" type="List" />
+    <aura:attribute name="ServMap" type="Object" />
+    <aura:attribute name="DistLinkObjId" type="String" />
+    <aura:attribute name="showNewREMS" type="Boolean" default="false" />
+    <aura:attribute name="showNewCase" type="Boolean" default="false" />
+    <aura:attribute name="isgridata" type="boolean" default="false" />
+    <aura:attribute name="caseData" type="List" />
+    <aura:attribute name="isCaseData" type="Boolean" default="false" />
+    <aura:attribute name="isEditCase" type="Boolean" default="false" />
+    <aura:attribute name="caseColumns" type="List" />
+    <aura:attribute name="draftValues" type="Object" default="[]" />
+    <aura:attribute name="dynamicCaseComponentPlaceholder" type="String" />
+    <aura:attribute name="componentName" type="String" />
+    <aura:attribute name="childCaseObj" type="Object" />
+    <aura:attribute name="caseActiveSections" type="List" />
+    <aura:attribute name="caseQueryColumns" type="List" />
+    <aura:attribute name="showProg" type="Boolean" default="false" />
+    <aura:attribute name="showNext" type="Boolean" default="false" />
+    <aura:attribute name="showspinner" type="Boolean" default="false" />
+    <aura:attribute name="showCase" type="Boolean" default="false" />
+    <aura:attribute name="showPrevInCaseTab" type="Boolean" default="false" />
+    <aura:attribute name="selectedId" type="String" access="global"/>
+    <aura:attribute name="requestType" type="String" access="global"/>
+    <aura:handler name="change" value="{!v.caseQueryColumns}" action="{!c.handleCaseListView}" />
+    <aura:method name="redirectionFromCase" action="{!c.handleNavigation}">
+        <aura:attribute name="Source" type="String"/>
+        <aura:attribute name="DocDetailId" type="String" />
+        <aura:attribute name="caseDetails" type="Object" />
+        <aura:attribute name="activeSections" type="List" />
+        <aura:attribute name="CaseColumns" type="List" />
+        
+    </aura:method>
+    <aura:method name="primaryFacilityValues" action="{!c.getPrimaryfacility}" access="public">
+        <aura:attribute name="primFacilityId" type="String" default="" />
+    </aura:method>
+    <!-- <aura:handler name="NotifycreateService" event="c:REMSNotifyServiceEvent" action="{!c.handleNavigation}"/>-->
+    
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="ButtonName" type="String" access="global" />
+    <lightning:messageChannel type="US_WSREMS__ReviewDocumentChannel__c" onMessage="{!c.handleNavigation}"/>
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Inpatient', 'value': 'Inpatient'},
+    {'label': 'Outpatient', 'value': 'Outpatient'}
+    ]"/>
+    <aura:attribute name="radioValue" type="String" />
+    <aura:attribute name="showPharmacyType" type="boolean" default="false"/>
+    
+    <div>
+        <!-- <lightning:inputfield aura:id="contactField" name="US_WSREMS__Participant__c" label="Participant"
+                  value="{!v.serviceFields.US_WSREMS__Participant__c}" required="true"/>-->
+        <aura:if isTrue="{!v.showNewREMS}">
+            <aura:if isTrue="{!v.showProg}">
+                <lightning:layout multipleRows="true">
+                    
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <!--  <lightning:radioGroup name="radioGroup" label="Select Services"
+            options="{! v.recordTypes }" value="{! v.selectedServiceId}"  onchange ="{!c.handleProgramSelect}" type="radio" required="true" aura:id="programId"/>-->
+                        <span class="slds-form-element__label ">Select Service</span>
+                        <aura:iteration items="{!v.recordTypes}" var="recordType">
+                            <div>
+                                <aura:if isTrue="{!recordType.checked}">
+                                    <input type="radio" id="{!recordType.value}" name="options"
+                                           value="{!recordType.label}" onchange="{!c.handleProgramSelect}"
+                                           checked="{!recordType.checked}"></input>
+                                    <aura:set attribute="else">
+                                        <input type="radio" id="{!recordType.value}" name="options"
+                                               value="{!recordType.label}" onchange="{!c.handleProgramSelect}"></input>
+                                    </aura:set>
+                                </aura:if>
+                                <span style="margin-left: 5px;">{!recordType.label}</span>
+                                <aura:if isTrue="{!recordType.isDesciptionAvailable}">
+                                    <lightning:helptext style="margin-left: 5px;position:relative;top:-4px"
+                                                        content="{!recordType.description}"></lightning:helptext>
+                                </aura:if>
+                            </div>
+                        </aura:iteration>
+                    </lightning:layoutItem>
+                    
+                </lightning:layout>
+                <footer class="slds-modal__footer ">
+                    <lightning:button variant="brand" label="Previous" title="Previous"
+                                      onclick="{! c.handlePrevious }" />
+                    <aura:if isTrue="{!v.showNext}">
+                        <lightning:button class="slds-m-top_small" variant="brand" name="Next" label="Next"
+                                          onclick="{!c.handleProgNext}" />
+                    </aura:if>
+                </footer>
+            </aura:if>
+            <div class="slds-m-right_x-small">
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem size="12">
+                        <aura:if isTrue="{!v.showRecodEditform}">
+                            <lightning:recordEditForm aura:id="myServiceform"
+                                                      objectApiName="US_WSREMS__REMS_Service_Summary__c" onsuccess="{!c.handleSuccess}"
+                                                      recordTypeId="{!v.selectedServiceId}" recordId="{!v.selectedREMSServiceId}"
+                                                      onsubmit="{!c.handleSubmit}" onerror="{!c.handleError}">
+                                <lightning:messages />
+                                <header class="slds-modal__header">
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">REMS
+                                        Service: {!v.selectedRecordTypeName}
+                                    </h2>
+                                </header>&nbsp;
+                                
+                                <div>
+                                    <lightning:accordion aura:id="accordion" allowMultipleSectionsOpen="true"
+                                                         activeSectionName="{! v.activeSections }">
+                                        
+                                        <aura:iteration items="{!v.layoutList}" var="section">
+                                            <div class="slds-section slds-is-open">
+                                                
+                                                <lightning:accordionSection name="{!section.label}"
+                                                                            label="{!section.label}">
+                                                    
+                                                    <div class="slds-section__content">
+                                                        <lightning:layout multipleRows="{!section.totalColumns > 0 }">
+                                                            
+                                                            <aura:iteration items="{!section.lstFields}" var="field">
+                                                                
+                                                                <lightning:layoutItem
+                                                                                      size="{! 12/section.totalColumns }"
+                                                                                      flexibility="auto">
+                                                                    <aura:if isTrue="{!(!field.isReadOnly)}">
+                                                                        <aura:if isTrue="{!field.fieldName == 'US_WSREMS__Participant__c'}">
+                                                                            <c:REMSLookupField objectAPIName="Account" showRecent="False" aura:id="participantId"
+                                                                                               recordTypeDeveloperName="{!v.selectedREMSServiceName}"
+                                                                                               label="Participant" selectedId="{!v.selectedId}" ProgramId="{!v.programId}" requestorType="{!v.requestType}" parent="{!this}" required="true"/>
+                                                                            <aura:set attribute="else">
+                                                                                <aura:if isTrue="{!and(field.fieldName != 'US_WSREMS__Status__c', field.fieldName != 'US_WSREMS__Service_Outcome__c') }">
+                                                                                    <lightning:inputField
+                                                                                                          fieldName="{!field.fieldName}"
+                                                                                                          required="{!field.isRequired}"
+                                                                                                          value="{!field.fieldValue}"
+                                                                                                          onchange="{!c.handleChange}" />
+                                                                                </aura:if>
+                                                                                
+                                                                            </aura:set>
+                                                                            
+                                                                        </aura:if>
+                                                                        <aura:set attribute="else">
+                                                                            <aura:if isTrue="{!and(field.fieldName != 'US_WSREMS__Status__c', field.fieldName != 'US_WSREMS__Service_Outcome__c') }">
+
+                                                                            <lightning:outputField
+                                                                                                   fieldName="{!field.fieldName}"
+                                                                                                   value="{!field.fieldValue}"
+                                                                                                   onchange="{!c.handleChange}" />
+                                                                            </aura:if>
+                                                                        </aura:set>
+                                                                    </aura:if>
+                                                                </lightning:layoutItem>
+                                                                
+                                                            </aura:iteration>
+                                                            <lightning:layoutItem size="{! 12/section.totalColumns }" flexibility="auto"> 
+                                                                <aura:if isTrue="{!and(section.label == 'Information') }">
+                                                                    <!--, v.programName == 'Sodium Oxybate REMS'-->
+                                                                    <aura:if isTrue="{!v.showPharmacyType}">
+                                                                        <lightning:radioGroup name="radioGroup"
+                                                                                              label="Choose the Pharmacy Type"
+                                                                                              options="{! v.options }"
+                                                                                              value="{! v.radioValue }"
+                                                                                              onchange="{! c.handleRadioChange}"
+                                                                                              required="{!v.showPharmacyType}"
+                                                                                              type="radio"/>
+                   
+                                                                    </aura:if>
+                                                                </aura:if>
+                                                            </lightning:layoutItem>
+                                                        </lightning:layout>
+                                                    </div>
+                                                </lightning:accordionSection>
+                                            </div>
+                                        </aura:iteration>
+                                    </lightning:accordion>
+                                </div>
+                                <footer class="slds-modal__footer ">
+                                    <lightning:button class="slds-m-top_small" variant="brand" name="Previous"
+                                                      label="Previous" onclick="{!c.handleRemsPrevious}" />
+                                    <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="Save"
+                                                      label="Next" />
+                                </footer>
+                            </lightning:recordEditForm>
+                            
+                        </aura:if>
+                    </lightning:layoutItem>
+                    
+                </lightning:layout>
+            </div>
+            
+        </aura:if>
+        <aura:if isTrue="{!v.showNewCase}">
+            <aura:if isTrue="{!v.showCase}">
+                {!v.dynamicCaseComponentPlaceholder}
+            </aura:if>
+            <div class="slds-m-right_x-small">
+                <aura:if isTrue="{!v.isCaseData}">
+                    <lightning:card title="Existing Cases">
+                        <div class="treegridCls">
+                            <lightning:datatable aura:id="caseTable" data="{! v.caseData }" columns="{! v.caseColumns }"
+                                                 keyField="Id" hideCheckboxColumn="true" onsave="{!c.handleCaseUpdate}"
+                                                 draftValues="{! v.draftValues }" onrowaction="{!c.handleRowction}" />
+                        </div>
+                        <aura:if isTrue="{!v.showPrevInCaseTab}">
+                            <footer class="slds-modal__footer ">
+                                <lightning:button class="slds-m-top_small" variant="neutral" name="Previous"
+                                                  label="Previous" onclick="{!c.handleCaseTablePrevious}" />
+                                
+                            </footer>
+                        </aura:if>
+                    </lightning:card>
+                </aura:if>
+            </div>
+            
+        </aura:if>
+    </div>
+    <aura:if isTrue="{!v.showspinner}">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+    
+</aura:component>

@@ -1,0 +1,390 @@
+<template>
+
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" data-aura-rendered-by="335:0" aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+	
+                <div data-aura-rendered-by="89:2;a" class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea" data-aura-class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="xxxslds-col--padded comm-content-header comm-layout-column" data-aura-rendered-by="91:2;a">
+				<template if:false={showModalContent}>
+					<div class="slds-text-heading_large">Edit/Re-Enroll Pharmacy / Healthcare Setting </div>
+				</template>
+				<p></p>
+				<div class="slds-m-bottom_large"></div>
+				
+				<div class="frmContainer">
+				<article class="slds-card " part="card">
+					 <div class="slds-card__header slds-grid">
+						<header class="slds-media slds-media_center slds-has-flexi-truncate">
+							<div class="slds-media__figure"></div>
+							<div class="slds-media__body">
+								<h2 class="slds-card__header-title">
+									<span>Pharmacy  / Healthcare Setting  Information</span>
+								
+								</h2>
+							</div>
+						</header>
+					 </div>
+					 <div class="slds-card__body slds-card__body_inner" part="body">
+						<p class="frmInstructions"><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> fields required</span></p>
+						  <slot>
+								<div  class="slds-m-around_small">
+								<fieldset class="slds-form-element" name="Preferred method of contact">
+									<legend class="slds-form-element__legend slds-form-element__label">
+										<abbr class="slds-required" title="required">* </abbr>Function
+									</legend>
+									<div class="slds-form-element__control">
+									<lightning-radio-group name="function"
+										class="arSubmit"
+										options={functionOptions}
+										value="edit"
+										type="radio"
+										onchange={handleFunction}></lightning-radio-group>
+									</div>
+								</fieldset>
+							<div class="dividerSolid"></div>
+								<div class="slds-text-heading_medium">Authorized Representative Information</div>
+
+									 <div  class="slds-grid   slds-wrap slds-gutters">
+										  <div  class="slds-col slds-large-size_3-of-12">
+												<lightning-input  class="validate slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.firstName} label=" First Name" name="firstName" type="text" variant="standard"
+                                    					required="true" onchange={handleChange} read-only>
+												</lightning-input>
+										  </div>
+										  <div  class="slds-col slds-large-size_1-of-12">
+												<lightning-input  class="slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.middleName} label=" MI"
+                                    				name="middleName" type="text" variant="standard" onchange={handleChange} read-only>
+												</lightning-input>
+										  </div>										  
+										  <div  class="slds-col slds-large-size_3-of-12">
+												<lightning-input  class="validate slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.lastName} label=" Last Name"
+                                    				name="lastName" type="text" variant="standard" required="true" onchange={handleChange} read-only>
+												</lightning-input>
+										  </div>
+
+										  <div  class="slds-col slds-large-size_1-of-12">
+												<lightning-input  class="slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.suffix} label=" Suffix" name="suffix"
+                                     				type="text" variant="standard" onchange={handleChange} read-only>
+												</lightning-input>
+										  </div>	
+										  </div>
+										  <div  class="slds-grid   slds-wrap slds-gutters">
+												<div class="slds-col slds-large-size_2-of-12">
+													<lightning-input  class="search slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.email} label=" Email" name="email"
+                                     					type="email" variant="standard" required="true" disabled>
+													</lightning-input>
+												</div>
+												<div  class="slds-col slds-large-size_3-of-12">
+													<lightning-input  class="search slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.email} label=" Confirm Email" name="confirmEmail"
+                                     					type="email" variant="standard" required="true" disabled>
+													</lightning-input>
+												</div>
+
+											</div>												  
+									<!--	  <div class="slds-col slds-wrap slds-large-size_1-of-12 slds-m-top_xx-small search-btn">
+												<lightning-button  class="brand-button" variant="brand">
+													 <button id="BtnContinue"  onclick="$('#ARDetails').removeClass('slds-hide'); $('#NPI').attr('disabled', true);$('#BtnContinue').attr('disabled', true);" class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Continue</button>
+												</lightning-button>
+										  </div>  -->
+										  <template if:true={showModalContent}>
+										<div class="slds-grid   slds-wrap slds-gutters">
+											<div class="slds-col slds-size_3-of-12">
+												<fieldset class="slds-form-element">
+													<legend class="slds-form-element__legend slds-form-element__label">
+														Salutation
+													</legend>
+													<div class="slds-form-element__control">
+														<lightning-radio-group name="salutation" class="arSubmit" options={salutation} value={arRecord.salutation}
+															onchange={handleChange} type="radio" disabled></lightning-radio-group>
+													</div>
+												</fieldset>
+											</div>
+										</div>
+										</template>
+									 <div  class="slds-m-bottom_small"></div>
+									 
+									 
+									<div id="ARDetails" class="slds-show">
+									<div class="slds-border_top slds-m-bottom_small"></div>
+									<div  class="slds-grid   slds-wrap slds-gutters">
+										<div  class="slds-col slds-medium-size_4-of-12">
+										<lightning-input  class="validate slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.phone} label=" Phone" name="phone"
+											type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+											onchange={handleChange} read-only>
+										</lightning-input>
+									  </div>
+									  <div  class="slds-col slds-medium-size_4-of-12">
+											<lightning-input  class="validate slds-form-element arSubmit" lwc-66unc5l95ad-host="" value={arRecord.fax} label=" Fax" name="fax"
+												type="tel" variant="standard" maxlength="10" minlength="10"
+												onchange={handleChange} read-only>
+											</lightning-input>
+									  </div>
+									<div  class="slds-col slds-size_3-of-12">
+										<fieldset class="slds-form-element" name="Preferred method of contact">
+											<legend class="slds-form-element__legend slds-form-element__label ">
+												<abbr class="slds-required" title="required">* </abbr>
+												Preferred method of contact</legend>
+											<div class="slds-form-element__control">
+											<lightning-radio-group name="preferredContactMethod"
+												class="arSubmit"
+												options={contactOptions}
+												onchange={handleChange}
+												value={arRecord.preferredContactMethod}
+												type="radio" disabled></lightning-radio-group>
+											</div>
+										</fieldset>
+									</div>									  
+								 </div>	 <!-- end row  -->		
+								 <div  class="slds-grid  slds-wrap  slds-gutters">
+									<div  class="slds-col slds-size_1-of-1">
+
+										<fieldset class="slds-form-element">
+											<legend class="slds-form-element__legend slds-form-element__label">
+												<abbr class="slds-required" title="required">* </abbr>Role
+											</legend>
+											<div class="slds-form-element__control">
+											<lightning-radio-group name="role"
+												class="arSubmit"
+												options={roleOptions}
+												value={arRecord.role}
+												onchange={handleChange}
+												type="radio" disabled></lightning-radio-group>
+											</div>
+										</fieldset>
+									</div>
+ 								 </div>	 <!-- end row  -->	
+
+                                <template if:true={displayOthers}>
+								  <div id="RollOther">
+									<div  class="slds-grid   slds-wrap slds-gutters">
+										<div  class="slds-col slds-medium-size_4-of-12">
+										<lightning-input class="slds-form-element otherVal"
+											label=" Role Other" name="other" value={arRecord.other} required onchange={handleChange}>
+											<lightning-primitive-input-simple
+												variant="standard" >
+												<div part="input-text">
+													<label class="slds-form-element__label slds-no-flex arSubmit" for="input-11" part="label"> <abbr class="slds-required" title="required">* </abbr>Role Other </label>
+													<div class="slds-form-element__control slds-grow"
+														part="input-container"
+														type="text">
+														<input class="slds-input" id="input-12" part="input" placeholder="" type="text" />
+													</div>
+												</div>
+											</lightning-primitive-input-simple>
+										</lightning-input>
+									  </div>
+								  
+								 </div>	 <!-- end row  -->	
+								</div>
+                                </template> 
+									</div>
+								</div><!-- end Credentials Other   -->								 
+								
+								<div class="dividerSolid"></div>
+									<h2 id="element-with-table-label" class="slds-text-heading_medium slds-m-bottom_xx-small">Pharmacy / Healthcare Setting Information</h2>
+									<p class="txtInstructions"></p>
+									<div  class="slds-grid  slds-wrap  slds-gutters">
+										  <div  class="slds-col slds-medium-size_8-of-12">
+											<lightning-input  class="validate hcsSubmit slds-form-element" lwc-66unc5l95ad-host="" value={pharmaRecord.name} label=" Pharmacy / Healthcare Setting Name" name="name" type="text" variant="standard"
+												required="true" onchange={handlePharmaChange}>
+											</lightning-input>
+										  </div>
+									  </div>  
+									  
+									<div  class="slds-grid  slds-wrap slds-wrap slds-gutters">
+										  <div  class="slds-col slds-medium-size_6-of-12 slds-large-size_4-of-12">
+												<lightning-input class="search slds-form-element hcsSubmit" lwc-66unc5l95ad-host=""
+													name="address1" value={pharmaRecord.address1} label=" Ship To Address Line 1" required onchange={handlePharmaChange}>
+													<lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host=""
+														variant="standard">
+														<div lwc-enmikoh2qu="" part="input-text">
+															<label lwc-enmikoh2qu="" class="hcsSubmit slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Ship To Address Line 1 </label>
+															<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																<input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" value="" id="input-143311" part="input" placeholder="" type="text">
+															</div>
+															</div>
+													</lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-wrap slds-medium-size_6-of-12 slds-large-size_4-of-12">
+												<lightning-input class="hcsSubmit slds-form-element"
+													lwc-66unc5l95ad-host="" value={pharmaRecord.address2} name="address2" label =" Ship To Address Line 2" onchange={handlePharmaChange}>
+													<lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host=""
+														variant="standard">
+														<div lwc-enmikoh2qu="" part="input-text">
+															<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">Ship To Address Line 2</label>
+															<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																<input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" value="" id="input-10033331" part="input" placeholder="" type="text">
+															</div>
+														</div>
+													</lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>
+									  
+									 </div>	 <!-- end row  -->										
+									 
+									 <div  class="slds-grid  slds-wrap  slds-gutters">
+										  <div  class="slds-col slds-medium-size_4-of-12">
+												<lightning-input class="hcsSubmit slds-form-element"  value={pharmaRecord.city} lwc-66unc5l95ad-host="" name="city"
+													label=" City" required onchange={handlePharmaChange}>
+													<lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host=""
+														variant="standard">
+														<div lwc-enmikoh2qu="" part="input-text">
+															<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> City</label>
+															<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																<input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" value="" id="input-1024571" part="input" placeholder="" type="text">
+															</div>
+														</div>
+													</lightning-primitive-input-simple>
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-medium-size_4-of-12  slds-large-size_2-of-12">
+														<div class="slds-form-element">
+															<label class="hcsSubmit slds-form-element__label" for="select-01"><abbr class="slds-required" title="required">*</abbr> State</label>
+															<div class="slds-form-element__control">
+																<div class="slds-select_container">
+																	<select class="slds-select hcsSubmit" id="select-01" name="state" required onchange={handlePharmaChange}>
+																		<option selected  value={pharmaRecord.state}>{pharmaRecord.state}</option>
+																		<template for:each={stateOptions} for:item="option" for:index="optionIndex">
+																			<option value={option.value} key={option.value}>{option.label}</option>
+																		</template>
+																	</select>
+																</div>
+															</div>
+														</div>
+										  </div>
+										  <div  class="slds-col slds-medium-size_4-of-12  slds-large-size_2-of-12">
+												<lightning-input class="hcsSubmit validate slds-form-element" lwc-66unc5l95ad-host="" value={pharmaRecord.zipCode} label=" Zip Code" name="zipCode" type="text" variant="standard"
+											required="true" maxlength="10" minlength="5" message-when-too-long ="Please enter valid Zip Code" onchange={handlePharmaChange}>
+												</lightning-input>
+										  </div>											  
+									  
+									 </div>	 <!-- end row  -->	
+									<template if:true={showModalContent}>
+										<div  class="slds-grid   slds-wrap slds-gutters">
+												<div  class="slds-col slds-medium-size_4-of-12">
+												<lightning-input  class="validate slds-form-element " lwc-66unc5l95ad-host="" value={pharmaRecord.phone} label="  Setting Phone" name="phone"
+													type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+													onchange={handlePharmaChange}>
+												</lightning-input>
+											</div>
+											<div  class="slds-col slds-medium-size_4-of-12">
+													<lightning-input  class="validate slds-form-element " lwc-66unc5l95ad-host="" value={pharmaRecord.fax} label="  Setting Fax" name="fax"
+														type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+														onchange={handlePharmaChange}>
+													</lightning-input>
+											</div>								  
+										</div>	 <!-- end row  -->
+										<div class="slds-border_top slds-m-bottom_small"></div>
+									</template>
+									<p class="fldInstructions">Provide as appropriate.  At least one identifier is required.</p>
+									<div  class="slds-grid  slds-wrap slds-wrap slds-gutters">
+										  <div  class="slds-col slds-medium-size_6-of-12 slds-large-size_3-of-12">
+												<lightning-input  class="hcsSubmit validate slds-form-element" label=" NPI# (Facility NPI)" name="npi" value={pharmaRecord.npi} type="text"
+													maxlength="10" minlength="10" message-when-too-long ="Please enter valid NPI" message-when-too-short ="Please enter valid NPI" onchange={handlePharmaChange} >
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-wrap slds-medium-size_6-of-12 slds-large-size_3-of-12">
+												<lightning-input  class="hcsSubmit validate slds-form-element" label=" DEA #" name="dea" value={pharmaRecord.dea}
+													maxlength="9" minlength="9" message-when-too-long ="Please enter valid DEA" message-when-too-short ="Please enter valid DEA" onchange={handlePharmaChange} >
+												</lightning-input>
+										  </div>
+										  <div  class="slds-col slds-medium-size_6-of-12 slds-large-size_3-of-12">
+												<lightning-input  class="hcsSubmit validate slds-form-element" label=" HIN #" name="hin" value={pharmaRecord.hin}
+													maxlength="9" minlength="9" message-when-too-long ="Please enter valid HIN" message-when-too-short ="Please enter valid HIN" onchange={handlePharmaChange} >
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-wrap slds-medium-size_6-of-12 slds-large-size_3-of-12">
+												<lightning-input  class="hcsSubmit validate slds-form-element" label=" NCPDP #" type="text" name="ncpdp" value={pharmaRecord.ncpdp}
+													maxlength="7" minlength="7" message-when-too-long ="Please enter valid NCPDP" message-when-too-short ="Please enter valid NCPDP" onchange={handlePharmaChange} >
+												</lightning-input>
+										  </div>										  
+									  
+									 </div>	 <!-- end row  -->							
+								 
+								 
+								 <div  class="slds-grid  slds-wrap  slds-gutters">
+									<div  class="slds-col slds-size_1-of-1">
+
+										<fieldset class="slds-form-element">
+											<legend class="slds-form-element__legend slds-form-element__label">
+												<abbr class="slds-required" title="required">* </abbr>Pharmacy or Healthcare Setting Type (check one)
+											</legend>
+											<div class="slds-form-element__control">
+												<lightning-radio-group name="hcsType" class="hcsSubmit" options={hcsType}
+													value={pharmaRecord.hcsType} type="radio" onchange={handlePharmaChange}></lightning-radio-group>
+											</div>
+										</fieldset>
+									</div>
+ 								 </div>	 <!-- end row  -->		
+								 
+								 
+								<template if:true={reEnroll}> 
+									<div class="slds-m-top_x-large"></div>
+									<div class="dividerSolid"></div>
+									<div class="frmAttestations">
+										<div class="slds-text-heading_medium">Authorized Representative Responsibilities</div>
+										<p>I understand that XIAFLEX<sup>&reg;</sup> is only available through the XIAFLEX<sup>&reg;</sup> REMS for Peyronie's disease.
+										<br><br>I am the Authorized Representative designated by my pharmacy or healthcare setting to coordinate the activities of the XIAFLEX<sup>&reg;</sup> REMS. I agree to comply with the following program requirements:</p>
+										<ul class="listItemDisc">
+											<li>Ensure that the staff responsible for dispensing and administering XIAFLEX<sup>&reg;</sup> at this healthcare setting is aware of my responsibilities as the Authorized Representative.</li>
+											<li>Put processes and procedures in place to verify prior to dispensing XIAFLEX<sup>&reg;</sup>, that the Healthcare Provider treating Peyronie's disease is specially certified in the XIAFLEX<sup>&reg;</sup> REMS for Peyronie's disease.</li>
+											<li>For healthcare settings: Establish processes and procedures to maintain a record of current certified healthcare providers affiliated with the healthcare setting.</li>	
+											<li>Maintain a current list of Healthcare Providers (HCP) affiliated with my healthcare setting who are specially certified. The current affiliated Healthcare Providers of this healthcare setting include the individuals listed below. I will maintain this list by adding or removing affiliated Healthcare Providers as appropriate.</li>											
+											<li>Agree not to loan, sell or transfer XIAFLEX<sup>&reg;</sup> to another pharmacy, healthcare setting, prescriber, institution, or distributor.</li>
+											<li>Make available to Endo USA, Inc., and/or a designated third party or the FDA, documentation to verify understanding of, and adherence to, the requirements of the XIAFLEX<sup>&reg;</sup> REMS.</li>
+										</ul>
+										
+										<div class="slds-m-top_x-large"></div>
+										<p>I understand that this enrollment only applies to me as the designated Authorized Representative of this pharmacy or healthcare setting. 
+										I will complete a separate enrollment form for each pharmacy or healthcare setting (unique ship-to site address) for which my designation and responsibilities extend. 
+										Failure to enroll a pharmacy or healthcare setting in the XIAFLEX<sup>&reg;</sup> REMS for Peyronie's disease will result in the inability to receive shipments of XIAFLEX<sup>&reg;</sup>.</p>
+										
+										<div class="containerEmphasis">
+											<div class="slds-text-heading_medium">Authorized Representative Signature</div>
+											<p class="txtInstructions">Use your mouse or touchpad to sign.</p>
+											<c-tryvio-sign-pad onsignimagedata={handleSignatureCompleted}></c-tryvio-sign-pad>
+										</div>										 
+		
+									</div>
+								</template>
+						  </slot>
+					 </div> <!-- end card body inner  -->
+					<div class="slds-card__footer" part="footer">
+						 <slot name="footer">
+							<div slot="footer">
+								<button onclick={handleCancel} title="Cancel" type="button" class="slds-button slds-button_text-destructive">Cancel</button>
+								<!--button id="resetSign" class="slds-button slds-m-top_large slds-button_outline-brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Clear Signature</button-->
+<!--button onclick="document.location.href='manageHCS.html';" class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button-->
+								<template if:true={reEnroll}>
+									<button id="resetSign" class="slds-button slds-m-top_large slds-button_outline-brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple" onclick={handleClear}>Clear Signature</button>
+								</template>
+                                <button onclick={handleSubmit} class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button>
+							</div>
+						</slot>
+					 </div>					 
+
+				</article>
+				</div>  <!-- end enrollmentForm  -->
+				
+				<div class="slds-m-top_xx-large"></div>			
+				
+
+				
+				
+				
+
+                        </div>
+                    </div>
+
+
+										  
+	</div>	
+</div>	
+</div>
+
+	<template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+
+</template>

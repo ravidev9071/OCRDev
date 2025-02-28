@@ -1,0 +1,548 @@
+<apex:page applyBodyTag="false" showHeader="false" renderAs="PDF" controller="SYN_MaciReportableEventFormCtr">
+    
+    <head>
+       <apex:variable var="Attachment" value="{!cs.US_WSREMS__Pharmacist_Confirmation__c}" />
+       <apex:variable var="Unknown" value="{!cs.SYN_Patient_Name_Unknown__c}" />
+        <script>
+          function checkSelected(){
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkboxes.length > 0){
+              document.getElementById('submit-btn').disabled = false;
+            } else {
+              document.getElementById('submit-btn').disabled = true;
+            }
+          }
+        </script>
+        <style>
+            body {
+                margin-top: 0px !important;
+                font-family: sans-serif !important;
+                padding-top:0px !important;
+            }
+            h6{
+                font-weight:500 !important;
+            }
+            p{
+                text-align:justify;
+            }
+
+            @page {
+                margin: 0  !important;
+                size: letter;
+                font-family: sans-serif !important;
+                padding-top:0px !important;               
+               
+            }
+            
+            
+        </style>
+    </head>
+
+     <apex:form style="margin-top:0px !important; padding-top:0px !important;height:auto;">
+
+        <body>
+
+            <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td>
+                        <img src="{!$Label.Tryvio_LogoForEmailTemplates}" class="img-fluid"
+                            style="width: 168px;height: 50px !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                        <!-- <img src="macii.jpg" class="img-fluid" style="width: 168px;"></img> -->
+                    </td>
+                   <td style="width: 55%; padding-top: 35px;">                       
+                        <p style="font-size:12px;text-align: right;margin: 0px;">
+                            Date of Report: 
+                        </p>
+                        <p style="font-size:12px;text-align: right;margin: 0px;">
+                            Case number: 
+                        </p>
+                        <p style="font-size:12px;text-align: right;font-size: 12px;margin: 0px;">
+                            Reported By (Contact Center Agent ID):
+                        </p>
+                    </td> 
+             <td style="padding-top: 35px;">               
+                <p style="font-size:12px;text-align: left;margin: 0px;padding:0px;"> 
+                    <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.Createddate}" />
+                    </apex:outputText>
+                </p>
+                <p style="font-size:12px;text-align: left;margin: 0px;padding:0px;"> 
+                    <apex:outputText value="{!cs.CaseNumber}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;" />
+                </p>
+                <p style="font-size:12px;text-align: left;margin: 0px;padding:0px;"> 
+                    <apex:outputText value="{!cs.CreatedBy.Name}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;" />
+                </p>
+             </td>
+                </tr>
+            </table>
+
+            <table width="100%" style="margin: 15px 0px;margin-bottom:0px;margin-bottom: -4px;">
+                <tr>
+                    <td style="text-align: center;font-weight: 100;font-size:14px"><b><u>Potential Adverse Event (PAE)/ Product Quality Complaint (PQC)/ Medical Information Request (MIR) Intake Form</u></b></td>
+                </tr>
+            </table>
+            <br></br>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 200px;"><b style="font-size:12px;margin: 0px 7px;"><u>Purpose:</u></b></td>
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">This intake form is intended for initial information capture only. The Idorsia Pharmacovigilance (PV)/PQC Team will follow-up as required.</p></td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 200px;">
+                        <b style="font-size:12px;margin: 0px 7px;"><u>Agent Instructions:</u></b></td>
+                    <td style="border: 1px solid #000;">
+                      <ul>
+                         <li>
+                        <p style="font-size:12px;margin: 0px 7px;">Complete this form if a caller mentions a potential adverse event (PAE), product quality complaint (PQC), and/or medical information request (MIR) report in association with TRYVIO <i><b><u>and is unable to be transferred</u></b></i> to Idorsia PV Team.</p>
+                         </li>                         
+                          <li>
+                        <p style="font-size:12px;margin: 7px 7px 0px 7px;"> Send form to the Idorsia PV Team via email <b> within 1 business day </b></p>
+                         </li>
+                          <li>
+                        <p style="font-size:12px;margin: 7px 7px 0px 7px;"> If a confirmation of receipt is not received from Idorsia PV Team  <i><b><u> within two (2) business days,</u></b></i> contact sponsor to determine if original report should be resent</p>
+                      </li>
+                    </ul>  
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 200px;"><b style="font-size:11px;margin: 0px 7px;"><u>Responsible Sponsor Instructions :</u></b></td>
+                    <td style="border: 1px solid #000;">
+                        <p style="font-size:12px;margin: 0px 7px;"> Idorsia PV Team must acknowledge receipt of form within two (2) business days of receipt. Acknowledgments will be submitted to the REMS Coordinating Center via email.</p>
+                         
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 345px;"><p style="font-size:12px;margin: 0px 7px;"><b>Type(s)of Report (e.g., PAE, PQC, MIR): </b></p>
+                     <p style="font-size:12px;margin: 0px 7px;"> </p>
+                    <p style="font-size:12px;margin: 0px 7px;"><apex:outputText value="{!cs.US_WSREMS__Type_s_of_Report__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                     <p style="font-size:12px;margin: 0px 7px;"> </p>
+                    
+                     </td>                    
+                    
+                  </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000; width: 345px;">
+                       <b> <p style="font-size:12px;margin: 0px 7px;"> Type of PQC Complaint </p><p style="font-size:12px;margin: 0px 7px;">(Manufacturing, Packaging/Labeling, Suspected Falsified Product, Other):</p>  </b>                           
+                        <p style="font-size:12px;margin: 0px 7px;"> </p> <p style="font-size:12px;margin: 0px 7px;"> <apex:outputText value="{!cs.Type_of_PQC_Compliant__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                          <p style="font-size:12px;margin: 0px 7px;"> </p>
+                        </td>
+                       
+                    <td style="border: 1px solid #000;">
+                        <p style="font-size:12px;margin: 0px 7px;"><b>If Other chosen, please specify here: </b>
+                            <apex:outputText value="{!cs.US_WSREMS__Primary_Language__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                            <p style="font-size:12px;margin: 0px 7px;"> </p> <p style="font-size:12px;margin: 0px 7px;"> </p>
+                            <p style="font-size:12px;margin: 0px 7px;"> </p> <p style="font-size:12px;margin: 0px 7px;"> </p>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td colspan="2" style="border: 1px solid #000;"><p style="margin: 0px 0px 0px 7px;font-size:12px;"><b>Date of Awareness: </b>
+                    <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.Date_of_Awareness__c}" />
+                    </apex:outputText> </p></td>
+                  </tr>
+            </table>           
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 345px;">
+                        <p style="font-size:12px;margin: 0px 7px; width:220px"><b>How was report received (Inbound Call, Inbound Fax, Outbound Call, Voicemail, Other)?   </b></p>
+                         <p style="font-size:12px;margin: 0px 7px;"> </p>
+                            
+                           <p style="font-size:12px;margin: 0px 7px; width:220px">
+                            <apex:outputText value="{!cs.Received_via__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                             <p style="font-size:12px;margin: 0px 7px;"> </p>
+                        </td>
+                    <td style="border: 1px solid #000;">
+                        <p style="font-size:12px;margin: 0px 7px;"><b>If Other chosen, please specify here: </b>
+                            <apex:outputText value="{!cs.Other_Credential__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                            <p style="font-size:12px;margin: 0px 7px;"> </p> <p style="font-size:12px;margin: 0px 7px;"> </p>
+                            <p style="font-size:12px;margin: 0px 7px;"> </p> <p style="font-size:12px;margin: 0px 7px;"> </p>
+                    </td>
+                </tr>
+            </table>
+           
+
+            <!-- start Reporter Information: -->
+
+            <table width="100%" style="margin: 15px 0px 0px 8px;margin-bottom: -4px;">
+                <tr>
+                    <td style="text-align: left;font-weight: 800;">Reporter Information:</td>
+                </tr>
+            </table>
+
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Reporter First Name: </p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;">    
+                        <apex:outputText value="{!cs.US_WSREMS__Reporter_First_Name__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> 
+                        </td></tr></table> 
+                        </td>
+                        
+                    <td style="border: 1px solid #000;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Reporter Last Name:  </p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;">   
+                        <apex:outputText value="{!cs.US_WSREMS__Reporter_Last_Name__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> 
+                        </td></tr></table> 
+                        </td>
+                    
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">REMS ID (if applicable):   
+                        <apex:outputText value="{!cs.US_WSREMS__Participant_REMS_ID__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>
+                    
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td colspan="3"  style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Reporter Address:   
+                        <apex:outputText value="{!cs.US_WSREMS__Address__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                    
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;width: 50%;"><p style="font-size:12px;margin: 0px 7px;">City:   
+                        <apex:outputText value="{!cs.US_WSREMS__City__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                    <td style="border: 1px solid #000;width: 16.66%;"><p style="font-size:12px;margin: 0px 7px;">State:    
+                        <apex:outputText value="{!cs.US_WSREMS__State__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                    <td style="border: 1px solid #000;width: 16.66%;"><p style="font-size:12px;margin: 0px 7px;">Zip:   
+                        <apex:outputText value="{!cs.US_WSREMS__REMS_Zip_Code__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>                    
+                    
+                </tr>
+                 <tr> 
+                     
+                     <td style="border: 1px solid #000;width: 16.66%;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Email: </p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;">
+                        <apex:outputText value="{!cs.US_WSREMS__Email__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p>   </td></tr></table>                      
+                        </td>                   
+                    
+                    <td style="border: 1px solid #000;width: 16.66%;"><p style="font-size:12px;margin: 0px 7px;">Fax:    
+                        <apex:outputText value="{!cs.US_WSREMS__Fax__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                        
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Phone:   
+                        <apex:outputText value="{!cs.US_WSREMS__Phone__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 200px;"><p style="font-size:12px;margin: 0px 7px;">Reporter Type (General Contact Role, Healthcare Provider, Authorized Representative, Other):   
+                        <apex:outputText value="{!cs.SYN_Type_of_Reporter__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>                    
+                   
+                </tr>
+                <tr>                  
+                    
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">If Other chosen for “Reporter Type,” please specify type and relationship to patient here:    
+                    <apex:outputText value="{!cs.US_WSREMS__Other_Title__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td colspan="4" style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Consent to contact reporter?:                    
+                        <apex:outputText value="{!cs.US_WSREMS__Consent_to_contact_reporter__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                </tr>
+            </table>
+
+            <!-- start Prescriber Information: -->
+
+            <table width="100%" style="margin: 15px 0px 0px 8px;margin-bottom: -4px;">
+                <tr>
+                    <td style="text-align: left;font-weight: 800;">Prescriber (Physician) Information (if not “Reporter” in above Section):</td>
+                </tr>
+            </table>
+             <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td  style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">
+                       [ ] Same as Reporter</p> </td>
+                </tr>
+            </table>           
+
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">           
+               
+                <tr>
+                    <td style="border: 1px solid #000;width: 33.33%;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Prescriber First Name: </p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;">   
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_First_Name__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                        </td></tr></table> 
+                         </td>
+                    
+                    <td style="border: 1px solid #000;width: 33.33%;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Prescriber Last Name: </p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;">    
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_Last_Name__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> 
+                        </td></tr></table>
+                        </td>
+                    
+                    <td style="border: 1px solid #000;width: 33.33%;"><p style="font-size:12px;margin: 0px 7px;">REMS ID (if applicable):  
+                        <apex:outputText value="{!cs.Prescriber_REMS_ID_Number__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>                    
+                    
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td  style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Address:   
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_Address__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 33.33%;"><p style="font-size:12px;margin: 0px 7px;">City:  
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_City__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>
+                    
+                    <td style="border: 1px solid #000;width: 33.33%;"><p style="font-size:12px;margin: 0px 7px;">State:  
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_State__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>
+                    
+                    <td colspan="2" style="border: 1px solid #000;width: 33.33%;"><p style="font-size:12px;margin: 0px 7px;">Zip:   
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_Zip__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td colspan="2" style="border: 1px solid #000;width: 33.33%;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Email:</p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;">
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_Email__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                        </td></tr></table>
+                         </td>                   
+                    
+                    <td style="border: 1px solid #000;width: 33.33%;"><p style="font-size:12px;margin: 0px 7px;">Fax:   
+                        <apex:outputText value="{!cs.US_WSREMS__REMS_Prescriber_Fax__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>
+                        
+                      <td style="border: 1px solid #000;width: 33.33%;"><p style="font-size:12px;margin: 0px 7px;">Phone:  
+                        <apex:outputText value="{!cs.US_WSREMS__Prescriber_Phone__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>
+                    
+                    
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td colspan="4" style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Consent to contact physician?:                     
+                        <apex:outputText value="{!cs.US_WSREMS__Consent_to_contact_reporter_2__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                </tr>
+            </table>
+           
+            <div>            
+            <p> </p>
+            <div style="width:100%;text-align: center;font-size:12px;">                
+                Page 1 of 2
+          </div>
+            <p style="font-size:12px;margin: 0px 7px;">Form reviewed and sent by {!cs.CreatedBy.Name} (Contact Center Agent ID) on  &nbsp;
+             <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.Createddate}" />
+                    </apex:outputText></p>
+                    
+             </div>
+
+           <div style="page-break-before:always"> 
+               
+               
+               <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td>
+                         <img src="{!$Label.Tryvio_LogoForEmailTemplates}" class="img-fluid"
+                            style="width: 168px;height: 50px !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                        <!-- <img src="macii.jpg" class="img-fluid" style="width: 168px;"></img> -->
+                    </td>
+                   <td style="width: 55%; padding-top: 35px;">                        
+                        <p style="font-size:12px;text-align: right;margin: 0px;">
+                            Date of Report: 
+                        </p>
+                        <p style="font-size:12px;text-align: right;margin: 0px;">
+                            Case ID: 
+                        </p>
+                        <p style="font-size:12px;text-align: right;font-size: 12px;margin: 0px;">
+                            Reported By (Coordinating Center Agent ID):
+                        </p>
+                    </td> 
+            <td style="padding-top: 35px;">                
+                <p style="font-size:12px;text-align: left;margin: 0px;padding:0px;"> 
+                    <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.Createddate}" />
+                    </apex:outputText>
+                </p>
+                <p style="font-size:12px;text-align: left;margin: 0px;padding:0px;"> 
+                    <apex:outputText value="{!cs.CaseNumber}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;" />
+                </p>
+                <p style="font-size:12px;text-align: left;margin: 0px;padding:0px;"> 
+                    <apex:outputText value="{!cs.CreatedBy.Name}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;" />
+                </p>
+            </td>
+                </tr>
+            </table>
+            
+            
+            <!-- start Patient Information: -->
+
+            <table width="100%" style="margin: 15px 0px 0px 8px;margin-bottom: -4px;">
+                <tr>
+                    <td style="text-align: left;font-weight: 800;">Patient Information:</td>
+                </tr>
+            </table>
+             <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td  style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">
+                         </p><img src="{!IF(Unknown, $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="margin: 0px 0px 0px 7px;width: 11px;height: 11px;border: 0px solid #232323;" /> Unknown </td>
+                
+                    <td  style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">
+                         </p><img src="{!IF(false, $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="margin: 0px 0px 0px 7px;width: 11px;height: 11px;border: 0px solid #232323;" /> Same as Reporter </td>
+                </tr>
+            </table>  
+
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Patient First Name Initial:  </p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;"> 
+                        <apex:outputText value="{!cs.US_WSREMS__Participant_FirstName__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> 
+                        </td></tr></table> 
+                        </td>
+                        
+                    <td style="border: 1px solid #000;"><table ><tr><td><p style="font-size:12px;margin: 0px 7px;">Patient Last Name Initial:  </p> </td></tr><tr><td>  <p style="font-size:12px;margin: 0px 7px;">   
+                        <apex:outputText value="{!cs.US_WSREMS__Participant_LastName__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> 
+                        </td></tr></table> 
+                        </td>
+                        
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Gender (Male, Female, Unknown):  
+                        <apex:outputText value="{!cs.SYN_Gender__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p> </td>
+                </tr>
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">               
+                <tr>
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Date of Birth:  
+                        <apex:outputText value="{0, date, MM/dd/yyyy}" style="margin: 0px; font-size: 12px; font-family: sans-serif !important;" 
+                        rendered="{!NOT(ISBLANK(cs.US_WSREMS__Patient_DOB__c))}"><apex:param value="{!cs.US_WSREMS__Patient_DOB__c}" /> </apex:outputText>
+                         <p style="font-size:12px;margin: 0px 7px;"><i>(MM/DD/YYYY)</i></p>
+                         </p></td>
+                    
+                    <td colspan="3" style="border: 1px solid #000;"><p style="margin: 0px 7px;font-size: 12px;">Age:   
+                        <apex:outputText value="{!cs.US_WSREMS__Age__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                        <p style="margin: 0px 7px;font-size: 12px;"> </p></td>
+                        
+                    <td colspan="3" style="border: 1px solid #000;"><p style="margin: 0px 7px;font-size: 12px;">Race:  
+                        <apex:outputText value="{!cs.Subject}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /></p>
+                        <p style="margin: 0px 7px;font-size: 12px;"><b><i> </i></b></p></td>
+                </tr>
+            </table>
+
+            <table width="100%" style="margin: 15px 0px 0px 8px;margin-bottom: -4px;">
+                <tr>
+                    <td style="text-align: left;font-weight: 800;">Product / Drug Information:</td>
+                </tr>
+            </table>
+
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                <tr>
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">Product / Dosage Form (Bottle, Blister Pack):    
+                        <apex:outputText value="{!cs.US_WSREMS__Dosage_Form__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">NDC #:  
+                       <apex:outputText value="{!cs.NDC_Code__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">Lot #:  
+                        <apex:outputText value="{!cs.Lot_Number__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">Drug (aprocitentan):   
+                        <apex:outputText value="{!cs.US_WSREMS__Product_Type__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                    
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">Strength/Dose:  
+                        <apex:outputText value="{!cs.Dosage__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">Expiration Date:                          
+                        <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.Expiration_Date__c}" />
+                    </apex:outputText>
+                        </p></td>                    
+                    
+                </tr>
+                 <tr>
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">Start Date:                           
+                         <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.US_WSREMS__Treatment_Start_Date__c}" />
+                    </apex:outputText>
+                         </p></td>
+                    
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">End Date:                       
+                            <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                            <apex:param value="{!cs.US_WSREMS__Treatment_Stopped_Date__c}" />
+                        </apex:outputText>
+                    </p></td>
+                    
+                    <td style="border: 1px solid #000;width: 33%;"><p style="font-size:12px;margin: 0px 7px;">Therapy Ongoing (Yes, No, Unknown):  
+                        <apex:outputText value="{!cs.US_WSREMS__Is_therapy_still_on_going__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /> </p></td>
+                </tr>
+            </table>
+            
+           <!------ Event Information Page------------> 
+               
+            <table width="100%" style="margin: 15px 0px 0px 8px;margin-bottom: -4px;">
+                <tr>
+                    <td style="text-align: left;font-weight: 800;">Event Information:</td>
+                </tr>
+            </table>
+
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                 <tr>
+                    <td style="border: 1px solid #000; width:500px"><p style="font-size:12px;margin: 0px 7px;">Verbatim Description </p> </td>
+                    <td rowspan="0" style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">
+                            <img src="{!IF(Attachment=='Yes', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="margin: 0px 0px 0px 7px;width: 11px;height: 11px;border: 0px solid #232323;" />
+                             SEE ATTACHED DOCUMENT</p>
+                        </td>
+                    </tr>
+                    <tr> 
+                        <td colspan="2" style="border: 1px solid #000;height:50px"><p style="font-size:12px;margin: 0px 7px;">
+                            <apex:outputText value="{!cs.US_WSREMS__Description__c}" style="margin: 0px;font-size: 12px;font-family: sans-serif !important;" /> </p>
+                        </td>
+                    </tr>
+                 </table>
+
+                <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                 <tr>
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Event Onset Date:                           
+                         <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.US_WSREMS__Prescriber_Date__c}" />
+                    </apex:outputText>
+                    </p></td>
+                 
+                    <td rowspan="0" style="border: 1px solid #000;"> <p style="font-size:12px;margin: 0px 7px;">If Resolved, Resolved date:   </p>
+                     <p style="font-size:12px;margin: 0px 7px;">  
+                      <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.US_WSREMS__Prescription_Date__c}" />
+                    </apex:outputText>
+                        </p>
+                    </td>
+               </tr>
+               
+            </table>
+            <table width="100%" style="border: 1px solid #000;border-collapse: collapse;">
+                 <tr>
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Outcome of event (Fatal, Resolved, Not resolved, Unknown):    </p>
+                       <p style="font-size:12px;margin: 0px 7px;">  <apex:outputText value="{!cs.Outcome_of_event__c}" style="margin: 0px;font-size: 12px;font-family: sans-serif !important;" /> 
+                       </p>
+                        </td>
+                 </tr>                
+                <tr>
+                    <td style="border: 1px solid #000;"><p style="font-size:12px;margin: 0px 7px;">Is there a reasonable possibility that the event(s) described in this report were causally related to the use of the Idorsia product? (Yes, No, Unknown):    </p>
+                     <p style="font-size:12px;margin: 0px 7px;">   <apex:outputText value="{!cs.Events_described_in_this_report__c}" style="margin: 0px;font-size: 12px;font-family: sans-serif !important;" /> 
+
+                        </p>
+                    </td>
+                 </tr>
+            </table>
+      </div> 
+              
+        <div>
+            <p style="height:300px"> </p>
+            <div style="width:100%;text-align: center;font-size:12px;">                
+                Page 2 of 2
+          </div>
+            <p style="font-size:12px;margin: 0px 7px;">Form reviewed and sent by {!cs.CreatedBy.Name} (Contact Center Agent ID)  on  &nbsp;
+             <apex:outputText value="{0,date,MM/dd/yyyy}" style="margin: 0px;font-size: 11px;font-family: sans-serif !important;">
+                        <apex:param value="{!cs.Createddate}" />
+                    </apex:outputText></p>
+                    
+             </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+        </body>
+    </apex:form>
+</apex:page>

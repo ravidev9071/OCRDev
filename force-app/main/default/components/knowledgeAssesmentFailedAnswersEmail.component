@@ -1,0 +1,25 @@
+<apex:component controller="SYN_FailedKnowledgeAssesEmailSox" access="global">
+    <!-- Get values from email template -->
+    <apex:attribute name="caseValId" assignTo="{!emailCaseId}" description="This is the account Id passed from the email template." type="Id"/>
+    <apex:repeat value="{!KnowledgeAssesmentsFailedQuestionsA}" var="cse" id="theRepeatA">
+        <!-- Print out each Failed Knowledge Assesment in a div -->
+            <br/>
+            {!cse.questionNumber}) {!cse.fullQuestionStr}<br/>
+            
+        
+            <apex:repeat value="{!cse.options}" var="answer" id="theanswer">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!answer}  <br/>
+            </apex:repeat>
+
+    </apex:repeat>
+    <apex:repeat value="{!KnowledgeAssesmentsFailedQuestionsB}" var="cse" id="theRepeatB">
+        <!-- Print out each Failed Knowledge Assesment in a div -->
+        <br/>
+             {!cse.questionNumber}) {!cse.fullQuestionStr}<br/>
+        
+            <apex:repeat value="{!cse.options}" var="answer" id="theanswer">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!answer}  <br/>
+            </apex:repeat>
+           
+    </apex:repeat> 
+</apex:component>

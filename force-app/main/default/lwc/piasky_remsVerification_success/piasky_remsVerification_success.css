@@ -1,0 +1,33 @@
+.slds-text-heading_medium{
+    display: block !important;
+}
+
+.rdaIconCheckMark {
+	    background: rgb(0 46 93 / 15%);
+    border-radius: 15%;
+    padding: 1%;
+    width: 77px;
+    margin-right: 1%;
+}
+.rdaResult {
+	display:flex;
+	gap: 15px;
+	align-items: center;
+	margin-bottom: 3px;
+}
+.rdaResult.success .rdaIcon {
+	background: rgb(0 46 93 / 15%);
+}
+.rdaResult.fail .rdaIcon {
+    background: rgb(162 11 11 / 15%);
+}
+.rdaIcon img {
+	height: 60px;
+}
+.PiaSkyIconCheckCerSuccess{
+    background: rgb(0 46 93 / 15%);
+    border-radius: 15%;
+    padding: 1%;
+    width: 60px;
+    margin-right: 1%;
+}

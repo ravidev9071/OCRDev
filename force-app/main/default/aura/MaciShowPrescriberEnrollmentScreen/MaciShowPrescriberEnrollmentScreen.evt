@@ -1,0 +1,14 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="showScreen" type="Boolean"/>
+    <aura:attribute name="screenName" type="String" default=""/>
+    <aura:attribute name="portalUserId" type="String" default=""/>
+    <aura:attribute name="prescriberInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="pCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="sCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="prescriberNPIObj" type="Map" default="{ 'firstName':'', 'middleName':'', 'lastName':'',
+                                                                     'addressLine1':'', 'city':'','state':'',
+                                                               		  'zipCode':'','confirmEmail':''}"/>
+    <aura:attribute name="primaryOtherInfoObj" type="Map" default="{'Id' : '','firstName':'', 'lastName':'', 'confirmEmail':'','PrefrerredMethod':'','State':''}"/>
+    <aura:attribute name="secondaryOtherInfoObj" type="Map" default="{'Id' : '','firstName':'', 'lastName':'', 'confirmEmail':'','PrefrerredMethod':'','State':''}"/>
+    <aura:attribute name="ShowNPIInfo" type="boolean" default="false"/>
+</aura:event>

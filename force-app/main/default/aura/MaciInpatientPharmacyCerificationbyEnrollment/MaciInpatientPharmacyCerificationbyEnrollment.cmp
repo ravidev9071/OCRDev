@@ -1,0 +1,136 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:registerEvent name="ShowInPatinetScreens" type="c:MaciShowInPatientPharmacyEnrollmentScreen"/>
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-position: center;height: 115vh;">
+        <div class="container-fluid px-5 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="card h-100 p-0 rounded-0 border-0">
+                         <div class="card-header border-0 crd-hdr-m" style="background-color: #eee;">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="row pt-lg-0 pt-4 d-flex justify-content-left align-items-center">
+                                        <div class="col-lg-1 col-sm col-1 text-end pe-3">
+                                            <i class="fa fa-file-text fa-2x heading-i"></i>
+                                        </div>
+                                        <div class="col-lg-7 col-sm col-10 ps-0">
+                                            <h5 class="card-title heading-h fs-4 mt-2 d-block" style="line-height:26px; font-size: 23.93px !important;">
+                                                Inpatient Pharmacy Certification <br></br> by Enrollment
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 modify-pro">
+                                    <div class="progressbar">
+                                        <div class="progress" id="progress"></div>
+									    <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY TYPE SELECTION </span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                            <span class="text-theme"><em>INSTRUCTIONS</em></span>
+                                        </div>
+                                         <div class="progress-block">
+                                             <div class="progress-step"></div>
+                                            <span>AUTHORIZED REPRESENTATIVE INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                               <span>PASSWORD</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY INFORMATION</span>
+                                        </div>
+                                         <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step last-step"></div>
+                                            <span>COMPLETE</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="card-body px-4 llc-dv">
+                            <div class="row">
+                                <div class="pl-table py-2 px-3">
+                                    <h5 class="text-theme mb-2 ">Instructions</h5>
+                                    <p class="px-4 fs-12" style="font-size:16px !important;">
+                                        Pharmacies that dispense {!$Label.c.macitentan_containing_products} must be specially certified by enrolling in the {!$Label.c.Macitentan_Containing_Products_REMS}. To become certified, an authorized representative
+                                        of the pharmacy must review the Prescribing Information and the <b><i>Prescriber and Pharmacy Guide</i></b>, and then complete the <b><i>Inpatient Pharmacy Enrollment Form.</i></b>
+                                        Select the Start button below to continue with online certification <b> OR </b> <u>fax</u> a completed the <b><i>Inpatient Pharmacy Enrollment Form</i></b> to
+                                        1-833-681-0003.
+                                    </p>
+                                    
+                                    <p class="px-4" style="font-size:16px !important;">Overview of online enrollment and certification:</p>
+                                    
+                                    <ol class="px-5" style="padding-left: 63px !important;">
+                                        <li class="row">
+                                            <div class="col-lg-10" style="font-size:16px !important;">
+                                                <b>Pharmacy Type Selection</b> - An authorized representative must select the specific pharmacy type for the pharmacy being certified.
+                                            </div>
+                                        </li>
+                                        <li class="row">
+                                            <div class="col-lg-10" style="font-size:16px !important;">
+                                                <b>Instructions To Complete Enrollment</b> - Directions for the authorized representative to follow in completing the enrollment and certification
+                                                process.
+                                            </div>
+                                        </li>
+                                        <li class="row">
+                                            <div class="col-lg-10" style="font-size:16px !important;">
+                                                <b>Authorized Representative Information</b> - The authorized representative will be asked to provide their name, title, and credentials. The authorized
+                                                representative will also be asked to provide an email, phone, and fax number.
+                                            </div>
+                                        </li>
+                                        <li class="row">
+                                            <div class="col-lg-10" style="font-size:16px !important;">
+                                                <b>Create Password</b> - The authorized representative will be asked to enter a password to create a program account. Upon creation of the account, the
+                                                authorized representative will receive an email with a link. Upon clicking on the link in the email, the authorized representative will be asked to log in and
+                                                complete the certification.
+                                            </div>
+                                        </li>
+                                        <li class="row">
+                                            <div class="col-lg-10" style="font-size:16px !important;">
+                                                <b>Pharmacy Information</b> - The authorized representative will enter the pharmacy's organizational National Provider Identifier (NPl) number. This will be
+                                                used to obtain most of the information needed for the enrollment form.
+                                            </div>
+                                        </li>
+                                        <li class="row">
+                                            <div class="col-lg-10" style="font-size:16px !important;">
+                                                <b>Agreement</b> - The authorized representative will be asked to provide their signature. By signing, the authorized representative agrees that the
+                                                pharmacy will comply with the {!$Label.c.Macitentan_Containing_Products_REMS} requirements for the pharmacy type.
+                                            </div>
+                                        </li>
+                                        <li class="row">
+                                            <div class="col-lg-10" style="font-size:16px !important;">
+                                                <b>Complete</b> - The certification will be completed upon agreeing and providing a signature.
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">START 
+                                        <i class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    
+</aura:component>

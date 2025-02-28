@@ -1,0 +1,82 @@
+.THIS .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.THIS .service-header {
+    display: inline-block;
+}
+
+.THIS .buttonIcon{
+    transform:rotate(0deg) !important;
+    height:24px !important;
+   /* border-radius: var(--slds-c-checkbox-radius-border, var(--sds-c-checkbox-radius-border, var(--lwc-borderRadiusSmall,0.125rem)));
+    border-width: var(--lwc-borderWidthThin,1px);
+    border-style: solid;
+    border-color: var(--slds-c-checkbox-color-border, var(--sds-c-checkbox-color-border, var(--lwc-colorBorderInput,rgb(201, 201, 201))));
+    background-color: var(--slds-c-checkbox-color-background, var(--sds-c-checkbox-color-background, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))));
+    box-shadow: var(--slds-c-checkbox-shadow, var(--sds-c-checkbox-shadow));
+    transition: border var(--lwc-durationQuickly,0.1s) linear,background-color var(--lwc-durationQuickly,0.1s) linear;*/
+}
+
+.THIS.aria-expanded>.slds-tree__item .slds-button__icon{
+    transform:none !important;
+}
+
+.THIS .btnCls{
+    display:none !important;
+}
+
+.THIS .remsBtnCls{
+    border: none !important;
+}
+
+.THIS .slds-button--icon-border{
+    border-color: none !important;
+}
+
+.THIS .hlpCls{
+    color: blue;
+    text-decoration: solid;
+}
+
+.THIS .infoMsg{
+    color: #464646;
+padding: 5px;
+margin: 5px;
+border-width: 1px;
+border-style: solid;
+border-radius: 5px;
+font-size: 13px;
+line-height: 18px;
+border-color: #ccc;
+background-color: #eee;
+opacity: 1;
+transition: opacity .2s ease-out;
+background-color:white;
+padding-right: 10px;
+display:flex;
+font-style: italic;
+}
+
+.THIS .infoBody{
+    overflow: hidden;
+    vertical-align: top;
+    padding-left:3px;
+}
+
+.THIS .alignCls{
+    float: left;
+}
+
+.THIS .infoCls{
+    position:relative;
+    top:-4px;
+}
+
+.THIS .treegridCls{
+    border-style: ridge;
+    border-color: rgb(229, 229, 229);
+    border-width: thin;
+}

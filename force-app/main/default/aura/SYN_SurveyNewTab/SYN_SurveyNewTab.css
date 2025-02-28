@@ -1,0 +1,16 @@
+.THIS .btnCustomStyle{
+    padding-left: 0.5rem!important;
+    padding-right: 0.5rem!important;
+}
+.THIS .btnCustomStyle{
+    padding-left: 0.5rem!important;
+    padding-right: 0.5rem!important;
+}
+.THIS.mybtn {
+padding: .75rem 1rem;
+margin-top: .75rem;
+text-align: center;
+font-size: .7rem;
+border-top: 1px solid rgb(221, 219, 218);
+margin-bottom: 10px;
+}

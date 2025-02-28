@@ -1,0 +1,394 @@
+<apex:page applyBodyTag="false" showHeader="false" renderAs="PDF" controller="SYN_InpatientPharmacyFormController" >
+ <head>
+    <apex:variable var="SelectedInpatientPharmacyType" value="{!ac.Inpatient_Pharmacy_Type__c}" />
+    <apex:variable var="SelectedTitle" value="{!ac.Title__c}" />
+    
+ <style>
+                body {
+                    margin-top: 0 !important;
+                    font-family: Dialog !important;
+                    padding-top:0px !important;
+                }
+
+                @page {
+                    margin: 0  !important;
+                    size: letter;
+                    font-family: Dialog !important;
+                    padding-top:0px !important;
+                }
+            </style>
+</head>
+     <apex:form style="margin-top:0px !important; padding-top:0px !important;height:auto;">
+        <body class="bg-light" style="margin-top:0px !important; padding-top:0px !important;font-family: Dialog !important;">
+
+
+            <table width="100%" style="margin-top:0 !important; padding-top:0px !important;">
+                <tr style="margin-top:0 !important; padding-top:0px !important;">
+                    <td style="border-right: 45px solid #fff;width: 1140px;">
+                        <h5 style="margin: 0;font-size: 16px;font-weight: 800;font-family: Dialog !important;">Macitentan REMS Inpatient Pharmacy Enrollment Form</h5>
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 12px;font-family: Dialog !important;">To enroll and become certified in the REMS, complete this form <u>online</u> at www.MacitentanREMS.com 
+                            <br></br>
+                            <b>OR</b> <u>fax</u> this completed form to 1-833-681-0003.
+                            <br></br>
+                            Contact the Macitentan REMS at 1-888-572-2934 with any questions.
+                        </p>
+                    </td>
+                    <td>
+                        <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"
+                            style="width: 168px;height: 50px !important;margin-top:0 !important; padding-top:0px !important;"></img>
+                        <!-- <img src="macii.jpg" class="img-fluid" style="width: 168px;"></img> -->
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" style="margin:0 !important; padding:0px !important;">
+                <tr>
+                    <td style="margin-bottom: 10px">
+                        <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 12px;text-align:justify;font-family: Dialog !important;">
+                            Due to the risk of embryo-fetal toxicity for female patients, macitentan is available only through a restricted program called the Macitentan
+                            <br></br>
+                            REMS (Risk Evaluation and Mitigation Strategy). Inpatient pharmacies that wish to stock this product must be certified in the Macitentan REMS
+                            <br></br>        
+                             and agree to comply with the requirements of the program. An Authorized Representative must complete and submit this form on behalf of the
+                            <br></br>
+                             inpatient pharmacy.</p>
+                    </td>
+                </tr>
+            </table>
+
+            <apex:pageblock >
+                <div
+                    style="background-color:#96B1AC;padding:5px;border:5px;border-color:black;font-size: 16px;;text-color: white;color: #FFFFFF;">
+                    <b>Inpatient Pharmacy Information (please print)</b>
+                    <!--##ADD8E6-->
+                </div>
+            </apex:pageblock>
+           
+            <div STYLE="font-size: 13px;margin-bottom: 1;margin-top:10px; ">
+                 <apex:outputText value="{!ac.SYN_Pharmacy__r.Name}" /><br />
+                <hr style="border: none;border-top: 0.1px solid black;width: 450px; margin: 0px 0;margin-bottom: 2px;border-size:5px"/>Name
+            </div>
+            
+            <table>
+                <tr>
+                    <td style="padding-right: 10px;font-size: 13px;">
+                         
+                        <img src="{!IF(SelectedInpatientPharmacyType == 'Hospital', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                      Hospital
+                    </td>
+                    <td style="padding-right: 10px;font-size: 13px;margin-bottom:0.5px;">
+                       <div class="form-check mb-2">
+                          <img src="{!IF(SelectedInpatientPharmacyType == 'Nursing Home', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                           Nursing Home
+                       </div>
+                    </td>
+                    <td style="padding-right: 10px;font-size: 13px;">
+                       <img src="{!IF(SelectedInpatientPharmacyType == 'Hospice', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                       Hospice
+                    
+                    </td>
+                    <td style="padding-right: 10px;font-size: 13px;">
+                    
+                       <img src="{!IF(SelectedInpatientPharmacyType == 'Asylum/Mental facility', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                       Asylum/Mental facility
+                    
+                    </td>
+                    <td style="padding-right: 10px;font-size: 13px;">
+                    
+                       <img src="{!IF(SelectedInpatientPharmacyType == 'Assisted Living', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                       Assisted Living
+                    
+                    </td>
+                    <td style="padding-right: 10px;font-size: 13px;">
+                    
+                      <img src="{!IF(SelectedInpatientPharmacyType == 'Prison', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                       Prison
+                    
+                    </td>
+                    <td style="padding-right: 10px;font-size: 13px;">
+                    
+                       <img src="{!IF(SelectedInpatientPharmacyType == 'Rehabilitation', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                       Rehabilitation
+                    
+                    </td>
+                </tr>
+            </table>
+            <table column="2">
+
+                <td style="padding-right: 10px;font-size: 13px;">
+                    <img src="{!IF(SelectedInpatientPharmacyType == 'Other(Please specify)', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                   Other(Please specify):
+                </td>
+                <td>
+                    <output value="" style="border: 0;"></output>
+                    <hr style="width: 280px; margin: 0px 0;border-size:5px;margin-bottom: 0px;border: none;margin-bottom: 0px;border-top: 0.1px solid black;" />
+                </td>
+                <!--<td style="padding-right:10px;font-size: 13px;;margin-bottom: 0;"><hr style="border-top: 0.2px solid black; height: 0px; width: 550px;"/></td>-->
+            </table> <br />
+
+            <div style="margin-bottom: 1;font-size: 13px;">
+                      <apex:outputText value="{!ac.US_WSREMS__NPI__c}" /><br />
+             <hr style="border: none;border-top: 0.1px solid black;width: 450px; margin: 0px 0;margin-bottom: 2px;border-size:5px" />
+                 National Provider Identifier (NPI) Number<br/> 
+            </div>
+            <br />
+            <div style="text-align: justify;font-size: 13px;margin-bottom: 0px;">
+                <apex:outputText value="{!ac.SYN_Street_Address__c}" /><br />
+                <hr
+                     style="border: none;border-top: 0.1px solid black;margin: 0px 0;margin-bottom: 2px;border-size:5px" />
+                Address
+            </div>
+            <p>
+            </p>
+           
+            <table column="3">
+                <td style="text-align: justify;font-size: 13px;margin-bottom: 1;">
+                    <apex:outputText value="{!ac.US_WSREMS__City__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;padding-right: 100px; width:250px;border-size:5px" />
+                    City
+                </td>
+                <td style="text-align: justify;font-size: 13px;margin-bottom: 1;">
+                    <apex:outputText value="{!ac.US_WSREMS__State__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;width: 10px;padding-right: 150px;border-size:5px" />
+                    State
+                </td>
+                <td style="padding-right: 10px;margin-bottom: 0;font-size: 13px;;">
+                    <apex:outputText value="{!ac.SYN_Zip_Code__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;width: 280px;border-size:5px" />
+                    Zip
+                </td>
+            </table>
+            <br />
+            <table column="2">
+                <td style="text-align: justify;font-size: 13px;;margin-bottom: 0;">
+                    <apex:outputText value="{!ac.US_WSREMS__Phone__c}" /><br />
+                    <hr style="border: none;margin: 0px 0px;border-top: 0.1px solid black;padding-right: 100px; width:250px;border-size:5px" />
+                    Phone #
+                </td>
+                <td style="text-align: justify;font-size: 13px;margin-bottom: 1;">
+                   <apex:outputText value="{!ac.Shipping_Fax__c}" /><br />
+                    <hr style="border: none;margin: 0px 0px;border-top: 0.1px solid black;padding-right: 100px; width:340px;border-size:5px" />
+                    Fax #
+                </td>
+
+            </table>
+            <br />
+            <apex:pageblock >
+                <div style="background-color:#96B1AC;padding: 5px;font-size: 16px;border:2px;color: #FFFFFF;">
+                    <b>Ship to Address (if different from above)</b>
+
+                </div>
+            </apex:pageblock>
+            <br />
+
+            <div style="text-align: justify;font-size: 13px;margin-bottom: 0px;">
+                <apex:outputText value="{!ac.US_WSREMS__Shipping_Street__c}" /><br />
+                <hr
+                     style="border: none;border-top: 0.1px solid black;margin: 10px 0;margin: 0px 0;border-size:5px" />
+                Address
+            </div>
+            <p>
+            </p>
+            <!--<hr style=" border-top: 1px solid black; width: 220px; margin: 10px 0;border-size:5px"/>-->
+            <table column="3">
+                <td style="text-align: justify;font-size: 13px;margin-bottom: 1;">
+                   <apex:outputText value="{!ac.US_WSREMS__Shipping_City__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;padding-right: 100px; width:250px;border-size:5px" />
+                    City
+                </td>
+                <td style="text-align: justify;font-size: 13px;margin-bottom: 1;">
+                    <apex:outputText value="{!ac.US_WSREMS__REMS_Shipping_State__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;width: 10px;padding-right: 150px;border-size:5px" />
+                    State
+                </td>
+                <td style="padding-right: 10px;margin-bottom: 0;font-size: 13px;;">
+                   <apex:outputText value="{!ac.US_WSREMS__Shipping_Zip_Postal_Code__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;width: 280px;border-size:5px" />Zip
+                </td>
+            </table>
+            <br />
+            <table column="2">
+                <td style="text-align: justify;font-size: 13px;;margin-bottom: 0;">
+                    <apex:outputText value="{!ac.Phone_Secondary_Office__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;padding-right: 100px; width:250px;border-size:5px" />
+                    Phone #
+                </td>
+                <td style="text-align: justify;font-size: 13px;margin-bottom: 1;">
+                    <apex:outputText value="{!ac.Shipping_Fax__c}" /><br />
+                    <hr style="border: none;margin: 0px 0;border-top: 0.1px solid black;padding-right: 100px; width:340px;border-size:5px" />
+                    Fax #
+                </td>
+
+            </table>
+            <br />
+            <apex:pageblock >
+                <div style="background-color:#96B1AC;padding: 5px;border:2px;color:#FFFFFF;font-size: 16px;;">
+                    <b>Authorized Representative Information (please print)</b>
+                </div>
+            </apex:pageblock>
+            <table column="2">
+                <td style="padding-right: 290px;text-align: justify;font-size: 13px;;"> </td>
+                <td style="text-align: justify;font-size: 13px;;"> Title:&nbsp;
+                    <apex:outputText value="" style="margin: 0px;font-size: 13px;;font-family: Dialog !important;" />
+                </td>
+            </table>
+            <table column="4">
+
+                <td style="padding-right: 290px;text-align: justify;font-size: 13px;"> </td>
+                <td style="font-size: 13px;">
+
+                    <img src="{!IF(SelectedTitle == 'Hospital pharmacist', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    Hospital Pharmacist
+
+                </td>
+                <td style="padding-right: 13px;font-size: 13px;">
+
+                    <img src="{!IF(SelectedTitle == 'Head of Pharmacy and Therapeutics (P&T) committee', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    Head of Pharmacy and Therapeutics(P T) committee
+                </td>
+            </table>
+            <table column="2">
+                <td style="text-align: justify;font-size: 13px;">
+                    <apex:outputText value="{!ac.SYN_Authorized_Rep__r.Name}" /><br />
+                    <hr
+                        style="border: none;margin: 0px 0;border-top: 0.1px solid black;padding-right: 128px;width: 160px;border-size:5px" />
+                    Name
+                </td>
+                <td style="font-size: 13px;;">
+                    <img src="{!IF(SelectedTitle == 'Other title', $Resource.MaciImages + '/img/Checkbox_checked.png', $Resource.MaciImages + '/img/Checkbox_unchecked.png')}" style="height: 10px; width: 10px;" alt="checkbox" />
+                    Other title:
+                </td>
+                <td>
+                    <output value="{!ac.Other_Title__c}" style="border: 0;"></output>
+                    <hr style="width: 250px;border: none;margin: 0px 0;border-top: 0.1px solid black;border-size:5px" />
+                </td>
+            </table>
+            <br/>
+            <table column="2">
+                <tr>
+                    <td style="font-size: 13px;padding-top:0.2px;">
+                        <apex:outputText value="{!ac.US_WSREMS__Phone__c}" /><br />
+                        <hr
+                            style="border: none;margin: 0px 0;border-top: 0.1px solid black;padding-right: 157px;width: 131px; border-size:5px" />
+                        Authorized Representative Phone # 
+                    </td>
+                    <td style="padding-right:30px;padding-top:0px;font-size: 13px;">
+                        <apex:outputText value="{!ac.Fax_Secondary_Office__c}" /><br />
+                        <hr
+                            style=" border: none;margin: 0px 0;border-top: 0.1px solid black;width: 500px;border-size:5px" />
+                        Fax
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <apex:pageblock >
+                <tr>
+                    <td style="padding-right: 30px;font-size: 13px; margin-top:1px;">
+                        <apex:outputText value="{!ac.US_WSREMS__Email__c}" /><br />
+                  <hr
+                      style="border: none;margin: 0px;border-top: 0.1px solid black;margin-bottom:0.1px;font-size: 13px;" />
+                            Authorized Representative Email
+                    </td>
+                    </tr>
+            </apex:pageblock>
+            <apex:pageblock >
+                <div style="background-color:#96B1AC;padding: 5px;border:2px;color:#FFFFFF;font-size: 16px;">
+                    <b>Authorized Representative Agreement </b>
+                </div>
+            </apex:pageblock>
+
+            <div style="text-align: justify;font-size: 14px;font-family: Dialog !important;">
+                <p style="padding: 0px 0px 2px 0px;margin: 0px;font-family: Dialog !important;">
+                I am the authorized representative designated by my Inpatient pharmacy to coordinate the activities of
+                the Macitentan REMS. Therefore, I must:
+
+                </p>
+
+                <li> Carry out the certification process and oversee implementation of and compliance with the REMS on
+                    behalf of the pharmacy.</li>
+                <li> Review the <i>Prescribing Information</i> and the <i>Prescriber and Pharmacy Guide</i>.</li>
+
+                <li> Certify by enrolling in the REMS by completing the <i>Inpatient Pharmacy Enrollment Form</i> and
+                    submitting it to the REMS.</li>
+
+                <li> Train all relevant staff in dispensing macitentan on the REMS requirements, procedures and REMS
+                    materials.</li>
+
+                <li> Establish processes and procedures to verify the female patient is enrolled in the REMS or will be
+                    enrolled prior to discharge, her reproductive status, and the female patient is under the
+                    supervision and care of a certified prescriber.</li>
+
+                <li style="text-align: justify;font-size: 14px;"> For females of reproductive potential: establish
+                    processes and procedures to verify pregnancy testing is complete and that the patient is counseled
+                    on the risk of embryo-fetal toxicity, the need to use reliable contraception during treatment and for
+                    one month after stopping treatment, to get monthly pregnancy tests, and to inform the prescriber
+                    immediately if she misses a menstrual period or suspects she is pregnant.</li>
+            </div>
+
+            <p style="padding: 0px 0px 2px 0px;margin: 0px;font-size: 14px;font-family: Dialog !important;">
+                Before dispensing:
+            </p>
+            <li style="text-align: justify;font-size: 14px;;font-family: Dialog !important;padding-bottom: 0;padding-top: 0;">Verify the female patient is under the supervision and care
+                of a certified prescriber, and that she is enrolled or will be enrolled in the REMS prior to discharge,
+                through the processes and procedures established as a requirement of the REMS.</li>
+            <li style="text-align: justify;font-size: 14px;;font-family: Dialog !important;">Verify pregnancy testing is complete, and that the patient
+                is counseled on the risk of embryo-fetal toxicity, the need to use reliable contraceptionduring
+                treatment and for one month after stopping treatment, to get monthly pregnancy tests, and to inform the
+                prescriber immediately if she misses a menstrual period or suspects she is pregnant, through the
+                processes and procedures established as a requirement of the REMS for females of reproductive potential.
+            </li>
+            <p style="padding: 0px 0px 2px 0px;margin: 0px;padding-bottom: 0;padding-top: 7px;font-size: 14px;;font-size: 14px;font-family: Dialog !important;">
+                To maintain certification to dispense:
+            </p>
+            <li style="text-align: justify;font-size: 14px;;font-family: Dialog !important;">Have a new authorized representative certify by enrolling
+                in the REMS by completing the <i>Inpatient Pharmacy Enrollment Form</i> if the authorized representative
+                changes.</li>
+            <p style="padding: 0px 0px 2px 0px;margin: 0px;padding-bottom: 0;padding-top: 7px;font-size: 14px;font-family: Dialog !important;">At discharge:</p>
+            <li style="text-align: justify;font-size: 14px;">Dispense no more than a 15-day's supply of Macitentan.</li>
+
+            <p style="padding: 0px 0px 2px 0px;margin: 0px;padding-bottom: 0;padding-top: 7px;font-size: 14px;;font-family: Dialog !important;">At all times:</p>
+
+            <li style="text-align: justify;font-size: 14px;font-family: Dialog !important;">Not distribute, transfer, loan, or sell macitentan, except
+                to certified dispensers.</li>
+            <li style="text-align: justify;font-size: 14px;font-family: Dialog !important;">Report any pregnancies to the REMS Coordinating Center.
+            </li>
+            <li style="text-align: justify;font-size: 14px;font-family: Dialog !important;">Maintain records that all processes and procedures are in
+                place and are being followed.</li>
+            <li style="text-align: justify;font-size: 14px;font-family: Dialog !important;">Comply with audits by the manufacturer or a third party
+                acting on behalf of the manufacturer to ensure all processes and procedures are in place and being
+                followed.</li>
+
+            <p style="text-align: justify;font-size: 14px;font-family: Dialog !important;">
+                <b>Note:</b> If your inpatient pharmacy needs macitentan and is not certified in the Macitentan REMS,
+                please go to www.MacitentanREMS.com for immediate online certification,or contact theREMS Coordinating
+                Center at 1-888-572-2934 for assistance in certifying.
+            </p>
+            <div>
+                <table>
+                  
+                    
+                    
+                    <tr>
+                        <td style="font-size: 14px;font-family: Dialog !important;">Signature:</td>
+                        <td>
+                             <apex:outputText value="{!ac.US_WSREMS__Signature__c}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;" /><br />
+                            <hr
+                            style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 290px;" />
+                        </td>
+                        <td style="font-size: 14px;font-family: Dialog !important;">Date:</td>
+                        <td>
+                           <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="margin: 0px;font-size: 14px;;font-family: Dialog !important;"><apex:param value="{!ac.US_WSREMS__Date__c}"/></apex:outputText>
+                            <hr
+                           style="border: none;margin: 0px;border-top: 0.1px solid black;border-size:5px;width: 410px;" />
+                        </td>
+                    </tr>
+                    
+                    
+                    <p style="text-align: justify;font-size: 14px;font-family: Dialog !important;">
+                        <b>Please visit www.MacitentanREMS.com or call 1-888-572-2934 for more information about the
+                            Macitentan REMS</b>
+                    </p>
+                </table>
+            </div>
+        </body>
+    </apex:form>
+</apex:page>

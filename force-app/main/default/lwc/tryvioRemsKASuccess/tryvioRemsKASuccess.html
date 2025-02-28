@@ -1,0 +1,55 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+
+        <div class="pageTitle prescriber">
+            <div class="slds-text-heading_medium">TRYVIO<sup>™</sup> REMS</div>
+            <div class="slds-text-heading_large"><img class="iconImg" src={iconPrescriber}> Prescribers</div>
+        </div>
+        <div class="pageContainer">
+            <div class="pageContent">
+
+
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+
+                        <lightning-progress-indicator current-step="4" type="path" has-error="true" variant="base">
+                            <lightning-progress-step label="Register" value="1"
+                                variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Review Materials" value="2"
+                                variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Knowledge Assessment" value="3"
+                                variant="active"></lightning-progress-step>
+                            <lightning-progress-step label="Complete Enrollment" value="4"
+                                variant="incomplete"></lightning-progress-step>
+                        </lightning-progress-indicator>
+
+                        <p class="slds-text-heading_medium">{presname}<br>NPI: {presnpi}</p>
+                        <div class="slds-border_bottom "></div>
+
+                        <div data-region-name="content">
+                            <div data-priority="" class="ui-widget">
+                                <div class="slds-text-heading_large">TRYVIO REMS Knowledge Assessment Complete</div>
+                                <div class="slds-p-vertical_small"></div>
+                                <div class="slds-text-heading_medium">You have <b>successfully passed</b> the TRYVIO
+                                    REMS Prescriber Knowledge Assessment.</div>
+                                <div class="slds-p-vertical_small"></div>
+                                <p>Click "Continue" to proceed to the last stage of the TRYVIO REMS Prescriber
+                                    Certification process.
+                                    <br> If you exit now, you may return later to complete your enrollment.
+                                </p>
+                                <div class="slds-m-top_large"></div>
+                                <div class="slds-border_top slds-m-top_xx-large"></div>
+                                <div class="slds-align_absolute-center">
+                                    <button onclick={handleContinue}
+                                    class="slds-button slds-m-top_large slds-button_brand"
+                                    aria-disabled="false" type="button" part="button"
+                                    kx-scope="button-brand" kx-type="ripple">Continue</button>
+                                </div>
+                            </div> <!-- end layout   -->
+                        </div>
+                    </div> <!-- end SF   -->
+                </div> <!-- end pageContent   -->
+            </div> <!-- end pageContainer   -->
+        </div> <!-- end main   -->
+    </div>
+</template>

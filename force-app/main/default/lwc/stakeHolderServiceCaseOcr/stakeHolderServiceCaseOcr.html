@@ -1,0 +1,278 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-12-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <template if:true={ShowSpinner}>
+      <lightning-spinner alternative-text="Loading" class="slds-is-fixed" variant="brand" size="large"></lightning-spinner>
+    </template>
+    <template if:true={showUI}>
+      <template if:true={accountCreationForm}>
+        <template if:true={serviceConfig}>
+          <div class="slds-p-horizontal_small">
+            <div class="slds-card-wrapper">
+              <p class="rating-stars">
+                <span class="required-star">&#9733;</span> Hard Required Fields <br />
+                <span class="softrequired-star">&#9733;</span> Soft Required Fields
+              </p>
+              <header>
+                <h3 class="slds-text-heading_medium slds-text-align_center my-text_clr">
+                  <b>{headerTitle}</b>
+                </h3>
+              </header>&nbsp;
+              <p class="rating-stars">
+                <template if:true={expandButton}>
+                  <lightning-button icon-name="utility:jump_to_bottom" variant="brand" label="" class="butnClass"
+                    onclick={handleExpandAll}></lightning-button>
+                </template>
+                <template if:false={expandButton}>
+                  <lightning-button icon-name="utility:jump_to_bottom" variant="brand" label="" class="butnClass"
+                    onclick={handleCollapseAll}></lightning-button>
+                </template>
+              </p>
+              <article class="slds-card slds-card_boundary">
+                <div class="slds-card__body slds-card__body_inner">
+                  <template lwc:if={serviceFields}>
+                    <template for:each={serviceFields} for:item="Objects">
+                        <lightning-record-edit-form object-api-name={Objects.Object} onsubmit={handleSubmit} onload={handleOnLoad} key={Objects.Object} data-object={Objects.Object}
+                          data-recordtype={Objects.recordTypeId} onsuccess={handleOnSuccess} onerror={handleError} record-type-id={Objects.recordTypeId}>
+                      <lightning-messages></lightning-messages>
+                      <lightning-accordion allow-multiple-sections-open="true"
+                        active-section-name={setActiveSectionsList}>
+                        <template if:false={Objects.topborder}>
+                          <div class="slds-border_top"></div>
+                      </template>
+                        <lightning-accordion allow-multiple-sections-open="true"
+                          active-section-name={setActiveSectionsList}>
+                          <template for:each={Objects.sectionVal} for:item="dataList">
+                            <lightning-accordion-section key={dataList.key} name={dataList.key} label={dataList.key}>
+                              <lightning-layout multiple-rows="true">
+                                <template for:each={dataList.value} for:item="prog">
+                                  <lightning-layout-item key={prog.fieldName} size="6" flexibility="auto"
+                                    padding="around-small">
+                                    <template if:true={prog.visible}>
+  
+  
+                                      <template lwc:if={prog.isUpload}>
+  
+                                        <lightning-file-upload label={prog.fieldLabel} 
+                                          name="fileUploader"
+                                          accept={acceptedFormats}
+                                          onuploadfinished={handleUploadFinished} multiple></lightning-file-upload>
+  
+                                        <template lwc:if={displayUploadedFiles}>
+                                          <template for:each={uploadedFiles} for:item="file">
+                                            <li key={file.key} class="slds-var-m-left_small file-name-txt">
+                                              {file.value}
+                                            </li>
+                                            <lightning-button-icon data-name={file.key} key={file.key} onclick={handleFileDelete} icon-name="utility:delete" alternative-text="Delete" class="slds-var-m-left_xx-small"
+                                              title="Delete"></lightning-button-icon>
+  
+                                          </template>
+                                        </template>
+  
+                                      </template>
+                                      <template lwc:else>
+  
+                                        <label>
+                                          <template if:true={prog.required}>
+                                            <span class="required-star">&#9733;</span>
+                                          </template>
+                                          <template if:true={prog.softrequired}>
+                                            <span class="softrequired-star">&#9733;</span>
+                                          </template>
+                                          {prog.fieldLabel}
+                                          <template if:true={prog.isHelpText}>
+                                           <lightning-helptext content={prog.helpText}></lightning-helptext>
+                                          </template>
+                                        </label>
+                                        <lightning-input-field variant="label-hidden" field-name={prog.fieldName}
+                                          onchange={handleInputChange} disabled={prog.editable} required={prog.required}
+                                          value={prog.fieldValue} data-field={prog.fieldName} data-id="datainputField"
+                                          name={prog.fieldType} data-name={prog.fieldDataType} data-error={prog.validationMsg}
+                                          data-objectkey ={Objects.Object}>
+                                        </lightning-input-field>
+                                        <lightning-formatted-text class="slds-hide colorClass" data-id="datainput"
+                                          title={prog.fieldName} value="">
+                                        </lightning-formatted-text>
+                                      </template>
+  
+  
+  
+                                    </template>
+                                  </lightning-layout-item>
+                                </template>
+  
+                              </lightning-layout>
+  
+                            </lightning-accordion-section>
+
+                          </template>
+                        </lightning-accordion>
+                      </lightning-accordion>
+                      <input type="submit" class="hidden" data-btnkey ={Objects.Object} data-addsec={Objects.additionalSec}/>
+                    </lightning-record-edit-form>
+                  </template>
+                  </template>
+                  <footer class="slds-modal__footer slds-m-top_medium slds-text-align_center">
+                    <lightning-button variant="brand" label="Previous" title="Previous" class="butnClass"
+                      size="small" type="Previous" onclick={handlePrevious}></lightning-button>
+                    <lightning-button variant="brand" label="Submit" title="Submit" class="butnClass" size="small"
+                    onclick={handleSubmitAll}></lightning-button>&nbsp;
+                    <lightning-button variant="brand" label="Cancel" title="Cancel" class="butnClass" size="small"
+                      type="Cancel" onclick={handleCancel}></lightning-button>&nbsp;
+                  </footer>
+                </div>
+              </article>
+            </div>
+          </div>
+        </template>
+      </template>
+    </template>
+    <template if:true={showPopup}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <!-- modal header start -->
+          <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+              onclick={handleNo}>
+              <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                size="small"></lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+  
+          </header>
+  
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-1">
+            <div> <b>{label.cancleButtonConformationMessage}</b></div>
+          </div>
+  
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+            <lightning-button label="Yes" onclick={handleYes}></lightning-button>&nbsp;&nbsp;
+            <lightning-button label="No" onclick={handleNo}></lightning-button>
+          </footer>
+  
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={isOpen}>
+  
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+  
+          <!--Header part of the Modal-->
+          <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+              onclick={hideModal}>
+              <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                size="small"></lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Duplicate Account Found </h2>
+          </header>
+          <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-2">
+            <lightning-accordion class="example-accordion" active-section-name="Facility">
+              <lightning-accordion-section if:true={showMainstakeDupModal} name="mainstake"
+                  label={mainstakeHolderType}>
+                <div class="slds-scrollable_y slds-scrollable_x div-style">
+                  <lightning-datatable data-target-id="mainstake" key-field="Id" max-row-selection="1"
+                      onrowselection={handleRowSelection} columns={mainstakeDupColumns} data={mainstakeDupAccounts}>
+                  </lightning-datatable>
+                </div>
+              </lightning-accordion-section>
+              <lightning-accordion-section name="Facility Contact" if:true={showFacility} label="Facility">
+                <div class="slds-scrollable_y slds-scrollable_x div-style">
+                  <lightning-datatable data-target-id="Facility_Account" key-field="Id" columns={facilityColumns} max-row-selection="1"
+                    onrowselection={handleRowSelection} data={FacilityContactRecords}>
+                  </lightning-datatable>
+                </div>
+              </lightning-accordion-section>
+              <lightning-accordion-section name="Prescriber Delegate" if:true={showPrescriber}
+                label="Prescriber Delegate">
+                <div class="slds-scrollable_y slds-scrollable_x div-style">
+                  <lightning-datatable data-target-id="Prescriber_Delegate" key-field="Id" max-row-selection="1"
+                    onrowselection={handleRowSelection} columns={prescriberColumns} data={PrescriberDelegateRecords}>
+                  </lightning-datatable>
+                </div>
+              </lightning-accordion-section>
+              <lightning-accordion-section name="Prescriber" if:true={showPrescriberSt}
+                label="Prescriber">
+                <div class="slds-scrollable_y slds-scrollable_x div-style">
+                  <lightning-datatable data-target-id="Prescriber" key-field="Id" max-row-selection="1"
+                    onrowselection={handleRowSelection} columns={prescriberColumns} data={PRESCRIBERRecords}>
+                  </lightning-datatable>
+                </div>
+              </lightning-accordion-section>
+              <lightning-accordion-section if:true={showOffice} name="Office Contact" label="Office Contact">
+                <div class="slds-scrollable_y slds-scrollable_x div-style">
+                  <lightning-datatable data-target-id="Office_Contact" key-field="Id" onrowselection={handleRowSelection} max-row-selection="1"
+                    columns={officeColumns} data={officeContactRecords}>
+                  </lightning-datatable>
+                </div>
+              </lightning-accordion-section>
+              <lightning-accordion-section if:true={showHCS} name="Authorized Representative"
+                label="Authorized Representative">
+                <div class="slds-scrollable_y slds-scrollable_x div-style">
+                  <lightning-datatable data-target-id="Pharmacy_Participant" key-field="Id" max-row-selection="1"
+                    onrowselection={handleRowSelection} columns={HCSColumns} data={HCSRecords}>
+                  </lightning-datatable>
+                </div>
+              </lightning-accordion-section>
+            </lightning-accordion>
+            <!--lightning-input class="slds-p-left_xx-large" type="checkbox" label="Still You want Continue without selecting Account" onchange={handleChange} ></lightning-input-->
+          </div>
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={hideModal} title="Cancel">Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={save} title="OK">OK</button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open">
+      </div>
+    </template>
+    <template if:true={duplicatesFound}>
+  
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+  
+          <!--Header part of the Modal-->
+          <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+              onclick={hideModal}>
+              <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                size="small"></lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Duplicate Account Found </h2>
+          </header>
+          <div class="slds-modal__content slds-var-p-around_medium" id="modal-content-id-3">
+            <lightning-accordion class="example-accordion" active-section-name={recordTypeName}>
+              <lightning-accordion-section name={recordTypeName} label={recordTypeName}>
+                <div class="slds-scrollable_y slds-scrollable_x div-style">
+                  <lightning-datatable data-target-id="duplicate_Acc" key-field="Id" columns={duplicateAccColumns}
+                    onrowselection={handleDuplicateRowSelection} data={duplicateAccRecs}>
+                  </lightning-datatable>
+                </div>
+              </lightning-accordion-section>
+            </lightning-accordion>
+            <!--lightning-input class="slds-p-left_xx-large" type="checkbox" label="Still You want Continue without selecting Account" onchange={handleChange} ></lightning-input-->
+          </div>
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={hideModal} title="Cancel">Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={save} title="OK">OK</button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open">
+      </div>
+    </template>
+  </template>

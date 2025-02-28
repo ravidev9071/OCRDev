@@ -1,0 +1,249 @@
+<aura:component controller="DocumentReviewControllerL"
+    implements="flexipage:availableForRecordHome,lightning:isUrlAddressable,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:attribute name="fileurl" type="String" />
+    <aura:attribute name="privewScreenspinner" type="Boolean" default="false" />
+    <aura:attribute name="accFieldList" type="Object" />
+    <aura:attribute name="remsRecordList" type="Object" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute type="string" name="recordId" />
+    <aura:attribute type="string" name="DistObjId" />
+    <aura:attribute name="showAccountSearch" type="Boolean" default="True" />
+    <aura:attribute name="isPogramExist" type="Boolean" default="false" />
+    <aura:attribute name="showNewForm" type="Boolean" default="false" />
+    <aura:attribute name="selectedProgramName" type="String" />
+    <aura:attribute name="selectedProgramId" type="String" />
+    <aura:attribute name="programs" type="List" />
+    <aura:attribute name="componentName" type="String" />
+    <aura:attribute name="dynamicComponentPlaceholder" type="String" />
+    <aura:attribute name="gridColumns" type="List" />
+    <aura:attribute name="gridData" type="Object" />
+    <aura:attribute name="selectedREMS" type="Object" />
+    <aura:attribute name="selectedRows" type="Object" />
+    <aura:attribute name="expandableRows" type="List" />
+    <aura:attribute name="createREMS" type="Boolean" default="false" />
+    <aura:attribute name="isprogramSelect" type="Boolean" default="false" />
+    <aura:attribute name="isrecordTypeSelect" type="Boolean" default="false" />
+    <aura:attribute name="accountRecTypes" type="List" />
+    <aura:attribute name="selectedaccRecTypeId" type="String" />
+    <aura:attribute name="newRemsId" type="String" />
+    <aura:attribute name="isshowCase" type="boolean" default="false" />
+    <aura:attribute name="isgridata" type="boolean" default="false" />
+    <aura:attribute name="caseData" type="List" />
+    <aura:attribute name="caseColumns" type="List" />
+    <aura:attribute name="draftValues" type="Object" default="[]" />
+    <aura:attribute name="childselectedServiceId" type="String" />
+    <aura:attribute name="childselectedREMSServiceId" type="String" />
+    <aura:attribute name="childselectedRecordTypeName" type="String" />
+    <aura:attribute name="childrecordTypes" type="List" />
+    <aura:attribute name="childlayoutList" type="String" />
+    <aura:attribute name="childreqType" type="String" />
+    <aura:attribute name="selectedCaseObj" type="Object" />
+    <aura:attribute name="selectedAccObj" type="List" />
+    <aura:attribute name="ActiveSections" type="List" />
+    <aura:attribute name="showspinner" type="Boolean" default="false" />
+    <aura:attribute name="selectedRowIds" type="List" />
+    <aura:attribute name="shownewAccount" type="Boolean" default="false" />
+    <aura:attribute name="disableNext" type="Boolean" default="false" />
+    <aura:attribute name="noSearchResult" type="Boolean" default="false" />
+    <aura:attribute name="searchHlpMsg" type="Boolean" default="true" />
+    <aura:attribute name="childselectId" type="String"/>
+    <aura:attribute name="selectedrequestType" type="String"/>
+
+    <aura:attribute name="hiddenServiceIcon" type="Boolean" default="false" />
+    <aura:attribute name="showServiceIcon" type="Boolean" default="true" />
+    <aura:handler name="remsServiceEvt" event="c:ServiceCreationEventL" action="{!c.handleCreateCase}" />
+    <lightning:workspaceAPI aura:id="workspace" />
+   <lightning:messageChannel type="US_WSREMS__ReviewDocumentChannel__c" onMessage="{!c.handleSuccess}"
+    />
+    <lightning:card>
+        <div>
+            <div class="grid-container">
+                <div class="grid-child purple">
+                    <div class="slds-m-around_x-small">
+                        <div class="slds-align_absolute-center">
+                            <aura:if isTrue="{!v.privewScreenspinner}">
+                                <lightning:spinner alternativeText="Loading" size="medium" />
+                            </aura:if>
+                            <iframe src="{!v.fileurl}" style="width: 100%;height: 750px "
+                                onload="{!c.iframeLoad}"></iframe>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c-container">
+                    <aura:if isTrue="{!v.showAccountSearch}">
+
+                        <lightning:card title="Account Search">
+
+                            <lightning:layout multipleRows="true">
+                                <aura:iteration items="{!v.accFieldList}" var="accFld">
+                                    <aura:if isTrue="{!accFld.visible}">
+                                        <aura:if isTrue="{!accFld.DataType__c == 'Combobox'}">
+                                            <lightning:layoutItem size="6" padding="around-small">
+                                                <lightning:combobox id="{!accFld.Field_Name__c}"
+                                                    name="{!accFld.Field_Name__c}"
+                                                    label="{!accFld.Field_Label__c}"
+                                                    value="{!accFld.fieldValue}"
+                                                    placeholder="{!accFld.PlaceHolder__c}"
+                                                    options="{! accFld.Picklist_values__c  }"
+                                                    variant="label-hidden" onchange="{!c.handleComboChange}"
+                                                    required="{!accFld.Required__c}" readonly="true" />
+                                            </lightning:layoutItem>
+                                            <aura:set attribute="else">
+                                                <lightning:layoutItem size="6" padding="around-small">
+                                                    <lightning:input id="{!accFld.Field_Name__c}"
+                                                        type="{!accFld.DataType__c}"
+                                                        name="{!accFld.Field_Name__c}"
+                                                        label="{!accFld.Field_Label__c}"
+                                                        value="{!accFld.fieldValue}" variant="label-hidden"
+                                                        placeholder="{!accFld.PlaceHolder__c}"
+                                                        onChange='{!c.handleNameChange}'
+                                                        required="{!accFld.Required__c}" />
+                                                </lightning:layoutItem>
+                                            </aura:set>
+                                        </aura:if>
+                                    </aura:if>
+                                </aura:iteration>
+                            </lightning:layout>
+                            <div  class="slds-align_absolute-center">
+                            <div class="padding-bottom:2px;">
+                                <div style="text-align:center;display:flex;margin-center:11%;padding-bottom:7px;">
+                                    <div style="padding-left:20px;">
+                                        <lightning:icon iconName="standard:search" style="cursor: pointer;" alternativeText="search" title="search"
+                                        onclick="{!c.handleSearch}" />
+                                    </div>
+                                      <div style="padding-left:20px;">
+                                        <lightning:icon iconName="action:reset_password" style="cursor: pointer;" alternativeText="Reset" title="Reset" size="x-small"
+                                        onclick="{!c.handleReset}" />
+                                    </div>                         
+                                    <div style="padding-left:20px;">
+                                        <lightning:icon iconName="standard:account" style="cursor: pointer;" alternativeText="Account" title="{!$Label.c.New_Account_Button}" 
+                                                    onclick="{!c.handleAccRecOptions}" />
+                                    </div>
+                                        <aura:if isTrue="{!v.showServiceIcon}">
+                                            <div style="padding-left:20px;">
+                                                <lightning:icon iconName="custom:custom26" style="cursor: pointer;" title="{!$Label.c.New_Service_Button}"
+                                                    onclick="{! c.handleNext }"  />
+                                           </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.hiddenServiceIcon}">
+                                        <div style="padding-left:20px;">
+                                            <lightning:icon iconName="custom:custom26" style="cursor: pointer;" title="{!$Label.c.New_Service_Button}"
+                                                      onclick="{! c.handleNext }"  class="slds-hidden" />
+                                        </div>
+                                        </aura:if>
+                                       
+                                    </div>
+                                </div>
+                                </div>
+                            <aura:if isTrue="{!v.searchHlpMsg}">
+                                <div class="infoMsg">
+                                 <lightning:helptext class="infoCls" content="Info"></lightning:helptext>
+                                        <div class="slds-text-heading_small infoBody">{!$Label.c.Account_Search_Msg}</div>
+                                </div>
+                                    </aura:if>
+                            <aura:if isTrue="{!v.noSearchResult}">
+                                <div class="infoMsg">
+                                    <lightning:helptext class="infoCls" content="Info"></lightning:helptext>
+                                    <div class="slds-text-heading_small infoBody">{!$Label.c.Service_Creation_Msg}</div>
+                                </div>
+                                </aura:if>
+                            <div class="slds-m-around_x-small">
+                            <aura:if isTrue="{!v.isgridata}">
+                                    <div class="infoMsg">
+                                        <lightning:helptext class="infoCls" content="Info"></lightning:helptext>
+                                        <div class="slds-text-heading_small infoBody">{!$Label.c.Existing_Service_Selection_Msg}</div>
+                                    </div>
+                                <div class="treegridCls">
+                                <lightning:treeGrid columns="{! v.gridColumns }" data="{! v.gridData }" keyField="Id"
+                                    aura:id="mytree" hideCheckboxColumn="true" maxRowSelection="1"
+                                    onrowaction="{!c.handleRowSelection}" expandedRows="{!v.expandableRows}" />
+                                </div>
+
+                                <footer class="slds-modal__footer ">
+                                </footer>
+                                
+                            </aura:if>
+                            </div>
+
+
+
+                        </lightning:card>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.showNewForm}">
+                                <aura:if isTrue="{!v.isprogramSelect}">
+                                    <aura:if isTrue="{!v.isPogramExist}">
+                                        <header class="slds-modal__header">
+                                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                                                REMS
+                                                Program</h2>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                            <lightning:radioGroup name="radioGroup" label="Select Program"
+                                                options="{! v.programs }" value="{! v.selectedProgramId}"
+                                                type="radio" />
+
+                                        </div>
+                                        
+                                        <footer class="slds-modal__footer ">
+                                            <lightning:button variant="brand" label="Previous11" title="Previous"
+                                                onclick="{! c.handleprogPrev }" />
+
+                                            <lightning:button variant="brand" label="Next" title="Brand action"
+                                                onclick="{! c.handleAccRecOptions }" />
+                                            <lightning:button variant="neutral" label="Cancel" title="Cancel"
+                                                onclick="{! c.handleCancle }" />
+                                        </footer>
+                                    </aura:if>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isrecordTypeSelect}">
+                                    <div class="slds-m-around_x-small">
+                                    <header class="slds-modal__header">
+                                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Select
+                                            Record Type</h2>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                        <lightning:radioGroup aura:id="recTypeId" name="radioGroup" label="Select RecordType"
+                                            options="{! v.accountRecTypes }" value="{! v.selectedaccRecTypeId}"
+                                            type="radio" required="true" messageWhenValueMissing="Please select service"/>
+
+                                    </div>
+                                    <footer class="slds-modal__footer ">
+                                        <lightning:button variant="brand" label="Previous" title="Previous"
+                                            onclick="{! c.handleRTPrev }" />
+                                        <lightning:button variant="brand" label="Next" title="Brand action"
+                                            onclick="{! c.createDynamicComponent }" />
+                                        <lightning:button variant="neutral" label="Cancel" title="Cancel"
+                                            onclick="{! c.handleCancle }" />
+
+                                    </footer>
+                                    </div>
+                                </aura:if>
+                            </aura:if>
+                        </aura:set>
+                    </aura:if>
+                    <aura:if isTrue="{!v.shownewAccount}">
+                        {!v.dynamicComponentPlaceholder}
+                    </aura:if>
+                    <aura:if isTrue="{!v.createREMS}">
+                        <c:ServiceCreationL aura:id="createService" programId="{!v.selectedProgramId}"
+                            remsObj="{!v.selectedREMS}" recievedDetailDocumentId="{!v.recordId}"
+                            selectedServiceId="{!v.childselectedServiceId}"
+                            selectedRecordTypeName="{!v.childselectedRecordTypeName}" layoutList="{!v.childlayoutList}"
+                            DistLinkObjId="{!v.DistObjId}" childCaseObj="{!v.selectedCaseObj}"
+                            caseActiveSections="{!v.ActiveSections}" selectedId="{!v.childselectId}" requestType="{!v.childreqType}"
+                            programName="{!v.selectedProgramName}" />
+
+                    </aura:if>
+                </div>
+
+            </div>
+
+        </div>
+        <aura:if isTrue="{!v.showspinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+    </lightning:card>
+
+</aura:component>

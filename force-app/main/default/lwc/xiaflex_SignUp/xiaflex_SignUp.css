@@ -1,0 +1,9 @@
+.lightning-studio{
+	color : blue;
+}
+.calloutContent {
+	background: #002e5d;
+    background-image: url('/resource/xiaflex_bgBlue') !important;
+	background-repeat: no-repeat;
+	font-family: "Roboto Condensed", Roboto, sans-serif;
+}

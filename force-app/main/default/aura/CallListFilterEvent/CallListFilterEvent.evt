@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template" >
+     <aura:attribute name="callListFilterWrapper" type="Object"/>
+    <aura:attribute name="selectedProject" type="String"/>
+    <aura:attribute name="IsSuperUser" type="Boolean"/>
+    <aura:attribute name="resetValues" type="Boolean"/> 
+</aura:event>

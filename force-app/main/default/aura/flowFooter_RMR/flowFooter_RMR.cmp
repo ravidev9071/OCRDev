@@ -1,0 +1,35 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens">
+        
+   <!-- Determine which actions are available -->
+   <aura:attribute name="canPause" type="Boolean" />
+   <aura:attribute name="canBack" type="Boolean" />
+   <aura:attribute name="canNext" type="Boolean" />
+   <aura:attribute name="canFinish" type="Boolean" />
+   <aura:handler name="init" value="{!this}" action="{!c.init}" />
+        
+   <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+      <!-- If Previous is available, display to the left -->
+      <div class="slds-float_left">
+         
+            <lightning:button aura:id="BACK" label="Cancel"
+               variant="Brand" onclick="{!c.onButtonPressed}" />
+        
+      </div>
+      
+         
+           
+        
+     
+      <div class="slds-float_left slds-p-left_small">
+         
+        	
+            <lightning:button aura:id="NEXT" label="Submit" 
+               variant="brand" onclick="{!c.onButtonPressed}" />
+      
+         <aura:if isTrue="{!v.canFinish}">
+            <lightning:button aura:id="FINISH" label="Done"
+               variant="brand" onclick="{!c.onButtonPressed}" />
+         </aura:if>
+      </div>
+   </div>
+</aura:component>

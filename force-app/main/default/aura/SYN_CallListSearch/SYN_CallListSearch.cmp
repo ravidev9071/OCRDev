@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	 <aura:handler name="CallListFilterEvent" event="c:CallListFilterEvent" action="{!c.showCallList}"/>
+		
+    <div class="{!$Browser.formFactor}">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem class="slds-p-around_xx-small" largeDeviceSize="3" mediumDeviceSize="12" smallDeviceSize="12" size="12">
+                <c:SYN_CallListSearchForm />
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-p-around_xx-small" largeDeviceSize="9" mediumDeviceSize="12" smallDeviceSize="12" size="12">
+                <c:SYN_CallListResultCmp aura:id="cCallListResult"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

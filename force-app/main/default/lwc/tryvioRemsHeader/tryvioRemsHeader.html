@@ -1,0 +1,53 @@
+<template>
+    <div class="pageContainer">
+	<div class="pageMainHeader">
+		<div class="slds-grid slds-gutters slds-wrap">
+			<div class=" slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_12-of-12">		
+				<div class="themeLogo">
+					 <a class="logo" onclick={redirectHome}>
+						 <img  src={logo} onclick={redirectHome}>
+						 <span class="slds-assistive-text">REMS Digital</span>
+					 </a>
+				</div>	
+			</div> <!-- end col  -->
+			<div class="slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_12-of-12">		
+				<nav data-id="navBar" class="topnav" id="CustomMainNav">
+					<ul class="nav">
+						<li>
+							<a id="Home" onclick={redirectHome} class="mainNavLink">Home</a> <!-- Add the onClick event and call the navitageToLWCWithoutAura function -->
+						</li>
+						<li>
+							<a id="Pharmacy" href="tryvioremspharmacy" class="mainNavLink">Pharmacies</a>
+						</li>						
+						<li>
+							<a id="Prescriber" href="tryvioremsprescriber"  class="mainNavLink">Prescribers</a>
+						</li>	
+						<li>
+							<a id="Patients" href="patient"  class="mainNavLink">Patients</a>
+						</li>
+						<li>
+							<a id="RDA" href="tryvioremsverification"  class="mainNavLink">REMS Dispense Authorization</a>
+						</li>						
+						<li>
+							<a id="Locator" href="lookup" class="mainNavLink">Prescriber/Pharmacy Lookup</a>  
+						</li>
+
+						<li>
+							<a id="ContactUs" href="contactus" class="mainNavLink">Contact Us</a>  
+						</li>
+						<li>
+							<a id="Resources" href="resources"  class="mainNavLink">Resources</a>  
+						</li>
+						<li>
+							<span class="icon" onclick={handleHamburgerMenu}>
+								<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+							</span>
+						</li>
+					</ul>
+				</nav>	
+			</div> <!-- end col  -->
+		</div> <!-- end row  -->
+	</div> <!-- end pageMainHeader  -->			
+</div>  <!-- end pageContainer  -->	
+<div class="headerBorder"></div>
+</template>

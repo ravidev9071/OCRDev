@@ -1,0 +1,15 @@
+.dummy{
+	color : black;
+}
+a {
+    color: #eb5903;
+}
+.btnSecondary {
+    background: #eb5903;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: bold;
+    /* width: 100%; */
+    padding: 10px;
+    margin: 15px 0;
+}

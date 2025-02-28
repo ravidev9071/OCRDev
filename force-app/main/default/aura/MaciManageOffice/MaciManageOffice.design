@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="programId" label="Program Name" datasource="apex://REMSPortalProgramPickListCtr" />
+    <design:attribute name="portalRole" label="Portal Role" datasource="apex://REMSPortalRolePickList"/>
+    <design:attribute name="recordTypeDeveloperName" label="RecordType Developer Name" default=""/>
+</design:component>

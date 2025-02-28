@@ -1,0 +1,21 @@
+:host {
+    --slds-c-tabs-item-color-border-active: rgb(255, 103, 31);
+    --slds-c-tabs-item-color-border-hover: rgb(255, 103, 31);
+    --slds-c-tabs-list-color-border: rgb(102, 102, 102);
+    
+}
+
+.HCPResult{
+    background-color:rgb(224 112 0 / 80%) !important;
+    color: #fff;
+    padding: 10px 0;
+}
+.HCSResult{ 
+    background: rgb(0 121 52 / 80%);
+    color: #fff;
+    padding: 10px 0;
+}
+
+.fontWhite {
+    color: white;
+}

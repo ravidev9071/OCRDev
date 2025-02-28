@@ -1,0 +1,963 @@
+<template>
+	<div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+						<div data-region-name="content">
+							<div data-priority="" class="ui-widget">
+								<div class="slds-text-heading_large">My Profile</div>
+								<!--<div class="slds-text-heading_medium">Healthcare Setting Details</div>	   -->
+								<div class="slds-m-bottom_large"></div>
+								<div class="profile">
+									<div class="tileCards">
+										<div class="slds-card-wrapper">
+											<article class="slds-card">
+												<div class="slds-card__header slds-grid">
+													<header
+														class="slds-media slds-media_center slds-has-flexi-truncate">
+														<div class="slds-media__figure">
+															<span class="slds-icon_container slds-icon-standard-contact"
+																title="contact">
+																<svg class="slds-icon slds-icon_small"
+																	aria-hidden="true">
+																	<use
+																		xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact">
+																	</use>
+																</svg>
+																<span class="slds-assistive-text"></span>
+															</span>
+														</div>
+														<div class="slds-media__body">
+															<h2 class="slds-card__header-title">
+																<span>{userName}
+																	<span class="status certified">{status}</span>
+																</span>
+															</h2>
+														</div>
+														<div class="slds-no-flex">
+
+															<button onclick={openModal}
+																class="slds-button slds-button_brand">Edit
+																Profile</button>
+														</div>
+													</header>
+												</div>
+												<template if:true={showPrescriberInfo}>
+													<div class="slds-card__body">
+
+														<div class="slds-form__row">
+															<div class="slds-col slds-large-size_4-of-12">
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Enrollment
+																			ID</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{enrollmentId}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">State
+																			License Number</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{stateLicenceNum}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">Phone
+																			Number</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{phone}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Degree</span>
+																		<div class="slds-form-element__control">
+																			<template lwc:if={othersCheck}>
+																				<div class="slds-form-element__static">
+																					{credentialsOther}</div>
+
+																			</template>
+																			<template lwc:else>
+																				<div class="slds-form-element__static">
+																					{credentials}</div>
+																			</template>
+
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="slds-col slds-large-size_4-of-12">
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Prescriber
+																			NPI</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{prescriberNPI}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">State
+																			License Number State</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{stateLicenceNumSt}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">Fax
+																			Number</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">{fax}
+																			</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Specialty</span>
+																		<div class="slds-form-element__control">
+																			<template lwc:if={otherSpecialityCheck}>
+																				<div class="slds-form-element__static">
+																					{specialityOther}</div>
+
+																			</template>
+																			<template lwc:else>
+																				<div class="slds-form-element__static">
+																					{speciality}</div>
+
+																			</template>
+
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+
+															</div><!-- end form item  -->
+															<div class="slds-col slds-large-size_4-of-12">
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">DEA
+																			Number</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{deaNumber}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+
+
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">Email
+																			address</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{email}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+
+
+
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">Preferred
+																			Method of Communication</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{preferredMethodOfContact}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+															</div>
+
+
+														</div> <!-- end form-row  -->
+
+													</div> <!-- end card body  -->
+												</template>
+												<template if:true={prescriberHcsInfo}>
+													<div class="slds-card__body">
+
+														<div class="slds-form__row">
+															<div class="slds-col slds-large-size_4-of-12">
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Enrollment
+																			ID</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{enrollmentId}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">Phone
+																			Number</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{phone}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Role</span>
+																		<div class="slds-form-element__control">
+
+																			<template lwc:if={othersCheck}>
+																				<div class="slds-form-element__static">
+																					{credentialsOther}</div>
+
+																			</template>
+																			<template lwc:else>
+																				<div class="slds-form-element__static">
+																					{roleHCS}</div>
+																			</template>
+
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="slds-col slds-large-size_4-of-12">
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Title</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{title}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">Fax
+																			Number</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">{fax}
+																			</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+
+
+
+															</div>
+															<div class="slds-col slds-large-size_4-of-12">
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span
+																			class="slds-form-element__label">Email</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{email}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="slds-form__item" role="listitem">
+																	<div
+																		class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																		<span class="slds-form-element__label">Preferred
+																			Method of Communication</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">
+																				{preferredMethodOfContact}</div>
+																			<button class="slds-button slds-button_icon"
+																				title="">
+																				<svg class="slds-button__icon slds-button__icon_hint"
+																					aria-hidden="true">
+																					<use
+																						xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+																					</use>
+																				</svg>
+																				<span
+																					class="slds-assistive-text"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div><!-- end form item  -->
+
+															</div>
+														</div> <!-- end form-row  -->
+													</div>
+												</template>
+												<!-- end card body  -->
+											</article>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- end pageContent   -->
+		</div>
+	</div>
+	<template if:true={boolVisible}>
+		<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" id="ModalAR"
+			class="slds-modal slds-fade-in-open slds-modal_medium" style="background-color:#19141463;">
+			<div class="slds-modal__container" id="theForm">
+				<div class="slds-modal__header">
+					<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Edit My Profile</h1>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<div class="frmContainer">
+						<article class="slds-card " part="card">
+							<div class="slds-card__header slds-grid">
+								<header class="slds-media slds-media_center slds-has-flexi-truncate">
+									<div class="slds-media__figure"></div>
+									<div class="slds-media__body">
+										<h2 class="slds-card__header-title">
+											<span>My Profile Information</span>
+										</h2>
+									</div>
+								</header>
+							</div>
+							<div class="slds-card__body  slds-card__body_inner" part="body">
+								<p class="frmInstructions"></p>
+								<slot>
+									<template if:true={prescriberHcsInfo}>
+										<div class="slds-m-bottom_small"></div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-large-size_3-of-12">
+
+
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="firstName" label=" First Name" value={firstName}
+													onchange={handleInputChange} required>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_2-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="mi" label="MI" value={middleName}
+													onchange={handleInputChange}>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_3-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="lastName" label=" Last Name" value={lastName}
+													onchange={handleInputChange} required>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_3-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="title" label="Title" value={title}
+													onchange={handleInputChange}>
+												</lightning-input>
+											</div>
+										</div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													maxlength="10" name="phoneHCS" label="Phone Number" value={phonehcs}
+													onchange={handleInputChange}>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													maxlength="10" name="fax" label="Fax Number" value={fax}
+													onchange={handleInputChange}>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="email"
+													name="email" label=" Email Address" value={email} disabled required>
+												</lightning-input>
+											</div>
+										</div>
+										<div if:true={isLoading} class="slds-is-relative">
+											<lightning-spinner alternative-text="Loading..." variant="brand">
+											</lightning-spinner>
+										</div>
+										<div>
+											<fieldset class="slds-form-element">
+												<legend class="slds-form-element__legend slds-form-element__label">
+													<abbr class="slds-required" title="required">*</abbr>&nbsp;Preferred
+													Method of Communication
+												</legend>
+												<div class="slds-form-element__control">
+													<span class="slds-radio">
+														<input type="radio" id="email" value="Email" name="contact"
+															onchange={handleInputChange} checked={emailCheck}>
+														<label class="slds-radio__label" for="email">
+															<span class="slds-radio_faux"></span>
+															<span class="slds-form-element__label">Email</span>
+														</label>
+													</span>
+													<span class="slds-radio">
+														<input type="radio" id="fax" value="Fax" name="contact"
+															onchange={handleInputChange} checked={faxCheck}>
+														<label class="slds-radio__label" for="fax">
+															<span class="slds-radio_faux"></span>
+															<span class="slds-form-element__label">Fax</span>
+														</label>
+													</span>
+												</div>
+											</fieldset>
+										</div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-size_1-of-1">
+												<fieldset class="slds-form-element">
+													<legend class="slds-form-element__legend slds-form-element__label">
+														<abbr class="slds-required" title="required">*</abbr>&nbsp;Role
+														(Please Select One)
+													</legend>
+													<div class="slds-form-element__control">
+														<span class="slds-radio">
+															<input type="radio" id="radio-171" value="MD"
+																name="position" onchange={handleInputChange}
+																checked={mdCheck}>
+															<label class="slds-radio__label" for="radio-171">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">M.D.</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-172" value="DO"
+																name="position" onchange={handleInputChange}
+																checked={doCheck}>
+															<label class="slds-radio__label" for="radio-172">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">D.O.</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-173" value="Nurse"
+																name="position" onchange={handleInputChange}
+																checked={nurseCheck}>
+															<label class="slds-radio__label" for="radio-173">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Nurse</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-174"
+																value="Physician Assistant" name="position"
+																onchange={handleInputChange} checked={physicianCheck}>
+															<label class="slds-radio__label" for="radio-174">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Physician
+																	Assistant</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-175" value="Practice Manager"
+																name="position" onchange={handleInputChange}
+																checked={practiceMCheck}>
+															<label class="slds-radio__label" for="radio-175">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Pratice
+																	Manager</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-177" value="Other"
+																name="position" onchange={handleInputChange}
+																checked={othersCheck}>
+															<label class="slds-radio__label" for="radio-177">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Other</span>
+															</label>
+														</span>
+													</div>
+												</fieldset>
+											</div>
+										</div> <!-- end row  -->
+										<div if:true={otherCred}>
+											<div id="RollOtherPrescriber" class="otherElement">
+												<div class="slds-grid  slds-wrap slds-gutters">
+													<div class="slds-col slds-medium-size_4-of-12">
+														<lightning-input class="validate search slds-form-element"
+															type="text" name="othersTitle" label=" Role Other"
+															value={credentialsOther} onchange={handleInputChange}
+															required>
+														</lightning-input>
+													</div>
+												</div> <!-- end row  -->
+											</div>
+										</div>
+									</template>
+									<template if:true={showPrescriberInfo}>
+										<div class="slds-m-bottom_small"></div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="prescriberNPI" label=" Prescriber NPI" value={prescriberNPI}
+													onchange={handleInputChange} disabled required>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="deaNumber" label=" DEA Number" value={deaNumber}
+													onchange={handleInputChange} disabled required>
+												</lightning-input>
+											</div>
+										</div> <!-- end row  -->
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="firstName" label=" First Name" value={firstName}
+													onchange={handleInputChange} required>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_2-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="mi" label="MI" value={middleName}
+													onchange={handleInputChange}>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													name="lastName" label=" Last Name" value={lastName}
+													onchange={handleInputChange} required>
+												</lightning-input>
+											</div>
+
+										</div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="email"
+													name="email" label=" Email Address" value={email} disabled required>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													maxlength="10" name="phone" label=" Phone Number" value={phone}
+													onchange={handleInputChange} required>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element" type="text"
+													maxlength="10" name="fax" label=" Fax Number" value={fax}
+													onchange={handleInputChange} required>
+												</lightning-input>
+											</div>
+										</div>
+										<div if:true={isLoading} class="slds-is-relative">
+											<lightning-spinner alternative-text="Loading..." variant="brand">
+											</lightning-spinner>
+										</div>
+										<div>
+											<fieldset class="slds-form-element">
+												<legend class="slds-form-element__legend slds-form-element__label">
+													<abbr class="slds-required" title="required">*</abbr>&nbsp;Preferred
+													Method of Communication
+												</legend>
+												<div class="slds-form-element__control">
+													<span class="slds-radio">
+														<input type="radio" id="rb-4" value="Email" name="contact"
+															onchange={handleInputChange} checked={emailCheck}>
+														<label class="slds-radio__label" for="rb-4">
+															<span class="slds-radio_faux"></span>
+															<span class="slds-form-element__label">Email</span>
+														</label>
+													</span>
+													<span class="slds-radio">
+														<input type="radio" id="rb-5" value="Fax" name="contact"
+															onchange={handleInputChange} checked={faxCheck}>
+														<label class="slds-radio__label" for="rb-5">
+															<span class="slds-radio_faux"></span>
+															<span class="slds-form-element__label">Fax</span>
+														</label>
+													</span>
+												</div>
+											</fieldset>
+										</div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-input class="search slds-form-element" type="text"
+													name="stateLicenceNum" label="State License Number"
+													value={stateLicenceNum} onchange={handleInputChange}>
+												</lightning-input>
+											</div>
+											<div class="slds-col slds-large-size_4-of-12">
+												<lightning-combobox name="stateLicenceNumSt"
+													label="State License Number State" value={stateLicenceNumSt}
+													options={state} onchange={handleInputChange}>
+												</lightning-combobox>
+											</div>
+										</div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-size_1-of-1">
+												<fieldset class="slds-form-element">
+													<legend class="slds-form-element__legend slds-form-element__label">
+														Position/Credentials</legend>
+													<div class="slds-form-element__control">
+														<span class="slds-radio">
+															<input type="radio" id="radio-181" value="MD"
+																name="position" onchange={handleInputChange}
+																checked={mdCheck}>
+															<label class="slds-radio__label" for="radio-181">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">M.D.</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-182" value="DO"
+																name="position" onchange={handleInputChange}
+																checked={doCheck}>
+															<label class="slds-radio__label" for="radio-182">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">D.O.</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-183"
+																value="Physician Assistant" name="position"
+																onchange={handleInputChange} checked={physicianCheck}>
+															<label class="slds-radio__label" for="radio-183">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Physician
+																	Assistant</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-184" value="Nurse"
+																name="position" onchange={handleInputChange}
+																checked={nurseCheck}>
+															<label class="slds-radio__label" for="radio-184">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Nurse
+																	Practitioner</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-187" value="Other"
+																name="position" onchange={handleInputChange}
+																checked={othersCheck}>
+															<label class="slds-radio__label" for="radio-187">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Other</span>
+															</label>
+														</span>
+													</div>
+												</fieldset>
+											</div>
+										</div> <!-- end row  -->
+										<div if:true={otherCred}>
+											<div id="RollOther" class="otherElement">
+												<div class="slds-grid slds-wrap slds-gutters">
+													<div class="slds-col slds-medium-size_4-of-12">
+														<lightning-input class="validate search slds-form-element"
+															type="text" name="othersTitle" label="Credential Other"
+															value={credentialsOther} onchange={handleInputChange}
+															required>
+														</lightning-input>
+													</div>
+												</div> <!-- end row  -->
+											</div>
+										</div>
+										<div class="slds-grid slds-wrap slds-gutters">
+											<div class="slds-col slds-size_1-of-1">
+												<fieldset class="slds-form-element">
+													<legend class="slds-form-element__legend slds-form-element__label">
+														Specialty</legend>
+													<div class="slds-form-element__control">
+														<span class="slds-radio">
+															<input type="radio" id="radio-191" value="Endocrinology"
+																name="speciality" onchange={handleInputChange}
+																checked={endocrinologyCheck}>
+															<label class="slds-radio__label" for="radio-191">
+																<span class="slds-radio_faux"></span>
+																<span
+																	class="slds-form-element__label">Endocrinology</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-192" value="Primary Care"
+																name="speciality" onchange={handleInputChange}
+																checked={primaryCheck}>
+															<label class="slds-radio__label" for="radio-192">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Primary
+																	Care</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-193" value="Urology"
+																name="speciality" onchange={handleInputChange}
+																checked={urologyCheck}>
+															<label class="slds-radio__label" for="radio-193">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Urology</span>
+															</label>
+														</span>
+														<span class="slds-radio">
+															<input type="radio" id="radio-194" value="Other"
+																name="speciality" onchange={handleInputChange}
+																checked={otherSpecialityCheck}>
+															<label class="slds-radio__label" for="radio-194">
+																<span class="slds-radio_faux"></span>
+																<span class="slds-form-element__label">Other</span>
+															</label>
+														</span>
+													</div>
+												</fieldset>
+											</div>
+										</div>
+										<div if:true={otherSpec}>
+											<div id="SpecialityOther" class="specialityElement">
+												<div class="slds-grid   slds-wrap slds-gutters">
+													<div class="slds-col slds-medium-size_4-of-12">
+														<lightning-input class="validate search slds-form-element"
+															type="text" name="specialityOther" label="Specialty Other"
+															value={specialityOther} onchange={handleInputChange}
+															required>
+														</lightning-input>
+													</div>
+												</div> <!-- end row  -->
+											</div>
+										</div>
+									</template>
+								</slot>
+							</div>
+							<div class="slds-card__footer" part="footer">
+								<slot name="footer">
+									<div slot="footer">
+
+										<button title="Cancel" type="button" onclick={closeModal}
+											class="slds-button slds-button_text-destructive">Cancel</button>
+
+										<lightning-button class="brand-button" style="padding-left: 2px;" label="Submit"
+											variant="brand" onclick={saveModal} disabled={disableSave}>
+											<button class="slds-button slds-m-top_large slds-button_brand"
+												aria-disabled="false" type="button" part="button"
+												kx-scope="button-brand" kx-type="ripple">Submit</button>
+										</lightning-button>
+									</div>
+								</slot>
+							</div>
+						</article>
+					</div> <!-- end prescriber details  -->
+				</div> <!-- end enrollmentForm  -->
+			</div>
+		</section>
+	</template>
+</template>

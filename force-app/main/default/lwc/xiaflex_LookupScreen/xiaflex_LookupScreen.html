@@ -1,0 +1,240 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class=" slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                        <div
+                            class=" slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_9-of-12 slds-p-right_large right-border">
+                            <div class="comm-content-header comm-layout-column">
+                                <div class="slds-text-heading_large">Pharmacy/Healthcare Setting & Healthcare Provider Lookup</div>
+                            </div>
+                            <div class="locatorContainer">
+                                <div class="slds-grid slds-grid_align-center">
+                                    <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12">
+                                        <div class="locatorContent ">
+                                            <p>Use the Online Locator tool to<br>
+                                                search for a specific location.</p>
+                                            <a href={locatorUrl}
+                                                class=" slds-button btnLink btnGrey slds-grid_align-center xxxslds-button_full-width slds-col slds-size_12-of-12 slds-medium-size_5-of-12"
+                                                tabindex="0">
+                                                <img src={iconLocation}>Online Locator for Certified Healthcare
+                                                Providers or Pharmacies/Healthcare Settings</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dividerSolid"></div>
+                            <div class="frmContainer">
+                                <article class="slds-card " part="card">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure"></div>
+                                            <div class="slds-media__body">
+                                                <h2 class="slds-card__header-title">
+                                                    <span></span>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                    </div>
+                                    <div class="slds-card__body  slds-card__body_inner" part="body">
+                                        <p class="frmInstructions">Select the participant type. You may also enter a
+                                            Name, NPI, State, or Zip Code to limit the search results.</p>
+
+                                            <legend class="slds-form-element__legend slds-form-element__label">
+                                                <abbr class="slds-required" title="required">* </abbr>Participant
+                                            </legend>
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-radio">
+                                                    <input type="radio" id="rb-1" value="Prescribing" name="rbPart" label="Prescribing Healthcare"  onchange={handleChangeRadio}>
+                                                    <label class="slds-radio__label" for="rb-1">
+                                                        <span class="slds-radio_faux"></span> 
+                                                        <span class="slds-form-element__label">Prescribing Healthcare
+                                                            Providers</span>
+                                                    </label>
+                                                </span>
+                                                <span class="slds-radio">
+                                                    <input type="radio" id="rb-2" value="Healthcare" name="rbPart" label="Healthcare Settings"  onchange={handleChangeRadio}>
+                                                    <label class="slds-radio__label" for="rb-2">
+                                                        <span class="slds-radio_faux"></span>
+                                                        <span class="slds-form-element__label">Pharmacies/Healthcare
+                                                            Settings</span>
+                                                    </label>
+                                                </span>
+
+                                            </div>
+                                        
+                                        <div class="slds-grid slds-wrap slds-gutters">
+                                            <lightning-input class="slds-col  slds-medium-size_12-of-12 slds-large-size_12-of-12" type="text" variant="standard" name="name" label="Name, NPI, State, or Zip Code" value={inputVal} onchange={handleChange}></lightning-input> 
+                                        </div>
+
+                                    </div>
+                                    <div class="slds-card__footer" part="footer">
+                                        <slot name="footer">
+                                            <div slot="footer">
+
+
+                                                <button onclick={handleSearchKeyword}
+                                                    class="slds-button  slds-button_brand" aria-disabled="false"
+                                                    type="button" part="button" kx-scope="button-brand"
+                                                    kx-type="ripple">Search</button>
+
+                                            </div>
+                                        </slot>
+                                    </div>
+                                </article>
+                            </div>						 
+                                                       
+    <template if:true={showTable}>
+            <template if:true={isHCP}>
+                <h2 id="element-with-table-label" class="slds-text-heading_medium slds-m-bottom_xx-small">Certified Prescribing Healthcare Providers</h2>														  
+            </template>
+            <template if:true={isHCS}>
+                <h2 id="element-with-table-label1" class="slds-text-heading_medium slds-m-bottom_xx-small">Certifed Pharmacies/Healthcare Settings</h2>	
+            </template>
+            <template if:true={isHCS}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                    <!-- Rest of your table code -->
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-is-sortable slds-is-sorted slds-is-sorted_asc" scope="col">
+                                <div class="slds-truncate" title="Opportunity Name">Pharmacies/Healthcare Setting Name<lightning-icon style="cursor:pointer" class ="arrowSort" 
+                                icon-name={sortIcon} variant="inverse" data-title="Name" onclick={sortData} size="xx-small"
+                                ></lightning-icon></div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Account Name">Address</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Close Date">City</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Stage">State</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Confidence">Zip Code</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Amount">Phone</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Contact">Enrollment ID</div>
+                            </th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={visibileContacts} for:item="record">
+                            <tr class="slds-hint-parent" key={record.Id}>
+                                <th data-label="Pharmacies/Healthcare Setting Name" scope="row">
+                                    <div class="slds-truncate">
+                                    {record.Name}
+                                    </div>
+                                </th>
+                                <td data-label="Address">
+                                    <div class="slds-truncate">{record.US_WSREMS__Address_Line_1__c} {record.US_WSREMS__Address_Line_2__c}</div>
+                                </td>
+                                <td data-label="City">
+                                    <div class="slds-truncate" >{record.US_WSREMS__City__c}</div>
+                                </td>
+                                <td data-label="State">
+                                    <div class="slds-truncate">{record.US_WSREMS__State__c}</div>
+                                </td>
+                                <td data-label="Zip Code">
+                                    <div class="slds-truncate">{record.US_WSREMS__Zip__c}</div>
+                                </td>
+                                <td data-label="Phone">
+                                    <div class="slds-truncate" >{record.Phone}</div>
+                                </td>
+                                <td data-label="Enrollment ID">
+                                    <div class="slds-truncate">
+                                    {record.US_WSREMS__REMS_ID__c}
+                                    </div>
+                                </td>
+                                </tr>
+                        </template>
+                        
+                    </tbody>
+            </table>
+             <template if:true={showPagination}>
+                <c-xiaflex-_-lookup-screen-pagination all-items={records} page-size="5" onupdate={updateRecords}></c-xiaflex-_-lookup-screen-pagination>  
+              </template>
+            </template>
+            <template if:true={isHCP}>
+                
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered  slds-table_striped" aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                    <tr class="slds-line-height_reset">
+
+                        <th class="slds-is-sortable slds-is-sorted slds-is-sorted_asc" scope="row">Last name
+                            <lightning-icon style="cursor:pointer" class ="arrowSort" 
+                                icon-name={sortIcon} variant="inverse" data-title="Name" onclick={sortData} size="xx-small"
+                            ></lightning-icon>
+                        </th>
+                        <th scope="col">First name</th>
+                        <th scope="col">NPI Number</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Zip Code</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Enrollment ID</th>
+                        <!-- Add more table headers for additional fields -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={visibileContacts} for:item="Prescriber_record">
+                        <tr key={Prescriber_record.Id} class = "handleWidth" >
+                            <th data-label="Last Name" scope="row">{Prescriber_record.US_WSREMS__Prescriber__r.LastName}</th>
+                            <td data-label="First name">{Prescriber_record.US_WSREMS__Prescriber__r.FirstName}</td>
+                            <td data-label="NPI Number">{Prescriber_record.US_WSREMS__Prescriber__r.US_WSREMS__National_Provider_Identifier__c}</td>
+                            <td data-label="Address" class = "handleWidth">{Prescriber_record.addressLine1} {Prescriber_record.addressLine2}</td>
+                            <td data-label="City">{Prescriber_record.city}</td>
+                            <td data-label="State">{Prescriber_record.state}</td>
+                            <td data-label="Zip Code">{Prescriber_record.zip}</td>
+                            <td data-label="Phone">{Prescriber_record.US_WSREMS__Prescriber__r.Phone}</td>
+                            <td data-label="Enrollment ID">{Prescriber_record.US_WSREMS__Prescriber__r.US_WSREMS__REMS_ID__c}</td>
+                            <!-- Add more table cells for additional fields -->
+                        </tr>
+                    </template>
+                    
+                </tbody>
+            </table>
+            <template lwc:if={showPagination}>
+                <c-xiaflex-_-lookup-screen-pagination all-items={prescriber_records} page-size="5" onupdate={updateRecords}></c-xiaflex-_-lookup-screen-pagination>  
+            </template>
+            </template>
+    </template>
+    
+
+ <template if:true={showError}>
+      
+     <div class="slds-notify slds-notify_alert slds-theme_alert-texture " role="alert">
+         <span class="slds-icon_container slds-icon-utility-error slds-m-right_small" title="Error">
+             <lightning-icon icon-name="utility:error" size="small" alternative-text="Error"></lightning-icon>
+         </span>
+         <h2 class="slds-text-heading_small">{noRecordMessage}</h2>
+     </div>
+ </template>
+
+                            
+
+                            
+
+                        </div>
+
+
+
+
+                        <div
+                            class="slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_3-of-12 slds-p-left_large">
+                            <c-xiaflex_-Resources-Home></c-xiaflex_-Resources-Home>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clear" data-aura-rendered-by="62:2;a"></div>
+            </div>
+        
+    </div>
+    </div>
+</template>

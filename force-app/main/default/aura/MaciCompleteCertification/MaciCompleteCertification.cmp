@@ -1,0 +1,215 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Complete Certification Page { Middle context }
+-->
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:attribute name="cAccount" type="Account" /> 
+<lightning:navigation aura:id="navigation"/>
+<aura:handler name="init" value="{! this }" action="{!c.doInit }" />
+<section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height: 56vw;">
+        <div class="container-fluid px-5 pb-0 h-100">
+            <div class="row  h-100">
+                <div class="col-lg-12  h-100">
+                    <div class="card p-0 rounded-0  h-100">
+                                               
+                         <div class="card-header border-0 crd-hdr-m bg-blue-header">
+                               <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-12">
+                                    <div class="heading-top mx-0 d-flex justify-content-between border-bottom-0"
+                                        style="margin: 0px 4px;background-color: #EBEBEB">
+                                        <div class="col-lg-7 col-sm col-6 text-start">
+                                            
+                                            <div class="row ps-3">
+                                                <div class="col-1" style="width: 39px;">
+                                                    <span class="text-theme">
+                                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="col-9 ps-4">
+                                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                       {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="row ps-3" style="position: relative;top: -10px;">
+                                                <div class="col-1" style="width: 39px;"></div>
+                                                <div class="col-9 ps-4">
+                                                    <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                        NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <div class="col-lg-5 text-end pe-4">
+                                            <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                <span class="text-theme fw-bold">Enrolled as of
+                                                    <span name="enrolled-number" id="enrolled-number">
+                                                        <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                month="numeric" day="numeric" />
+                                                    </span>
+                                                   &nbsp; <i class="fa fa-check-circle"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-bottom-0 mx-1" style="background-color: #EBEBEB">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <h5 class="mb-0 fw-lighter ps-4 mt-4" style="color: #4c4c4c !important;margin-left: 18px;">
+                                            <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt=""
+                                                 style="width: 35px; margin-top: -26px; margin-left: -6px;"></img>
+                                            <i class="fa fa-file-text fs-3 ps-3 ms-2 pe-2" style="position: relative;left: -7px;padding-right: 2px !important;color: #4c4c4c !important;"></i> Prescriber Certification
+                                        </h5>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="progressbar">
+                                            <div class="progress" id="progress"></div>
+                                            
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>PRESCRIBER INFORMATION</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>PRIMARY OFFICE PRACTICE/CLINICAL
+                                                    INFORMATION</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>SECONDARY OFFICE PRACTICE/CLINICAL
+                                                    INFORMATION</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>PASSWORD</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step ">
+                                                </div>
+                                                <span class="text-theme"><em>AGREEMENT</em></span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step last-step progress-step-active">
+                                                </div>
+                                                <span>COMPLETE</span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body px-4 llc-dv  h-100">
+                                        <div>
+                                        <h5 class="mb-3 fw-bold">Complete</h5>
+                                            <div class="ps-4 ">
+                                                <p class="fw-bold">{!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}, your certification in the {!$Label.c.Macitentan_Containing_Products_REMS} is complete.</p>
+                                                <p class="fw-bold">You may choose from the following options or navigate to your desired function utilizing the prescriber menu at the top of the page.</p>
+                                            </div>
+                                        </div>
+                                    <div class="row d-flex justify-content-center ">
+                                        <div class="col-lg-4 mb-3 customcursor" onclick="{!c.navigateToMangePatientsPage}">
+                                          <div class="card-bg">
+                                            <div class="card-header">
+                                                <div class="card-section pt-1">
+                                                    <img src="{!$Resource.MaciImages + '/img/users.png'}" alt="" style="width: 50px;"></img>
+                                                    <p class="pt-1">manage Patients</p>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4>Manage Patients</h4>
+                                                <div class="list-bullets">
+                                                    <ul class="p-inline-s" style="font-size: 13px;color: #5a5a5a;">
+                                                        <li class="d-flex align-items-center">
+                                                            <i class="fa fa-circle"></i>
+                                                            <div>
+                                                                Manage your enrolled patients
+                                                            </div>   
+                                                        </li>
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                Change patient's reproductive potential <br></br> status
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-lg-4 mb-3 customcursor" onclick="{!c.navigateToPrescriberPreferencePage}">
+                                            <div class="card-bg">
+                                              <div class="card-header">
+                                                  <div class="card-section">
+                                                      <i class="fa fa-cog fa-2x"></i>
+                                                      <p>Preferences </p>
+                                                  </div>
+                                              </div>
+                                              <div class="card-body">
+                                                <h4>Preferences</h4>
+                                               <p> Update your personal preferences.</p>
+                                              <div class="user-detail">
+                                                <div class="user-box">
+                                                    <div class="col-md-1">
+                                                        <i class="fa fa-user-circle text-theme"></i>
+                                                    </div>
+                                                    <p>{!v.cAccount.US_WSREMS__NPI__c}</p>
+                                                </div>
+                                                <div class="user-box">
+                                                    <div class="col-md-1">
+                                                        <img src="{!$Resource.MaciImages + '/img/address-card-solid.png'}" alt="" style="width: 20px;" ></img>
+                                                    </div>
+                                                    <p>{!v.cAccount.Name}</p>
+                                                </div>
+                                                <div class="user-box">
+                                                    <div class="col-md-1"></div>
+                                                    <p class="mb-0">{!v.cAccount.ShippingStreet},
+                                                      {!v.cAccount.ShippingCity}, {!v.cAccount.ShippingState}, {!v.cAccount.ShippingPostalCode}</p>
+                                                </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-lg-4 mb-3 customcursor" >
+                                                  <div class="card-bg">
+                                                      <div class="card-header">
+                                                          <div class="card-section">
+                                                              <i class="fa fa-print fa-2x"></i>
+                                                              <p>print enrollment form</p>
+                                                          </div>
+                                                      </div>
+                                                      <div class="card-body">
+                                                          <h4>Print enrollment form</h4>
+                                                          <p> Print or download a PDF copy of your completed enrollment form. </p>
+                                                          <div>
+                                                              <a style="text-decoration: none" onclick="{!c.downloadEnrollmentForm}" shouldstayinownframe="true" title="Download pdf"  download="download" >
+                                                              <img src="{!$Resource.MaciImages + '/img/Prescriber-Enrollment-and-Agreement-Form.png'}" alt=""  class="d-block mx-auto" style="width:40%; height:180px;"></img>
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                          </div>
+                                             
+                                    </div>
+
+                        </div>
+                        <div class="card-footer border-0 py-4">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>

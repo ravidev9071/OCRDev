@@ -1,0 +1,281 @@
+/* .auraMsgMask,
+.auraErrorMask,
+.auraLoadingBox {
+    display: none;
+}
+
+.spaError {
+    padding: 10px;
+}
+
+.spaErrorLink {
+    padding: 10px 0;
+    display: block;
+}
+
+.siteforceContentArea .comm-layout-column .ui-widget:not(:last-child),
+.siteforceContentArea .cb-section_column .ui-widget:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.siteforceContentArea .comm-layout-column:not(:empty) {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.forceSkipLink {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 6px 12px;
+    color: #3c3d3d;
+    background: hsla(0, 0%, 100%, 0.98);
+}
+
+.forceSkipLink:focus {
+    width: auto;
+    height: auto;
+    clip: auto;
+    z-index: 1000;
+}
+
+.uiOutputRichText em {
+    font-style: italic;
+}
+
+.uiOutputRichText strong {
+    font-weight: bold;
+}
+
+.forceCommunityRichTextInline .inverseTextColor {
+    color: rgb(17, 17, 17);
+}
+
+.siteforceThemeLayoutStarter {
+    position: relative;
+    z-index: 1;
+    font-size: 0.8125rem;
+    width: 100%;
+    touch-action: manipulation;
+}
+
+.siteforceThemeLayoutStarter * {
+    box-sizing: border-box;
+}
+
+.siteforceThemeLayoutStarter ::-moz-selection {
+    background: #b4d5fe !important;
+}
+
+.siteforceThemeLayoutStarter ::selection {
+    background: #b4d5fe !important;
+}
+
+.siteforceThemeLayoutStarter.no-scroll {
+    position: fixed;
+}
+
+.siteforceThemeLayoutStarter .header {
+    transition: background 0.5s ease;
+}
+
+.siteforceThemeLayoutStarter .hero {
+    position: relative;
+    display: none;
+}
+
+.siteforceThemeLayoutStarter.isHeroUnderHeader-true > .a11y-banner > .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+.siteforceThemeLayoutStarter.isHeaderPinned-true > .a11y-banner > .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+.siteforceThemeLayoutStarter > .body.isPageWidthFixed-true {
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.siteforceThemeLayoutStarter > .body:focus {
+    outline: none;
+}
+
+.comm-user-profile-menu__nubbin {
+    display: none;
+}
+
+.comm-user-profile-menu__dropdown-ctn {
+    background-color: transparent;
+}
+
+.comm-user-profile-menu__login-button {
+    color: #e17000;
+    background-color: #e17000;
+    border-color: #e17000;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1px 0px #e17000 inset, 0 0 1px 0px #e17000;
+    padding: 10px 25px;
+    font-size: 18px;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.comm-user-profile-menu__trigger {
+    max-width: 8.125rem;
+    border-color: #dcdcdc;
+    flex-basis: auto;
+    overflow: hidden;
+}
+
+.comm-user-profile-menu__trigger-p {
+    line-height: 0.85rem;
+    font-size: 0.75rem;
+}
+
+.comm-user-profile-menu__menu-item {
+    color: inherit;
+    background-color: transparent;
+}
+
+a.comm-user-profile-menu__menu-item:hover,
+a.comm-user-profile-menu__menu-item:focus,
+a.comm-user-profile-menu__menu-item-hover {
+    color: inherit;
+    background-color: transparent;
+}
+
+.slds-dropdown__list a.menu-item {
+    color: #3c3d3d;
+}
+
+.slds-dropdown__list a.menu-item-hover {
+    color: #3c3d3d;
+}
+
+.slds-dropdown__list a.menu-item-bg-hover-color {
+    background-color: #f3f3f3;
+}
+
+.comm-user-profile-menu__trigger-ctn {
+    flex-direction: row-reverse;
+}
+
+.comm-user-profile-menu__trigger-ctn .comm-user-profile-menu__trigger-p {
+    text-align: left;
+}
+
+@media only screen and (max-width: 47.9375em) {
+    .comm-user-profile-menu__trigger-icon {
+        margin: 0;
+    }
+
+    .comm-user-profile-menu__dropdown-ctn {
+        max-width: none;
+        width: 100vw;
+        position: fixed;
+        top: 47px;
+        box-sizing: inherit;
+        margin: 0;
+    }
+
+    .comm-user-profile-menu__menu-item,
+    .comm-user-profile-menu__menu-item-hover {
+        font-size: 1rem;
+        text-align: left;
+        line-height: 50px;
+        padding: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .comm-user-profile-menu__nubbin {
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        transform: rotate(45deg);
+        background-color: inherit;
+        left: 50%;
+        top: -0.5rem;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        box-shadow: rgba(0, 0, 0, 0.16) -1px -1px 0px 0px;
+    }
+
+    .comm-user-profile-menu__ul {
+        max-height: 90vh;
+    }
+}
+
+.forceCommunityThemeHeaderCompact .search-triggerButton svg {
+    fill: rgba(0, 0, 0, 0.8);
+}
+
+.forceCommunityThemeHeaderCompact .search-triggerButton:focus svg {
+    fill: rgba(0, 0, 0, 0.8);
+}
+
+.forceCommunityThemeHeaderCompact .search-triggerButton:hover svg {
+    fill: rgba(0, 0, 0, 0.7);
+}
+
+.forceCommunityThemeHeaderCompact .search-triggercloseButton svg {
+    fill: rgba(0, 0, 0, 0.8);
+}
+
+.forceCommunityThemeHeaderCompact .search-triggercloseButton:hover svg {
+    fill: rgba(0, 0, 0, 0.7);
+}
+
+.forceCommunityThemeHeaderCompact .themeAppLauncher .slds-icon-waffle div {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.forceCommunityThemeHeaderCompact .themeAppLauncher .slds-icon-waffle:hover div {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.forceCommunityThemeHeaderCompact .themeUtils .themeUtil.themeNotifications button svg {
+    fill: rgba(0, 0, 0, 0.8);
+}
+
+.forceCommunityThemeHeaderCompact .themeUtils .themeUtil.themeNotifications:hover button svg {
+    fill: rgba(0, 0, 0, 0.7);
+}
+
+.uiTooltip .tooltip-invisible {
+    width: 1px;
+}
+
+@media only screen and (max-width: 47.9375em) {
+    .uiPanel--notificationsPanel {
+        width: 100vw;
+        left: 0 !important;
+    }
+
+    .unsNotificationsPanel .listContainer {
+        width: auto;
+    }
+} */
+.custom-css{
+    --lwc-colorBackgroundPathComplete: #e44a20e8;
+    
+    --lwc-colorBackgroundPathCompleteHover: #e44a20e8;
+    
+}
+
+/* .lightning-progress-step {
+    background-color: transparent !important;
+} */

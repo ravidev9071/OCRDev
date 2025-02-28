@@ -1,0 +1,101 @@
+<template>
+   <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+      <div class="">
+         <div class="">
+            <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea" style="background: white;">
+               <div class="slds-col--padded comm-content-header comm-layout-column">
+                  <div class=" slds-grid slds-gutters slds-wrap slds-large-nowrap">
+                     <div class=" slds-col--padded slds-size_12-of-12">
+                        <div data-region-name="content">
+                           <div data-priority=""  class="ui-widget">
+                              <!--div class="slds-text-heading_large">Log In / Enroll </div>
+                              <p class="txtInstructions">Complete the enrollment form(s)  to enroll and set up an account with the XTRA Managed Distribution Program.</p>
+                              <div class="slds-m-vertical_xx-large"></div-->
+                              <div class="">
+                                
+                                 <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_12-of-12">
+                                 </div>
+                                 <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_12-of-12">
+                                   <div class="frmRegister" style="background: white;">
+                                      <!--	<div class="slds-text-heading_medium slds-m-top_none">Register to Create an Online Account</div>   -->
+                                      <div class="frmContainer">
+                                         <article class="slds-card " part="card">
+                                            <div class="slds-card__header slds-grid">
+                                               <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                  <div class="slds-media__figure"></div>
+                                                  <div class="slds-media__body">
+                                                     <h2 class="slds-card__header-title">
+                                                        <span>Enroll</span>
+                                                     </h2>
+                                                  </div>
+                                               </header>
+                                            </div>
+                                            <div class="slds-card__body  slds-card__body_inner" part="body">
+                                               <p class="frmInstructions">To begin, select and confirm if you are a Prescribing Healthcare Provider, or a Pharmacy/Healthcare Setting Authorized Representative.
+                                                  <br><br><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> field required</span>
+                                               </p>
+                                                  <!--<p class="txtInstructions"></p>  -->
+                                                  <lightning-radio-group 
+                                                  name="rbTypeLogin"
+                                                  label=" I am a:"
+                                                  required
+                                                  options={options}
+                                                  value={value}
+                                                  onchange={handleChange}
+                                                  type="radio">
+                                               </lightning-radio-group>
+                                                  <div if:true={ConfirmHCP} >
+                                                     <div class="containerInfo">
+                                                        <div class="txtInstructions"><b>Prescribing Healthcare Provider:</b><br>A Prescribing Healthcare Provider is responsible for obtaining and injecting XIAFLEX and/or administering XIAFLEX in an enrolled Pharmacy/Healthcare Setting. 
+                                                           Prescribing Healthcare Providers must be enrolled in the XIAFLEX MDP to be able to prescribe XIAFLEX.  
+                                                           Prescribing Healthcare Providers cannot complete enrollment until their Pharmacy/Healthcare Setting is enrolled.
+                                                        </div>
+                                                     </div>
+                                                       <lightning-button
+                                                       class="slds-align_absolute-center slds-m-top_large slds-button_brand slds-button_full-width slds-text-align_center brand-button"
+                                                       label="Confirm and Continue"
+                                                       variant="brand"
+                                                       onclick={handleConfirm}
+                                                       data-id="BtnConfirmHCP">
+                                                   </lightning-button>                                                      
+                                                  </div>
+                                                  
+                                                  <div if:true={ConfirmHCS} >
+                                                   <div class="containerInfo">
+                                                     <div class="txtInstructions"><b>Pharmacy/Healthcare Setting Authorized Representative:</b><br>An individual responsible for enrolling their Pharmacy/Healthcare Setting as a ship-to location.  This individual may be a prescribing or non-prescribing Healthcare Provider, a Practice Manager, or any responsible individual within the Pharmacy/Healthcare Setting suitable to attest to the enrollment requirements. 
+                                                         A Pharmacy/Healthcare Setting must be enrolled and have at least one enrolled  Prescriber associated with the facility to be able to order, receive, or administer XIAFLEX.
+                                                      </div>
+                                                   </div>
+                                                   <lightning-button
+                                                     class="slds-align_absolute-center slds-m-top_large slds-button_brand slds-button_full-width slds-text-align_center brand-button" 
+                                                     label="Confirm and Continue"
+                                                     variant="brand"
+                                                     onclick={handleConfirm}
+                                                     data-id="BtnConfirmHCP">
+                                                     </lightning-button>
+                                                </div>
+                                               </div>
+                                         </article>
+                                         </div>  <!-- end frmContainer  -->
+                                      </div>
+                                      <!-- end register  -->
+                                   </div>
+                              </div>
+                              <!-- end row  -->
+                              <div class="slds-p-vertical_medium"></div>
+                           </div>
+                           <!-- end layout   -->
+                        </div>
+                     </div>
+                     <!-- end SF   -->
+                  </div>
+                  <!-- end pageContent   -->
+               </div>
+               <!-- end pageContainer   -->
+            </div>
+            <!-- end main   -->
+         </div>
+         <!-- end 888   -->
+      </div>
+   </div>
+</template>

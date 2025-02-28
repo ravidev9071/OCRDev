@@ -1,0 +1,14 @@
+.textColor{
+	color: #eb5903 !important;
+}
+@media only screen and (max-width: 600px) {
+
+	.textColor{
+		color: #eb5903 !important;
+		font-size: 1.75rem !important;
+	}
+	.btnGrey{
+		font-size: 0.75rem;
+	}
+
+}

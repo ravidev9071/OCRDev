@@ -1,0 +1,39 @@
+<template>
+    <!-- RT 11-10-24 alignment changes -->
+    <div role="main" tabindex="-1" class="body isPageWidthFixed-true slds-container_fluid" aria-hidden="false">
+         <!--render facet: 3:2;a-->
+        <div class="slds-grid slds-wrap slds-p-around_medium">
+            <div class="slds-col slds-size_1-of-1 slds-p-bottom_medium">
+                <div class="slds-text-heading_large">Contact Us</div>
+                <p>
+                    If you have any questions, or for additional information, please call at
+                    <span class="txtNoWrap">{label.Phone}.</span>
+                    <br><br>The AVEED REMS Contact Center is available Monday through Friday from 8am - 8pm ET.
+                </p>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                <div class="contactUs slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-stretch">
+                    <div class="contactUsItem slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+                        <div class="contactUsIcon slds-text-align_center">
+                            <img src={iconPhone} alt="Phone Icon" class="slds-icon slds-icon_large" />
+                        </div>
+                        <div class="contactUsName slds-text-align_center">
+                            <span class="txtEmphasis">Phone</span><br>
+                            <span class="txtNoWrap">{label.Phone}</span>
+                        </div>
+                    </div>
+                    <div class="contactUsItem slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-p-around_small">
+                        <div class="contactUsIcon slds-text-align_center">
+                            <img src={iconFax} alt="Fax Icon" class="slds-icon slds-icon_large" />
+                        </div>
+                        <div class="contactUsName slds-text-align_center">
+                            <span class="txtEmphasis">Fax</span><br>
+                            <span class="txtNoWrap">{label.Fax}</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

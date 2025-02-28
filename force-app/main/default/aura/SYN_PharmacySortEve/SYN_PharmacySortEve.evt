@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+     <aura:attribute name="SortingField" type="String"/>
+    <aura:attribute name="SortingDirection" type="String"/>
+</aura:event>

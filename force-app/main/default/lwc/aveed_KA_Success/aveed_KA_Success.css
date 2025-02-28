@@ -1,0 +1,22 @@
+.bgSubmit{
+   
+	   --sds-c-button-brand-color-background:rgb(255, 103, 31) !important;
+  --sds-c-button-brand-color-border: rgb(255, 103, 31) !important;
+  --sds-c-button-brand-color-background-hover: red ;
+  --sds-c-button-brand-color-border-hover: rgb(255, 103, 31) !important;
+ 
+}
+
+.slds-button:hover, .slds-button:focus {
+    --sds-c-button-brand-color-background:rgb(255, 103, 31) !important;
+  --sds-c-button-brand-color-border: rgb(255, 103, 31) !important;
+  --sds-c-button-brand-color-background-hover: rgb(255, 103, 31) !important;
+  --sds-c-button-brand-color-border-hover: rgb(255, 103, 31) !important;
+}
+.bgContiue:focus,.bgContiue:active {
+
+	   box-shadow: var(--slds-c-button-brand-focus, var(--sds-c-button-brand-focus, var(--_slds-g-brand-outline-focus))); 
+    outline: 0; 
+
+
+}

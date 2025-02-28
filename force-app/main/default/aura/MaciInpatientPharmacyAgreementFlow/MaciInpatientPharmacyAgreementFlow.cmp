@@ -1,0 +1,47 @@
+<aura:component controller ="MaciPortalCustomController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+    <aura:attribute name="ShowPharmacyNPIScreen" type="Boolean" default="true"/>
+    <aura:attribute name="ShowMailingAddressInfoScreen" type="Boolean" default="false"/>
+    <aura:attribute name="ShowAgreementInfoScreen" type="Boolean" default="false"/>
+    <aura:attribute name="ShowCompleteInfoScreen" type="Boolean" default="false"/>
+    
+    <aura:attribute name="pharmcInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="pharmacistInfo" type="Account" />
+    <aura:attribute name="mailingInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="useMailingAddress" type="boolean" default ="false"/>
+    <!-- storing Authorized Rep Tile -->
+    <aura:attribute name="authorizedRepTile" type="string" default =""/>
+    
+    <!-- storing Authorized Rep Tile other -->
+    <aura:attribute name="authorizedRepTileOther" type="string" default =""/>
+    
+    <!-- storing Case State Picklist values  -->
+    <aura:attribute name="stateMap" type="Map"/> 
+    
+     <!-- storing Case Title Picklist values  -->
+    <aura:attribute name="titleMap" type="Map"/> 
+    
+    <!-- storing Case Title Picklist values  -->
+    <aura:attribute name="pharmacyType" type="Map"/>
+    
+    <aura:attribute name="ShowNPIInfo" type="boolean" default="false"/>
+
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    
+    <!-- lightning Event -->
+    <aura:handler name="ShowInPatinetScreens" event="c:MaciShowInPatientPharmacyEnrollmentScreen" action="{!c.handleShowScreen}"/>
+    
+    <aura:if isTrue="{!v.ShowPharmacyNPIScreen}">
+        <c:MaciPharmacyInformationInpatient newCase="{!v.pharmcInfo}" pharmacistInfo="{!v.pharmacistInfo}"  titleMap="{!v.titleMap}" pharmacyTypeMap="{!v.pharmacyType}" ShowNPIInfo="{!v.ShowNPIInfo}" authorizedRepTile ="{!v.authorizedRepTile}" authorizedRepTileOther ="{!v.authorizedRepTileOther}" useMailingAddress="{!v.useMailingAddress}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowMailingAddressInfoScreen}">
+        <c:MaciPharmacyInformationPage2 newCase="{!v.pharmcInfo}" stateMap="{!v.stateMap}" useMailingAddress="{!v.useMailingAddress}"/>
+    </aura:if> 
+    
+    <aura:if isTrue="{!v.ShowAgreementInfoScreen}">
+        <c:MaciInpatientPharmacyAgreement newCase="{!v.pharmcInfo}" pharmacistInfo="{!v.pharmacistInfo}"/>
+    </aura:if>
+    
+    
+</aura:component>

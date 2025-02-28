@@ -1,0 +1,32 @@
+.THIS .form-control {
+    background-color: #F1F1F1;
+    border-radius: 0px;
+    border: 1px solid #ccc;
+}
+.THIS .slds-input{
+	padding-left: 0px !important;
+	border-radius: 0px !important;
+	border: 0px !important;
+	background-color: #F1F1F1 !important;
+    height: 25px !important;
+    min-height: 25px !important;
+    
+}
+.THIS .slds-form-element__label{
+    display: none;
+}
+
+.THIS .slds-input:focus, .THIS .slds-input:active {
+     box-shadow: none;
+}
+
+.THIS .slds-form-element__label {
+    font-size: 15px !important;
+    color: #182132;
+    font-weight: 600;
+    margin-left: -0.2em;
+}
+.THIS .spinnerClass {
+    z-index: 10000;
+    position: fixed
+}

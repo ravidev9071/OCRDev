@@ -1,0 +1,40 @@
+.dummy {background-color:#002c77;
+
+}
+
+/* .pageContainer {
+    background-color:#002c77;
+    color: white; 
+    padding: 20px; 
+    max-width: 1440px !important;
+    box-sizing: border-box;
+}
+.slds-grid {
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+.slds-text-align_center {
+    text-align: center; 
+}
+
+.slds-text-align_left,
+.slds-text-align_right {
+    text-align: inherit; 
+}
+.slds-item a {
+    color: white; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+
+@media (min-width: 768px) { 
+    .slds-text-align_left {
+        text-align: left; 
+    }
+
+    .slds-text-align_right {
+        text-align: right; 
+    }
+}
+ */

@@ -1,0 +1,467 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" data-aura-rendered-by="335:0" aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+	
+                <div data-aura-rendered-by="89:2;a" class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea" data-aura-class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="xxxslds-col--padded comm-content-header comm-layout-column" data-aura-rendered-by="91:2;a">
+						  
+				<div class="slds-text-heading_large text-heading">Managed Distribution Program for XIAFLEX for Dupuytren's Contracture</div>		  
+				
+				<div class="slds-text-heading_medium">Enroll Yourself</div>
+				
+				<div class="sectionSubHeading">Complete and submit this HCP Enrollment Form to register and set up an account with the Managed Distribution Program (MDP).</div>
+
+			
+			
+					
+				
+			<div class="slds-m-vertical_large"></div>
+			<div class="frmContainer">
+				<article class="slds-card " part="card">
+					 <div class="slds-card__header slds-grid">
+						<header class="slds-media slds-media_center slds-has-flexi-truncate">
+							<div class="slds-media__figure"></div>
+							<div class="slds-media__body">
+								<h2 class="slds-card__header-title">
+									<span>Healthcare Provider Enrollment Form for Dupuytren’s Contracture</span>
+								
+								</h2>
+							</div>
+						</header>
+					 </div>
+					 <div class="slds-card__body  slds-card__body_inner" part="body">
+						<p class="frmInstructions">Please enter the information below and click "Continue" to begin.
+						<br><br><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> field required</span></p>
+						  <slot>
+								<div  class="slds-m-around_small">
+
+								<div class="slds-text-heading_medium">Healthcare Provider Information</div>	
+								<p class="txtInstructions">Please provide your NPI # and click "Continue". </p>
+
+								<div  class="slds-grid slds-wrap slds-gutters">
+										<div  class="slds-col slds-medium-size_6-of-12">
+											<div class="slds-form-element">
+												 <div class="slds-form-element__control ">
+													<lightning-input class="search"
+													value={searchValue} label=" NPI #" onchange={searchKeyword} required="true"
+													min="0" formatter="decimal" disabled={disabled} maxlength="10" minlength="10" message-when-too-long ="Please enter valid NPI" message-when-too-short ="Please enter valid NPI" ></lightning-input>
+												 </div>
+											</div>		
+										</div>  	
+                                            <div class="slds-col slds-wrap slds-large-size_2-of-12 search-btn  slds-m-top_x-large">
+                                                <lightning-button class="brand-button " variant="brand" name="ContinueButton" label="Continue" disabled={displaySection} onclick={handleSearchKeyword}>
+                                                    <button id="BtnContinue"  class="slds-button slds-m-top_large slds-button_brand"  type="button" part="button" kx-scope="button-brand" kx-type="ripple">Continue</button>
+                                                </lightning-button>
+                                            </div>
+									</div>   <!--end row  -->
+
+							 <template if:true={displaySection}>
+									<br/>
+									<div id="HCPDetails"> 
+										<div class="slds-border_top slds-m-bottom_small"></div>
+									
+										<div class="slds-grid   slds-wrap slds-gutters">
+                                            <div class="slds-col slds-large-size_3-of-12">
+                                                <lightning-input  class="validate slds-form-element continueInput " lwc-66unc5l95ad-host="" value={prescriberData.firstName} label=" First Name" name="firstName" type="text" variant="standard"
+                                                    required="true" onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-large-size_1-of-12">
+                                                <lightning-input  class="validate slds-form-element continueInput " lwc-66unc5l95ad-host="" value={prescriberData.middleName} label=" MI"
+                                                    name="middleName" type="text" variant="standard" onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-large-size_3-of-12">
+                                                <lightning-input  class="validate slds-form-element continueInput " lwc-66unc5l95ad-host="" value={prescriberData.lastName} label=" Last Name"
+                                                    name="lastName" type="text" variant="standard" required="true" onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-large-size_1-of-12">
+                                                <lightning-input  class="validate slds-form-element " lwc-66unc5l95ad-host="" value="" label=" Suffix" name="suffix"
+                                                    type="text" variant="standard" onchange={handleChange}>
+                                                </lightning-input>
+                                            </div>
+                                        </div>	 <!-- end row  -->		
+									
+									<div class="slds-grid  slds-wrap  slds-gutters">
+									<div class="slds-col slds-size_1-of-1 ">
+										<lightning-radio-group
+                                                    name="degree"
+													label=" Degree"
+                                                    class="validate hcpSubmit" options={degreeoptions}
+                                                    value={prescriberData.degree} type="radio" onchange={handleChange} required>
+                                                </lightning-radio-group>
+									</div>
+									 </div>		 <!-- end row  -->	
+									 <div class="slds-grid   slds-wrap slds-gutters">										  
+                                        <div class="slds-col slds-large-size_3-of-12">
+                                            <lightning-input class="validate slds-form-element hcpSubmit" lwc-66unc5l95ad-host="" value={prescriberData.fax}
+                                                label=" Fax" name="fax" type="tel" variant="standard" maxlength="10" minlength="10" 
+                                                onchange={handleChange}>
+                                            </lightning-input>
+                                        </div>
+										<div class="slds-col slds-medium-size_3-of-12">
+										<lightning-input  class="validate slds-form-element phoneOptions hcpSubmit" lwc-66unc5l95ad-host="" value={prescriberData.phone} label=" Phone" name="phone"
+                                            type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+                                            onchange={handleChange}>
+                                        </lightning-input>
+									  </div>
+									<div class="slds-col slds-size_3-of-1 ">
+
+										<lightning-radio-group
+                                                    name="phoneType"
+                                                    class="validate hcpSubmit" options={phoneOptions} label=" Phone Type"
+                                                    value={prescriberData.phoneType} type="radio" onchange={handleChange} required>
+                                                </lightning-radio-group>
+									</div>
+										
+								 </div>	 <!-- end row  -->			
+									 <div class="slds-grid   slds-wrap slds-gutters">										  
+                                    <div class="slds-col slds-large-size_3-of-12">
+                                        <lightning-input class="validate search slds-form-element continueInput hcpSubmit" lwc-66unc5l95ad-host="" value={prescriberData.email}
+                                            label=" Email" name="email" type="email" variant="standard" required="true" onchange={handleChange}>
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-large-size_3-of-12">
+                                        <lightning-input class="validate search slds-form-element continueInput hcpSubmit" lwc-66unc5l95ad-host="" value=""
+                                            label=" Confirm Email" name="confirmEmail" type="email" variant="standard" required="true"
+                                            onchange={handleChange}>
+                                        </lightning-input>
+                                    </div>
+									<!--<div class="slds-col slds-size_6-of-12">-->
+										<!--Added by Pratap M for Mobile Compatibilities-->
+									<div class="slds-col slds-large-size_3-of-12 slds-x-small-size_12-of-12">
+
+										<lightning-radio-group name="preferredContactMethod" label=" Preferred Method of Contact" class="validate hcpSubmit" options={contactOptions}
+                                                    value={prescriberData.preferredContactMethod} type="radio" onchange={handleChange} required>
+                                                </lightning-radio-group>
+									</div>									  
+								 </div> <!-- end row  -->
+									
+
+ 									<div class="slds-grid slds-wrap slds-gutters ">
+									<div class="slds-col slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <lightning-input  class="validate slds-form-element hcpSubmit" lwc-66unc5l95ad-host="" value="" label=" License #" name="license"
+                                            maxlength="10" type="text" variant="standard" onchange={handleChange}>
+                                           </lightning-input>
+									  </div>
+									<div class="slds-col slds-medium-size_6-of-12 slds-large-size_3-of-12">
+												<div class="slds-form-element">
+													<label class="slds-form-element__label" for="select-01">License # State</label>
+													<div class="slds-form-element__control">
+														<div class="slds-select_container">
+															<select class="validate slds-select" id="select-01" name="licenseState" required onchange={handleChange}>
+															<option selected value="None">Select...</option>
+															<template for:each={stateOptions} for:item="option" for:index="optionIndex">
+																<option value={option.value} key={option.value}>{option.label}</option>
+															</template>
+														</select>
+													</div>
+													
+													</div>
+												</div>								  
+									</div>
+									</div>
+								<div class="slds-grid  slds-wrap  slds-gutters slds-size_12-of-12">
+									<div class="slds-col slds-size_1-of-1">
+
+										<lightning-radio-group name="speciality" label=" Specialty" class="validate hcpSubmit" options={specialityOptions}
+                                                    value={prescriberData.speciality} type="radio" onchange={handleChange} required>
+                                                </lightning-radio-group>
+									</div>
+ 								 </div> <!-- end row  -->		
+								<template if:true={displayOther}>
+								 <div id="MedSpecOther" >
+									<div class="slds-grid   slds-wrap slds-gutters slds-size_12-of-12">
+										<div class="slds-col slds-medium-size_4-of-12 otherLeft">
+										<lightning-input class="slds-form-element validate hcpSubmit" value={prescriberData.other} label=" Specialty Other" name="other" required onchange={handleChange}>
+										</lightning-input>
+									  </div>
+								  
+								 </div>	 <!-- end row  -->	
+								</div> <!-- end SpecOther  -->
+								</template>
+								
+								<div class="slds-border_top slds-m-bottom_small"></div>
+								<p class="txtInstructions">Endo USA,  Inc. understands that your privacy is important. 
+								Please note that by providing your name, address, or other information, you are giving Endo and companies working with us permission to communicate with you via traditional mail, email, telephone, or text about XIAFLEX and other Endo products, programs, and services. 
+								We will not sell or transfer your name, address, or other personally identifiable information about you to any party for its own marketing use. 
+								To view the privacy policy, please visit <a href="https://www.endo.com/privacy-legal" target="_blank">www.endo.com/privacy-legal</a>.</p>
+										<div class="slds-form-element slds-size_2-of-2">
+											<div class="slds-form-element__control">
+												<div class="slds-checkbox">
+												<!--<abbr class="slds-required" title="required">*</abbr>   -->
+													<input type="checkbox" name="onhold" id="cbSig"   onclick={handleChange} >
+													<label class="slds-checkbox__label" for="cbSig">
+														<span class="slds-checkbox_faux"></span>
+														<span class="slds-form-element__label">NO, I would not like to receive information in the future about XIAFLEX and related health information.</span>
+													</label>
+												</div>
+											</div>
+										</div>	
+								
+								
+
+																	<div class="dividerSolid"></div>
+
+								<div class="slds-text-heading_medium">Practice Information</div>	
+								<p class="txtInstructions">To affiliate a  Pharmacy/Healthcare Setting, please search to see if your Pharmacy/Healthcare Setting already exists in the XIAFLEX MDP. 
+								Please provide the Enrollment ID,  Pharmacy/Healthcare Setting Name, State, or ZIP, and click "Search". </p>
+								
+									<div  class="slds-grid   slds-wrap slds-gutters">
+										<div  class="slds-col slds-medium-size_8-of-12">
+											<div class="slds-form-element">
+												 <label class="slds-form-element__label" for="text-input-id-0">
+												 <abbr class="slds-required" title="required">* </abbr>Enrollment ID,  Pharmacy/Healthcare Setting Name, State, or ZIP</label>
+												 <div class="slds-form-element__control"><input id="text-input-id-0" placeholder="" type="text" class="slds-input hcsSearchData" value="" required></div>
+											</div>		
+										</div>  <!-- end col  -->
+                                            <div class="slds-col slds-wrap slds-large-size_2-of-12 search-btn  slds-m-top_xx-small">
+                                                <button id="BtnSearch" data-index={tabIndex} onclick={handleSearch} class="slds-button slds-m-top_large slds-button_outline-brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Search</button>
+                                            </div>
+									</div>  <!-- end row  -->
+									<template if:true={hcsSearch}>
+										<br/>
+									<div id="HCSResults" >
+										<div class="tblContainer">	
+											<h2 id="element-with-table-label" class="slds-text-heading_medium slds-m-bottom_xx-small">Trained Pharmacies/Healthcare Settings</h2>
+											<p class="txtInstructions">Select the Pharmacy/Healthcare Setting you would like to affiliate with.
+											<br><br>If the Pharmacy/Healthcare Setting is not found in the table below, please check the box for "I cannot find my Pharmacy/Healthcare Setting" below to enroll new.</p>
+											<div style="overflow:auto;">										
+											<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-max-medium-table_stacked-horizontal" aria-labelledby="element-with-table-label other-element-with-table-label">
+											 <thead>
+												  <tr class="slds-line-height_reset">
+													<th class="slds-text-align_right" scope="col" style="width:3.25rem">
+													  <div class="slds-truncate slds-assistive-text" id="column-group-header" title="Choose a row to select">Choose a row to select</div>
+													</th>											  
+													<th aria-sort="ascending" class="xxxslds-is-resizable slds-is-sortable slds-is-sorted slds-is-sorted_asc slds-cell_action-mode" scope="col">
+														<a class="slds-th__action slds-text-link_reset" href="#" role="button" tabindex="0">
+															<span class="slds-assistive-text">Sort by: </span>
+															<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+																<span class="slds-truncate" title="Name">Pharmacy/Healthcare Setting Name</span>
+																<span class="slds-icon_container slds-icon-utility-arrowdown" onclick={sortAccountRecords}>
+																	<img src={iconSortAcc}> 
+																</span>
+															</div>
+														</a>
+														<span class="slds-assistive-text" aria-live="polite" aria-atomic="true">Sorted ascending</span>
+													</th>							
+													<th class="slds-is-sortable" scope="col">
+														 <div class="slds-truncate" title="Address">Address</div>
+													</th>
+													<th class="slds-is-sortable" scope="col">
+														 <div class="slds-truncate" title="City">City</div>
+													</th>
+													<th class="slds-is-sortable" scope="col">
+														 <div class="slds-truncate" title="State">State</div>
+													</th>
+													<th class="slds-is-sortable" scope="col">
+														 <div class="slds-truncate" title="ZIP Code">ZIP</div>
+													</th>
+													<th class="slds-is-sortable" scope="col">
+														 <div class="slds-truncate" title="ZIP Code">Phone</div>
+													</th>	
+													<th class="slds-is-sortable" scope="col">
+														 <div class="slds-truncate" title="NPI">Enrollment ID</div>
+													</th>	
+													<th class="slds-is-sortable" scope="col">
+														 <div class="slds-truncate" title="NPI">Status</div>
+													</th>						
+												  </tr>
+											 </thead>
+											 <tbody>
+                                                <template for:each={visibileAccounts} for:item="newAcc" for:index="newAccIndex">
+												  <tr key={newAcc.Id} class="slds-hint-parent">
+													<td class="slds-text-align_right" role="gridcell" scope="row">
+														<input type="radio" name="selectedRow" data-cmp="hcsCheckbox" data-rec-id={newAcc.Id}	data-index={newAccIndex} class="hcsSelectedRow" value={newAcc.Id} checked={newAcc.checked} onchange={handleRowSelection} />
+													</td>
+											  
+													<td data-label="First Name" scope="col">
+														 <div class="slds-truncate" title="ABC Healthcare Setting ">{newAcc.Name}</div>
+												 
+													</td>			
+										
+													<td data-label="Address">
+														 <div class="slds-truncate" title="123 Main Street">{newAcc.Address}</div>
+													</td>
+													<td data-label="City">
+														 <div class="slds-truncate" title="Philadelphia">{newAcc.City}</div>
+													</td> 
+													<td data-label="State">
+														 <div class="slds-truncate" title="PA">{newAcc.State}</div>
+													</td>
+													<td data-label="ZIP">
+														 <div class="slds-truncate" title="99999">{newAcc.ZIPCode}</div>
+													</td>								
+													<td data-label="Phone">
+														 <div class="slds-truncate" title=">555 555-1212">{newAcc.Phone}</div>
+													</td>
+													<td data-label="Enrollment ID">
+														 <div class="slds-truncate" title="12312">{newAcc.EnrollmentID}</div>
+													</td>
+													<td data-label="REMS Status">
+																						<div class="slds-truncate">
+																							<template lwc:if={newAcc.mdpStatusPending}>
+																								<span class="status pending">{newAcc.mdpStatusPending}</span>
+																							</template>
+																							<template lwc:elseif={newAcc.mdpStatusCertified}>
+																								<span class="status certified"> {newAcc.mdpStatusCertified}</span>
+																							</template>
+																						</div>
+																					</td>							
+												  </tr>
+                                                </template>
+												</tbody>
+											</table>	
+											</div>
+                                            <template if:true={hcsSearch}>
+                                                <c-xiaflex-_-lookup-screen-pagination all-items={hcsAccountRecords} page-size="5" onupdate={updateRecords}>
+                                                </c-xiaflex-_-lookup-screen-pagination>
+                                            </template>
+									 
+										<div class="slds-m-vertical_x-large"></div>
+										<div class="slds-form-element">
+										<div class="slds-form-element__control">
+											<div class="slds-checkbox">
+												<input type="checkbox" name="options" id="cbNewPharmHCS" data-cmp="cannotFindCheck" class="hcsCheck" value="checkbox-unique-id-399" onclick={handleHcsEntry}>
+												<label class="slds-checkbox__label" for="cbNewPharmHCS">
+													<span class="slds-checkbox_faux"></span>
+													<span class="slds-form-element__label">I cannot find my Pharmacy/Healthcare Setting</span>
+												</label>
+											</div>
+										</div>
+									</div>
+
+							 	<template if:true={showHCSNewForm}>
+									<div id="HCSEntry" > 
+									<div class="dividerSolid"></div>
+									<h2 id="element-with-table-label2" class="slds-text-heading_medium slds-m-bottom_xx-small">Pharmacy/Healthcare Setting Information</h2>
+									<p class="txtInstructions">Please provide Pharmacy/Healthcare Setting information.</p>
+									<div  class="slds-grid  slds-wrap  slds-gutters">
+										<div  class="slds-col slds-medium-size_8-of-12">
+											<lightning-input  class="validate hcsSubmit slds-form-element" lwc-66unc5l95ad-host="" value="" label=" Pharmacy/Healthcare Setting Name" name="hcsname" type="text" variant="standard"
+												required="true" onchange={handleChange}>
+											</lightning-input>
+										</div>
+									  </div>  
+									  
+									<div  class="slds-grid  slds-wrap slds-wrap slds-gutters">
+										  <div  class="slds-col slds-medium-size_6-of-12 slds-large-size_4-of-12">
+												<lightning-input class="validate search slds-form-element hcsSubmit" lwc-66unc5l95ad-host=""
+													name="hcsaddress1" label=" Address Line 1" required onchange={handleChange}>
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-wrap slds-medium-size_6-of-12 slds-large-size_4-of-12">
+												<lightning-input class="validate hcsSubmit slds-form-element"
+													lwc-66unc5l95ad-host="" name="hcsaddress2" label =" Address Line 2" onchange={handleChange}>
+												</lightning-input>
+										  </div>
+									  
+									 </div>	 <!-- end row  -->										
+									 
+									 <div  class="slds-grid  slds-wrap  slds-gutters">
+										  <div  class="slds-col slds-medium-size_4-of-12">
+												<lightning-input class="validate hcsSubmit slds-form-element" lwc-66unc5l95ad-host="" name="hcscity"
+													label=" City" required onchange={handleChange}>
+												</lightning-input>
+										  </div>											 
+										  <div  class="slds-col  slds-medium-size_4-of-12  slds-large-size_2-of-12">
+											<div class="slds-form-element">
+												<label class=" slds-form-element__label" for="select-02"><abbr class="slds-required" title="required">*</abbr> State</label>
+												<div class="slds-form-element__control">
+													<div class="slds-select_container">
+													<select class="slds-select hcsSubmit validate" id="select-02" name="hcsstate" required onchange={handleChange}>
+														<option selected value="">Select..</option>
+														<template for:each={stateOptions} for:item="option" for:index="optionIndex">
+															<option value={option.value} key={option.value}>{option.label}</option>
+														</template>
+													</select>
+													</div>
+												</div>
+											</div>
+										  </div>
+										  <div  class="slds-col slds-medium-size_4-of-12  slds-large-size_2-of-12">
+												<lightning-input class="hcsSubmit validate slds-form-element" lwc-66unc5l95ad-host="" value="" label=" ZIP" name="hcszipcode" type="text" variant="standard"
+													required="true" maxlength="10" minlength="5" message-when-too-long ="Please enter valid Zip Code" onchange={handleChange}>
+												</lightning-input>
+										  </div>											  
+									  
+									 </div>	 <!-- end row  -->			
+
+									
+								
+							</div><!-- end end HCS Entry   -->
+							</template>
+						</div><!-- end tblContainer   -->
+					</div><!-- end HCS Results   -->
+							</template> 
+								 
+								<div class="slds-m-top_x-large"></div>
+								<div class="dividerSolid"></div>
+								<div class="frmAttestations">
+									<div class="slds-text-heading_medium">Healthcare Provider responsibilities for the use of XIAFLEX in the treatment of adults with Dupuytren's contracture with a palpable cord:</div>
+									<p>I understand that XIAFLEX is only available for the treatment of Dupuytren’s contracture through the Managed Distribution Program for XIAFLEX.  I confirm that I have met all of the following requirements:</p>
+									<ul class="listItemDisc">
+										<li>I am a Healthcare Provider experienced in injection procedures of the hand and in the treatment of Dupuytren’s contracture. </li>
+										<li>I have read and understand the full Prescribing Information for XIAFLEX, including the risks associated with the use of XIAFLEX and how to properly administer XIAFLEX for the treatment of Dupuytren’s contracture. </li>
+										<li>I have completed the XIAFLEX procedure training video and/or training guide for Dupuytren’s contracture. </li>
+										<li>Prior to initiating treatment, and as part of each treatment-related visit, I agree to provide each patient with a Medication Guide and counsel each patient about the benefits and risks of XIAFLEX prior to administering XIAFLEX. </li>
+										<li>I agree that I will make available to Endo USA, Inc., and/or a designated third party or the FDA, documentation to verify understanding of, and adherence to, the XIAFLEX managed distribution requirements for Dupuytren’s contracture.</li>
+									</ul>
+									
+									<p>I understand that this enrollment only applies to me, and does not apply to any Healthcare Setting that employs me, or in which I may have an interest.
+									I understand that my program status will be shared with Endo USA, Inc. Failure to enroll in the Managed Distribution Program for XIAFLEX for Dupuytren’s contracture as a Healthcare Provider will result in my inability to receive shipments of XIAFLEX.</p>
+									
+							
+									<div class="containerEmphasis">
+										<div class="slds-text-heading_medium">Healthcare Provider Signature</div>
+										<p class="txtInstructions">Use your mouse or touchpad to sign.</p>
+										<c-tryvio-sign-pad onsignimagedata={handleSignatureCompleted}></c-tryvio-sign-pad>
+									</div>	
+                                </div><!-- end of frmAttestations -->
+
+
+											
+							<!--/div> < end cardbody   -->
+							
+									 
+					 <div class="slds-card__footer" part="footer">
+						 <slot name="footer">
+							<div  slot="footer">
+								<button title="Cancel" type="button" class="slds-button slds-button_text-destructive" onclick={handleCancel}>Cancel</button>
+
+							<button id="resetSign" class="slds-button slds-m-top_large slds-button_outline-brand" aria-disabled="false" type="button" part="button" onclick={handleClear} >Clear Signature</button>
+
+								 <button  onclick={handleSubmit} class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button>
+							</div>
+						</slot>
+					 </div>		
+
+					<div class="dividerSolid"></div>
+					
+
+					<p class="txtInstructions slds-text-align_center slds-p-vertical_x-large">Please see <a onclick={isiSection}>Important Safety Information</a>  on the first page.
+					<br>Click for full <a href="https://endodocuments.com/XIAFLEX/PI" target="_blank">Prescribing Information</a> and <a href="https://endodocuments.com/XIAFLEX_DC/MG" target="_blank">Medication Guide</a>.	</p>				 
+							
+									 </div>  <!-- end HCPDetails   -->			 
+									 </template>
+
+				
+							</div>		 
+									 
+						  </slot>
+					 </div>
+
+				</article>
+				</div>  <!-- end enrollmentForm  -->
+				        </div>
+                    </div>
+			<div class="slds-m-top_xx-large"></div>							  
+	        </div>	
+        </div>	
+        <template if:true={displaySpinner}>
+          <lightning-spinner alternative-text="Loading"></lightning-spinner>
+       </template>
+    </div>
+</template>

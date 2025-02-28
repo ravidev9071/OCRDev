@@ -1,0 +1,137 @@
+<template>
+    <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+		  
+		<div class="pageTitle prescriber">
+			<div class="slds-text-heading_medium">TRYVIO<sup>™</sup> REMS</div>
+			<div class="slds-text-heading_large"><img class="iconImg" src={iconPrescriber}> Prescribers</div>	
+		</div>		  
+		<div class="pageContainer">
+			<div class="pageContent">
+		
+
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+					
+						<lightning-progress-indicator current-step="3" type="path" has-error="true" variant="base">
+							<lightning-progress-step label="Register" value="1" variant="complete"></lightning-progress-step>
+							<lightning-progress-step label="Review Materials" value="2" variant="complete"></lightning-progress-step>
+							<lightning-progress-step label="Knowledge Assessment" value="3" variant="active"></lightning-progress-step>
+							<lightning-progress-step label="Complete Enrollment" value="4" variant="incomplete"></lightning-progress-step>
+					</lightning-progress-indicator>
+
+						<!--<lightning-progress-indicator>
+							<div class="slds-path">
+								<div class="slds-grid slds-path__track">
+									<div class="slds-grid slds-path__scroller-container justifyCenter">
+										<div role="application" class="slds-path__scroller">
+											<div class="slds-path__scroller_inner">
+												<ul role="listbox" aria-orientation="horizontal" class="slds-path__nav">
+													<slot>
+														 <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	  <lightning-primitive-icon>
+																	  <img src="files/check.svg" style="width: 25px">
+																		<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+																	  </lightning-primitive-icon>
+																	  <span class="slds-assistive-text">Register</span>
+																 </span>
+																 <span class="slds-path__title">Register</span>
+															</a>
+														 </lightning-progress-step>															
+														 <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	  <lightning-primitive-icon>
+																	<img src="files/check.svg" style="width: 25px">
+																		<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+																	 </lightning-primitive-icon>
+																	  <span class="slds-assistive-text">Review Materials</span>
+																 </span>
+																 <span class="slds-path__title">Review Materials</span>
+															</a>
+														 </lightning-progress-step>
+														<lightning-progress-step role="listitem" class="slds-path__item slds-is-current">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	  <lightning-primitive-icon>
+																			<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+																	  </lightning-primitive-icon>
+																 </span>
+																 <span class="slds-path__title">Knowledge Assessment</span>
+															</a>
+														 </lightning-progress-step>   
+														 <lightning-progress-step role="listitem" class="slds-path__item slds-is-incomplete">
+															<a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+																 <span class="slds-path__stage">
+																	<lightning-primitive-icon>
+																		<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+																	</lightning-primitive-icon>
+																</span>
+																<span class="slds-path__title">Complete Enrollment</span>
+															</a>
+														</lightning-progress-step>
+													</slot>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</lightning-progress-indicator>-->	
+								
+						<p class="slds-text-heading_medium">{presname}<br>NPI: {presnpi}</p>
+						<div class="slds-border_bottom "></div>
+
+						<div data-region-name="content">
+							<div data-priority=""  class="ui-widget">
+								<div class="slds-text-heading_large">TRYVIO REMS Knowledge - Attempt 3 Unsuccessful</div>
+								
+								<div class="slds-p-vertical_small"></div>
+
+							
+								<div class="slds-text-heading_medium">You <b>did not achieve 100%</b> on the TRYVIO REMS Prescriber Knowledge Assessment within the last 3 attempts.</div>
+								<div class="slds-p-vertical_small"></div>
+								<p>Please contact the TRYVIO REMS at <span class="txtNoWrap">1-866-429-8964</span> (Monday to Friday, 8 AM - 8 PM ET) for assistance.</p>
+								<div class="slds-m-top_large"></div>
+								
+					
+
+								
+			
+							</div> <!-- end layout   -->
+						</div>		
+	
+					</div> <!-- end SF   -->
+				</div> <!-- end pageContent   -->
+		</div> <!-- end pageContainer   -->
+
+			</div>  <!-- end main   -->
+					
+
+
+           <!--  <div class="footer siteFooter" aria-hidden="false">
+                <div data-region-name="themeFooter">
+                    <div data-priority="" class="ui-widget">
+                        <div class="" data-aura-class="forceCommunityRichText forceCommunityRichTextInline">
+                            <div dir="ltr"  class="uiOutputRichText" data-aura-class="uiOutputRichText">
+									 
+					 COMMON FOOTER   -->
+					<!-- <script src="files/contentFooter.js"></script>								
+
+                            </div>								 
+                          </div>
+
+                        </div>
+                    </div>
+                </div> 
+					 
+					 
+            </div>-->
+        </div>
+		  
+<!-- <script src="files/customNav.js"></script>	
+<script>
+	$("#Prescriber").addClass("active");
+</script> -->
+</template>

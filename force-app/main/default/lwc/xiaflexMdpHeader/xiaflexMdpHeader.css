@@ -1,0 +1,41 @@
+.lightning-studio{
+	color : blue;
+}
+.head{
+	display: flex;
+    justify-content: flex-end;
+}
+.certified{
+	
+}
+.util-top {
+	background:none !important;
+	border-bottom: none;
+}
+.navbar-top ul li a {
+    color: #707070;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 0;
+}
+.util-top .slds-has-dividers_right>.slds-item:after{
+	color: #f26322;
+}
+a.logo img {
+    width: auto !important;
+}
+.pageContainer {   
+    width: 100% !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.positionFixed {
+    position: fixed;
+    width: 100%;
+}
+.logo {
+    padding-left: 20px;
+}
+.navLookup{
+    padding-right: 7rem;
+}

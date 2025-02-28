@@ -1,0 +1,12 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" >
+  
+    <lightning:recordEditForm aura:id="curEditform"
+        recordId="{!v.recordId}"
+        objectApiName="US_WSREMS__Affiliation__c" 
+        onload="{!c.sendInviteEmail}">
+
+    <lightning:messages /> 
+    	<lightning:inputField aura:id="sendInvite" fieldName="Send_Invite__c" class="slds-hide"/>
+    </lightning:recordEditForm>
+    
+</aura:component>

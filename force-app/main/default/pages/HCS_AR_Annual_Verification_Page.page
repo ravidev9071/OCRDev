@@ -1,0 +1,70 @@
+<apex:page applyBodyTag="false" renderAs="PDF" showHeader="false" controller="HCSAccountDB">
+    <apex:form style="margin-top:0px !important; padding-top:0px !important;height:auto;">
+        <head>
+             <style>
+            body {
+            margin-top: 0px !important;
+            font-family: sans-serif !important;
+            padding-top:0px !important;
+            }
+            h6{
+            font-weight:500 !important;
+            }
+            p{
+            text-align:justify;
+            }
+            
+            @page {
+            margin: 0  !important;
+            size: letter;
+            font-family: sans-serif !important;
+            padding-top:0px !important;
+            }
+        </style>
+        </head>
+        <body>
+                <tr>
+                    <td style="font-size:14px;margin-left: 106px;margin-top: 1px;font-family: sans-serif !important;"><b>Healthcare Setting Authorized Representative Confirmation  </b>
+                        <br/> <p>
+                        As noted in the accompanying notification letter, a Healthcare Setting Authorized Representative Confirmation is 
+                        required to be submitted to the AVEED REMS Program. Please review the below information and confirm that the 
+                        currently listed Healthcare Setting Authorized Representative is correct.
+                        </p><br/>
+                        REMS Enrollment ID:&nbsp;  
+                            <b><apex:outputText value="{!account.US_WSREMS__REMS_ID__c}" style="margin: 0px;font-size: 12px;font-family: sans-serif !important;" /> </b>
+                            <br/> 
+                        <apex:outputText value="{!account.Name}" style="margin: 0px;font-size: 12px;font-family: sans-serif !important;" /><br/>
+                        <apex:outputText value="{!account.US_WSREMS__Address_Line_1__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" /><br/>
+                        <apex:outputText value="{!account.US_WSREMS__City__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" />,&nbsp;
+                        <apex:outputText value="{!account.US_WSREMS__State__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" />&nbsp;
+                        <apex:outputText value="{!account.US_WSREMS__Zip__c}" style="margin: 0px;font-size: 12px;;font-family: sans-serif !important;" />
+                        <br/><br/>
+                        <p>Authorized Representative Name:  
+                           <span>   
+                            <apex:outputText value="_______________________________________" />
+                            </span>
+                            </p>
+                        <p><b><u>Confirmation:</u></b> The statement and signature below serve as confirmation that the currently listed Healthcare
+                             Setting Authorized Representative is correct.</p>
+                             <br/>
+                              Authorized Representative Signature
+                           <span> <apex:outputText style="color:black;" value="_______________________"/>  </span>&nbsp;&nbsp;
+                           Date
+                           <span> <apex:outputText style="color:black;" value="_______________________"/> 
+                            </span>
+                        <br/><br/>
+                        <p>
+                        Please fax the Healthcare Setting Authorized Representative Confirmation or updated<b><i> Healthcare Setting
+                            Enrollment Form </i></b>to 1-855-755-0495.
+                            </p>
+                        
+                        <p>
+                        If you have any questions, you may call the AVEED REMS Program at 1-855-755-0494, Monday 
+                         through Friday, 8:00 AM to 8:00 PM ET.
+
+                        </p>
+                    </td>
+                </tr>      
+      </body>
+    </apex:form>
+</apex:page>

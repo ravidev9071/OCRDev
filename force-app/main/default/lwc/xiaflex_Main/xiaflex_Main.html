@@ -1,0 +1,194 @@
+<template>
+<div role="main" tabindex="-1"  aria-hidden="false">
+	<div class="pageContainer">
+	<div class="pageContent">
+		<div class="siteforceContentArea">
+            <div class="slds-col--padded paddingRightLeft">
+                <div class="slds-col--padded borderRightLeft ">
+                <div class=" slds-grid slds-gutters slds-wrap slds-large-nowrap ">
+					<div
+						class=" slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_9-of-12 slds-p-right_large right-border">
+
+						<div data-region-name="content">
+							<div class="ui-widget">
+								<div class="slds-text-heading_large">What is XIAFLEX</div>
+								<p>XIAFLEX is approved for the treatment of adult men with Peyronie's disease with a
+									palpable plaque and curvature deformity of at least 30 degrees at the start of
+									therapy. XIAFLEX should be administered by a healthcare provider experienced in the
+									treatment of male urological diseases, who has completed required training for use
+									of XIAFLEX in the treatment of Peyronie's disease. </p>
+								<div class="dividerSolid"></div>
+								<div class="slds-text-heading_large">What is the XIAFLEX REMS?</div>
+								<p>A REMS (<u>Risk Evaluation and Mitigation Strategy</u>) is a strategy to
+									manage
+									known or potential serious risks associated with a drug and is required by
+									the
+									Food and Drug Administration (FDA) to ensure that the benefits of the drug
+									outweigh its risks. Endo USA, Inc. has worked with the FDA to develop
+									the
+									XIAFLEX REMS.</p>
+								<br>
+								<p>The XIAFLEX REMS requires a review of educational materials, training, and
+									certification.</p>
+								<br>
+								<p>XIAFLEX is available for the treatment of Peyronie's disease only through the
+									XIAFLEX REMS. The XIAFLEX REMS requirements include:</p>
+
+								<ul class="listItemDisc">
+									<li><b>Training</b> for healthcare providers on the risks of corporal
+										rupture
+										and other serious injuries to the penis that can occur with XIAFLEX
+										treatment, such as severe penile hematoma or ecchymoses, skin and soft
+										tissue necrosis, swelling, and pain.</li>
+									<li><b>Certification</b> in the XIAFLEX REMS by completing training and
+										enrollment in the program.</li>
+									<li><b>Patient counseling</b> about the risks of corporal rupture and other
+										serious injuries to the penis that can occur with XIAFLEX treatment,
+										such as
+										severe penile hematoma or ecchymoses, skin and soft tissue necrosis,
+										swelling, and pain as well as the importance of patient adherence to
+										post-injection instructions. Healthcare Providers must give patients the
+										Patient Counseling Tool, <a href={urlFile} target="_blank"><b>What You Need to
+												Know About XIAFLEX Treatment for Peyronie's Disease: A Patient
+												Guide</b></a>, after each XIAFLEX injection.</li>
+									<li><b>Restricted Distribution</b> through specially certified healthcare
+										settings (e.g., pharmacies, practitioners, hospitals or outpatient
+										settings).</li>
+								</ul>
+
+
+								<div class="clear"></div>
+
+								<div class="callout overview">
+
+									<div class="calloutContent hcp">
+										<div class="calloutTitle"><span class="stakeholder Prescriber">Healthcare
+												Provider Certification</span></div>
+										<div class="widgetContainer noMargin">
+											<div class="calloutText">To become certified in the XIAFLEX REMS, healthcare
+												providers must read the prescribing information, take the training
+												(video or guide) and complete the Enrollment Form.</div>
+											<div class="btnHome" style="margin-top: 17%;">
+												
+												<a class="btnHomeHCP" onclick={handleOnlineCertificationHCP}>Online
+													Certification</a>
+											</div>
+
+										</div> 
+										<div class="calloutIconAbs"><img src={iconHCP}></div>
+									</div>
+						
+
+									<div class="calloutContent hcs">
+										<div class="calloutTitle"><span class="stakeholder">Pharmacy/<br>Healthcare
+												Setting Certification</span></div>
+										<div class="widgetContainer noMargin">
+											<div class="calloutText">To become certified in the XIAFLEX REMS, pharmacies
+												and healthcare settings must complete the Pharmacy/Healthcare Setting
+												Enrollment Form.</div>
+											<div class="btnHome" style="margin-top: 17%;">
+												
+												<a class="btnHomeHCS"  onclick={handleOnlineCertification}>Online
+													Certification</a>
+											</div>
+										</div> 
+										<div class="calloutIconAbs"><img src={iconHCS}></div>
+									</div> 
+								</div>
+
+								<div class="dividerSolid"></div>
+
+								<br>
+								<p>For more information about the XIAFLEX REMS, call <span>1-877-313-1235.</span></p>
+								<br>
+                                <p class="marginBottom">If you have product-related questions or to report adverse events, please
+									contact
+									the XIAFLEX Medical Information Call Center at <span>1-800-462-3636.</span> Adverse
+									events may also be
+									reported
+									to the FDA at <span>1-800-FDA-1088</span> or <a href="http://www.fda.gov/medwatch"
+										target="_blank"><strong>www.fda.gov/medwatch</strong></a></p>
+
+
+							</div>
+						</div> <!-- end col   -->
+					</div>
+
+					<div
+						class="slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_3-of-12 slds-p-left_large">
+						<c-xiaflex_-Resources-Home></c-xiaflex_-Resources-Home>
+					</div> 
+				</div> 
+			</div>
+            </div>
+		</div>
+	</div>  
+</div> 
+	</div> 
+	<template if:true={showCertificationEnrollment}>
+
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<!-- modal header start -->
+				<header class="slds-modal__header">
+					
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Authorized Representative for Pharmacy/Healthcare
+						Setting</h2>
+				</header>
+			  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<p class="slds-text-align_center"><b>Please confirm you are enrolling as an Authorized Representative for a <br> Pharmacy/Healthcare Setting.</b></p>
+				<div class="slds-p-around_medium"></div>
+				<p class="slds-text-align_center">An Authorized Representative for a Pharmacy/Healthcare Setting is an <br> individual responsible for enrolling their Pharmacy/Healthcare Setting in the <br> xiaflex rems.
+					 This individual may be a prescribing or non-prescriber <br> Healthcare Provider, a Practice Manager, or any responsible individual within <br> the Pharmacy/Healthcare Setting suitable to attest to the enrollment <br> requirements.
+					 A Pharmacy/Healthcare Setting must be certified in the <br> XIAFLEX REMS and have at least one certified prescriber associated with <br> the facility in order to order, receive, or administer XIAFLEX.
+					 <br><br>If you do not meet the definition of an Authorized Representative for the <br> Pharmacy/Healthcare Setting, please select "Cancel", otherwise select <br> "Confirm" to continue.</p>
+
+			  </div>
+				<div class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral"
+							onclick={handleOnlineCertification}>Cancel</button>
+						<button class="slds-button slds-button_brand" onclick={openHCS}>Confirm</button>
+				</div>
+
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+
+	<template if:true={showCertificationEnrollmentHCP}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				
+				<header class="slds-modal__header">					
+					<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Prescribing Healthcare
+						Provider</h2>
+				</header>
+
+				
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+					<p class="slds-text-align_center"><b>Please confirm you are registering as a Prescribing Healthcare
+							Provider.</b></p>
+					<div class="slds-p-around_medium"></div>
+					<p class="slds-text-align_center">A Prescribing Healthcare Provider is responsible for prescribing
+						XIAFLEX <br> and/or administering XIAFLEX in an enrolled Healthcare Setting.
+						Prescribing <br> Healthcare Providers must be certified in the XIAFLEX REMS to be able to <br> prescribe
+						XIAFLEX.
+						Prescribing Healthcare Providers cannot complete <br> certification until their pharmacy / healthcare
+						setting is enrolled
+						<br><br>If you do not meet the definition of a Prescribing Healthcare Provider, please <br> select
+						"Cancel", otherwise select "Confirm" to continue.</p>
+				</div>
+
+				
+				<div class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral"
+							onclick={handleOnlineCertificationHCP}>Cancel</button>
+						<button class="slds-button slds-button_brand" onclick={openHCP}>Confirm</button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+</template>

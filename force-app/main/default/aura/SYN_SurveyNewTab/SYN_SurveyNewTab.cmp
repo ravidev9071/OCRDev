@@ -1,0 +1,41 @@
+<!--This component is used open survey in subTab -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" controller="SYN_SurveyList" >
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="show" type="Boolean" default="false" /> 
+    <aura:attribute name="tabId" type="boolean" default="false"/>
+    <aura:attribute name="surveyList" type="List"  />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="value" type="String" default="option1"/>
+    <aura:attribute name="surveyWrapper" type="Object"  />
+    <aura:attribute name="surveyurl" type="String" />
+    <aura:handler event="c:SYN_SendTabIdEvent" action="{!c.handleTabEvent}"/>
+    <aura:registerEvent name="informEvent" type="c:SYN_InformTabIdEvent"/>
+    <aura:attribute name="existingSurveyNames" type="List" />
+    <aura:attribute name="surveysMap" type="Map"/>
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:icon iconName="utility:survey" size="small"/>
+            Survey List
+        </aura:set>
+        <aura:set attribute="footer">
+            
+            <lightning:button class="slds-m-top_small" variant="brand" onclick="{!c.startSurvey}"
+                              label="Start Survey" />
+            
+            <lightning:button class="slds-m-top_small" variant="brand" onclick="{!c.cancel}"
+                              label="Cancel" />
+                        
+        </aura:set>
+        
+        <div class="slds-m-left_small">
+            <lightning:radioGroup 
+                                  options="{! v.surveyList }"
+                                  value="{! v.value }"
+                                  onchange="{!c.handleChange }"
+                                  name="{!v.surveyList.label}"
+                                  type="radio"/>
+        </div>
+    </lightning:card>
+    
+</aura:component>

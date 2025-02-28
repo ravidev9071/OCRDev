@@ -1,0 +1,231 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Home Page { Middle context }
+-->
+
+<aura:component controller="SYN_PortalEnrollmentController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+	<lightning:navigation aura:id="navigation"/>
+    <aura:attribute name="currentUser" type="User" />
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+    <!-- storing current portal user type -->
+    <aura:attribute name="usertype" type="string" />
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <section class="sec-one py-5" style="background-image: url('/resource/MaciImages/img/banner.jpg');background-size: cover;background-repeat: no-repeat;">
+        <aura:if isTrue="{! v.ShowSpinner }">
+            <lightning:spinner alternativeText="Loading" class="spinnerClass"/>
+        </aura:if>  
+        <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>A Risk Evaluation and Mitigation Strategy (REMS) is a program required by the Food and Drug
+                            Administration (FDA) to manage serious risks associated with a drug product. The {!$Label.c.Macitentan_Containing_Products_REMS}
+                            is for females only. Male patients are not required to enroll in the {!$Label.c.Macitentan_Containing_Products_REMS}. The goal
+                            of the {!$Label.c.Macitentan_Containing_Products_REMS} is to mitigate the risk of embryo-fetal toxicity associated with
+                            {!$Label.c.macitentan_containing_products} by: </h4>
+                        
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <!-- 1 -->
+                                <ol style="padding-inline-start: 0px !important;">
+                                    <div class="pb-3">
+                                      <span class="font-lg">1. &nbsp; Ensuring prescribers are educated on the following:</span>
+                                        <div class="list-bullets">
+                                            <ul>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <div>
+                                                        the risks of embryo-fetal toxicity
+                                                    </div>
+                                                
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- 2 -->
+    
+                                    <div class="pb-3">
+                                        <span class="font-lg" style="display: flex;">
+                                            <div style="padding-right: 11px;">
+                                                2.
+                                            </div>
+                                            <div>
+                                                 Ensuring prescribers are educated on and adhere to the following:
+                                            </div>
+                                        </span>
+                                       
+                                        <div class="list-bullets">
+                                            <ul>
+                                                <li class="d-flex ">
+                                                    <i class="fa fa-circle-o" style="padding-top: 11px;"></i>
+                                                    <div>
+                                                        counseling patients about these risks and the need for monthly monitoring
+                                                    </div>
+                                                
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <div>
+                                                        enrolling patients in the {!$Label.c.Macitentan_Containing_Products_REMS}
+                                                    </div>
+                                                
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <div>
+                                                        monitoring patients at baseline and monthly
+                                                    </div>
+                                                
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+    
+                                    <!-- 3 -->
+    
+                                    <div class="pb-3">
+                                        <span class="font-lg">3. &nbsp;  Ensuring that pharmacies are educated on the following: </span>
+                                        <div class="list-bullets">
+                                            <ul>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <div>
+                                                        the risks of embryo-fetal toxicity
+                                                    </div>
+                                                
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </ol>
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- 4 -->
+                                <ol start="4"  style="padding-inline-start: 0px !important;">
+                                    <div class="pb-3">
+                                        <span class="font-lg" style="display: flex;">
+                                            <div style="padding-right: 13px;">
+                                                4.
+                                            </div>
+                                            <div>
+                                                 Ensuring that pharmacies are educated on and adhere to the following:
+                                            </div>
+                                        </span>
+                                        
+                                        <div class="list-bullets">
+                                            <ul>
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle-o" style="padding-top: 11px;"></i>
+                                                    <div>
+                                                        confirming that the appropriate patient
+                                                    monitoring and counseling has occurred
+                                                    before dispensing {!$Label.c.macitentan_containing_products}
+                                                    </div>
+                                                
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+    
+                                    <!-- 5 -->
+    
+                                    <div class="pb-3">
+                                        <span class="font-lg">5. &nbsp;  Ensuring that patients are informed about: </span>
+                                       <div class="list-bullets">
+                                            <ul>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <div>
+                                                        the risks of embryo-fetal toxicity
+                                                    </div>
+                                                
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <div>
+                                                        appropriate baseline and monthly patient monitoring
+                                                    </div>
+                                                
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle-o"></i>
+                                                    <div>
+                                                        appropriate contraception
+                                                    </div>
+                                                
+                                                </li>
+                                                
+                                                
+                                            </ul>
+                                       </div>
+                                    </div>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+        
+        <section class="sec-two py-5 bg-white" style="height: 28vw;background-color: #e9e9e9 !important;padding-top: 5vw !important;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3" id="general" onclick="{!c.navigate}">
+                        <div class="card p-0">
+                            <div class="banner b-one" style="background-image: url(/resource/MaciImages/img/img-1.jpg);">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                <h5>General</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>General</h4>
+                                <p>Additional information including a list of participating companies and products </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3" id="patient" onclick="{!c.navigate}">
+                        <div class="card p-0">
+                            <div class="banner b-two" style="background-image: url(/resource/MaciImages/img/img-2.jpg);">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <h5>Patient</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>Patient</h4>
+                                <p>Information, tools and materials for patients taking macitentan </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3" id="pharmacy" onclick="{!c.navigate}">
+                        <div class="card p-0">
+                            <div class="banner b-three" style="background-image: url(/resource/MaciImages/img/img-3.jpg);">
+                                
+                                <img src="{!$Resource.MaciImages + '/img/icon-pharmacy.png'}" class="img-fluid pt-2 me-2" style="width: 48px;"></img>
+                                <h5 class="pt-2">Pharmacy</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>Pharmacy</h4>
+                                <p>REMS Dispense Authorization, resources, forms, enrollment, and educational materials for
+                                    pharmacies </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3" id="prescriber" onclick="{!c.navigate}">
+                        <div class="card p-0">
+                            <div class="banner b-four" style="background-image: url(/resource/MaciImages/img/img-4.jpg);">
+                                <i class="fa fa-user-md fs-1" aria-hidden="true"></i>
+                                <h5>Prescriber</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>Prescriber</h4>
+                                <p>Resources, forms, enrollment, patient management, and educational materials for macitentan
+                                    prescribers </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>	
+</aura:component>

@@ -1,0 +1,1490 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> FAQS Page { Middle context }
+-->
+
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+   <aura:handler name="init" value="{!this}" action="{!c.doInit }" />
+    <lightning:navigation aura:id="navigation"/>
+    <section class="sec-one py-5"
+             style="background-image: url('/resource/MaciImages/img/banner.jpg');background-size: cover;background-repeat: no-repeat; background-attachment: fixed;">
+        <div class="container-fluid px-5">
+            <div class="row accordion-main"  >
+              <div class="col-lg-12">
+                    <div class="row mt-0">
+                        <div class="col-lg-12">
+                            <h4 class="me-5" >General FAQs 
+                                <a class="expand-all">
+                                    <button class="button-no" >
+                                        <span class="Expand-All"><i class="fa fa-angle-right text-theme fw-bold pe-2"></i>  Expand All</span> 
+                                        <span class="Collapse-All"><i class="fa fa-angle-down text-theme fw-bold pe-2" ></i>Collapse All</span>
+                                    </button>
+                                </a>
+                            </h4>
+                            
+                            
+                            
+                            <div class="accordion accordion-white list-unstyled">
+                                <span class="target-fix" id="accordion"></span>
+                                
+                                <div class="ac-1">
+                                    <span class="target-fix" id="accordion-general-1"></span>
+                                    <a href="#accordion-general-1" id="open-accordion-general-1" class="general-1" title="open"><i class="fa fa-angle-right"></i> What type of information is collected by the Macitentan-Containing Products REMS and who will see it? </a>
+                                    <a href="#accordion" id="close-accordion-general-1" class="general-2" title="close"><i class="fa fa-angle-down"></i> What type of information is collected by the Macitentan-Containing Products REMS and who will see it? </a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">
+                                            The Macitentan-Containing Products REMS collects personal information when you enroll and/or certify in the Macitentan-Containing Product REMS, when you use Macitentan-Containing Product REMS services, and when you visit <a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a>. Once you are enrolled and certified with the Macitentan-Containing Product REMS, you are not anonymous to us.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">
+                                            As a female patient, we collect health-related information from you and your
+                                            prescriber (or a designated agent) to complete requirements to comply with
+                                            the Macitentan-Containing Products REMS.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">
+                                            The Macitentan-Containing Products REMS uses your identifiable personal information to fulfill
+                                            your requests for products and services, and to contact you on Macitentan-Containing Products
+                                            REMS-related matters. Before information is reported to the companies that
+                                            sponsor the Macitentan-Containing Products REMS (i.e., the drug manufacturers) or the FDA, your
+                                            personal identifying information is removed. We use aggregated
+                                            (non-personally identifiable) information to help us understand trends,
+                                            website performance, and patient needs.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">
+                                            Please see the Privacy Policy by visiting <a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a> for complete details.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="ac-2">
+                                    <span class="target-fix" id="accordion-general-2"></span>
+                                    <a href="#accordion-general-2" id="open-accordion-general-2" class="general-1" title="open"><i class="fa fa-angle-right"></i> Why aren't I receiving emails
+                                        from the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion-general-2" class="general-2" title="close"><i class="fa fa-angle-down"></i> Why aren't I receiving emails
+                                        from the Macitentan-Containing Products REMS?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> Because email clients differ, and spam filters sometimes filter legitimate
+                                            email, the Macitentan-Containing Products REMS suggests you add the Macitentan-Containing Product REMS domain to
+                                            your Safe Senders list in your email provider. This will minimize the chance
+                                            that you will miss an email from the Macitentan-Containing Products REMS. Follow the
+                                            instructions for adding a domain to your Safe Sender list for your email
+                                            provider.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-3">
+                                    <span class="target-fix" id="accordion-general-3"></span>
+                                    <a href="#accordion-general-3" id="open-accordion-general-3" class="general-1" title="open"><i class="fa fa-angle-right"></i> What if I need help using the
+                                        website?</a>
+                                    <a href="#accordion" id="close-accordion-general-3" class="general-2" title="close"><i class="fa fa-angle-down"></i> What if I need help using the
+                                        website?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> Call the Macitentan-Containing Products REMS Coordinating Center for help at 1-888-572-2934.</p>
+                                    </div>
+                                </div>
+                                <div class="ac-4">
+                                    <span class="target-fix" id="accordion-general-4"></span>
+                                    <a href="#accordion-general-4" id="open-accordion-general-4" class="general-1" title="open"><i class="fa fa-angle-right"></i> What browser types and versions
+                                        does the Macitentan-Containing Products REMS website support?</a>
+                                    <a href="#accordion" id="close-accordion-general-4" class="general-2" title="close"><i class="fa fa-angle-down"></i> What browser types and versions
+                                        does the Macitentan-Containing Products REMS website support?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> We support the latest and previous releases of all major browsers on a
+                                            rolling basis. Each time a new version is released, we begin supporting that
+                                            version and typically stop supporting the third most recent version. Major
+                                            browsers include Edge, Chrome, Firefox, and Safari.</p>
+                                    </div>
+                                </div>
+                                <div class="ac-5">
+                                    <span class="target-fix" id="accordion-general-5"></span>
+                                    <a href="#accordion-general-5" id="open-accordion-general-5" class="general-1" title="open"><i class="fa fa-angle-right"></i> How does the Macitentan-Containing Products REMS
+                                        website use cookies?</a>
+                                    <a href="#accordion" id="close-accordion-general-5" class="general-2" title="close"><i class="fa fa-angle-down"></i> How does the Macitentan-Containing Products REMS
+                                        website use cookies?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Cookies are used to display the correct alerts and notifications that help
+                                            you comply with the Macitentan-Containing Products REMS requirements.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">We never store your unencrypted sensitive information in a cookie.
+                                            You can find more information about how we use cookies in our Privacy
+                                            Policy.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-6">
+                                    <span class="target-fix" id="accordion-general-6"></span>
+                                    <a href="#accordion-general-6" id="open-accordion-general-6" class="general-1" title="open"><i class="fa fa-angle-right"></i> What do I do if I can't view a
+                                        document on the website?</a>
+                                    <a href="#accordion" id="close-accordion-general-6" class="general-2" title="close"><i class="fa fa-angle-down"></i> What do I do if I can't view a
+                                        document on the website?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> If you are attempting to open a document, but nothing appears, you may have
+                                            a pop-up blocker enabled in your browser, or, in the case of a PDF file, you may
+                                            not have the Adobe Reader software installed. To rectify this, you can
+                                            disable the feature in your browser for pop-up blockers. To install Adobe
+                                            Reader, you can visit the Adobe site.
+                                            
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-7">
+                                    <span class="target-fix" id="accordion-general-7"></span>
+                                    <a href="#accordion-general-7" id="open-accordion-general-7" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do I report a problem with
+                                        the Macitentan-Containing Products REMS website?</a>
+                                    <a href="#accordion" id="close-accordion-general-7" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do I report a problem with
+                                        the Macitentan-Containing Products REMS website?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">You may report website problems to the Macitentan-Containing Products REMS Coordinating Center by
+                                            calling 1-888-572-2934.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-8">
+                                    <span class="target-fix" id="accordion-general-8"></span>
+                                    <a href="#accordion-general-8" id="open-accordion-general-8" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do I obtain a username and
+                                        password for the Macitentan-Containing Products REMS website?</a>
+                                    <a href="#accordion" id="close-accordion-general-8" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do I obtain a username and
+                                        password for the Macitentan-Containing Products REMS website?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">
+                                            Physicians and other appropriately licensed healthcare professionals who
+                                            prescribe macitentan-containing products (prescribers) must be specially certified in the
+                                            Macitentan-Containing Products REMS. To become certified, a prescriber must first read the <em class="fw-bold">Prescribing Information</em> and the 
+                                            <em class="fw-bold">Prescriber and Pharmacy Guide.</em> The prescriber must
+                                            then certify by enrolling in the Macitentan-Containing Products REMS. The enrollment process will
+                                            create a username and password.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">
+                                            Pharmacies and health care settings that dispense macitentan-containing products (dispensers)
+                                            must be specially certified. To become certified, an authorized
+                                            representative of the pharmacy must read the <em class="fw-bold">Prescribing
+                                            Information</em> and the <em class="fw-bold">Prescriber and Pharmacy
+                                            Guide.</em> The authorized representative must then enroll and certify
+                                            the pharmacy in the Macitentan-Containing Products REMS. When an authorized representative enrolls their pharmacy to become certified, they create their own credentials.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">
+                                            Authorized representatives managing the REMS requirements for their certified pharmacy can invite pharmacy staff to create login credentials in order to access the Macitentan-Containing Products REMS website and conduct REMS activities on behalf of their pharmacy.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-9">
+                                    <span class="target-fix" id="accordion-general-9"></span>
+                                    <a href="#accordion-general-9" id="open-accordion-general-9" class="general-1" title="open"><i class="fa fa-angle-right"></i> What if I do not receive the
+                                        verification email after I created my account?</a>
+                                    <a href="#accordion" id="close-accordion-general-9" class="general-2" title="close"><i class="fa fa-angle-down"></i> What if I do not receive the
+                                        verification email after I created my account?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">If you haven't received your verification email, first check your spam and/or
+                                            junk email folder. If the email is not present, please call the REMS
+                                            Coordinating Center at 1-888-572-2934.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-10">
+                                    <span class="target-fix" id="accordion-general-10"></span>
+                                    <a href="#accordion-general-10" id="open-accordion-general-10" class="general-1" title="open"><i class="fa fa-angle-right"></i> What do I do if I forgot my
+                                        password?</a>
+                                    <a href="#accordion" id="close-accordion-general-10" class="general-2" title="close"><i class="fa fa-angle-down"></i> What do I do if I forgot my
+                                        password?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">On the login screen, select “Forgot your password?” and follow the
+                                            instructions.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-11">
+                                    <span class="target-fix" id="accordion-general-11"></span>
+                                    <a href="#accordion-general-11" id="open-accordion-general-11" class="general-1" title="open"><i class="fa fa-angle-right"></i> What do I do if I forgot my
+                                        username?</a>
+                                    <a href="#accordion" id="close-accordion-general-11" class="general-2" title="close"><i class="fa fa-angle-down"></i> What do I do if I forgot my
+                                        username?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> If you are a healthcare provider, authorized representative, or pharmacy staff, your username is your individual email address. If you can’t remember your username, you can call the REMS Coordinating Center at 1-888-572-2934 for assistance.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-12">
+                                    <span class="target-fix" id="accordion-general-12"></span>
+                                    <a href="#accordion-general-12" id="open-accordion-general-12" class="general-1" title="open"><i class="fa fa-angle-right"></i> What do I do if my user account
+                                        is locked?</a>
+                                    <a href="#accordion" id="close-accordion-general-12" class="general-2" title="close"><i class="fa fa-angle-down"></i> What do I do if my user account
+                                        is locked?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> If you are locked out of your user account, call the REMS Coordinating
+                                            Center at 1-888-572-2934.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-13">
+                                    <span class="target-fix" id="accordion-general-13"></span>
+                                    <a href="#accordion-general-13" id="open-accordion-general-13" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do I change my username
+                                        and/or password?</a>
+                                    <a href="#accordion" id="close-accordion-general-13" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do I change my username
+                                        and/or password?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Your username cannot be changed. You may however change your password in the
+                                            Preferences section of the website. Use the Preferences sub menu under the
+                                            top far right menu item labeled with your username.</p>
+                                    </div>
+                                </div>
+                                
+                                  <div class="ac-14">
+                                    <span class="target-fix" id="accordion-general-14"></span>
+                                    <a href="#accordion-general-14" id="open-accordion-general-14" class="general-1" title="open"><i class="fa fa-angle-right"></i> What is two-factor
+                                        authentication (2FA)?</a>
+                                    <a href="#accordion" id="close-accordion-general-14" class="general-2" title="close"><i class="fa fa-angle-down"></i> What is two-factor
+                                        authentication (2FA)?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">
+                                            We take the security of your patients' Protected Health Information (PHI) seriously. As part of our commitment to
+                                            safeguarding your data, we are pleased to offer Two-Factor Authentication (2FA) as an additional layer of protection for
+                                            your accounts. 2FA offers the below benefits.
+                                        </p>
+                                        
+                                        <div  class="list-bullets">
+                                            <ul class="mb-2">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="padding-left: 1px;font-size: 18px;">
+                                                        <b>Enhanced Security:</b> 2FA adds an extra layer of defense, ensuring that only authorized users can access your account, even
+                                                        if your password is compromised.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="padding-left: 1px;font-size: 18px;">
+                                                        <b>Protect Patient Confidentiality:</b> Safeguard your patients' sensitive information from unauthorized access, preserving their trust in your practice.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="padding-left: 1px;font-size: 18px;">
+                                                        <b>Regulatory Compliance:</b> Maintain compliance with healthcare regulations like HIPAA by implementing robust security measures.                                                     </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <p class="mb-2" style="font-size:18px">
+                                            If you choose to opt out of 2FA, please be aware of the following risks:
+                                        </p>
+                                        <div  class="list-bullets">
+                                            <ul class="mb-2">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="padding-left: 1px;font-size: 18px;">
+                                                        <b>Increased Vulnerability:</b> Without 2FA, your account is more susceptible to unauthorized access, potentially exposing your patients' PHI to
+                                                        malicious actors.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="padding-left: 1px;font-size: 18px;">
+                                                        <b>Potential Data Breach:</b> In the event of a security breach, your patients' sensitive information could be compromised,
+                                                        leading to legal and financial consequences. </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="padding-left: 1px;font-size: 18px;">
+                                                        <b>Loss of Trust:</b> Patients entrust you with their confidential information. A breach could erode their trust in your practice.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="mb-2" style="font-size:18px">
+                                            Your Patients Rely on You; We Rely on Your Security<br />
+                                            Protecting patient data is a shared responsibility. By opting in for 2FA, you play a crucial role in upholding the
+                                            highest standards of security. If you have any questions or need assistance with enabling 2FA, please contact our
+                                            support team.
+                                        </p>
+                                        <div  class="list-bullets">
+                                            <ul class="mb-2">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="padding-left: 1px;font-size: 18px;">
+                                                        Thank you for your dedication to patient care and data security. 
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-0">
+                        <div class="col-lg-12">
+                            <h4>Prescriber FAQs</h4>
+                            <div class="accordion accordion-white list-unstyled ">
+                                <span class="target-fix" id="accordion"></span>
+                                
+                                <div class="ac-15">
+                                    <span class="target-fix" id="accordion1"></span>
+                                    <a href="#accordion1" id="open-accordion1"  class="general-1" title="open"><i class="fa fa-angle-right"></i> How do patients enroll in the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion1"  class="general-2" title="close"><i class="fa fa-angle-down"></i> How do patients enroll in the Macitentan-Containing Products REMS?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">
+                                        Female patients must enroll in the Macitentan-Containing Products REMS to receive macitentan-containing products. Male patients taking macitentan-containing products are not enrolled in the Macitentan-Containing Products REMS.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">
+                                        A certified prescriber may enroll their female patient online via the Macitentan-Containing Products REMS website or by faxing a completed <em class="fw-bold">Patient Enrollment Form</em> to the REMS Coordinating Center at 1-833-681-0003. 
+                                            Upon receipt of a completed patient enrollment form, a REMS Coordinating Center Associate will ensure that the prescriber submitting the <em class="fw-bold">Patient Enrollment Form</em> is certified in the Macitentan-Containing Products REMS. 
+                                        Upon confirmation of a certified prescriber, the associate will enter the information into the Macitentan-Containing Products REMS system completing the patient's enrollment and linking the enrolled patient with the certified prescriber.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-16">
+                                    <span class="target-fix" id="accordion2"></span>
+                                    <a href="#accordion2" id="open-accordion2" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do I complete a patient transfer?</a> 
+                                    
+                                    <a href="#accordion" id="close-accordion2" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do I complete a patient transfer?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">If a patient is being transferred to your care from a different prescriber, you must submit a <em class="fw-bold">Patient Enrollment Form</em> for the patient via fax to the REMS Coordinating Center.</p>
+                                    </div>
+                                </div>
+                                <div class="ac-17">
+                                    <span class="target-fix" id="accordion3"></span>
+                                    <a href="#accordion3" id="open-accordion3" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do prescribers certify by enrolling in the Macitentan-Containing Products
+                                        REMS?</a>
+                                    <a href="#accordion" id="close-accordion3" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do prescribers certify by enrolling in the Macitentan-Containing Products
+                                        REMS?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">To become certified, a prescriber must complete and submit the <em class="fw-bold">Prescriber Enrollment and Agreement Form</em>. 
+                                        The form may be completed and submitted online via the Macitentan-Containing Products REMS website <u>or</u> by printing and faxing a completed form to the REMS Coordinating Center at 1-833-681-0003.</p>
+                                     </div>
+                                </div>
+                                
+                                <div class="ac-18">
+                                    <span class="target-fix" id="accordion4"></span>
+                                    <a href="#accordion4" id="open-accordion4" class="general-1" title="open"><i class="fa fa-angle-right"></i> What are the Macitentan-Containing Products REMS requirements for prescribers?</a>
+                                    <a href="#accordion" id="close-accordion4" class="general-2" title="close"><i class="fa fa-angle-down"></i> What are the Macitentan-Containing Products REMS requirements for prescribers?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> <strong>Healthcare Providers who prescribe macitentan-containing products must: </strong></p>
+                                        <p class="mb-2" style="font-size:18px"> To become certified to prescribe</p>
+                                            <div class="list-bullets">
+                                                <ul class="mb-2">
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                            Review the drug's <em class="fw-bold">Prescribing Information.</em>
+                                                        </div>
+                                                    </li>
+                                                      <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                          Review the <em class="fw-bold">Prescriber and Pharmacy Guide.</em>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                        <div style="font-size:18px">
+                                                            Enroll and become certified in the REMS by completing the <em class="fw-bold">Prescriber Enrollment and Agreement Form</em> and submitting it to the 
+                                                            <div style="font-size:18px;margin-top: 0px">
+                                                            Macitentan-Containing Products REMS.
+                                                            </div>
+                                                          </div>
+                                                     </li>
+                                                </ul>
+                                            </div>
+                                        
+                                        <p class="mb-2" style="font-size:18px"> Before treatment initiation (first dose)</p>
+                                            <div  class="list-bullets">
+                                                <ul class="mb-2" style="font-size:18px">
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;margin-top: -30px;"></i>
+                                                        <div style="font-size:18px;">
+                                                            For all females: Assess the patient's reproductive status using the definitions in the <em class="fw-bold">Prescriber and Pharmacy Guide.</em> Document and submit the results to the Macitentan-Containing Products REMS using
+                                                            the <em class="fw-bold">Patient Enrollment Form</em>.
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                            For all females: Counsel the patient that the drug is only available through a restricted distribution program.
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                        For females of reproductive potential: Assess the patient's pregnancy status by ordering and reviewing her pregnancy test result.
+                                                        </div>
+                                                        </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                        <div style="font-size:18px">
+                                                        For females of reproductive potential: Counsel the patient on the risk of embryo-fetal toxicity, the need to use reliable contraception, and emergency contraception using the <em class="fw-bold">Guide
+                                                            for Female Patients. </em>
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                        <div style="font-size:18px">
+                                                        For pre-pubertal females: Counsel the patient on the risk of embryo-fetal toxicity and to immediately contact her prescriber if she begins to menstruate - using the <em class="fw-bold">Guide for Female
+                                                        Patients</em>.
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                         Enroll all female patients by completing and submitting the <em class="fw-bold">Patient Enrollment Form</em> and submitting it to the Macitentan-Containing Products REMS.
+                                                        </div>
+                                                   </li>
+                                                </ul>
+                                            </div>
+                                        
+                                        
+                                        <p class="mb-2" style="font-size:18px"> During treatment; before each prescription</p>
+                                            <div  class="list-bullets">
+                                                <ul class="mb-2" style="font-size:18px">
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;margin-top: -30px;"></i>
+                                                        <div style="font-size:18px">
+                                                         For females of reproductive potential: Counsel the patient if she is not complying with required testing, if she is not using appropriate contraception, and to contact her prescriber if
+                                                            she misses a menstrual period or suspects that she is pregnant.
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                          For females of reproductive potential: Assess the patient's pregnancy status by ordering and reviewing her pregnancy test result.
+                                                        </div>
+                                                   </li>
+                                                </ul>
+                                            </div>
+                                        
+                                        <p class="mb-2" style="font-size:18px"> During treatment; at least annually </p>
+                                            <div  class="list-bullets">
+                                                <ul class="mb-2" style="font-size:18px">
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;margin-top: -30px;"></i>
+                                                        <div style="font-size:18px">
+                                                        For pre-pubertal females at least age 8 years or older: Document reproductive status and submit to the Macitentan-Containing Products REMS using the <em class="fw-bold">Change in Reproductive Potential Status and Pre-pubertal Annual Verification Form.</em>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                       
+                                        <p class="mb-2" style="font-size:18px">  After treatment discontinuation; one month</p>
+                                            <div  class="list-bullets">
+                                                <ul class="mb-2" style="font-size:18px">
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                        For females of reproductive potential: Assess the patient's pregnancy status by ordering and reviewing her pregnancy test result.
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        
+                                        <p class="mb-2" style="font-size:18px"> At all times</p>
+                                            <div  class="list-bullets">
+                                                <ul class="mb-2" style="font-size:18px">
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                          For pre-pubertal females: Assess the patient's reproductive status.
+                                                        </div>
+                                                    </li>
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;"></i>
+                                                        <div style="font-size:18px">
+                                                           Report pregnancies to the REMS Coordinating Center by calling 1-888-572-2934.
+                                                        </div>
+                                                   </li>
+                                                </ul>
+                                            </div>
+                                        
+                                        <p class="mb-2" style="font-size:18px"> At all times; within 10 business days</p>
+                                            <div  class="list-bullets">
+                                                <ul class="mb-2" style="font-size:18px">
+                                                    <li class="d-flex align-items-center"> 
+                                                        <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                        <div style="font-size:18px">
+                                                        Report a change or misclassification in reproductive status to the Macitentan-Containing Products REMS using the <em class="fw-bold">Change in Reproductive Potential Status and Pre-pubertal Annual Verification Form.</em>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-19">
+                                    <span class="target-fix" id="accordion5"></span>
+                                    <a href="#accordion5" id="open-accordion5" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do I find a pharmacy to fill a macitentan-containing product prescription
+                                        for outpatient use? </a>
+                                    <a href="#accordion" id="close-accordion5" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do I find a pharmacy to fill a macitentan-containing product prescription
+                                        for outpatient use? </a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Pharmacies that dispense macitentan-containing products must be certified in the Macitentan-Containing Products REMS. Only certain outpatient pharmacies participate in the Macitentan-Containing Products REMS. You may need to help your patients find an outpatient pharmacy that is certified in the Macitentan-Containing Products REMS. For a list of certified outpatient pharmacies, visit <a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com.</u></a> or call the REMS Coordinating Center at 1-888-572-2934. Your patient may also contact her insurance carrier for assistance in determining what pharmacies and Macitentan-Containing Products products are supported by her current insurance plan.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-21">
+                                    <span class="target-fix" id="accordion7"></span>
+                                    <a href="#accordion7" id="open-accordion7" class="general-1" title="open"><i class="fa fa-angle-right"></i> Do healthcare providers who prescribe macitentan-containing products have to
+                                        certify by enrolling in the Macitentan-Containing Products REMS? </a>
+                                    <a href="#accordion" id="close-accordion7" class="general-2" title="close"><i class="fa fa-angle-down"></i> Do healthcare providers who prescribe macitentan-containing products have to
+                                        certify by enrolling in the Macitentan-Containing Products REMS? </a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Healthcare providers who prescribe macitentan-containing products must be specially certified. To become certified, a prescriber must read the <em class="fw-bold">Prescriber and Pharmacy Guide</em> and the <em class="fw-bold">Prescribing Information</em>, certify in the Macitentan-Containing Products REMS, and agree to follow the Macitentan-Containing Products REMS prescriber requirements. Prescribers must be certified in the Macitentan-Containing Products REMS and comply with the Macitentan-Containing Products REMS requirements to prescribe macitentan-containing products</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-22">
+                                    <span class="target-fix" id="accordion8"></span>
+                                    <a href="#accordion8" id="open-accordion8" class="general-1" title="open"><i class="fa fa-angle-right"></i> What if a patient gets pregnant during treatment with
+                                        macitentan-containing product or within one month of discontinuation of treatment?</a>
+                                    <a href="#accordion" id="close-accordion8" class="general-2" title="close"><i class="fa fa-angle-down"></i> What if a patient gets pregnant during treatment with
+                                        macitentan-containing product or within one month of discontinuation of treatment?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Prescribers must notify the REMS Coordinating Center at 1-888-572-2934 of any pregnancies that occur during treatment with a macitentan-containing product or within one month of discontinuation of treatment.</p>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="ac-23">
+                                    <span class="target-fix" id="accordion9"></span>
+                                    <a href="#accordion9" id="open-accordion9" class="general-1" title="open"><i class="fa fa-angle-right"></i> What is an RDA?</a>
+                                    <a href="#accordion" id="close-accordion9" class="general-2" title="close"><i class="fa fa-angle-down"></i> What is an RDA?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">
+                                            An RDA is a REMS Dispense Authorization and is necessary for the pharmacy to obtain in order to fill a prescription for a macitentan-containing product for a female patient. An RDA is created once it is confirmed that the prescriber is certified, the patient is enrolled, and for a female of reproductive potential, a pregnancy test has been completed.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-0">
+                        <div class="col-lg-12">
+                            <h4>Pharmacy FAQs</h4>
+                            <div class="accordion accordion-white list-unstyled">
+                                <span class="target-fix" id="accordion"></span>
+                                
+                                <div class="ac-24">
+                                    <span class="target-fix" id="accordion-pharmacy-1"></span>
+                                    <a href="#accordion-pharmacy-1" id="open-accordion-pharmacy-1" class="general-1" title="open"><i class="fa fa-angle-right"></i> How does a patient enroll in the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-1" class="general-2" title="close"><i class="fa fa-angle-down"></i> How does a patient enroll in the Macitentan-Containing Products REMS?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Only female patients are required to enroll in the Macitentan-Containing Products REMS. To enroll a female patient, the certified prescriber must complete a <em class="fw-bold">Patient Enrollment Form</em>. 
+                                                        The form may be completed and submitted online via the Macitentan-Containing Products REMS website or by printing and faxing a completed form to the REMS Coordinating Center at 1-833-681-0003.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-25">
+                                    <span class="target-fix" id="accordion-pharmacy-2"></span>
+                                    <a href="#accordion-pharmacy-2" id="open-accordion-pharmacy-2" class="general-1" title="open"><i class="fa fa-angle-right"></i> How does a pharmacy certify in the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-2" class="general-2" title="close"><i class="fa fa-angle-down"></i> How does a pharmacy certify in the Macitentan-Containing Products REMS?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> In order to dispense macitentan-containing products, the pharmacy must certify by enrolling in the REMS.
+                                            Pharmacies must complete an enrollment form specific to its pharmacy type
+                                            (outpatient or inpatient). Pharmacies may enroll online via the Macitentan-Containing Products REMS
+                                            website <u>or</u> by faxing a completed enrollment form to the REMS Coordinating Center.
+                                            Additional information can be found in the <em class="fw-bold">Prescriber and Pharmacy
+                                            Guide</em>.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-26">
+                                    <span class="target-fix" id="accordion-pharmacy-3"></span>
+                                    <a href="#accordion-pharmacy-3" id="open-accordion-pharmacy-3" class="general-1" title="open"><i class="fa fa-angle-right"></i> What happens if the pharmacy's authorized representative
+                                        leaves or changes?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-3" class="general-2" title="close"><i class="fa fa-angle-down"></i> What happens if the pharmacy's authorized representative
+                                        leaves or changes?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> If the pharmacy's authorized representative leaves or changes, the new authorized
+                                            representative must recertify the pharmacy in the Macitentan-Containing Products REMS by
+                                            completing the appropriate Pharmacy Enrollment Form. </p>
+                                    </div>
+                                </div>
+
+                                <div class="ac-27">
+                                    <span class="target-fix" id="accordion-pharmacy-4"></span>
+                                    <a href="#accordion-pharmacy-4" id="open-accordion-pharmacy-4" class="general-1" title="open"><i class="fa fa-angle-right"></i> Do all outpatient pharmacy locations need to certify in the Macitentan-Containing
+                                        Products REMS? </a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-4" class="general-2" title="close"><i class="fa fa-angle-down"></i>Do
+                                        all outpatient pharmacy locations need to certify in the Macitentan-Containing Products REMS?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> No. Only one outpatient pharmacy location per organization is required to
+                                            certify; all outpatient pharmacy locations within the organization are not required to additionally certify, as
+                                            these locations will be considered certified under the primary pharmacy organization’s certification. </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-28">
+                                    <span class="target-fix" id="accordion-pharmacy-5"></span>
+                                    <a href="#accordion-pharmacy-5" id="open-accordion-pharmacy-5" class="general-1" title="open"><i class="fa fa-angle-right"></i> Do pharmacies need to recertify annually in
+                                        the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-5" class="general-2" title="close"><i class="fa fa-angle-down"></i> Do pharmacies need to recertify annually in
+                                        the Macitentan-Containing Products REMS?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">No, pharmacies do not need to recertify annually in the Macitentan-Containing Products REMS.
+                                            However, if the pharmacy’s authorized representative leaves or changes, the new authorized representative must recertify the pharmacy
+                                            in the Macitentan-Containing Products REMS by completing the appropriate Pharmacy Enrollment Form.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-29">
+                                    <span class="target-fix" id="accordion-pharmacy-6"></span>
+                                    <a href="#accordion-pharmacy-6" id="open-accordion-pharmacy-6" class="general-1" title="open"><i class="fa fa-angle-right"></i> What are the Macitentan-Containing Products REMS requirements for pharmacies?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-6" class="general-2" title="close"><i class="fa fa-angle-down"></i> What are the Macitentan-Containing Products REMS requirements for pharmacies?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> The Macitentan-Containing Products REMS requirements for pharmacies depend on the pharmacy type. For
+                                            specific information on pharmacy requirements, please refer to the <em class="fw-bold">Prescriber and Pharmacy Guide</em>.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-30">
+                                    <span class="target-fix" id="accordion-pharmacy-7"></span>
+                                    <a href="#accordion-pharmacy-7" id="open-accordion-pharmacy-7" class="general-1" title="open"><i class="fa fa-angle-right"></i> How are pharmacies classified in the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-7" class="general-2" title="close"><i class="fa fa-angle-down"></i> How are pharmacies classified in the Macitentan-Containing Products REMS?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-0 pb-1 pt-1 fw-bold text-white" style="font-size:18px">An Outpatient Pharmacy</p>
+                                        <p class="mb-0  text-white" style="font-size:18px">
+                                            Pharmacies that dispense macitentan-containing products for outpatient use must be enrolled and certified as an
+                                            outpatient pharmacy and must ensure they are contracted with a manufacturer in the Macitentan-Containing Products REMS
+                                            Group.
+                                        </p>
+                                        <p class="mb-0 pb-1 pt-2 fw-bold  text-white" style="font-size:18px">An Inpatient Pharmacy</p>
+                                        <p class="mb-0  text-white" style="font-size:18px">An inpatient pharmacy is a pharmacy that dispenses prescriptions in an inpatient
+                                            setting such as a hospital, nursing home, hospice, asylum/mental facility, assisted
+                                            living, prison, or rehabilitation. Inpatient pharmacies are a filling pharmacy.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-31">
+                                    <span class="target-fix" id="accordion-pharmacy-8"></span>
+                                    <a href="#accordion-pharmacy-8" id="open-accordion-pharmacy-8" class="general-1" title="open"><i class="fa fa-angle-right"></i> What is a REMS Dispense Authorization (RDA)?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-8" class="general-2" title="close"><i class="fa fa-angle-down"></i> What is a REMS Dispense Authorization (RDA)?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">An RDA is a REMS Dispense Authorization and is necessary for the <u>outpatient</u> pharmacy
+                                            to obtain in order to fill a prescription for macitentan-containing products for a female patient.  An RDA is issued once 
+                                            it is confirmed that the prescriber is certified, the pharmacy is certified, the patient is enrolled, 
+                                            and for a female of reproductive potential, a pregnancy test has been completed.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-32">
+                                    <span class="target-fix" id="accordion-pharmacy-9"></span>
+                                    <a href="#accordion-pharmacy-9" id="open-accordion-pharmacy-9" class="general-1" title="open"><i class="fa fa-angle-right"></i> How does a pharmacy obtain a REMS Dispense Authorization
+                                        (RDA)?</a>
+                                    <a href="#accordion" id="close-accordion-pharmacy-9" class="general-2" title="close"><i class="fa fa-angle-down"></i> How does a pharmacy obtain a REMS Dispense Authorization
+                                        (RDA)?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"><strong>Outpatient Pharmacies</strong>
+                                            <br></br>
+                                            The pharmacy must obtain an RDA from the Macitentan-Containing Products REMS website 
+                                            (<a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a>.) 
+                                            or by calling the REMS Coordinating Center at 1-888-572-2934 and providing the patient's first and last name, 
+                                            the patient's date of birth, the prescriber’s NPI number, confirmation of a 
+                                            completed pregnancy test for Females of Reproductive Potential (FRP) patients or indicate a prescriber 
+                                            authorization to refill, confirmation that counseling has been completed, manufacturer 
+                                            information, product/NDC code, and days’ supply.
+                                            <br> </br>
+                                            If an RDA cannot be obtained for the patient, the pharmacy must contact the patient or prescriber to obtain the information that is missing or preventing the issuance of an RDA. 
+                                            <br></br>
+                                            The system will allow the outpatient pharmacy to obtain an RDA once all requirements have 
+                                            been met. The pharmacy, pharmacy participant, prescriber name, patient name, patient date of 
+                                            birth, manufacturer, NDC code, and days’ supply, reason for days’ supply greater than 30 days (if 
+                                            applicable and for FRP patients only), did patient have a delay in treatment of five or more days, 
+                                            and reason for delay in treatment (if applicable), will be presented with the RDA number.
+                                        </p>
+                                        <p class="mb-2" style="font-size:18px">
+                                            <strong>Inpatient Pharmacies</strong>
+                                            <br> <br> </br></br>
+                                            An RDA is not required for inpatient pharmacies. Before dispensing to a female patient, the certified inpatient pharmacy must verify the female patient is under the supervision and care of a certified prescriber, 
+                                            and that she is enrolled or will be enrolled in the Macitentan-Containing Products REMS prior to discharge. 
+                                            The inpatient pharmacy may verify the patient’s enrollment status and prescriber’s certification status online or by calling the REMS Coordinating Center at 1-888-572-2934. 
+                                            To verify online, the authorized representative or pharmacy staff will login to the REMS website and click on “Verify Prescriber Certification and Patient Enrollment” button. 
+                                            The authorized representative or pharmacy staff will be prompted to enter the prescriber’s individual NPI number and the patient’s name and date of birth.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-0">
+                        <div class="col-lg-12">
+                            <h4>Patient FAQs</h4>
+                            <div class="accordion accordion-white list-unstyled">
+                                <span class="target-fix" id="accordion"></span>
+                                
+                                <div class="ac-33">
+                                    <span class="target-fix" id="accordion-patient-1"></span>
+                                    <a href="#accordion-patient-1" id="open-accordion-patient-1" class="general-1" title="open"><i class="fa fa-angle-right"></i> What are macitentan-containing products?</a>
+                                    <a href="#accordion" id="close-accordion-patient-1" class="general-2" title="close"><i class="fa fa-angle-down"></i> What are macitentan-containing products?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px"> Macitentan-containing products are a prescription medicine used to treat pulmonary arterial
+                                            hypertension
+                                            (PAH), which is high blood pressure in the arteries of your lungs.
+                                            Macitentan-containing products can
+                                            improve your ability to exercise, improve some of your symptoms, and help
+                                            slow down
+                                            the progression of your disease. Macitentan-containing products can also lower your chance of
+                                            being
+                                            hospitalized for PAH. It is not known if Macitentan-containing products are safe and effective in
+                                            children.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-34">
+                                    <span class="target-fix" id="accordion-patient-2"></span>
+                                    <a href="#accordion-patient-2" id="open-accordion-patient-2" class="general-1" title="open"> <i class="fa fa-angle-right"></i> What are the serious risks of
+                                        macitentan-containing products?</a>
+                                    <a href="#accordion" id="close-accordion-patient-2" class="general-2" title="close"> <i class="fa fa-angle-down"></i> What are the serious risks of
+                                        macitentan-containing products?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Macitentan-Containing Products can cause serious birth defects if taken during pregnancy. Women
+                                            must not
+                                            be pregnant when they start taking macitentan-containing products or become pregnant while
+                                            taking
+                                            macitentan-containing products.</p>   
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-35">
+                                    <span class="target-fix" id="accordion-patient-3"></span>
+                                    <a href="#accordion-patient-3" id="open-accordion-patient-3" class="general-1" title="open"> <i class="fa fa-angle-right"></i> What is the Macitentan-Containing Products REMS (Risk Evaluation and
+                                        Mitigation Strategy)?</a>
+                                    <a href="#accordion" id="close-accordion-patient-3" class="general-2" title="close"> <i class="fa fa-angle-down"></i> What is the Macitentan-Containing Products REMS (Risk Evaluation and
+                                        Mitigation Strategy)?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">The Macitentan-Containing Products REMS is a program to educate patients and healthcare providers about the risk of serious birth defects when taking macitentan-containing products. 
+                                           This program is required by the Food and Drug Administration (FDA). 
+                                           All females must enroll in the Macitentan-Containing Products REMS to receive macitentan-containing products. The Macitentan-Containing Products REMS requirements are different for females who cannot get pregnant and females who can get pregnant.
+                                        </p>
+                                     
+                                    </div>
+                                </div>
+                                
+                                 <div class="ac-36">
+                                    <span class="target-fix" id="accordion-patient-33"></span>
+                                    <a href="#accordion-patient-33" id="open-accordion-patient-33" class="general-1" title="open"> <i class="fa fa-angle-right"></i> Am I considered a female who cannot get pregnant?</a>
+                                    <a href="#accordion" id="close-accordion-patient-33" class="general-2" title="close"> <i class="fa fa-angle-down"></i>Am I considered a female who cannot get pregnant?</a>
+                                    <div class="accordion-content text-white">
+                                         <p class="mb-2" style="font-size:18px">You are considered a female who is not able to get pregnant if you:</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Have not yet entered puberty, or 
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Do not have a uterus, or 
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Have gone through menopause. (Menopause means that you have not had a
+                                                        menstrual period for at least 12 months for natural reasons, or that you have had
+                                                        your ovaries removed.), or
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Are infertile for other medical reasons and this infertility is permanent and cannot be reversed.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="ac-37">
+                                    <span class="target-fix" id="accordion-patient-34"></span>
+                                    <a href="#accordion-patient-34" id="open-accordion-patient-34" class="general-1" title="open"> <i class="fa fa-angle-right"></i> I am a female who cannot get pregnant, what must I do to receive macitentan-containing products?</a>
+                                    <a href="#accordion" id="close-accordion-patient-34" class="general-2" title="close"> <i class="fa fa-angle-down"></i>I am a female who cannot get pregnant, what must I do to receive macitentan-containing products?</a>
+                                    <div class="accordion-content text-white">
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center"> 
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Enroll in the Macitentan-Containing Products REMS by completing the <em class="fw-bold">Patient Enrollment Form </em> with your prescriber
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center"> 
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Tell your prescriber if you become pregnant or your ability to become
+                                                        pregnant changes
+                                                      </div>
+                                                </li>
+                                                <li class="d-flex align-items-center"> 
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Receive counseling from your prescriber on the risk of serious birth
+                                                        defects
+                                                        (<u>only</u> if you are premenopausal)
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center"> 
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Be monitored every year to see if your ability to become pregnant
+                                                        changes and
+                                                        tell your prescriber if your ability to become pregnant changes (<u>only</u> if
+                                                        you are
+                                                        over the age of 8)
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="mt-2" style="font-size:18px"><u>Note</u>: If you are a parent or caregiver of a female child who
+                                            started
+                                            taking
+                                            macitentan-containing products before reaching puberty, you should check your child regularly to
+                                            see if
+                                            she is developing signs of puberty. Tell your prescriber right away if you
+                                            notice
+                                            that she is developing breast buds or pubic hair. Your prescriber should
+                                            decide if
+                                            your child has reached puberty. Your child may reach puberty before having
+                                            her first
+                                            menstrual period.</p>
+                                     </div>
+                                </div>
+                                
+                                 <div class="ac-38">
+                                    <span class="target-fix" id="accordion-patient-35"></span>
+                                    <a href="#accordion-patient-35" id="open-accordion-patient-35" class="general-1" title="open"> <i class="fa fa-angle-right"></i> Am I considered a female who can get pregnant?</a>
+                                    <a href="#accordion" id="close-accordion-patient-35" class="general-2" title="close"> <i class="fa fa-angle-down"></i>Am I considered a female who can get pregnant?</a>
+                                    <div class="accordion-content text-white">
+                                       	<p class="mb-2" style="font-size:18px">You are considered a female who can get pregnant if you:</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Have entered puberty, even if you have not started your period, and
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Have a uterus, and 
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex ">   
+                                                    <i class="fa fa-circle pt-2 " style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Have not gone through menopause (have not had a period for at least 12 months for natural reasons
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                       
+                                
+          
+                                
+                                
+                                 <div class="ac-39">
+                                    <span class="target-fix" id="accordion-patient-37"></span>
+                                    <a href="#accordion-patient-37" id="open-accordion-patient-37" class="general-1" title="open"> <i class="fa fa-angle-right"></i> I am a female who can get pregnant, what must I do to receive macitentan-containing products?</a>
+                                    <a href="#accordion" id="close-accordion-patient-37" class="general-2" title="close"> <i class="fa fa-angle-down"></i>I am a female who can get pregnant, what must I do to receive macitentan-containing products?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mt-0 mb-0 pb-2" style="font-size:18px">Enroll in the Macitentan-Containing Products REMS by completing the <em class="fw-bold">Patient Enrollment Form</em> with your prescriber</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                               <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Talk to your healthcare provider about the risks and benefits of
+                                                        macitentan-containing products
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Read the <b><em class="fw-bold">Guide for Female Patients</em></b>
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i> 
+                                                    <div style="font-size:18px">
+                                                        Have a negative pregnancy test: 
+                                                    </div>
+                                                    
+                                                </li>
+                                                <div class="list-bullets">
+                                                    <ul class="mb-2" style="font-size:18px">
+                                                        <li class="d-flex align-items-center">
+                                                            <i class="fa fa-circle-o" style="position: revert;"></i>
+                                                            <div style="font-size:18px">
+                                                                before you start taking macitentan-containing products,
+                                                            </div>
+                                                        </li>
+                                                        <li class="d-flex align-items-center">
+                                                            <i class="fa fa-circle-o" style="position: revert;"></i>
+                                                            <div style="font-size:18px">
+                                                                each month before you receive your refill
+                                                            </div>
+                                                        </li>
+                                                        <li class="d-flex align-items-center">
+                                                            <i class="fa fa-circle-o" style="position: revert;"></i>
+                                                            <div style="font-size:18px">
+                                                                for one month after you stop taking Macitentan-containing products 
+                                                            </div>                                            
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                        
+                                        <p class="mt-0 mb-0 pb-2" style="font-size:18px">Your healthcare provider will order the pregnancy tests for
+                                            you. You
+                                            may not
+                                            receive your macitentan-containing products refill on time if you do not confirm with the
+                                            pharmacy
+                                            that you have had your monthly pregnancy test.</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Use reliable forms of birth control at all times during macitentan-containing product treatment and for one month after stopping treatment with a macitentan-containing product
+                                                     </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Do not have unprotected sex
+                                                    </div>     
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle pt-2" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Immediately notify your healthcare provider if you miss a menstrual
+                                                        period
+                                                        or suspect you are pregnant
+                                                    </div>    
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                
+                                <div class="ac-40">
+                                    <span class="target-fix" id="accordion-patient-4"></span>
+                                    <a href="#accordion-patient-4" id="open-accordion-patient-4" class="general-1" title="open"><i class="fa fa-angle-right"></i> Do male patients taking macitentan-containing products need to enroll?</a>
+                                    <a href="#accordion" id="close-accordion-patient-4" class="general-2" title="close"><i class="fa fa-angle-down"></i> Do male patients taking macitentan-containing products need to enroll?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Males are not required to enroll in the Macitentan-Containing Products REMS. </p> 
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-41">
+                                    <span class="target-fix" id="accordion-patient-5"></span>
+                                    <a href="#accordion-patient-5" id="open-accordion-patient-5" class="general-1" title="open"><i class="fa fa-angle-right"></i> Can Veterans Affairs (VA) patients enroll in the Macitentan-Containing Products REMS by phone or online?  </a>
+                                    <a href="#accordion" id="close-accordion-patient-5" class="general-2" title="close"><i class="fa fa-angle-down"></i> Can Veterans Affairs (VA) patients enroll in the Macitentan-Containing Products REMS by phone or online? </a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Enrollment by phone or online are available for all patients. 
+                                            VA patients will follow the standard process for patient enrollment. </p> 
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-42">
+                                    <span class="target-fix" id="accordion-patient-6"></span>
+                                    <a href="#accordion-patient-6" id="open-accordion-patient-6" class="general-1" title="open"><i class="fa fa-angle-right"></i>What are my birth control options while taking macitentan-containing products?</a>
+                                    <a href="#accordion" id="close-accordion-patient-6" class="general-2" title="close"><i class="fa fa-angle-down"></i>What are my birth control options while taking macitentan-containing products?</a>
+                                        
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Talk to your prescriber if you have questions about your birth control
+                                            options. Tell
+                                            your prescriber if you want to change your birth control method. Information
+                                            about
+                                            birth control options can be found in the <em class="fw-bold">Guide for
+                                            Female Patients.</em> </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-43">
+                                    <span class="target-fix" id="accordion-patient-7"></span>
+                                    <a href="#accordion-patient-7" id="open-accordion-patient-7" class="general-1" title="open"><i class="fa fa-angle-right"></i> How will I receive
+                                        my macitentan-containing product?</a>
+                                    <a href="#accordion" id="close-accordion-patient-7" class="general-2" title="close"><i class="fa fa-angle-down"></i> How will I receive
+                                        my macitentan-containing product?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Your prescription must be filled by an outpatient pharmacy certified in the
+                                            Macitentan-Containing Products
+                                            REMS.</p>
+                                        <p class="mb-2" style="font-size:18px">You and your prescriber can find a list of outpatient pharmacies certified in
+                                            the
+                                            Macitentan-Containing Products REMS on the Macitentan-Containing Products REMS website, <a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a>, or
+                                            by calling
+                                            the REMS Coordinating Center at 1-888-572-2934. You may also contact your
+                                            insurance
+                                            carrier for assistance in determining what pharmacies and macitentan-containing 
+                                            products are
+                                            supported by your current insurance plan.</p>
+                                        
+                                        <p class="mb-2" style="font-size:18px">The outpatient pharmacies will mail your prescription to you.</p>
+                                        
+                                        <p class="mb-2" style="font-size:18px">If you are a female who can get pregnant, <b>every month</b> you will be contacted
+                                            by your
+                                            pharmacy to receive counseling and to confirm that you have taken a monthly
+                                            pregnancy
+                                            test before refilling your prescription. It is important that you are able
+                                            to be
+                                            contacted in order to avoid delays in your refills.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-44">
+                                    <span class="target-fix" id="accordion-patient-8"></span>
+                                    <a href="#accordion-patient-8" id="open-accordion-patient-8" class="general-1" title="open"><i class="fa fa-angle-right"></i>What should I do if I get pregnant while taking macitentan-containing products?</a>
+                                    <a href="#accordion" id="close-accordion-patient-8" class="general-2" title="close"><i class="fa fa-angle-down"></i>What should I do if I get pregnant while taking macitentan-containing products?</a>
+                                        
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Talk to your prescriber or pharmacist right away if you have unprotected sex,
+                                            if you
+                                            think your birth control has failed, or if you think you may be pregnant.
+                                            Your
+                                            prescriber may tell you to use emergency birth control. Do not wait until
+                                            your next
+                                            appointment to tell your prescriber if you miss your menstrual period or if
+                                            you
+                                            think you may be pregnant.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-45">
+                                    <span class="target-fix" id="accordion-patient-9"></span>
+                                    <a href="#accordion-patient-9" id="open-accordion-patient-9" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do I enroll in the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion-patient-9" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do I enroll in the Macitentan-Containing Products REMS?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Female patients must be enrolled in the Macitentan-Containing Products REMS to receive macitentan-containing products. Follow these steps with your prescriber:</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Read and understand the <em class="fw-bold">Guide for Female Patients,</em>
+                                                        which can be found on the
+                                                        Macitentan-Containing Products REMS website, <a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a>.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Talk with your prescriber to ensure the benefits outweigh the risks of
+                                                        macitentan-containing products
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Ask questions. Make sure you understand what you need to do
+                                                        to enroll and take part in the Macitentan-Containing Products REMS. Make sure you know 
+                                                        how to receive and take macitentan-containing products
+                                                      </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        You and your prescriber complete the <em class="fw-bold">Patient Enrollment Form</em>. The form
+                                                        may be
+                                                        completed and submitted online via the Macitentan-Containing Products REMS website <u>or</u> by
+                                                        printing
+                                                        and faxing a
+                                                        completed form to the REMS Coordinating Center at 1-833-681-0003.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-47">
+                                    <span class="target-fix" id="accordion-patient-12"></span>
+                                    <a href="#accordion-patient-12" id="open-accordion-patient-12" class="general-1" title="open"><i class="fa fa-angle-right"></i> Is this REMS mandatory?</a>
+                                    <a href="#accordion" id="close-accordion-patient-12" class="general-2" title="close"><i class="fa fa-angle-down"></i> Is this REMS mandatory?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">The Macitentan-Containing Products REMS is mandatory for all female patients.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-48">
+                                    <span class="target-fix" id="accordion-patient-13"></span>
+                                    <a href="#accordion-patient-13" id="open-accordion-patient-13" class="general-1" title="open"><i class="fa fa-angle-right"></i>If I am unable to get pregnant, do I still need to enroll?</a>
+                                    <a href="#accordion" id="close-accordion-patient-13" class="general-2" title="close"><i class="fa fa-angle-down"></i>If I am unable to get pregnant, do I still need to enroll?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">All female patients taking macitentan-containing products are required to enroll in the
+                                            Macitentan-Containing Products
+                                            REMS. When completing the enrollment form, your prescriber will determine
+                                            your reproductive status. Pre-pubertal females will be educated using the
+                                            <em class="fw-bold">Guide for Female Patients</em>, which can be found on the
+                                            program's website.
+                                            Female patients that cannot become pregnant will be regularly evaluated
+                                            for any change in reproductive status. Any change will be documented by
+                                            your prescriber's completion of the <em class="fw-bold">Change in Reproductive Potential
+                                            Status and Pre-Pubertal Annual Verification Form.</em> 
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-49">
+                                    <span class="target-fix" id="accordion-14"></span>
+                                    <a href="#accordion-14" id="open-accordion-14" class="general-1" title="open"><i class="fa fa-angle-right"></i> What is an RDA?</a>
+                                    <a href="#accordion" id="close-accordion-14" class="general-2" title="close"><i class="fa fa-angle-down"></i> What is an RDA?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">An RDA is a REMS Dispense Authorization and is necessary for the pharmacy to
+                                            obtain in order to fill a prescription for a macitentan-containing product for a female patient.
+                                            An RDA is created once it is confirmed that the pharmacy is certified, the prescriber is certified,
+                                            the patient is enrolled, and for a female of reproductive potential, a
+                                            pregnancy
+                                            test has been completed.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-50">
+                                    <span class="target-fix" id="accordion-15"></span>
+                                    <a href="#accordion-15" id="open-accordion-15" class="general-1" title="open"><i class="fa fa-angle-right"></i> What
+                                        are
+                                        the patient requirements for the Macitentan-Containing Products REMS?</a>
+                                    <a href="#accordion" id="close-accordion-15" class="general-2" title="close"><i class="fa fa-angle-down"></i> What
+                                        are
+                                        the patient requirements for the Macitentan-Containing Products REMS?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">
+                                            <b>Females of reproductive potential who are prescribed macitentan-containing products:</b> <br></br>
+                                        </p>
+                                        <p class="pb-0 mb-2" style="font-size:18px">
+                                            Before starting macitentan-containing products, you must: </p>
+                                        <div class="list-bullets">
+                                            <ul >
+                                                
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Review the <em class="fw-bold">Guide for Female Patients.</em>
+                                                    </div>    
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Get a Pregnancy Test.
+                                                    </div> 
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px;">
+                                                        Enroll in the REMS by completing the <em class="fw-bold">Patient Enrollment Form</em> with the
+                                                        prescriber. Enrollment information will
+                                                        be provided to the
+                                                    <div style="font-size:18px;margin-top: 0px">  
+                                                        Macitentan-Containing Products REMS. 
+                                                    </div>
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Receive counseling from the prescriber on the risk of
+                                                        embryo-fetal toxicity, the need to use reliable contraception, and
+                                                        emergency
+                                                        contraception using the <em class="fw-bold">Guide for Female
+                                                        Patients.</em>
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Communicate with the pharmacy to confirm completion of pregnancy
+                                                        testing.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="pb-0 mb-2" style="font-size:18px">During treatment before each dispensing, you must:</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                
+                                                
+                                                <li class="d-flex align-items-center"> 
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Receive counseling from the pharmacy
+                                                        or healthcare provider who dispenses macitentan-containing products on the risk of
+                                                        embryo-fetal
+                                                        toxicity,
+                                                        the need for reliable contraception during treatment
+                                                        and for one month after stopping treatment, to get monthly pregnancy
+                                                        tests, and
+                                                        to
+                                                        report a pregnancy immediately. 
+                                                    </div>    
+                                                </li>
+                                                <li class="d-flex align-items-center"> 
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Get a pregnancy test.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center"> 
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Communicate with the pharmacy to confirm completion of pregnancy testing.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p class="pb-0 mb-2" style="font-size:18px">During treatment and after treatment discontinuation for
+                                            one month, you must:</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Use reliable contraception as described in the <em class="fw-bold">Guide
+                                                        for Female Patients.</em> 
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Agree to be contacted by the drug manufacturer if you become pregnant.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <p class="pb-0 mb-2" style="font-size:18px">At all times, you must: </p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Inform the prescriber immediately if you miss a menstrual period or suspect a pregnancy.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <p class="pb-0 mb-2" style="font-size:18px"> <b>Pre-pubertal females who are prescribed
+                                            macitentan-containing products:</b></p>
+                                        
+                                        
+                                        
+                                        <p class="pb-0 mb-2" style="font-size:18px">Before starting macitentan-containing products, you must: </p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Review the <em class="fw-bold">Guide for Female Patients</em>. 
+                                                    </div>    
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Enroll in the REMS by completing the <em class="fw-bold">Patient Enrollment Form</em> with the prescriber. Enrollment information will be
+                                                        provided to the
+                                                        <div style="font-size:18px;margin-top: 0px">
+                                                        Macitentan-Containing Products REMS. 
+                                                        </div>
+                                                    </div>    
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Using the <em class="fw-bold">Guide for Female Patients</em>, receive
+                                                        counseling from the prescriber on
+                                                        the risk of embryo-fetal toxicity and to contact your 
+                                                        <div style="font-size:18px;margin-top: 0px">
+                                                        prescriber if you begin to menstruate.
+                                                        </div>
+                                                    </div>    
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <p class="pb-0 mb-2" style="font-size:18px">At all times, you must: </p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        If over the age of 8: Be monitored for a change in reproductive status.
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Inform the prescriber if there is a change in reproductive status.
+                                                    </div>    
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        <p class="pb-0 mb-2" style="font-size:18px"><b>Post-menopausal females or females with other medical reason for permanent,
+                                            irreversible infertility who are prescribed macitentan-containing products:</b></p>
+                                        
+                                        <p class="pb-0 mb-2" style="font-size:18px">Before starting macitentan-containing products, you must:</p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Review the <em class="fw-bold">Guide for Female Patients</em>. 
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;margin-top: -30px"></i>
+                                                    <div style="font-size:18px">
+                                                        Enroll in the REMS by completing the <em class="fw-bold">Patient Enrollment Form</em> with the prescriber. Enrollment information will be
+                                                        provided to he 
+                                                        <div style="font-size:18px;margin-top: 0px">
+                                                        Macitentan-Containing Products REMS.
+                                                        </div>
+                                                    </div>    
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <p class="pb-0 mb-2" style="font-size:18px">At all times, you must: </p>
+                                        <div class="list-bullets">
+                                            <ul class="mb-2" style="font-size:18px">
+                                                <li class="d-flex align-items-center">
+                                                    <i class="fa fa-circle" style="position: revert;"></i>
+                                                    <div style="font-size:18px">
+                                                        Inform the prescriber if there is a change in reproductive status.
+                                                    </div>    
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="ac-51">
+                                    <span class="target-fix" id="accordion-16"></span>
+                                    <a href="#accordion-16" id="open-accordion-16" class="general-1" title="open"><i class="fa fa-angle-right"></i>Where can patients 
+                                        fill macitentan-containing product prescriptions?  </a>
+                                    
+                                    <a href="#accordion" id="close-accordion-16" class="general-2" title="close"><i class="fa fa-angle-down"></i>Where can patients 
+                                        fill macitentan-containing product prescriptions?  </a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Your prescription must be filled by an outpatient pharmacy certified in the Macitentan-Containing Products REMS.
+                                            A list of certified outpatient pharmacies can be found by visiting the Macitentan-Containing Products REMS website (<a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a>).
+                                            If additional assistance is required, please contact the REMS Coordinating Center at 1-888-572-2934.</p>
+                                    </div>
+                                </div>
+                                <div class="ac-52">
+                                    <span class="target-fix" id="accordion-17"></span>
+                                    <a href="#accordion-17" id="open-accordion-17" class="general-1" title="open"><i class="fa fa-angle-right"></i>What does it mean to transfer prescribers?</a>
+                                    <a href="#accordion" id="close-accordion-17" class="general-2" title="close"><i class="fa fa-angle-down"></i>What does it mean to transfer prescribers?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Transferring to another prescriber means your current prescriber will no longer be able to see any of your information in 
+                                            the Macitentan-Containing Products REMS and the Macitentan-Containing Products REMS will no longer provide information about you to your current prescriber. 
+                                            To continue macitentan-containing products treatment, you will need to find another prescriber certified in the Macitentan-Containing Products REMS. 
+                                            You can choose to transfer back to this prescriber at any time.</p>
+                                    </div>
+                                </div> 
+                                <div class="ac-53">
+                                    <span class="target-fix" id="accordion-18"></span>
+                                    <a href="#accordion-18" id="open-accordion-18" class="general-1" title="open"><i class="fa fa-angle-right"></i>If I transfer prescribers, will my previous prescriber 
+                                        still be able to see my information in the REMS system?</a> 
+                                    <a href="#accordion" id="close-accordion-18" class="general-2" title="close"><i class="fa fa-angle-down"></i>If I transfer prescribers, will my previous prescriber 
+                                        still be able to see my information in the REMS system?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Once you complete the transfer to your new prescriber, your previous 
+                                            prescriber will no longer be able to see any of your information in the Macitentan-Containing Products REMS.
+                                            Your previous prescriber may still have access to his or her own copies of your medical information.</p>
+                                    </div>
+                                </div>  
+                                
+                                <div class="ac-54">
+                                    <span class="target-fix" id="accordion-19"></span>
+                                    <a href="#accordion-19" id="open-accordion-19" class="general-1" title="open"><i class="fa fa-angle-right"></i>Will a transfer cause an interruption in my treatment?</a>
+                                    <a href="#accordion" id="close-accordion-19" class="general-2" title="close"><i class="fa fa-angle-down"></i>Will a transfer cause an interruption in my treatment?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">This depends on when you received your last prescription and how quickly you can begin treatment with a new prescriber.
+                                            You should talk to your prescriber to ensure that an interruption in treatment does not occur.</p>
+                                    </div>
+                                </div> 
+                                
+                                
+                                <div class="ac-55">
+                                    <span class="target-fix" id="accordion-20"></span>
+                                    <a href="#accordion-20" id="open-accordion-20" class="general-1" title="open"><i class="fa fa-angle-right"></i>How does a transfer work?</a>
+                                    <a href="#accordion" id="close-accordion-20" class="general-2" title="close"><i class="fa fa-angle-down"></i>How does a transfer work?</a>
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">You may initiate a transfer by requesting 
+                                            your new prescriber to send a new, complete <em class="fw-bold">Patient Enrollment Form</em> via fax to the REMS Coordinating Center.</p>
+                                    </div>
+                                </div> 
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-0">
+                        <div class="col-lg-12">
+                            <h4>Wholesaler FAQs</h4>
+                            <div class="accordion accordion-white list-unstyled ">
+                                <span class="target-fix" id="accordion"></span>
+                                
+                                <div class="ac-56">
+                                    <span class="target-fix" id="accordion-Wholesaler-1"></span>
+                                    <a href="#accordion-Wholesaler-1" class="general-1" id="open-accordion-Wholesaler-1" title="open"><i class="fa fa-angle-right"></i> What are the requirements of the Macitentan-Containing Products REMS for wholesalers?</a>
+                                    <a href="#accordion" class="general-2" id="close-accordion-Wholesaler-1" title="close"><i class="fa fa-angle-down"></i> What are the requirements of the Macitentan-Containing Products REMS for wholesalers?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Wholesalers who distribute macitentan-containing products must be registered in the Macitentan-Containing Products REMS prior to distributing macitentan-containing products. Wholesalers may register by faxing a completed <em class="fw-bold">Wholesaler-Distributor Registration Form</em> to the Macitentan-Containing Products REMS Coordinating Center at 1-833-681-0003. 
+                                                        To register, wholesalers must agree to confirm that a pharmacy is currently certified or the receiving wholesaler-distributor is registered in the REMS prior to each shipment of macitentan-containing products to the pharmacy or wholesaler-distributor.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ac-57">
+                                    <span class="target-fix" id="accordion-Wholesaler-2"></span>
+                                    <a href="#accordion-Wholesaler-2" id="open-accordion-Wholesaler-2" class="general-1" title="open"><i class="fa fa-angle-right"></i> How do wholesalers confirm that the pharmacy is authorized to receive macitentan-containing products?</a> 
+                                    
+                                    <a href="#accordion" id="close-accordion-Wholesaler-2" class="general-2" title="close"><i class="fa fa-angle-down"></i> How do wholesalers confirm that the pharmacy is authorized to receive macitentan-containing products?</a> 
+                                    <div class="accordion-content text-white">
+                                        <p class="mb-2" style="font-size:18px">Wholesalers-distributors can check for certified pharmacies and registered wholesalers-distributors by referencing the daily certification files available via a secure file transfer protocol (sFTP) or by calling the Macitentan-Containing Products REMS Coordinating Center. 
+                                                        Wholesalers-distributors can check for certified pharmacies online by accessing the Macitentan-Containing Products REMS website, <a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a> and navigating to the Pharmacy Stakeholder page, click “Find a Pharmacy” link at the bottom of the stakeholder page.<br></br></p>
+                                        <p class="mb-2" style="font-size:18px">Only one outpatient pharmacy location per organization is required to certify; all outpatient pharmacy locations
+                                            within the organization are not required to additionally certify, as these locations will be considered certified
+                                            under the primary pharmacy organization’s certification. All inpatient pharmacy locations, even if within the same
+                                            organization, are required to separately certify in Macitentan-Containing Products REMS. </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>

@@ -1,0 +1,78 @@
+<template>
+    <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+					 <lightning-progress-indicator  type="path" variant="base" >
+        <lightning-progress-step label="Education Program" value="1" class= "slds-path__item slds-is-current" onclick={dummyCall}></lightning-progress-step>
+        <lightning-progress-step label="Complete Enrollment" value="2" onclick={dummyCall}></lightning-progress-step>
+       
+    </lightning-progress-indicator>					
+
+						<div data-region-name="content">
+							<div data-priority=""  class="ui-widget">
+								<div class="slds-text-heading_large">XIAFLEX<sup>&reg;</sup> REMS Education Program for Healthcare Providers</div>	
+
+								<div class="sectionSubHeading">This Educational Piece Includes Information About:</div>
+								<ul class="listItemDisc">
+									<li>XIAFLEX REMS  Requirements</li>
+									<li>Serious risks with XIAFLEX injection</li>
+									<li>Proper administration of XIAFLEX</li>
+									<li>Counseling your patient</li>
+								</ul>
+								
+								<div class="slds-p-top_medium"></div>
+								<div class="sectionSubHeading">What is the XIAFLEX REMS (Risk Evaluation and Mitigation Strategy)?</div>
+								<p>A REMS is a strategy to manage known or potential risks associated with a drug, and is required by the Food and Drug Administration (FDA) to ensure that the benefits of the drug outweigh its risks. 
+								XIAFLEX is only available  under a restricted program called the XIAFLEX REMS because of the risks of penile fracture (corporal rupture) or other serious injury to the pennis.
+								The XIAFLEX REMS Education Program is designed to train Healthcare Providers (HCPs) who prescribe and/or administer XIAFLEX about these risks.</p>						
+								<ul class="listItemDisc">
+									<li><b>Healthcare Providers</b> must be certified in the XIAFLEX REMS to be able to prescribe XIAFLEX.  Healthcare Providers cannot complete certification until their primary Pharmacy / Healthcare Setting is enrolled.</li>
+									<li><b>Pharmacies / Healthcare Settings</b> must be certified in the XIAFLEX REMS and have one or more associated certified Healthcare Providers to be able to order XIAFLEX.</li>
+								</ul>								
+													
+								<div class="slds-p-top_medium"></div>
+								<div class="sectionSubHeading">To Complete the Education Program</div>
+								<p>To complete the XIAFLEX REMS Education Program, Healthcare Providers can either review the Training Guide, or complete a Training Video to learn more about the administration of XIAFLEX for Peyronies's disease.
+								Only one method is required, however, both will be available in the Forms and Resources for future reference.</p>	
+				
+								<div class="containerEmphasis">
+									<div class="slds-grid slds-wrap slds-gutters slds-grid_align-center slds-text-align_center">
+										<div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_12-of-12" >
+												<p class="slds-m-vertical_medium">You must click on either link to view the <span class="docEmphasis">Education Program for Healthcare Providers</span> before you can proceed to complete your enrollment.<br/>
+												The resource will open up in a new window for you to view and/or download.</p>
+												<div class="containerFlexReview flexreview slds-text-align_cente">
+													<div class="resourceName" ><a  class="slds-button slds-button_outline-brand" onclick={handleNext} href={guideUrl} target="_blank">Training Guide</a>
+													<template if:true={showfilelogo}>
+													<span class="resourceCheck handlePadding" id="IconChecked"><img src={iconCheck}></span>
+													</template></div>
+													<div class="txtEmphasis">OR</div>
+													<div class="resourceName"><a  class="slds-button slds-button_outline-brand" href={videoUrl} onclick={handleNextVideo} target="_blank">Training Video</a>
+													<template if:true={showvideoLogo}>
+
+													<span class="resourceCheck handlePadding" id="IconChecked2"><img src={iconCheck}>
+													
+													</span>
+													</template></div>
+												</div>
+											</div>								
+									</div> <!-- end col  -->
+								</div>  <!-- end row  -->		
+									</div>
+								
+
+								<div class="slds-border_top slds-m-top_xx-large"></div>
+									<lightning-button class="brand-button buttonAlign" variant="brand" onclick={navigateToEnrollment} label="Next" disabled = {buttondisable}>
+										<button id="BtnReviewNext" disabled class="slds-align_absolute-center slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Next</button>
+									</lightning-button>	
+							</div> <!-- end layout   -->
+						</div>		
+	
+					</div> <!-- end SF   -->
+				</div> <!-- end pageContent   -->
+		</div> <!-- end pageContainer   -->
+
+			</div>  <!-- end main   -->
+					
+</template>

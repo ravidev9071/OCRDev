@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader"
+                access="global" >
+     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+     <aura:attribute name="dynamicCaseComponentPlaceholder" type="String" />
+     <aura:attribute name="docDetailIdVal" type="String" access="global"/>
+    <aura:attribute name="caseObj" type="Object" access="global"/>
+    <aura:attribute name="caseId" type="String" access="global"/>
+     <lightning:messageChannel type="US_WSREMS__ReviewDocumentChannel__c" aura:id="REMSReviewDocumentChannel"/>
+	<c:changeOfInformation recordId="{!v.recordId}" calledByFaxTransfo="true"  docDetailIdVal="{!v.docDetailIdVal}" caseId="{!v.caseId}" isexistingcase="true"/>
+      <!-- {!v.dynamicCaseComponentPlaceholder}-->
+</aura:component>

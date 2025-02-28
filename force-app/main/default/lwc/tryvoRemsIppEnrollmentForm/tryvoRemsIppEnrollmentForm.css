@@ -1,0 +1,13 @@
+.dummy {
+    font-family: Arial, sans-serif;
+}
+.pageContainer .slds-card__header {
+    background: #6691dd;
+    padding: 30px 15px;
+    font-size: 1.75rem;
+}
+.pageContainer .slds-card__header-title {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.5rem;
+}

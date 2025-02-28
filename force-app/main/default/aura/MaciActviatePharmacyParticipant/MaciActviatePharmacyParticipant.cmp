@@ -1,0 +1,3 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="SYN_InvitePharamcyStaffController">
+     <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+</aura:component>

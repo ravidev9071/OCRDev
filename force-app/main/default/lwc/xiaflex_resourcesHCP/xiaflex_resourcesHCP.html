@@ -1,0 +1,90 @@
+<template>
+	<div role="main" tabindex="-1" class="mainBody" aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+				<div class="siteforceContentArea">
+					<div>
+						<div class="slds-grid slds-gutters slds-wrap slds-large-nowrap">
+							<div
+								class=" slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_9-of-12 slds-p-right_large right-border">
+
+
+								<div class="slds-text-heading_large">Materials for Healthcare Providers</div>
+								<p class="slds-m-top_large">Adobe<sup>&reg;</sup> Reader<sup>&reg;</sup> is required to
+									view all of these PDFs. If you do not have it installed, download it free here.
+									<br><a href="http://get.adobe.com/reader/" title="Get Adobe Reader"
+										target="_blank"><img class="slds-p-bottom_x-small" src={adobeReader}></a>
+								</p>
+								<div class="slds-grid slds-wrap slds-gutters xslds-grid_align-center">
+
+									<div
+										class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-large-size_6-of-12">
+										<div class="resources">
+											<div class="slds-text-heading_medium">Resources</div>
+											<template if:true={isDisplayFiles}>
+												<template for:each={filesList} for:item="file">
+													<template if:false={file.form}>
+														<div class="resourceItem" key={file.value}>
+															<div class="resourceIcon">
+																<img src={file.icon}>
+															</div>
+															<div class="resourceName"><a onclick={previewHandler}
+																	data-previewurl={file.previewurl}
+																	data-id={file.value}>{file.label}</a>
+															</div>
+														</div>
+													</template>
+												</template>
+											</template>
+											<template for:each={redirectUrls} for:item="url">  
+												<div class="resourceItem" key={url.value}>
+												   <div class="resourceIcon">
+														<img src={iconLink}>
+													</div>
+													<div class="resourceName"><a href={url.url} target="_blank">{url.label}</a></div>
+												</div>
+											</template>
+
+										</div>
+									</div> <!-- end col  -->
+
+									<div
+										class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-large-size_6-of-12">
+										<div class="resources">
+											<div class="slds-text-heading_medium">Forms</div>
+											<template if:true={isDisplayFiles}>
+												<template for:each={filesList} for:item="file">
+													<template if:true={file.form}>
+														<div class="resourceItem" key={file.value}>
+															<div class="resourceIcon">
+																<img src={iconDownload}>
+															</div>
+															<div class="resourceName"><a onclick={previewHandler}
+																	data-previewurl={file.previewurl}
+																	data-id={file.value}>{file.label}</a>
+															</div>
+														</div>
+													</template>
+												</template>
+											</template>
+										</div>
+
+									</div> <!-- end col  -->
+								</div> <!-- end row -->
+							</div> <!-- end col    -->
+
+							<div
+								class="slds-col--padded slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_3-of-12 slds-p-left_large ">
+								<c-xiaflex_-Resources-Home></c-xiaflex_-Resources-Home>
+							</div> <!-- end col  -->
+						</div> <!-- end row   -->
+
+
+					</div> <!-- end page content   -->
+				</div> <!-- end pageContainer  -->
+			</div> <!-- end main   -->
+		</div>
+	</div>
+
+
+</template>

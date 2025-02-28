@@ -1,0 +1,160 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> Patient Enrollment { Middle Context }
+-->
+
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="isOfficeContact" type="Boolean" default="false" />
+    <aura:attribute name="prescriberName" type="String" default=""/>
+    <aura:attribute name="prescriberNPI" type="String" default=""/>
+    <aura:registerEvent name="ShowPatientInformationScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowPatientEnrollmentScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="ShowOCPatientEnrollmentScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;">
+        <div class="section-content container-fluid px-5">
+                <div class="col-lg-12">
+                    <div class="card h-100 p-0 rounded-0 border-0">
+                        <div class="card-header border-0 crd-hdr-m px-0" style="background-color: #EBEBEB;">
+                            <div class="row d-flex justify-content-center align-items-center" style="margin-top:-10px;">
+                                <div class="col-lg-12">
+                                    <div class="heading-top mx-0 d-flex justify-content-between border-bottom-0"
+                                        style="margin: 0px 4px;background-color: #EBEBEB">
+                                        <div class="col-lg-7 col-sm col-6 text-start">
+                                            
+                                            <div class="row ps-3">
+                                                <div class="col-1" style="width: 39px;">
+                                                    <span class="text-theme">
+                                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                                    </span>
+                                                </div>
+                                                <aura:if isTrue="{!v.isOfficeContact}">
+                                                    <div class="col-9 ps-4">
+                                                        <h3 class="mb-0 fs-3" style="margin-top: 12px;"> 
+                                                           Office Contact: {!v.cAccount.Name}
+                                                        </h3>
+                                                        
+                                                    </div>
+                                                    <aura:set attribute="else">
+                                                        <div class="col-9 ps-4">
+                                                            <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                               {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                                            </h3>
+                                                        </div>
+                                                    </aura:set>
+                                                </aura:if>
+                                                
+                                            </div>
+                                            <aura:if isTrue="{!v.isOfficeContact}">
+                                                <div class="col-lg-7">
+                                                    <h3 class="heading mb-0 fs-3 fw-lighter" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img><span class="text-theme"><i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;margin-left: 10px;">   </i></span> <p style="display:inline; margin-left:15px;">{!v.prescriberName}</p></h3>
+                                                    <div class="row ps-3" style="position: relative;top: -10px;">
+                                                        <div class="col-1" style="width: 39px;"></div>
+                                                        <div class="col-9 ps-4">
+                                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                                NPI: {!v.prescriberNPI}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <aura:set attribute="else">
+                                                    <div class="row ps-3" style="position: relative;top: -10px;">
+                                                        <div class="col-1" style="width: 39px;"></div>
+                                                        <div class="col-9 ps-4">
+                                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                                NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </aura:set>
+                                            </aura:if>
+                                            
+                            
+                                        </div>
+                                        <div class="col-lg-5 text-end pe-4">
+                                            <aura:if isTrue="{!v.isOfficeContact}">
+                                                <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                <span class="text-theme fw-bold">Active as of
+                                                    <span name="enrolled-number" id="enrolled-number">
+                                                        <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                month="numeric" day="numeric" />
+                                                    </span>
+                                                    &nbsp; <i class="fa fa-check-circle"></i>
+                                                </span>
+                                                </span>
+                                                <aura:set attribute="else">
+                                                    <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                    <span class="text-theme fw-bold">Enrolled as of
+                                                        <span name="enrolled-number" id="enrolled-number">
+                                                            <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                    month="numeric" day="numeric" />
+                                                        </span>
+                                                       &nbsp; <i class="fa fa-check-circle"></i>
+                                                    </span>
+                                                    </span>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center align-items-center" style="margin-top:-30px;">
+                                <div class="col-lg-7">
+                                    <h3 class="heading mb-0 fs-3 fw-lighter slds-m-left_large" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img> <i class="fa fa-file-text ps-3 pe-2"></i> Patient Enrollment</h3>
+
+                                </div>
+                                <div class="col-lg-5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pl-table p-4 pb-1 bg-white" style="height:33vw;padding-bottom: 2vw !important;">
+                    <h5 class="text-theme mb-3"><b>Instructions</b></h5>
+                    <p class="px-4 mb-0" style="font-size: 16px;">All female patients taking {!$Label.c.macitentan_containing_products} must be enrolled in the {!$Label.c.Macitentan_Containing_Products_REMS}.</p>
+                    <br></br>
+                    <ol class="px-4" style="padding-left: 70px !important;"> 
+                        <li class="row py-2"><div class="col-lg-10" style="font-size: 16px;"><strong>Patient Information - </strong>  Enter information about the patient such as name, address, phone number, date of birth, primary language, and email address.</div></li>
+                        <li class="row py-2"><div class="col-lg-10" style="font-size: 16px;"><strong>Alternate Contact - </strong>The patient may enter information about an emergency contact that the REMS Coordinating Center can contact in the event of an emergency.
+                            Legal guardian contact information is required for a patient that is under the age of 18 years old.</div></li>
+                        <li class="row py-2"><div class="col-lg-10" style="font-size: 16px;"><strong>Reproductive Potential Status  - </strong>Enter the reproductive potential status of the patient. For a female of reproductive potential, indicate if a negative pregnancy test
+
+                            has been confirmed. Certify that for female patients, you have provided the appropriate counseling and {!$Label.c.Macitentan_Containing_Products_REMS} materials and will continue to fulfill the
+                            required obligations under the {!$Label.c.Macitentan_Containing_Products_REMS}.</div></li>
+                        <aura:if isTrue="{!v.isOfficeContact}">
+                                <li class="row py-2"><div class="col-lg-10" style="font-size: 16px;"><strong>Prescriber/Patient Agreement - </strong>  The prescriber will receive the Prescriber Agreement. The patient and/or parent/legal guardian will receive an email to complete their attestation.</div></li>
+                            <aura:set attribute="else">
+                                <li class="row py-2"><div class="col-lg-10" style="font-size: 16px;"><strong>Patient Agreement - </strong>  The patient and/or parent/legal guardian will receive an email to complete their attestation.</div></li>
+                            </aura:set>
+                        </aura:if>
+
+                        
+                    </ol>
+                </div>
+                <aura:if isTrue="{!v.isOfficeContact}">
+                    <div class="card border-0 pt-3" style="border-radius: 0px;">
+                        <div class="card-footer border-0 crd-hdr-m" >
+                            <a class="btn btn-secondary rounded-0 my-2 mb-1" onclick="{!c.handlePrevious}">PREVIOUS <i class="fa fa-arrow-left" ></i></a>
+                            <a class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i class="fa fa-arrow-right" ></i></a>
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="card border-0 pt-3" style="border-radius: 0px;">
+                            <div class="card-footer border-0 crd-hdr-m" >
+                                <a class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handlePrescriberNext}">START <i class="fa fa-arrow-right" ></i></a>
+                            </div>
+                        </div>
+                    </aura:set>
+                </aura:if>
+                
+                
+        </div>
+       
+    </section>
+
+
+
+	
+</aura:component>

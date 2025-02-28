@@ -1,0 +1,95 @@
+<aura:component implements="lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride" access="global" controller="LightningRecordEditFormController">
+
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="layoutSections" type="List" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:attribute name="fieldName" type="String" default="StageName" />
+    <aura:attribute name="objectName" type="String"/>  
+    <aura:attribute name="layoutName" type="String"/>
+    <aura:attribute name="PSSfieldName"  type="String"/>
+    <aura:attribute name="Accountid"  type="String"/>
+    <aura:attribute name="objectRecordId"  type="String"/>
+    <aura:attribute name="selectedId" type="String" />
+    <aura:attribute name="isFlow" type="Boolean" default="false"/>
+    <aura:attribute name="requestorType" type="String" />
+    <aura:attribute name="REMSServiceId" type="String" />
+    <aura:attribute name="enrollmentType" type="String" />
+ 
+    <aura:attribute name="recordtypeId" type="Id"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:card >
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner />
+        </aura:if>
+        <aura:if isTrue="{!!v.saved}">
+            <lightning:recordEditForm
+                aura:id="myform"
+                onload="{!c.handleLoad}"
+                onsubmit="{!c.handleSubmit}"
+                onsuccess="{!c.handleSuccess}"
+                objectApiName="{!v.objectName}"
+                recordId="{!v.objectRecordId}"
+                recordTypeId="{!v.recordtypeId}"
+                >
+                <!-- the messages component is for error messages -->
+                <lightning:messages />
+                
+                <aura:iteration items="{!v.layoutSections}" var="section">
+                    <div class="slds-section slds-is-open">
+                    	<h3 class="slds-section__title">
+                            {!section.label}
+                        </h3>
+                        <div class="slds-section__content">
+                            <lightning:layout multipleRows="{!section.totalColumns > 1 }">
+
+                                <aura:iteration items="{!section.lstFields}" var="field">
+
+                                    <lightning:layoutItem size="{! 12/section.totalColumns }" flexibility="auto">
+                                        <aura:if isTrue="{!(!field.isReadOnly)}">
+                                            <aura:if isTrue="{!or(field.fieldName == 'SYN_Authorized_Rep__c' , field.fieldName == 'SYN_Pharmacy__c' , field.fieldName == 'US_WSREMS__Facility__c' )}">
+                                                
+                                                <lightning:inputField aura:id="InputField" fieldName="{!field.fieldName}"
+                                                                      required="{!field.isRequired}" onchange="{!c.handleFieldChange}"/>
+                                                
+                                                <aura:set attribute="else">
+                                                    
+                                                    <lightning:inputField aura:id="InputField" fieldName="{!field.fieldName}"
+                                                                          required="{!field.isRequired}" />
+                                                </aura:set>
+                                            </aura:if>
+                                            <aura:set attribute="else">
+                                                <lightning:outputField fieldName="{!field.fieldName}" />
+                                            </aura:set>
+                                        </aura:if>
+                                    </lightning:layoutItem>
+
+                                </aura:iteration>
+                         </lightning:layout>
+                        </div>
+                    </div>
+                </aura:iteration>
+                <div class="slds-align_absolute-center" style="height:5rem">
+                    <lightning:layout verticalAlign="center" class="x-large">
+                        <lightning:layoutItem padding="around-large">
+                            <div class="slds-m-top_medium">
+                               
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-large">
+                            <div class="slds-m-top_medium">
+                                
+                                <lightning:button class="slds-m-top_small" variant="brand" type="submit" label="Save" />
+                            </div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+
+            </lightning:recordEditForm>
+            <aura:set attribute="else">
+                <p>Saved!</p>
+            </aura:set>
+        </aura:if>
+    </lightning:card>
+</aura:component>

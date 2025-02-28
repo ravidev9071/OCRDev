@@ -1,0 +1,346 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Manage Patients Page { Middle context }
+-->
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="programId" type="String" default=""/>
+    <aura:attribute name="pageSize" type="Integer" default="10" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="allData" type="List" />
+<aura:attribute name="sortDirection" type="String" default="asc" />
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="filteredData" type="List" />
+    <aura:attribute name="caseList" type="Case[]" />
+<aura:attribute name="caseListPagination" type="List" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="PrescriberName" type="boolean" default="true"/>
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="stateMap" type="Map"/> 
+    <aura:attribute name="resourceList" type="List" default=""/>
+    <aura:attribute name="recordTypeDeveloperName" type="String" default=""/>
+    <aura:attribute name="portalRole" type="String" default=""/>
+    <aura:attribute name="recordId" type="String" default="false" access="global"/>
+    <aura:attribute name="sendEmailToPrescriber" type="String"/>
+    <aura:attribute name="caseDetails" type="case"/>
+     <aura:attribute name="isModalOpen" type="Boolean" default="false" />
+<aura:attribute name="isModalPatientOpen" type="Boolean" default="false" />
+   <aura:attribute name="pageReference" type="Object"/>
+   
+    <aura:attribute name="patientRiskCategory" type="String" default="false" access="global"/>
+<aura:attribute name="selectedRole" type="String" default=""/>
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    <lightning:navigation aura:id="navigation"/>
+    <section class="sec-one-1 pb-0" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height:150vh;">
+        <div class="container-fluid px-5 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12 h-120">
+                    <div class="card p-0 rounded-0 border-0 h-100">
+                        <div class="heading-top d-flex justify-content-between border-bottom-0" style="margin: 0px 0px;background-color: #EBEBEB">
+                            <div class="col-lg-7 col-sm col-8 text-start">
+                                <div class="row ps-3">
+                                    <div class="col-1" style="width: 39px;">
+                                        <span class="text-theme">
+                                            <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-9 ps-4">
+                                        <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                            <b>Office Contact : </b>  {!v.cAccount.Name}
+                                        </h3>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-lg-5 text-end pe-4">
+                                <span class="fs-6 text-muted">Program Status:&nbsp; 
+                                    <span class="text-theme fw-bold">Active as of 
+                                        <span name="enrolled-number" id="enrolled-number"><lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></span> 
+                                        &nbsp; <i class="fa fa-check-circle"></i>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body px-4 llc-dv">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <h5 class="fw-bold">Manage Patients</h5>
+                                    <div class="row d-flex justify-content-center align-items-center cnt-d">
+                                        <aura:if isTrue="{! v.isLoading }">
+                                            <lightning:spinner alternativeText="Loading" />
+                                        </aura:if>
+                                        <div class="col-lg-12">
+                                            <div class="card p-0 rounded-0 border-0">
+                                                <div class="card-header text-center dark-header">
+                                                    <h5 class="card-title mt-2">PATIENTS</h5>
+                                                </div>
+                                                <div class="card-body px-0 pt-0 pb-0">
+                                                    <div class="table-responsive">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped tbl-one mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <!---Office Contact screen Changes-->
+                                                                        <th class="fw-lighter" scope="col" >Prescriber
+                                                                             <span class="fw-lighter">
+                                                                                <lightning:icon iconName="utility:arrowup" onclick="{!c.sortByPrescriberUp}" size="xx-small" alternativeText="Indicates approval" />
+                                                                                <lightning:icon iconName="utility:arrowdown" onclick="{!c.sortByPrescriberDown}"  size="xx-small" alternativeText="Indicates approval"/>
+                                                                            </span>
+                                                                        </th>
+                                                                        <th class="fw-lighter" scope="col" >Patient Name
+                                                                              <span class="fw-lighter">
+                                                                                <lightning:icon iconName="utility:arrowup" onclick="{!c.sortByPatientUp}" size="xx-small" alternativeText="Indicates approval" />
+                                                                                <lightning:icon iconName="utility:arrowdown" onclick="{!c.sortByPatientDown}"  size="xx-small" alternativeText="Indicates approval"/>
+                                                                            </span>
+                                                                        </th>
+                                                                        <th class="fw-lighter">REMS ID</th>
+                                                                        <th class="fw-lighter">Date of Birth</th>
+                                                                        <th class="fw-lighter">Classification</th>
+                                                                        <th class="fw-lighter">Prescriber Signature</th>
+                                                                        <th class="fw-lighter">Patient Signature</th>
+                                                                        <th class="fw-lighter">Status</th>
+                                                                        <th class="fw-lighter">Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <aura:iteration items="{!v.caseListPagination}" var="cs">
+                                                                        
+                                                                       <tr>
+                                                                           <td>{!cs.SYN_Prescriber__r.Name}</td>
+                                                                            <!--Office Contact Changes-->
+                                                                            <td>{!cs.US_WSREMS__Patient__r.Name}</td>
+                                                                            <td>{!cs.US_WSREMS__Patient__r.SYN_Ref_Id__c}</td>
+                                                                            <td><lightning:formattedDateTime timeZone="GMT" value="{!cs.US_WSREMS__Patient__r.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" /></td>
+                                                                            <td>
+                                                                                <aura:if isTrue="{!cs.US_WSREMS__Patient__r.US_WSREMS__Patient_Risk_Category__c == 'Female of Reproductive Potential (FRP)'}">
+                                                                                    FRP (Female of Reproductive Potential)
+                                                                                    <aura:set attribute="else">
+                                                                                        {!cs.US_WSREMS__Patient__r.US_WSREMS__Patient_Risk_Category__c}
+                                                                                    </aura:set>
+                                                                                </aura:if>
+                                                                                
+                                                                            </td>
+                                                                              <td>
+                                                                                <aura:if isTrue="{!cs.SYN_Prescriber_Signature__c   == 'Yes'}">
+                                                                               <img src="{!$Resource.MaciImages + '/img/Right-Symbol.jpg'}" alt="img" style="width: 15px; margin-top: -2px;margin-right: 1px; "></img>
+                                                                                    <aura:set attribute="else">
+                                                                               <img src="{!$Resource.MaciImages + '/img/Wrong-Symbol.jpg'}" alt="img" style="width: 9px; margin-top: -2px;margin-right: 1px; "></img>
+                                                                                    </aura:set>
+                                                                                    
+                                                                                </aura:if>
+                                                                            </td>
+                                                                            <td>
+                                                                                <aura:if isTrue="{!cs.US_WSREMS__Signature__c == 'Yes'}">
+                                                                               <img src="{!$Resource.MaciImages + '/img/Right-Symbol.jpg'}" alt="img" style="width: 15px; margin-top: -2px;margin-right: 1px; "></img>
+                                                                                    <aura:set attribute="else">
+                                                                               <img src="{!$Resource.MaciImages + '/img/Wrong-Symbol.jpg'}" alt="img" style="width: 9px; margin-top: -2px;margin-right: 1px; "></img>
+                                                                                    </aura:set>
+                                                                                    
+                                                                                </aura:if>
+                                                                            </td>
+                                                                            <aura:if isTrue="{!cs.US_WSREMS__Patient__r.US_WSREMS__Status__c != 'Enrolled'}">
+                                                                                <td>{!cs.US_WSREMS__Patient__r.US_WSREMS__Status__c} </td>
+                                                                                <aura:set attribute="else">
+                                                                                    <td>{!cs.US_WSREMS__Patient__r.US_WSREMS__Status__c} as of <br></br><lightning:formattedDateTime timeZone="GMT" value="{!cs.US_WSREMS__Patient__r.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></td>
+                                                                                </aura:set>
+                                                                            </aura:if>
+                                                                            <td class="icons">
+                                                                                
+                                                                                <li>
+                                                                                    <aura:if isTrue="{!cs.SYN_Prescriber_Signature__c   == 'Yes'}">
+                                                                                            <a style="opacity: 0.5" disabled = 'disabled'> <i class="fa fa-user-md"></i></a>        
+                                                                                       
+                                                                                         <aura:set attribute="else">
+                                                                                          <a data-id="{!cs.Id}" onclick="{!c.navigateToModalPopUp}" style="cursor:pointer"><i class="fa fa-user-md" ></i></a>
+                                                                                      
+                                                                                        </aura:set>
+                                                                                    </aura:if> 
+                                                                                </li>
+                                                                                 <li>
+                                                                                    <aura:if isTrue="{!cs.US_WSREMS__Signature__c == 'Yes'}">
+                                                                                      <a style="opacity: 0.5" disabled = 'disabled'> <i class="fa fa-user"></i></a>        
+                                                                                        <aura:set attribute="else">
+                                                                                         <a data-id="{!cs.Id}" onclick="{!c.navigateToModalPopUpForPatient}"> <i class="fa fa-user"></i></a>
+                                                                                        </aura:set>
+                                                                                    </aura:if> 
+                                                                                </li>
+                                                                                 <li>
+                                                                                    <aura:if isTrue="{!cs.US_WSREMS__Patient__r.US_WSREMS__Status__c== 'Disenrolled'}">
+                                                                                        <a style="opacity: 0.5" disabled = 'disabled' ><img src="{!$Resource.MaciImages + '/img/microscope.png'}" alt="img" style="width: 12px; margin-top: -2px; "></img></a>
+                                                                                        <aura:set attribute="else">
+                                                                                            <aura:if isTrue="{!or(or(cs.US_WSREMS__Patient__r.US_WSREMS__Patient_Risk_Category__c =='FNRP (Patient is post-menopausal)',cs.US_WSREMS__Patient__r.US_WSREMS__Patient_Risk_Category__c == 'FNRP (other medical reasons for permanent irreversible infertility)'),cs.US_WSREMS__Patient__r.US_WSREMS__Patient_Risk_Category__c == 'FNRP (Patient is pre-pubertal)')}">
+                                                                                                <a style="opacity: 0.5" disabled = 'disabled' ><img src="{!$Resource.MaciImages + '/img/microscope.png'}" alt="img" style="width: 12px; margin-top: -2px; "></img></a>
+                                                                                                
+                                                                                                <aura:set attribute="else">
+                                                                                                    <a data-id="{!cs.US_WSREMS__Patient__r.Id}" onclick="{!c.navigateToMonthlyPregancyTestPage}" ><img src="{!$Resource.MaciImages + '/img/microscope.png'}" alt="img" style="width: 12px; margin-top: -2px; "></img></a>
+                                                                                                    
+                                                                                                </aura:set>
+                                                                                            </aura:if> 
+                                                                                        </aura:set>
+                                                                                    </aura:if>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a  data-id="{!cs.Id}" onclick="{!c.navigateToPatientDetailPage}"><i class="fa fa-user-circle"></i></a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <aura:if isTrue="{!cs.US_WSREMS__Patient__r.US_WSREMS__Status__c != 'Disenrolled'}">
+                                                                                        <a  data-id="{!cs.Id}" onclick="{!c.navigateToReEnrollPatientPage}" style="pointer-events: none" class="deleteIconNoColor"><img src="{!$Resource.MaciImages + '/img/clipboardGrey.png'}" alt="img" style="width: 30px; margin-top: -4px;margin-right: -12px;margin-left: -10px;" ></img></a>
+                                                                                        <aura:set attribute="else">
+                                                                                            <a  data-id="{!cs.Id}" onclick="{!c.navigateToReEnrollPatientPage}" ><img src="{!$Resource.MaciImages + '/img/clipboard.png'}" alt="img" style="width: 9px; margin-top: -4px;margin-right: 1px; "></img></a>   
+                                                                                        </aura:set>
+                                                                                    </aura:if>
+                                                                                </li>
+
+
+
+                                                                           </td>
+                                                                        </tr> 
+                                                                    </aura:iteration>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tbl-list">
+                                                        <ul>
+                                                            <li>Key: </li>
+                                                            <!---Office Contact Changes-->
+                                                            <li><i class="fa fa-user-md"></i>&nbsp;Prescriber Signature</li>
+                                                            <li><i class="fa fa-user"></i>&nbsp;Patient Signature</li> 
+                                                            <li><img src="{!$Resource.MaciImages + '/img/microscope.png'}" alt="img" style="width: 12px; margin-top: -2px; ">t</img>&nbsp;Monthly Pregnancy Test</li>
+                                                            <li><i class="fa fa-user-circle"></i>&nbsp;Patient Detail</li>
+                                                            <li><img src="{!$Resource.MaciImages + '/img/clipboard.png'}" alt="img" style="width: 9px; margin-top: -2px;margin-right: 1px; "></img>&nbsp;Re-Enroll Patient</li>
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                    <div style=" height: 10px;"></div>
+                                                    <!-- <center>-->
+                                                    <p align="right">
+                                                        
+                                                        <div>
+                                                            <lightning:button
+                                                                              label="Previous"
+                                                                              iconName="utility:chevronleft"
+                                                                              iconPosition="left"
+                                                                              onclick="{!c.onPrev }"
+                                                                              disabled="{! v.currentPageNumber == 1 }" />
+                                                            
+                                                            <span class="slds-var-p-horizontal_x-small">
+                                                                Page {! (v.currentPageNumber) } of {! (v.totalPages) }
+                                                            </span>
+                                                            
+                                                            <lightning:button
+                                                                              label="Next"
+                                                                              iconName="utility:chevronright"
+                                                                              iconPosition="right"
+                                                                              onclick="{!c.onNext }"
+                                                                              disabled="{! v.currentPageNumber == v.totalPages }" />
+                                                        </div>
+                                                        <!-- </Center>-->
+                                                    </p>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-lg-3 cl-right">
+                                    <h5 class="pb-2">New Patient Actions</h5>
+                                    <a class="btn btn-primary-m pull-right w-100 mb-4 px-1" onclick="{!c.navigateToPatientEnrollmentPage}"><img src="{!$Resource.MaciImages + '/img/clipboard-solid.png'}" alt="img" style="width: 8px; margin-top: -2px; "></img> ENROLL A PATIENT</a>
+                                    <!---<h5 class="pb-2">Prescriber Actions</h5>
+                                    <a  onclick="{!c.navigateToManageOfficePage}" class="btn btn-primary-m pull-right w-100 mb-4 px-1" ><img src="{!$Resource.MaciImages + '/img/clipboard-solid.png'}" alt="img" style="width: 8px; margin-top: -2px; "></img> MANAGE OFFICE</a>-->
+                                    <div class="">
+                                        <h5 class="mb-2 fw-bold">Materials for Prescribers</h5>
+                                        
+                                        <ul class="list-group list-dec">
+                                            <aura:iteration items="{!v.resourceList}" var="rc">
+                                                <li class="list-group-item border-top-0">{!rc.label}
+                                                    <a href="{!rc.downloadurl}" shouldstayinownframe="true" title="Download pdf" download="download">
+                                                        <i class="fa fa-download float-end"></i>
+                                                    </a>
+                                                </li>
+                                            </aura:iteration>
+                                            
+                                        </ul>
+                                        <!--<li class="list-group-item border-top-0"><a href="Patient-enrollment">Patient Enrollment Form</a></li>
+                                        <div class="space-md"></div>
+                                        <li class="list-group-item border-top-0"><a href="Patient-enrollment">Change in Reproductive Potential Status and Pre-Pubertal Annual Verification Form</a></li>
+                                        <div class="space-md"></div>
+                                         <li class="list-group-item border-top-0"><a href="Patient-enrollment">Prescriber and Pharmacy Guide</a></li>
+                                        <div class="space-md"></div>
+                                        <li class="list-group-item border-top-0"><a href="prescriberenrollment">Prescriber Enrollment and Agreement Form</a></li>
+                                        <div class="space-md"></div>-->
+                                        <li class="list-group-item border-top-0"><a href="prescriber-faqs">Prescriber FAQs</a></li>
+                                        <div class="space-md"></div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="card-footer border-0 mt-4 py-4">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <aura:if isTrue="{!v.isModalOpen}">
+            <!-- Modal/Popup Box starts here for prescriber Signature-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><center>Send   <b>{!v.caseDetails.US_WSREMS__Patient__r.Name} </b>   to prescriber for signature?</center></p>
+                        
+                        <center>
+						<lightning:button variant="brand"
+                                          label="Yes"
+                                          title="Yes"
+                                          onclick="{!c.SendEmailToPrescriber}"
+                                          class="btn"/>
+                        <lightning:button variant="neutral"
+                                          label="No"
+                                          title="No"
+                                          onclick="{!c.closeModel }"
+                                          class="btn"/>
+                        
+                        </center>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+<aura:if isTrue="{!v.isModalPatientOpen}">
+            <!-- Modal/Popup Box starts here for Patient Signature-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><center>Send enrollment signature notification to  <b>{!v.caseDetails.US_WSREMS__Patient__r.Name} </b>   for signature? </center></p>
+                        
+                        <center>
+						<lightning:button variant="brand"
+                                          label="Yes"
+                                          title="Yes"
+                                          onclick="{!c.SendEmailToPatient}"
+                                          class="btn"/>
+                        <lightning:button variant="neutral"
+                                          label="No"
+                                          title="No"
+                                          onclick="{!c.closeModelPatient }"
+                                          class="btn"/>
+                        
+                        </center>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </section>
+</aura:component>

@@ -1,0 +1,378 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Patient Information Page { Middle context }
+-->
+
+
+<aura:component controller ="SYN_PortalEnrollmentController"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="isOfficeContact" type="Boolean" default="false" />
+    <aura:attribute name="caseId" type="String" />
+    <aura:attribute name="caseRecord" type="Case" />
+    <aura:attribute name="caseEnrolledRecord" type="Case" />
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="pAccount" type="Account" />
+    <aura:attribute name="programId" type="String" default=""/>
+    <aura:attribute name="resourceList" type="List" default=""/>
+    <aura:attribute name="recordTypeDeveloperName" type="String" default=""/>
+    <aura:attribute name="portalRole" type="String" default=""/>
+    <!-- handlter declarion  -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="true" />
+    <aura:attribute name="isEnrolled" type="Boolean" default="true" />
+	<aura:attribute name="phoneNumber" type="String" default=""/>
+      <aura:attribute name="oc" type="Boolean"/>
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navigation"/>
+
+
+    <aura:if isTrue="{! v.isLoading }">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height:140vh;">
+        <div class="container-fluid px-5 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card p-0 border-0 rounded-0 h-100">
+                        <div class="card-header border-0 crd-hdr-m px-0">
+                            <div class="col-lg-12">
+                <div class="heading-top d-flex justify-content-between border-bottom-0"  style="background-color: #EBEBEB">
+                   <div class="col-lg-7 col-sm col-8 text-start">
+                        <aura:if isTrue="{!v.isOfficeContact}">
+                            <div class="row ps-3">
+                                <div class="col-1" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                    </span>
+                                </div>
+                                <div class="col-9 ps-4">
+                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;margin-top:13px;"> 
+                                        <b>Office Contact: </b> {!v.cAccount.Name}
+                                    </h3>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.isOfficeContact}">
+                            <div class="row ps-3" style="margin-left:5px;margin-top:15px;">
+                                <div class="col-1 pe-0" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                    </span>
+                                </div>
+                                <div class="col-1" style="width: 39px;">
+                                    <span class="text-theme">
+                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                    </span>
+                                </div>
+                                <div class="col-9 ps-4">
+                                    <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                        {!v.caseRecord.SYN_Prescriber__r.Name}&nbsp;{!v.caseRecord.SYN_Professional_Designation__c}
+                                    </h3>
+                                </div>
+                            </div>
+                            <aura:set attribute="else">
+                                <div class="row ps-3">
+                                    <div class="col-1 pe-0" style="width: 39px;">
+                                        <span class="text-theme">
+                                            <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                        </span>
+                                    </div>
+                                    <div class="col-1" style="width: 39px;">
+                                        <span class="text-theme">
+                                            <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                        </span>
+                                    </div>
+                                    <div class="col-9 ps-4">
+                                        <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                            {!v.cAccount.Name}&nbsp;{!v.cAccount.SYN_Professional_Designation__c}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                            
+                        <aura:if isTrue="{!v.isOfficeContact}">
+                            <div class="row ps-3" style="position: relative;top: -10px;margin-left:45px;">
+                                <div class="col-1" style="width: 39px;"></div>
+                                <div class="col-9 ps-4">
+                                    <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                        NPI: {!v.caseRecord.US_WSREMS__NPI__c}
+                                    </span>
+                                </div>
+                            </div>
+                            <aura:set attribute="else">
+                                <div class="row ps-3" style="position: relative;top: -10px;">
+                                    <div class="col-1" style="width: 39px;"></div>
+                                    <div class="col-9 ps-4">
+                                        <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                            NPI: {!v.cAccount.US_WSREMS__NPI__c}
+                                        </span>
+                                    </div>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="col-lg-5 col-sm col-4 text-end pe-4">
+                        <span class=" text-muted">Program Status:&nbsp; <span class="text-theme fw-bold">{!v.cAccount.US_WSREMS__Status__c} as of <span name="enrolled-number" id="enrolled-number"><lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></span> <i class="fa fa-check-circle ps-1"></i></span></span>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.isOfficeContact}">
+                    <div class="border-bottom-0 mx-0" style="background-color: #EBEBEB;">
+                        <div class="row px-1">
+                            <div class="col-lg-12 col-sm col-12 text-start" style="margin-left:50px;margin-top:-15px;">
+                            
+                                    <div class="row ps-4">
+                                        <div class="col-1 pe-0" style="width: 39px;">
+                                            <span class="text-theme">
+                                                <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                            </span>
+                                        </div>
+                                        <div class="col-1" style="width: 39px;">
+                                            <span class="text-theme">
+                                                <span class="text-theme">
+                                                    <i class="fa fa-user text-info fs-1" style="position: relative;top: 6px;left: 7.5px;"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="col-9 ps-4">
+                                            <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                {!v.pAccount.Name}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row ps-4" style="position: relative;top: -10px;">
+                                        <div class="col-1  pe-0" style="width: 39px;"></div>
+                                        <div class="col-1" style="width: 39px;"></div>
+                                        <div class="col-9 ps-4">
+                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                <span class="fs-6 text-black-50 fw-bold">Date of Birth: <strong style="color: #011338;"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" /></strong></span>
+                                            </span>
+                                            <br/>
+                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                <span class="fs-6 text-black-50 fw-bold">REMS ID: <strong style="color: #011338;">{!v.pAccount.SYN_Ref_Id__c}</strong></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="border-bottom-0 mx-0" style="background-color: #EBEBEB;">
+                        <div class="row px-1">
+                            <div class="col-lg-12 col-sm col-12 text-start">
+                            
+                                    <div class="row ps-4">
+                                        <div class="col-1 pe-0" style="width: 39px;">
+                                            <span class="text-theme">
+                                                <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                            </span>
+                                        </div>
+                                        <div class="col-1" style="width: 39px;">
+                                            <span class="text-theme">
+                                                <span class="text-theme">
+                                                    <i class="fa fa-user text-info fs-1" style="position: relative;top: 6px;left: 7.5px;"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="col-9 ps-4">
+                                            <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                {!v.pAccount.Name}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row ps-4" style="position: relative;top: -10px;">
+                                        <div class="col-1  pe-0" style="width: 39px;"></div>
+                                        <div class="col-1" style="width: 39px;"></div>
+                                        <div class="col-9 ps-4">
+                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                <span class="fs-6 text-black-50 fw-bold">Date of Birth: <strong style="color: #011338;"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" /></strong></span>
+                                            </span>
+                                            <br/>
+                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                <span class="fs-6 text-black-50 fw-bold">REMS ID: <strong style="color: #011338;">{!v.pAccount.SYN_Ref_Id__c}</strong></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        </div>
+                    </aura:set>
+                </aura:if>  
+            </div>
+                        
+                        </div>
+                        
+                        <div class="card-body px-4 llc-dv">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="col-lg-5 mb-4">
+                                            <h5 class="">Patient Information</h5>
+                                            <div class="pi-list ps-3">
+                                                <li>
+                                                    <i class="fa fa-user text-info fs-4 px-1 customcursor"></i> 
+                                                    <span class="ps-1">{!v.pAccount.Name}</span>
+                                                </li>
+                                                <li>
+                                                    <img src="{!$Resource.MaciImages + '/img/address-card-solid.png'}" alt="img" style=" height:13px;"> </img> 
+                                                    <span>{!v.pAccount.ShippingStreet} <br></br> {!v.pAccount.ShippingCity}, {!v.pAccount.ShippingCountry} {!v.pAccount.ShippingPostalCode}</span>
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-birthday-cake text-theme fs-5"></i>
+                                                    <span><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" /></span> 
+                                                    <i class="fa fa-female text-theme fs-5 ps-4"></i>
+                                                    <span>Female</span>
+                                                </li>
+                                                <li>
+                                                    <img src="{!$Resource.MaciImages + '/img/call.png'}" alt="img" style=" width:15px;"></img>
+                                                    <span style="margin-left:5px">{!v.phoneNumber}</span>
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-envelope fs-5"></i> 
+                                                    <span>{!v.pAccount.US_WSREMS__Email__c}</span>
+                                                </li>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 border-start pi-table mb-sm-5">
+                                            <h5 class="">Patient Events</h5>
+
+                                            <div class="row" style="margin-top: 20px;">
+                                                <div class="col-2 text-center">
+                                                    <p class="py-0 my-0"><img src="{!$Resource.MaciImages + '/img/chat-sm.png'}" alt="img" style=" width:22px;"></img></p>
+                                                </div>
+                                                <div class="col-7">Counseled</div>
+                                                <div class="col-3"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.Counseling_Completion_Date__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                            </div>
+                                            <div class="row" style="margin-top: 20px;">
+                                                <div class="col-2 text-center">
+                                                    <p class="py-0 my-0"><img src="{!$Resource.MaciImages + '/img/microscope.png'}" alt="img" style=" width:20px;"></img></p>
+                                                </div>
+                                                <div class="col-7">Pregnancy Test Confirmed</div>
+                                                <div class="col-3"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.Monthly_Pregnancy_Test_Date__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                            </div>
+                                            <div class="row" style="margin-top: 20px;">
+                                                <div class="col-2 text-center">
+                                                    <p class="py-0 my-0"><i class="fa fa-plus-square text-theme" style="font-size: 20px;"></i></p>
+                                                </div>
+                                                <div class="col-7">Reproductive Potential Status</div>
+                                                <div class="col-3"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.Patient_Reproductive_Status_Date__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                            </div>
+                                            <aura:if isTrue="{!!v.isOfficeContact}">
+                                                <div class="row" style="margin-top: 20px;">
+                                                    <div class="col-2 text-center">
+                                                        <p class="py-0 my-0"><i class="fa fa-heartbeat text-theme" style="font-size: 20px;"></i></p>
+                                                    </div>
+                                                    <div class="col-7">Enrollment Date</div>
+                                                    <div class="col-3"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                                </div> 
+                                                <div class="row" style="margin-top: 12px;">
+                                                    <div class="col-2 text-center">
+                                                        <aura:if isTrue="{!!v.isOfficeContact}">
+                                                            <p class="py-0 my-0"> <i class="fa fa-user-md text-theme" style="font-size: 23px;"></i> </p>
+                                                        </aura:if>
+                                                    </div>
+                                                    <div class="col-7" style="margin-top: 8px;">Prescriber Signature</div>
+                                                    <div class="col-3" style="margin-top: 8px;" ><lightning:formattedDateTime timeZone="GMT" value="{!v.caseEnrolledRecord.SYN_Prescriber_Signature_Date__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                                </div> 
+                                                <div class="row" style="margin-top: 20px;">
+                                                    <div class="col-2 text-center">
+                                                        <aura:if isTrue="{!!v.isOfficeContact}">
+                                                            <p class="py-0 my-0"> <i class="fa fa-user text-theme" style="font-size: 23px;"></i> </p>
+                                                        </aura:if>
+                                                    </div>
+                                                    <div class="col-7">Patient Signature</div>
+                                                    <div class="col-3"><lightning:formattedDateTime timeZone="GMT" value="{!v.caseEnrolledRecord.US_WSREMS__Date__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                                </div> 
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.isOfficeContact}">
+                                                <div class="row" style="margin-top:20px;">
+                                                    <div class="col-2 text-center">
+                                                        <p class="py-0 my-0"><i class="fa fa-heartbeat text-theme" style="font-size: 20px;"></i></p>
+                                                    </div>
+                                                    <div class="col-7">Enrollment Date</div>
+                                                    <div class="col-3"><lightning:formattedDateTime timeZone="GMT" value="{!v.pAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                                </div>  
+                                                <div class="row" style="margin-top: 12px;">
+                                                    <div class="col-2 text-center">
+                                                        <p class="py-0 my-0"> <i class="fa fa-user-md text-theme" style="font-size: 23px;"></i> </p>
+                                                    </div>
+                                                    <div class="col-7" style="margin-top: 8px;">Prescriber Signature</div>
+                                                    <div class="col-3" style="margin-top: 8px;"><lightning:formattedDateTime timeZone="GMT" value="{!v.caseRecord.SYN_Prescriber_Signature_Date__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                                </div>  
+                                                <div class="row" style="margin-top: 20px;">
+                                                    <div class="col-2 text-center">
+                                                        <p class="py-0 my-0"> <i class="fa fa-user text-theme" style="font-size: 23px;"></i> </p>
+                                                    </div>
+                                                    <div class="col-7">Patient Signature</div>
+                                                    <div class="col-3"><lightning:formattedDateTime timeZone="GMT" value="{!v.caseRecord.US_WSREMS__Date__c}" year="numeric" month="numeric" day="numeric" /></div>
+                                                </div>  
+                                            </aura:if>                                               
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 cl-right">
+                                    <h5 class="pb-2 mb-0">Actions</h5>
+                                    
+                                    <aura:if isTrue="{!v.isDisabled}">
+                                        <a data-id="{!v.patientID}" onclick="{!c.navigateToMonthlyPregancyTestPage}" class="btn btn-primary-m pull-right w-100 mb-2 px-1"> <img src="{!$Resource.MaciImages + '/img/microscope-white.png'}" alt="img" style="width: 12px; margin-top: -2px; "> </img> monthly Pregnancy test</a>
+                                        
+                                        <aura:set attribute="else">
+                                            <a  style="pointer-events: none" class="btn btn-primary-m pull-right w-100 mb-2 px-1 text-muted"> <img src="{!$Resource.MaciImages + '/img/microscope-white.png'}" alt="img" style="width: 12px; margin-top: -2px; "> </img> monthly Pregnancy test</a>
+                                            
+                                        </aura:set>
+                                    </aura:if> 
+                                    <aura:if isTrue="{!!v.isOfficeContact}">                                  
+                                        <aura:if isTrue="{!v.pAccount.US_WSREMS__Status__c != 'Pending'}">
+                                            <a class="btn btn-primary-m pull-right w-100 mb-2 px-1" data-id="{!v.patientID}" onclick="{!c.downloadPatientEnrollmentForm}"><i class="fa fa-print" aria-hidden="true"></i> print completed Enrollment form</a>
+                                            <aura:set attribute="else">
+                                                <a style="pointer-events: none" class="btn btn-primary-m pull-right w-100 mb-2 px-1 text-muted" data-id="{!v.patientID}" onclick="{!c.downloadPatientEnrollmentForm}"><i class="fa fa-print" aria-hidden="true"></i> print completed Enrollment form</a>  
+                                            </aura:set>
+                                        </aura:if>
+                                        
+                                        <aura:if isTrue="{!v.pAccount.US_WSREMS__Status__c == 'Enrolled'}">
+                                            <a data-id="{!v.patientID}" onclick="{!c.navigateToProductivePotentialStatusPage}" class="btn btn-primary-m pull-right w-100 mb-2 px-1"><i class="fa fa-plus-square"></i> Reproductive Potential status</a>
+                                            <aura:set attribute="else">
+                                                <a  style="pointer-events: none"  class="btn btn-primary-m pull-right w-100 mb-2 px-1 text-muted"><i class="fa fa-plus-square"></i> Reproductive Potential status</a>                                   
+                                            </aura:set>
+                                        </aura:if> 
+                                        
+                                        <aura:if isTrue="{!v.pAccount.US_WSREMS__Status__c != 'Enrolled'}">
+                                            <a class="btn btn-primary-m pull-right w-100 mb-4 px-1 text-muted" data-id="{!v.patientID}" onclick="{!c.navigateToDisenrollPatientPage}" style="pointer-events: none" ><i class="fa fa-trash"></i> Disenroll Patient</a>
+                                            <aura:set attribute="else">
+                                                <a class="btn btn-primary-m pull-right w-100 mb-4 px-1" data-id="{!v.patientID}" onclick="{!c.navigateToDisenrollPatientPage}"><i class="fa fa-trash"></i> Disenroll Patient</a>
+                                            </aura:set>
+                                        </aura:if>
+                                    </aura:if>
+                                    
+                                    <div class="">
+                                        <h5 class="mb-2 fw-bold">Materials for Prescribers</h5>
+
+                                        <ul class="list-group list-dec">
+                                            <aura:iteration items="{!v.resourceList}" var="rc">
+                                                <li class="list-group-item border-top-0">{!rc.label}
+                                                    <a href="{!rc.downloadurl}" shouldstayinownframe="true" title="Download pdf" download="download">
+                                                        <i class="fa fa-download float-end"></i>
+                                                    </a>
+                                                </li>
+                                            </aura:iteration>
+                                        </ul>
+                                        <li class="list-group-item border-top-0"><a href="prescriber-faqs">Prescriber FAQs</a></li>
+                                        <div class="space-md"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        
+                        <div class="card-footer border-0 mt-4 py-4">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>

@@ -1,0 +1,62 @@
+.required::before {
+    content: "*";
+    color: #ff6666;
+}
+
+.softrequired::before {
+    content: "*";
+    font-weight: bold;
+    color: #80b3ff;
+}
+
+.required {
+    font-weight: normal;
+    color: inherit;
+}
+
+.slds-form-element__icon {
+    display: none;
+}
+
+.slds-form-element__help {
+    display: none;
+}
+
+.colorClass {
+    color: var(--lwc-colorTextError, rgb(194, 57, 52));
+}
+
+.butnClass {
+    width: 10px;
+    height: 25px;
+    padding-right: 9px;
+}
+
+.rating-stars {
+    text-align: right;
+}
+
+.required-star {
+    font-size: 10px;
+    color: #ff6666
+}
+
+.softrequired-star {
+    font-size: 10px;
+    color: #80b3ff;
+}
+
+.spinnerStyles {
+    height: 300vh;
+    width: 100vw;
+    margin-top: 15rem;
+}
+
+.file-name-txt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hidden {
+    display: none;
+}

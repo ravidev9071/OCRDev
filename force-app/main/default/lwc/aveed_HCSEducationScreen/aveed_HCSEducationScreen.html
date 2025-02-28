@@ -1,0 +1,67 @@
+<template>
+
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <div class="slds-p-top_small">
+        <lightning-progress-indicator type="path" variant="base">
+            <lightning-progress-step label="Education Program" value="1" onclick={handleEducationProgram}
+                class="educationProgram"></lightning-progress-step>
+            <lightning-progress-step label="Complete Enrollment" value="2" onclick={handleCompleteEnrollment}
+                class="completeProgram"></lightning-progress-step>
+        </lightning-progress-indicator>
+    </div>
+
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageContainer">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+                        <div data-region-name="content">
+                            <div data-priority="" class="ui-widget">
+                                <div class="slds-text-heading_large">AVEED<sup>&reg;</sup> REMS Education Program
+                                    for Healthcare Settings</div>
+                                <div class="slds-text-heading_medium">This Educational Piece Includes Information
+                                    About:</div>
+                                <ul class="listItemDisc">
+                                    <li>Serious POME reaction and anaphylaxis with AVEED injection</li>
+                                    <li>AVEED REMS requirements to implement in your healthcare setting</li>
+                                    <li>Ordering AVEED</li>
+                                </ul>
+                                <div class="slds-border_top slds-p-vertical_medium"></div>
+                                <div class="slds-text-heading_medium">Review Materials</div>
+                                <div class="slds-grid slds-wrap slds-gutters">
+                                    <div
+                                        class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_12-of-12">
+                                        <p class="slds-m-vertical_medium">You must click on the link to view the&nbsp;
+                                            <span class="docEmphasis">Education Program for Healthcare
+                                                Setting</span>&nbsp;before you can proceed to complete your enrollment.
+                                            The document will open up in a new window for you to view and/or
+                                            download.
+                                        </p>
+                                        <template lwc:if={isDisplayFiles}>
+                                            <div class="resourceItem">
+                                                <div class="resourceName"><a class="docEmphasis"
+                                                        onclick={previewHandler}>{fileTitle}</a>
+                                                    <template lwc:if={showNext}>
+                                                        <span class="resourceCheck" id="IconChecked"><img
+                                                                src={iconCheck}></span>
+                                                    </template>
+                                                </div>
+                                            </div>
+
+                                        </template>
+                                    </div>
+                                </div> <!-- end col  -->
+                            </div> <!-- end row  -->
+                            <div class="slds-border_top slds-m-top_xx-large"></div>
+                            <lightning-button id="BtnReviewNext" disabled={isDisabled}
+                                class="slds-align_absolute-center slds-m-top_large brand-button" variant="brand"
+                                label="Next" onclick={handleNext}></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

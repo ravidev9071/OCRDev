@@ -1,0 +1,32 @@
+<apex:component controller="GenerateAffiliationRelatedDetails" access="global">
+    <apex:attribute name="recordId" type="String" description="ID of the account record" assignTo="{!accountRecordId}" access="global"/>
+    <apex:attribute name="showHCPInfos" type="Boolean" description="Retrieve HCP Infos" assignTo="{!retrieveHCPInfos}" access="global"/>
+    <apex:attribute name="showHCSInfos" type="Boolean" description="Retrieve HCS Infos" assignTo="{!retrieveHCSInfos}" access="global"/>
+    <apex:attribute name="programTypeValue" type="String" description="Type of the program" assignTo="{!programType}" access="global" default="REMS"/>
+    
+    <apex:outputPanel rendered="{!retrieveHCPInfos}">
+        <!--Show all the HCP's related details-->
+        <ul>
+            <apex:repeat value="{!accountDetails}" var="acc">
+                <li>{!acc.FirstName} {!acc.LastName}</li>
+            </apex:repeat>
+        </ul>
+    </apex:outputPanel>
+    
+    <apex:outputPanel rendered="{!retrieveHCSInfos}">
+        <!--Show all the HCS's related details-->
+        <ul>
+            <apex:repeat value="{!accountDetails}" var="acc">
+                <!--Show all the HCS's related details for REMS Program-->
+                <apex:outputPanel rendered="{!IF(programType=='REMS',TRUE,FALSE)}">
+                    <li>{!acc.Name}. REMS Enrollment ID: <b>{!acc.US_WSREMS__REMS_ID__c}</b></li>
+                </apex:outputPanel>
+                <!--Show all the HCS's related details for MDP Program-->
+                <apex:outputPanel rendered="{!IF(programType=='MDP',TRUE,FALSE)}">
+                    <li>{!acc.Name}. Enrollment ID: <b>{!acc.US_WSREMS__REMS_ID__c}</b></li>
+                </apex:outputPanel>           
+            </apex:repeat>
+        </ul>
+    </apex:outputPanel>
+    
+</apex:component>

@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="showScreen" type="Boolean"/>
+    <aura:attribute name="screenName" type="String" default=""/>
+</aura:event>

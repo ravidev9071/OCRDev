@@ -1,0 +1,9 @@
+.THIS .slds-is-open {
+    --sds-c-accordion-summary-color-background: rgb(211, 210, 211);
+  }
+
+  .THIS .treegridCls{
+    border-style: ridge;
+    border-color: rgb(229, 229, 229);
+    border-width: thin;
+}

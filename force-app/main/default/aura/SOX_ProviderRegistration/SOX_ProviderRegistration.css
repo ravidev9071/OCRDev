@@ -1,0 +1,63 @@
+.THIS h3{
+    background: #ed8b00;
+    padding: 10px 0;
+    font-size: 140%;
+    font-weight: 300;
+    text-align: left;
+    color: #fff;
+    margin: -16px -16px 16px -16px;
+}
+.THIS h2{
+    background: #ed8b00;
+    padding: 10px 0;
+    font-size: 140%;
+    font-weight: 300;
+    text-align: center;
+    color: #fff;
+    margin: -16px -16px 16px -16px;
+}
+.THIS fieldset{
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    margin: 0px 0px 10px 0px;
+    border: 1px solid #305A72;
+    padding: 20px;
+}
+.THIS .message{
+    font-size: .75rem;
+    padding-left: 4px;
+    line-height: 0.75;
+    color: var(--lwc-colorTextError,rgb(194, 57, 52));
+        }
+        .THIS .rclass{
+            text-align: left !important;
+        }
+        .THIS .rclass1{
+            background: #FFFFFF;
+            padding: 10px 0;
+            font-size: 90%;
+            font-weight: 200;
+            text-align: left !important;
+            color: #000000;
+            margin: -16px -16px 16px -16px;
+        }
+        .THIS .rspanclass1{
+            background: #FFFFFF;
+            padding: 10px 0;
+            font-size: 90%;
+            font-weight: 150;
+            text-align: left !important;
+            color: #FFFFFF;
+        }
+        
+        .THIS .btnFont{
+            background-color: #2949AD;
+            color: #FFFFFF ;           
+        }
+        .THIS .headerFont{
+            font-family:Sans-serif;
+            font-size: 14px;
+            color:black;
+            
+        }

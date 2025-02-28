@@ -1,0 +1,404 @@
+<template>
+    <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+		  
+        <div class="pageTitle prescriber">
+          <div class="slds-text-heading_medium">TRYVIO<sup>™</sup> REMS</div>
+          <div class="slds-text-heading_large"><img class="iconImg" src={iconPrescriber}> Prescribers</div>	
+      </div>
+      <div class="pageContainer">
+          <div class="pageContent">
+      
+
+              <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                  <div class="slds-col--padded comm-content-header comm-layout-column">
+                  
+                 <!--      <lightning-progress-indicator current-step="5" type="path" variant="base">
+                        <lightning-progress-step label="Register" value="1" variant="complete"></lightning-progress-step>
+                        <lightning-progress-step label="Review Materials" value="2" variant="complete"></lightning-progress-step>
+                        
+                        <lightning-progress-step label="Knowledge Assessment" value="3" variant="active"></lightning-progress-step>
+                        <lightning-progress-step label="Complete Enrollment" value="4" variant="incomplete"></lightning-progress-step>
+                        <lightning-progress-step class="slds-hide" label="Review Materials" value="5" variant="complete"></lightning-progress-step>
+                      </lightning-progress-indicator> -->
+                      <lightning-progress-indicator>
+                        <div class="slds-path">
+                            <div class="slds-grid slds-path__track">
+                                <div class="slds-grid slds-path__scroller-container justifyCenter">
+                                    <div role="application" class="slds-path__scroller">
+                                        <div class="slds-path__scroller_inner">
+                                            <ul role="listbox" aria-orientation="horizontal" class="slds-path__nav">
+                                                <slot>
+                                                     <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+                                                        <a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+                                                             <span class="slds-path__stage">
+                                                                  <lightning-primitive-icon>
+                                                                  <img src="files/check.svg" style="width: 25px">
+                                                                    <!--	<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>   -->
+                                                                  </lightning-primitive-icon>
+                                                                  <span class="slds-assistive-text">Register</span>
+                                                             </span>
+                                                             <span class="slds-path__title">Register</span>
+                                                        </a>
+                                                     </lightning-progress-step>															
+                                                     <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+                                                        <a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+                                                             <span class="slds-path__stage">
+                                                                  <lightning-primitive-icon>
+                                                                <img src="files/check.svg" style="width: 25px">
+                                                                    <!--	<svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>  -->
+                                                                 </lightning-primitive-icon>
+                                                                  <span class="slds-assistive-text">Review Materials</span>
+                                                             </span>
+                                                             <span class="slds-path__title">Review Materials</span>
+                                                        </a>
+                                                     </lightning-progress-step>
+                                                    <lightning-progress-step role="listitem" class="slds-path__item slds-is-current">
+                                                        <a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+                                                             <span class="slds-path__stage">
+                                                                  <lightning-primitive-icon>
+                                                                        <svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+                                                                  </lightning-primitive-icon>
+                                                             </span>
+                                                             <span class="slds-path__title">Knowledge Assessment</span>
+                                                        </a>
+                                                     </lightning-progress-step>   
+                                                     <lightning-progress-step role="listitem" class="slds-path__item slds-is-incomplete">
+                                                        <a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+                                                             <span class="slds-path__stage">
+                                                                <lightning-primitive-icon>
+                                                                    <svg focusable="false" data-key="check" aria-hidden="true" class="slds-icon slds-icon_x-small"><use xlink:href="/slds/2.13.7//assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg>
+                                                                </lightning-primitive-icon>
+                                                            </span>
+                                                            <span class="slds-path__title">Complete Enrollment</span>
+                                                        </a>
+                                                    </lightning-progress-step>
+                                                </slot>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-progress-indicator>	
+                      <p class="slds-text-heading_medium">John Smith<br>NPI: 1234567890</p>
+                      <div class="slds-border_bottom "></div>
+
+                      <div data-region-name="content">
+                          <div data-priority=""  class="ui-widget">
+                              <div class="slds-text-heading_large">TRYVIO REMS Knowledge Assessment</div>	
+                              <p>You did not achieve 100% on the TRYVIO REMS Prescriber Knowledge Assessment.
+                                  <br><br>You have <span class="kaAttemptsRemaining">1</span> attempt(s) remaining to retake and pass the knowledge assessment.
+                              <br><br>Click "Retake Assessment" to retake the assessment and submit those questions you answered incorrectly.
+                              <br>Click "Review Materials" to return and review resources.  
+                              </p>
+                              <div class="slds-p-top_large"></div>
+                              <div class="ka">
+                              <div class="frmContainer">
+                              
+                                  <div class="kaQuestion kaQuestionIncorrect">
+                                      <div class="kaHeading">Question 1</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>To prescribe TRYVIO, prescribers do not need to be certified in the TRYVIO REMS. </legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q1-1" value="Q1-1" name="Q1" checked disabled />
+                                                  <label class="slds-radio__label" for="Q1-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">a.</span> True</span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q1-2" value="Q1-2" disabled name="Q1"/>
+                                                  <label class="slds-radio__label" for="Q1-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">b.</span> False</span>
+                                                  </label>
+                                               </span>
+                                                   
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->
+                                  
+                                  <div class="slds-hide">
+                                  <div class="kaQuestion kaQuestionCorrect">
+                                      <div class="kaHeading">Question 2</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>Which of the following is true for TRYVIO™? </legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q2-1" value="Q2-1" disabled name="Q2"/>
+                                                  <label class="slds-radio__label" for="Q2-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">a.</span>TRYVIO™ is indicated for the treatment of hypertension, to lower blood pressure in patients who are not adequately controlled on other drugs. </span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q2-2" value="Q2-2" disabled name="Q2"/>
+                                                  <label class="slds-radio__label" for="Q2-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">b.</span>TRYVIO™ is contraindicated for pregnancy and hypersensitivity.</span>
+                                                  </label>
+                                               </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q2-3" value="Q2-3" disabled name="Q2"/>
+                                                  <label class="slds-radio__label" for="Q2-3">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">c.</span>TRYVIO™ carries a risk of embryo-fetal toxicity.</span>
+                                                  </label>
+                                               </span>	
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q2-4" value="Q2-4" disabled checked name="Q2"/>
+                                                  <label class="slds-radio__label" for="Q2-4">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">d.</span>All of the above.</span>
+                                                  </label>
+                                               </span>														 
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->		
+                                  
+                                  <div class="kaQuestion kaQuestionCorrect">
+                                      <div class="kaHeading">Question 3</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>Based on the mechanism of action, TRYVIO™ has a risk of embryo-fetal toxicity as early as which trimester during pregnancy? </legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q3-1" value="Q3-1" disabled name="Q3"/>
+                                                  <label class="slds-radio__label" for="Q3-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">a.</span>Only during the third trimester.</span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q3-2" value="Q3-2" disabled name="Q3"/>
+                                                  <label class="slds-radio__label" for="Q3-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">b.</span>Only during the second trimester. </span>
+                                                  </label>
+                                               </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q3-3" value="Q3-3" disabled  checked name="Q3"/>
+                                                  <label class="slds-radio__label" for="Q3-3">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">c.</span>During the first trimester, even before a patient knows they are pregnant. </span>
+                                                  </label>
+                                               </span>	
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q3-4" value="Q3-4" disabled name="Q3"/>
+                                                  <label class="slds-radio__label" for="Q3-4">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">d.</span>None of the above. </span>
+                                                  </label>
+                                               </span>														 
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->											
+
+
+                                  <div class="kaQuestion kaQuestionCorrect">
+                                      <div class="kaHeading">Question 4</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>A patient should inform their prescriber immediately if they suspect they are pregnant.  </legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q4-1" value="Q4-1" disabled checked name="Q4"/>
+                                                  <label class="slds-radio__label" for="Q4-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">a.</span>True</span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q4-2" value="Q4-2" disabled name="Q4"/>
+                                                  <label class="slds-radio__label" for="Q4-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">b.</span>False</span>
+                                                  </label>
+                                               </span>
+                                               
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->	
+                                  
+
+                                  <div class="kaQuestion kaQuestionCorrect">
+                                      <div class="kaHeading">Question 5</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>Patients who can become pregnant should continue to take a pregnancy test for one month after treatment. </legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q5-1" value="Q5-1" disabled checked name="Q5"/>
+                                                  <label class="slds-radio__label" for="Q5-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">a.</span>True</span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q5-2" value="Q5-2" disabled name="Q5"/>
+                                                  <label class="slds-radio__label" for="Q5-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">b.</span>False</span>
+                                                  </label>
+                                               </span>
+                                           
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->				
+
+                                  <div class="kaQuestion kaQuestionCorrect">
+                                      <div class="kaHeading">Question 6</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>Before treatment with TRYVIO™, prescribers must inform patients who can become pregnant.</legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q6-1" value="Q6-1" disabled name="Q6"/>
+                                                  <label class="slds-radio__label" for="Q6-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">a.</span>To report a missing menstrual period or any other suspected pregnancy to their healthcare provider. </span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q6-2" value="Q6-2" disabled name="Q6"/>
+                                                  <label class="slds-radio__label" for="Q6-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">b.</span>To have a pregnancy test before and monthly during treatment. </span>
+                                                  </label>
+                                               </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q6-3" value="Q6-3" disabled name="Q6"/>
+                                                  <label class="slds-radio__label" for="Q6-3">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">c.</span>About the acceptable contraception and medical options in the event of unprotected sex or known contraceptive failure. </span>
+                                                  </label>
+                                               </span>	
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q6-4" value="Q6-4" disabled checked name="Q6"/>
+                                                  <label class="slds-radio__label" for="Q6-4">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label"><span class="kaChoice">d.</span>All of the above. </span>
+                                                  </label>
+                                               </span>	
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->	
+                                  
+                                  <div class="kaQuestion kaQuestionCorrect">
+                                      <div class="kaHeading">Question 7</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>Prescribers must report pregnancies of patients exposed to TRYVIO™ to the REMS. </legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q7-1" value="Q7-1" disabled checked name="Q7"/>
+                                                  <label class="slds-radio__label" for="Q7-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label">True</span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q7-2" value="Q7-2" disabled name="Q7"/>
+                                                  <label class="slds-radio__label" for="Q7-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label">False</span>
+                                                  </label>
+                                               </span>
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->		
+                                  
+                                  <div class="kaQuestion kaQuestionCorrect">
+                                      <div class="kaHeading">Question 8</div>
+                                      <fieldset class="slds-form-element">
+                                          <legend class="slds-form-element__legend slds-form-element__label">
+                                              <abbr class="slds-required" title="required">*</abbr>Prior to initiating treatment with TRYVIO™, a prescriber must assess a patient’s reproductive status.</legend>
+                                          <div class="slds-form-element__control">
+                                              <span class="slds-radio">
+                                                  <input type="radio" id="Q8-1" value="Q8-1" disabled checked name="Q8"/>
+                                                  <label class="slds-radio__label" for="Q8-1">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label">True</span>
+                                                  </label>
+                                              </span>
+                                               <span class="slds-radio">
+                                                  <input type="radio" id="Q8-2" value="Q8-2" disabled name="Q8"/>
+                                                  <label class="slds-radio__label" for="Q8-2">
+                                                            <span class="slds-radio_faux"></span>
+                                                            <span class="slds-form-element__label">False</span>
+                                                  </label>
+                                               </span>
+                                          </div>
+                                      </fieldset>
+                                  </div>	
+                                  <!-- end question   -->		
+
+                                      
+                                  
+
+</div>  <!-- end hide  -->									
+                                                                      
+                                  
+                              <div class="slds-border_top slds-m-top_xx-large"></div>
+                              <div class="slds-align_absolute-center">
+                                <lightning-button label="Review Materials" variant="base"
+                                                  class="slds-m-top_large slds-m-right_medium white-button" onclick={navigateToReviewMaterials}>
+                                </lightning-button>
+                                <lightning-button label="Retake Assessment" variant="brand"
+                                                  class="slds-m-top_large" onclick={navigateToRetakeAssessment}>
+                                </lightning-button>
+                            </div>
+                                  
+
+                              </div> <!-- end frmContainer  -->
+                              </div> <!-- end KA   -->
+
+
+                              
+          
+                          </div> <!-- end layout   -->
+                      </div>		
+  
+                  </div> <!-- end SF   -->
+              </div> <!-- end pageContent   -->
+      </div> <!-- end pageContainer   -->
+
+          </div>  <!-- end main   -->
+                  
+
+
+         <!-- <div class="footer siteFooter" aria-hidden="false">
+              <div data-region-name="themeFooter">
+                  <div data-priority="" class="ui-widget">
+                      <div class="" data-aura-class="forceCommunityRichText forceCommunityRichTextInline">
+                          <div dir="ltr"  class="uiOutputRichText" data-aura-class="uiOutputRichText">
+                                   
+                   COMMON FOOTER   
+                  <script src="files/contentFooter.js"></script> 									
+
+                          </div>								 
+                        </div>
+
+                      </div>
+                  </div>
+              </div>
+                   
+                   
+          </div>-->
+      </div>
+        
+<!-- <script src="files/customNav.js"></script>	
+<script>
+  $("#Prescriber").addClass("active");
+</script> -->
+</template>

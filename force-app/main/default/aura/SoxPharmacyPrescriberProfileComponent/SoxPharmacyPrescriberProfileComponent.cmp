@@ -1,0 +1,404 @@
+<aura:component controller="PharmacyPrescriberProfileController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute type="Boolean" name="isEdit" default="false"/>
+    <aura:attribute type="Boolean" name="isChangedValue" default="false"/>
+    <aura:attribute type="Boolean" name="isEmailChangedValue" default="false"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="userDetails" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <!--<aura:attribute name="RecordTypeId" type="String" access="public" default="0123C000000Zz8RQAS"/>-->
+    <aura:attribute name="communityName" type="String"/>
+    <aura:attribute name="fields" type="List" 
+                    default="['LastName',FirstName]"/>
+    <aura:attribute type="String" name="recTypeId"/>
+    
+    <aura:attribute name="options" type="List" default="AL,AR,AS,AZ,CT,DC,DE,GA,GU,HI,IA,ID,IL,IN,KS,KY,LA,MA,MD,ME,MI,MN,MO,MP,MS,MT,NC,ND,NE,NH,NJ,NM,NV,NY,OH,OK,OR,PA,PR,RI,SC,SD,TN,TX,UT,VA,VI,VT,WA,WI,WV,WY"/>
+    <aura:attribute name="selectedValue" type="String"/>
+    <aura:html tag="style">
+        .toastMessage.forceActionsText{
+        white-space : pre-line !important;
+        }
+    </aura:html>
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" class="slds-is-relative;z-index:9999"/>
+    </aura:if>
+    <aura:if isTrue="{!v.recordId}">
+        <force:recordData aura:id="recordLoader"
+                          recordId="{!v.recordId}"
+                          targetFields="{!v.userDetails}"
+                          targetError="{!v.recordLoadError}"
+                          recordUpdated="{!c.handleRecordUpdated}"
+                          layoutType="FULL"
+                          mode="EDIT"
+                          fields="Profile.Name,ContactId,Contact.AccountId,Contact.Account.FirstName,Contact.Account.MiddleName,Contact.Account.SYN_Credentials__c,
+                                  Contact.Account.LastName,Contact.Account.SYN_Professional_Designation__c,Contact.Account.SYN_Ext__c,
+                                  Contact.Account.US_WSREMS__DEA__c,Contact.Account.US_WSREMS__NPI__c,Contact.Account.Phone,Contact.Account.US_WSREMS__Email__c,
+                                  Contact.Account.Fax,Contact.Account.US_WSREMS__SLN__c,Contact.Account.ShippingCity,Contact.Account.ShippingState,
+                                  Contact.Account.ShippingCountry,Contact.Account.ShippingPostalCode,Contact.Account.ShippingStreet,
+                                  Contact.Account.SYN_Ref_Id__c,Contact.Account.Date_Enrolled__c,Contact.Account.Phone,Contact.Account.US_WSREMS__Preferred_Contact_Method__c,Contact.Account.US_WSREMS__Channel__c"
+                          />
+    </aura:if>
+    <lightning:card  title= "{!(v.userDetails.Contact.Account.FirstName)+' '+ (v.userDetails.Contact.Account.LastName)}">
+        
+        <aura:set attribute="actions">
+            <lightning:button label="Edit" onclick="{!c.openModel}"/>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            For any information on this screen that you are unable to update, please contact the Sodium Oxybate REMS at 1-833-769-7367.
+            <!-- this is for Edit Form  -->
+            <aura:if isTrue="{!v.isEdit}">
+                <aura:if isTrue="{!v.userDetails}">
+                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                                X
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <div class="slds-modal__header">
+                                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Edit Profile</h1>
+                                For any information on this screen that you are unable to update, please contact the Sodium Oxybate REMS at 1-833-769-7367.
+                            </div>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <lightning:recordEditForm objectApiName="Account" aura:id="accForm"  onsubmit="{!c.updatePersonAccountrec}" recordTypeId="{!v.recTypeId}" >
+                                    <div class="c-container">
+                                        <lightning:layout >
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="SYN_Ref_Id__c" value="{!v.userDetails.Contact.Account.SYN_Ref_Id__c}" onchange="{!c.checkAnyChange}"/>
+                                            </lightning:layoutItem>
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="Date_Enrolled__c" value="{!v.userDetails.Contact.Account.Date_Enrolled__c}" disabled="true" onchange="{!c.checkAnyChange}"/>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                        <lightning:layout >
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <aura:if isTrue="{!v.communityName == 'Pharmacyportal'}">
+                                                    <lightning:inputField fieldName="FirstName" aura:id="validfield" value="{!v.userDetails.Contact.Account.FirstName}" maxlength="20" messageWhenTooLong="Please Enter only 20 charecters"  onchange="{!c.checkAnyChange}" required="true"/>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.communityName != 'Pharmacyportal'}">
+                                                    <lightning:inputField fieldName="FirstName"  aura:id="validfield" value="{!v.userDetails.Contact.Account.FirstName}" disabled="true" />
+                                                </aura:if>
+                                            </lightning:layoutItem>
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="MiddleName" value="{!v.userDetails.Contact.Account.MiddleName}" onchange="{!c.checkAnyChange}"/>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                        <lightning:layout>
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <aura:if isTrue="{!v.communityName != 'Pharmacyportal'}">
+                                                    <lightning:inputField fieldName="LastName" value="{!v.userDetails.Contact.Account.LastName}" disabled="true" onchange="{!c.checkAnyChange}"/>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.communityName == 'Pharmacyportal'}">
+                                                    <lightning:inputField fieldName="LastName" value="{!v.userDetails.Contact.Account.LastName}" onchange="{!c.checkAnyChange}" required="true" />
+                                                    
+                                                </aura:if>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                        <lightning:layout>
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="SYN_Professional_Designation__c" value="{!v.userDetails.Contact.Account.SYN_Professional_Designation__c}" onchange="{!c.checkAnyChange}" required="true"/>
+                                            </lightning:layoutItem>
+                                            <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    <lightning:inputField fieldName="US_WSREMS__DEA__c" value="{!v.userDetails.Contact.Account.US_WSREMS__DEA__c}" disabled="true" onchange="{!c.checkAnyChange}"/>
+                                                </lightning:layoutItem>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.communityName == 'Pharmacyportal'}">
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    <lightning:inputField fieldName="SYN_Credentials__c" value="{!v.userDetails.Contact.Account.SYN_Credentials__c}" onchange="{!c.checkAnyChange}" required="true"/>
+                                                </lightning:layoutItem>
+                                            </aura:if>
+                                            
+                                        </lightning:layout>
+                                        <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                            <lightning:layout >
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    <lightning:inputField fieldName="US_WSREMS__NPI__c" value="{!v.userDetails.Contact.Account.US_WSREMS__NPI__c}" disabled="true" onchange="{!c.checkAnyChange}"/>
+                                                </lightning:layoutItem>
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    <lightning:inputField fieldName="US_WSREMS__SLN__c" value="{!v.userDetails.Contact.Account.US_WSREMS__SLN__c}" disabled="true" onchange="{!c.checkAnyChange}"/>
+                                                </lightning:layoutItem>
+                                            </lightning:layout>
+                                            
+                                            <lightning:layout >
+                                                <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                                    <lightning:layoutItem  size="6" padding="around-small">
+                                                        <div class="slds-form" >
+                                                            <div class="slds-form-element slds-form-element__label">
+                                                                <label class="slds-form-element__label" for="shippingPostalCode"><span style="color:red">*</span>Address</label>
+                                                            </div>
+                                                            <lightning:inputField fieldName="ShippingStreet" value="{!v.userDetails.Contact.Account.ShippingStreet}" variant="label-hidden" onchange="{!c.checkAnyChange}" required="true"/>
+                                                        </div>
+                                                    </lightning:layoutItem>
+                                                </aura:if>
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    <div class="slds-form">
+                                                        <div class="slds-form-element slds-form-element__label">
+                                                            <label class="slds-form-element__label" for="shippingCity"><span style="color:red">*</span>City</label>
+                                                        </div>
+                                                        <lightning:inputField fieldName="ShippingCity" value="{!v.userDetails.Contact.Account.ShippingCity}" variant="label-hidden" onchange="{!c.checkAnyChange}" required="true"/>
+                                                    </div>
+                                                </lightning:layoutItem>
+                                                
+                                            </lightning:layout>
+                                            <lightning:layout >
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    
+                                                    <div class="slds-form">
+                                                        
+                                                        <!-- <label class="slds-form-element__label" for="shippingState">State</label>-->
+                                                        
+                                                        <!-- <lightning:inputField fieldName="State__c" value="{!v.userDetails.Contact.Account.ShippingState}" variant="label-hidden"/>  -->
+                                                        <lightning:select name="select" aura:id ="state" label="State" value="{!v.userDetails.Contact.Account.ShippingState}" onchange="{!c.checkAnyChange}" required="true">
+                                                            <aura:iteration items="{!v.options}" var="opt">
+                                                                <option text="{!opt}" selected="{!v.selectedValue}"></option>
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                    </div>
+                                                </lightning:layoutItem>
+                                                
+                                                <lightning:layoutItem  size="6" padding="around-small">                                        
+                                                    <div class="slds-form">
+                                                        <div class="slds-form-element slds-form-element__label">
+                                                            <label class="slds-form-element__label" for="shippingPostalCode"><span style="color:red">*</span>Zip</label>
+                                                        </div>
+                                                        <lightning:inputField fieldName="ShippingPostalCode" value="{!v.userDetails.Contact.Account.ShippingPostalCode}" variant="label-hidden" onchange="{!c.checkAnyChange}" required="true"/>
+                                                    </div>
+                                                </lightning:layoutItem>
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    
+                                                </lightning:layoutItem>
+                                            </lightning:layout>
+                                        </aura:if>
+                                        <lightning:layout >
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="Phone" value="{!v.userDetails.Contact.Account.Phone}" onchange="{!c.checkAnyChange}" required="true"/>
+                                            </lightning:layoutItem>
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="SYN_Ext__c" value="{!v.userDetails.Contact.Account.SYN_Ext__c}" onchange="{!c.checkAnyChange}" />
+                                            </lightning:layoutItem>
+                                            <!--     <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:inputField fieldName="US_WSREMS__Email__c" value="{!v.userDetails.Contact.Account.US_WSREMS__Email__c}"/>
+                                </lightning:layoutItem> -->
+                                        </lightning:layout>
+                                        <lightning:layout>
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="US_WSREMS__Email__c" value="{!v.userDetails.Contact.Account.US_WSREMS__Email__c}" onchange="{!c.checkEmailChanged}" required="true"/>
+                                            </lightning:layoutItem>
+                                            <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    <lightning:inputField fieldName="Fax" value="{!v.userDetails.Contact.Account.Fax}" onchange="{!c.checkAnyChange}" required="true"/>
+                                                </lightning:layoutItem>
+                                            </aura:if>
+                                        </lightning:layout>
+                                        <lightning:layout>
+                                            <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                                <lightning:layoutItem  size="6" padding="around-small">
+                                                    <lightning:inputField fieldName="US_WSREMS__Preferred_Contact_Method__c" value="{!v.userDetails.Contact.Account.US_WSREMS__Preferred_Contact_Method__c}" onchange="{!c.checkAnyChange}" required="true"/>
+                                                </lightning:layoutItem> 
+                                            </aura:if>
+                                            <lightning:layoutItem  size="6" padding="around-small">
+                                                <lightning:inputField fieldName="Id" value="{!v.userDetails.Contact.AccountId}" class="slds-hide"/>
+                                            </lightning:layoutItem> 
+                                        </lightning:layout>
+                                        <!-- <lightning:layout>
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                     <lightning:inputField fieldName="SYN_Ext__c" value="{!v.userDetails.Contact.Account.SYN_Ext__c}"/>
+                                </lightning:layoutItem>
+                            </lightning:layout>  -->
+                                    </div>
+                                    <!--  <div class="slds-align_absolute-center" >
+                            <lightning:button variant="brand" type="submit" name="Save" label="Save"  />
+                        </div>  -->
+                                    <div class="slds-modal__footer">
+                                        <lightning:button variant="brand"  name="cancel" label="Cancel" onclick="{!c.closeModel}" />
+                                        <lightning:button variant="brand" type="submit" name="Save" label="Save"  />
+                                        
+                                    </div>
+                                </lightning:recordEditForm>
+                                
+                            </div>
+                            
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                    
+                    
+                    
+                </aura:if>
+            </aura:if>
+            <!-- this is for read only form -->
+            <aura:if isTrue="{!!v.isEdit}">
+                <aura:if isTrue="{!v.userDetails}">
+                    <lightning:recordViewForm objectApiName="Account" aura:id="accreadonlyForm" recordId="{!v.userDetails.Contact.AccountId}">
+                        <lightning:messages />
+                        <div class="c-container">
+                            <lightning:layout >
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="SYN_Ref_Id__c"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="Date_Enrolled__c"/>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                            <lightning:layout >
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="FirstName"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="MiddleName"/>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                            <lightning:layout>
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="LastName"/>
+                                </lightning:layoutItem>
+                                
+                            </lightning:layout>
+                            <lightning:layout>
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="SYN_Professional_Designation__c"/>
+                                </lightning:layoutItem>
+                                <aura:if isTrue="{!v.communityName == 'Pharmacyportal'}">
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <lightning:outputField fieldName="SYN_Credentials__c"/>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                                <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <lightning:outputField fieldName="US_WSREMS__DEA__c"/>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                                
+                            </lightning:layout>
+                            
+                            <!-- this logic is only for prescriber  -->
+                            <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                <lightning:layout >
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <lightning:outputField fieldName="US_WSREMS__NPI__c"/>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <lightning:outputField fieldName="US_WSREMS__SLN__c"/>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                                
+                                <lightning:layout >
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <div class="slds-form">
+                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                <label class="slds-form-element__label" for="shippingPostalCode">Address</label>
+                                                <div class="slds-form-element__control">
+                                                    <lightning:outputField id="shippingStreet" fieldName="ShippingStreet" variant="label-hidden"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <div class="slds-form">
+                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                <label class="slds-form-element__label" for="shippingCity">City</label>
+                                                <div class="slds-form-element__control">
+                                                    <lightning:outputField id="shippingCity" fieldName="ShippingCity" variant="label-hidden"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                                <lightning:layout >
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <div class="slds-form">
+                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                <label class="slds-form-element__label" for="shippingState">State</label>
+                                                <div class="slds-form-element__control">
+                                                    <lightning:outputField id="shippingState" fieldName="ShippingState" variant="label-hidden"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <div class="slds-form">
+                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                <label class="slds-form-element__label" for="shippingPostalCode">Zip</label>
+                                                <div class="slds-form-element__control">
+                                                    <lightning:outputField id="shippingPostalCode" fieldName="ShippingPostalCode" variant="label-hidden"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </aura:if>
+                            <lightning:layout >
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <div class="slds-form">
+                                        <div class="slds-form-element slds-form-element_horizontal">
+                                            <label class="slds-form-element__label" for="Phone">Phone</label>
+                                            <div class="slds-form-element__control">
+                                                <lightning:outputField id="Phone" fieldName="Phone" variant="label-hidden"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning:layoutItem>
+                                <!-- <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="Phone"/>
+                                </lightning:layoutItem> -->
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="SYN_Ext__c"/>
+                                </lightning:layoutItem>
+                                
+                            </lightning:layout>
+                            <lightning:layout>
+                                <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="US_WSREMS__Email__c"/>
+                                </lightning:layoutItem>
+                                
+                                <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                    <!-- <lightning:layoutItem  size="6" padding="around-small">
+                                        <lightning:outputField fieldName="Fax"/>
+                                    </lightning:layoutItem>  -->
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <div class="slds-form">
+                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                <label class="slds-form-element__label" for="Fax">Fax</label>
+                                                <div class="slds-form-element__control">
+                                                    <lightning:outputField id="Phone" fieldName="Fax" variant="label-hidden"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                                <!--  <lightning:layoutItem  size="6" padding="around-small">
+                                    <lightning:outputField fieldName="US_WSREMS__Preferred_Contact_Method__c"/>
+                                 </lightning:layoutItem> -->
+                            </lightning:layout>
+                            
+                            <lightning:layout>
+                                <aura:if isTrue="{!v.communityName == 'SOXPrescriberPortal'}">
+                                    <lightning:layoutItem  size="6" padding="around-small">
+                                        <lightning:outputField fieldName="US_WSREMS__Preferred_Contact_Method__c"/>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                            </lightning:layout> 
+                        </div>
+                        <!-- <div class="slds-align_absolute-center" >
+                            <lightning:button variant="brand" type="submit" name="Save" label="Save"  />
+                        </div>  -->
+                    </lightning:recordViewForm>
+                    
+                </aura:if>
+            </aura:if>   
+        </p>
+    </lightning:card>
+    
+    
+    
+    
+    <aura:if isTrue="{!not(empty(v.recordLoadError))}">
+        <div>
+            {!v.recordLoadError}</div>
+    </aura:if>
+</aura:component>

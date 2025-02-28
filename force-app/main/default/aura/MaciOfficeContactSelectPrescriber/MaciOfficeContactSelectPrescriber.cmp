@@ -1,0 +1,74 @@
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="prescribers" type="String[]" default="[]"/>
+    <aura:attribute name="selectedPrescriber" type="String"/>
+    <aura:attribute name="prescriberName" type="String" default=""/>
+    <aura:attribute name="prescriberNPI" type="String" default=""/>
+    <aura:registerEvent name="ShowOCPatientEnrollmentScreens" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:registerEvent name="PrescriberDetails" type="c:MaciPrescriber_ShowPatientEnrollmentScreen"/>
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;">
+        <div class="section-content container-fluid px-5">
+                <div class="col-lg-12">
+                    <div class="card h-100 p-0 rounded-0 border-0">
+                        <div class="card-header border-0 crd-hdr-m px-0" style="background-color: #EBEBEB;">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-12">
+                                    <div class="heading-top mx-0 d-flex justify-content-between border-bottom-0"
+                                        style="margin: 0px 4px;background-color: #EBEBEB">
+                                        <div class="col-lg-7 col-sm col-6 text-start">
+                                            
+                                            <div class="row ps-3">
+                                                <div class="col-1" style="width: 39px;">
+                                                    <span class="text-theme">
+                                                        <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="col-9 ps-4">
+                                                    <h3 class="mb-0 fs-3" style="margin-top: 12px;"> 
+                                                        Office Contact : {!v.cAccount.Name}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                            
+                                        </div>
+                                        <div class="col-lg-5 text-end pe-4">
+                                            <span class="fs-6 text-muted">Program Status:&nbsp;
+                                                <span class="text-theme fw-bold">Enrolled as of
+                                                    <span name="enrolled-number" id="enrolled-number">
+                                                        <lightning:formattedDateTime timeZone="GMT" value="{!v.cAccount.Date_Enrolled__c}" year="numeric"
+                                                month="numeric" day="numeric" />
+                                                    </span>
+                                                    &nbsp; <i class="fa fa-check-circle"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-7" style="margin-top:-10px">
+                                    <h3 class="heading mb-0 fs-3 fw-lighter" style="padding-left: 35px !important;"> <img src="/resource/MaciImages/img/arrow-up.png" alt=""  style="margin-top: -25px;width:28px;"></img> <i class="fa fa-file-text ps-3 pe-2"></i> Patient Enrollment</h3>
+
+                                </div>
+                                <div class="col-lg-5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pl-table p-4 pb-1 bg-white" style="height:33vw;padding-bottom: 2vw !important;">
+                    <h5 class="text-theme"><b>Select a Prescriber:</b></h5>
+                    <lightning:combobox name="prescriber" style="width:30%; margin-top:-20px;" value="{!v.selectedPrescriber}" placeholder="Select Prescriber" options="{!v.prescribers}" onchange="{!c.handleChange }"/>
+                </div>
+                <div class="card border-0 pt-3" style="border-radius: 0px;">
+                    <div class="card-footer border-0 crd-hdr-m" >
+                        <a class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">START <i class="fa fa-arrow-right" ></i></a>
+                    </div>
+                </div>
+                
+        </div>
+       
+    </section>
+</aura:component>

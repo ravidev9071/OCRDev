@@ -1,0 +1,23 @@
+.dummy{
+	color : black;
+}
+.calloutContent {
+	background: #002e5d;
+    background-image: url('/resource/xiaflex_bgBlue') !important;
+	background-repeat: no-repeat;
+	font-family: "Roboto Condensed", Roboto, sans-serif;
+}
+.displayblock {
+	    display: block;
+}
+
+.custompath-css {
+	--lwc-colorBackgroundPathComplete:#002e5d;
+	--lwc-colorBackgroundPathCompleteHover:#002e5d;
+  }
+  .signBoxWidth{
+	width: 45%;
+  }
+   .frmAttestations{
+	border: none !important;
+  }

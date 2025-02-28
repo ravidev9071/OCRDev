@@ -1,0 +1,8 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="PatientID" type="String" />
+    <div>
+       <!-- <p class="pad"> Please click <a href="{!$Label.c.PharmacyPortalURL}"><span style="color:blue;"><u>here</u></span></a> to return to your dashboard. </p>-->
+         <p class="pad"> Please click <a href="{! 
+                $Label.c.PharmacyPortalURL + '/rdaflow?PatientID=' + (v.PatientID) }" target="_blank"><span style="color:blue;"><u>here</u></span></a> to return to your dashboard. </p>
+    </div>
+</aura:component>

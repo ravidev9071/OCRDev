@@ -1,0 +1,603 @@
+<template>
+    <template lwc:if={isloading}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+      </template>
+      <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+      </template>
+    <div class="slds-card__body  slds-card__body_inner" part="body">
+        <p>Due to the risk of embryo-fetal toxicity for patients who can
+            become pregnant, prescribers who wish to prescribe
+            TRYVIO<sup>&trade;</sup> must be certified in the
+            TRYVIO<sup>&trade;</sup> REMS (Risk Evaluation and
+            Mitigation Strategy) and agree to comply with the
+            requirements of the program.
+            In order to receive samples of TRYVIO<sup>&trade;</sup>,
+            prescribers must be enrolled in the TRYVIO<sup>&trade;</sup>
+            REMS and agree to comply with the requirements for a Sample
+            Dispensing Prescriber, detailed in the agreement below.
+            <br><br>To enroll and become certified in the
+            TRYVIO<sup>&trade;</sup> REMS, complete and submit this form
+            below.
+            <br><br>Contact the TRYVIO<sup>&trade;</sup> REMS at <span
+                class="txtNoWrap">1-866-429-8964</span> with any
+            questions.</p>
+        <p class="frmInstructions"><span
+                class="slds-text-body_medium"><span
+                    class="slds-text-color_destructive">*</span> fields
+                required</span></p>
+        <slot>
+            <div class="slds-m-around_small">
+                <div class="slds-text-heading_medium">Prescriber
+                    Information</div>
+
+                <div class="slds-grid   slds-wrap slds-gutters">
+                    <div
+                        class="slds-col slds-medium-size_9-of-12 slds-large-size_6-of-12">
+                        <lightning-input
+                            class="search slds-form-element" name="npi"
+                            lwc-66unc5l95ad-host="" label=" National Provider
+                            Identifier (NPI) #" value={npiRecord.npi} required disabled={npidisable} onchange={handleChange}> 
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-m-bottom_small"></div>
+                <div id="PrescriberDetails" class="slds-show">
+                    <div class="slds-m-bottom_small"></div>
+                    <div class="slds-grid slds-wrap   slds-gutters ">
+                        <div class="slds-col slds-medium-size_4-of-12">
+                            <lightning-input  class="search validate slds-form-element" value={npiRecord.firstName} label=" First Name" name="firstName" type="text" variant="standard"
+                                    required="true" onchange={handleChange}>
+												</lightning-input>
+                        </div>
+                        <div class="slds-col slds-medium-size_2-of-12">
+                            <lightning-input  class="search validate slds-form-element" value={npiRecord.middleName} label=" MI"
+                            name="mi" type="text" variant="standard" onchange={handleChange}>
+                                        </lightning-input>
+                        </div>
+                        <div class="slds-col slds-medium-size_4-of-12">
+                            <lightning-input  class="search validate slds-form-element" value={npiRecord.lastName} label=" Last Name"
+                                    name="lastName" type="text" variant="standard"
+                                    required="true" onchange={handleChange}>
+												</lightning-input>
+                        </div>
+                    </div> <!-- end row  -->
+                    <div  class="slds-grid  slds-wrap  slds-gutters">
+                        <div  class="slds-col slds-size_1-of-1">
+                            <div class="slds-form-element__control">
+                                <lightning-radio-group class="search validate"
+                                                        name="specialty" options={specialityOptions}
+                                                        value={npiRecord.specialty} type="radio"
+                                                        label=" Specialty (please select one)" onchange={handleChange} required>
+                                                    </lightning-radio-group></div>
+                            <!--<fieldset class="slds-form-element">
+                                <legend class="slds-form-element__legend slds-form-element__label">
+                                     <abbr class="slds-required" title="required">* </abbr>Specialty (please select one)</legend>
+                                <div class="slds-form-element__control">
+                                    <lightning-radio-group class="search validate"
+                                                            name="specialty" options={specialityOptions}
+                                                            value={arRecord.credentials} type="radio"
+                                                            label=" Specialty (please select one)" onchange={handleChange} required>
+                                                        </lightning-radio-group>
+                                   <span class="slds-radio">
+                                        <input type="radio" id="radio-181" value="Nephrology" name="specialty" onclick={handleChange}/>
+                                        <label class="slds-radio__label" for="radio-181">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">Nephrology</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="radio-182" value="Cardiology" name="specialty" onclick={handleChange}/> 
+                                        <label class="slds-radio__label" for="radio-182">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">Cardiology</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="radio-183" value="Endocrinology" name="specialty" onclick={handleChange}/> 
+                                        <label class="slds-radio__label" for="radio-183">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">Endocrinology</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="radio-184" value="Internist" name="specialty" onclick={handleChange}/> 
+                                        <label class="slds-radio__label" for="radio-184">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">Internist</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="radio-187" value="other" name="specialty" onclick={handleChange} />
+                                        <label class="slds-radio__label" for="radio-187">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">Other (please specify)</span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </fieldset>-->
+                        </div>
+                      </div> <!-- end row  -->
+                      <div if:true={showOtherSpecialty}>
+                        <div  class="slds-grid   slds-wrap slds-gutters">
+                            <div  class="slds-col slds-medium-size_4-of-12">
+                                <lightning-input  class="search validate slds-form-element" value={npiRecord.otherSpecialty} label="Specialty Other" name="SpecialityOther"
+                                onchange={handleChange} required="true">
+                                </lightning-input>
+                          </div>
+                      
+                     </div>
+                     </div> <!-- end Specialty Other   -->
+                     <div  class="slds-grid  slds-wrap  slds-gutters">
+                        <div  class="slds-col slds-size_1-of-1">
+                            <div class="slds-form-element__control">
+                                <lightning-radio-group class="search validate"
+                                                        name="PD" options={pdOptions}
+                                                        value={npiRecord.proffDesig} type="radio"
+                                                        label=" Professional Designation" onchange={handleChange} required>
+                                                    </lightning-radio-group>
+                            </div>
+                            <!--<fieldset class="slds-form-element">
+                                <legend class="slds-form-element__legend slds-form-element__label">
+                                     <abbr class="slds-required" title="required">* </abbr>Professional Designation</legend>
+                                <div class="slds-form-element__control">
+                                    <span class="slds-radio">
+                                        <input type="radio" id="rb-1" value="MD" name="PD" onclick={handleChange}/>
+                                        <label class="slds-radio__label" for="rb-1">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">MD</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="rb-2" value="DO" name="PD" onclick={handleChange}/> 
+                                        <label class="slds-radio__label" for="rb-2">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">DO</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="rb-3" value="PA" name="PD" onclick={handleChange}/> 
+                                        <label class="slds-radio__label" for="rb-3">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">PA</span>
+                                        </label>
+                                    </span>
+                                    <span class="slds-radio">
+                                        <input type="radio" id="rb-4" value="NP" name="PD" onclick={handleChange}/> 
+                                        <label class="slds-radio__label" for="rb-4">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">NP</span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </fieldset>-->
+                        </div>
+                      </div>
+                     <!-- end row  -->
+                    <div class="slds-border_top slds-m-bottom_small">
+                    </div>
+                    <div class="slds-grid  slds-wrap  slds-gutters">
+                        <div class="slds-col slds-medium-size_8-of-12">
+                            <lightning-input class="search validate slds-form-element"
+                                                        label=" Office Practice / Academic Institution" value={npiRecord.officePractice}
+                                                        onchange={handleChange} name="OfficePractice"></lightning-input>
+                        </div>
+                    </div>
+                    <div
+                        class="slds-grid  slds-wrap slds-wrap slds-gutters">
+                        <div
+                            class="slds-col slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-input class="slds-form-element"
+                                                        label=" Address Line 1" value={npiRecord.address1} required
+                                                        onchange={handleChange} name="address1"></lightning-input>
+                        </div>
+                        <div
+                            class="slds-col  slds-wrap slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-input class="slds-form-element"
+                                                        label="Address Line 2" value={npiRecord.address2}
+                                                        onchange={handleChange} name="address2"></lightning-input>
+                        </div>
+                    </div> <!-- end row  -->
+                    <div class="slds-grid  slds-wrap  slds-gutters">
+                        <div class="slds-col slds-medium-size_4-of-12">
+                            <lightning-input class="search validate slds-form-element"
+                                                        label=" City" value={npiRecord.city} required
+                                                        onchange={handleChange} name="city"></lightning-input>
+                        </div>
+                        <div
+                            class="slds-col  slds-medium-size_4-of-12  slds-large-size_2-of-12">
+                            <lightning-combobox class="search slds-form-element" label=" State"
+                                                        required options={stateOptions} value={npiRecord.state}
+                                                        onchange={handleChange} name="state"></lightning-combobox>
+                        </div>
+                        <div
+                            class="slds-col slds-medium-size_4-of-12  slds-large-size_2-of-12">
+                            <lightning-input class="search validate slds-form-element"
+                                                        label=" Zip Code" value={npiRecord.zip} required maxlength="10" minlength="5"
+                                                        onchange={handleChange} name="zip"></lightning-input>
+                        </div>
+                    </div> <!-- end row  -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_8-of-12">
+                            <div class="slds-form-element__control">
+                                <lightning-radio-group class="search validate"
+                                    name="preferredContact" options={preferredContactOptions}
+                                    value={npiRecord.preferredContactMethod} type="radio" required
+                                    label=" Preferred Method of Contact"
+                                    onchange={handleChange}></lightning-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="txtInstructions">By selecting to receive
+                        texts, you agree to receive text messages from
+                        the TRYVIO<sup>&trade;</sup> REMS.</p>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-medium-size_4-of-12">
+                                <lightning-input class="search validate slds-form-element"
+                                    label=" Office Phone" value={npiRecord.offPhone} required
+                                    onchange={handleChange} name="oPhone"
+                                    variant="standard" maxlength="10" minlength="10"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-medium-size_2-of-12">
+                                <lightning-input class="search validate slds-form-element"
+                                    label="Ext" value={npiRecord.ext} name="ext"
+                                    max-length="10" onchange={handleChange}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-large-size_4-of-12">
+                                <lightning-input class="search validate slds-form-element"
+                                    label=" Email" required value={npiRecord.email}
+                                    onchange={handleChange} name="email" disabled={emaildisable}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-large-size_4-of-12">
+                                    <lightning-input class="search validate slds-form-element"
+                                    label=" Mobile Phone" value={npiRecord.phone}
+                                    onchange={handleChange} name="phoneM"
+                                    variant="standard" maxlength="10" minlength="10"></lightning-input>
+<!-- Removed Mobile Phone as Required and Added by Rishitha  -->
+                            </div>
+                            <div class="slds-col slds-medium-size_4-of-12">
+                                <lightning-input class="search validate slds-form-element"
+                                    label=" Fax" required value={npiRecord.fax}
+                                    onchange={handleChange} name="fax"
+                                    type="tel" variant="standard" maxlength="10" minlength="10"></lightning-input>
+                            </div>
+                        </div> <!-- end row  -->
+                    <div class="slds-m-around_small"></div>
+                    <div class="slds-border_top slds-m-bottom_small">
+                    </div>
+                    <div class="slds-text-heading_medium">Office Contact
+                        Information</div>
+                        <div class="slds-grid slds-wrap   slds-gutters ">
+                            <div class="slds-col slds-large-size_6-of-12">
+                                <div class="frmGroupContainer">
+                                    <div class="frmHdgSubSection">Primary
+                                        Contact</div>
+                                    <div
+                                        class="slds-grid slds-wrap   slds-gutters ">
+                                        <div
+                                            class="slds-col slds-col--padded slds-medium-size_6-of-12">
+                                            <lightning-input  class="search validate slds-form-element" value={npiRecord.pfirstname} label=" First Name" name="pfirstName" type="text" variant="standard"
+                                            onchange={handleChange}>
+                                                    </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input  class="search validate slds-form-element" value={npiRecord.plastname} label=" Last Name"
+                                        name="plastName" type="text" variant="standard"
+                                        onchange={handleChange}>
+                                                    </lightning-input>
+                                        </div>
+                                    </div> <!-- end row  -->
+                                    <div
+                                        class="slds-grid   slds-wrap slds-gutters">
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input class="search validate slds-form-element"
+                                                            label=" Office Phone" value={npiRecord.pophone}
+                                                            onchange={handleChange} name="primaryoPhone"
+                                                            type="tel" variant="standard" maxlength="10" minlength="10"></lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input class="search validate slds-form-element"
+                                                            label="Ext"  value={npiRecord.pext} name="pext"
+                                                            max-length="10" onchange={handleChange} ></lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input class="search validate slds-form-element"
+                                                            label=" Email" value={npiRecord.pemail}
+                                                            onchange={handleChange} name="pemail"></lightning-input>
+                                        </div>
+                                    </div>
+                                </div> <!-- end row  -->
+                            </div> <!-- end col  -->
+                            <div class="slds-col slds-large-size_6-of-12">
+                                <div class="frmGroupContainer">
+                                    <div class="frmHdgSubSection">Secondary
+                                        Contact</div>
+                                    <div
+                                        class="slds-grid slds-wrap   slds-gutters ">
+                                        <div
+                                            class="slds-col slds-col--padded slds-medium-size_6-of-12">
+                                            <lightning-input  class="search validate slds-form-element" value={npiRecord.sfirstname} label=" First Name" name="sfirstName" type="text" variant="standard"
+                                            onchange={handleChange}>
+                                                    </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input  class="search validate slds-form-element" value={npiRecord.slastname} label=" Last Name" name="slastName" type="text" variant="standard"
+                                            onchange={handleChange}>
+                                                    </lightning-input>
+                                        </div>
+                                    </div> <!-- end row  -->
+                                    <div
+                                        class="slds-grid   slds-wrap slds-gutters">
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input class="search validate slds-form-element"
+                                                            label=" Office Phone" value={npiRecord.sophone}
+                                                            onchange={handleChange} name="secondaryoPhone"
+                                                            type="tel" variant="standard" maxlength="10" minlength="10"></lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input class="search validate slds-form-element"
+                                                            label="Ext" value={npiRecord.sext} name="sext"
+                                                            max-length="10" onchange={handleChange} ></lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-col slds-medium-size_6-of-12">
+                                            <lightning-input class="search validate slds-form-element"
+                                                            label=" Email" value={npiRecord.semail}
+                                                            onchange={handleChange} name="semail"></lightning-input>
+                                        </div>
+                                    </div>
+                                </div> <!-- end row  -->
+    
+                            </div> <!-- end col  -->
+                        </div> <!-- end row  -->
+
+                    <div class="slds-border_top slds-m-bottom_small">
+                    </div>
+
+                    <div class="frmAttestations">
+                        <div class="slds-text-heading_medium">
+                            TRYVIO<sup>&trade;</sup> REMS Prescriber
+                            Agreement</div>
+
+                        <p>By signing this Prescriber Enrollment Form,
+                            you signify your understanding of the risks
+                            of TRYVIO<sup>&trade;</sup> treatment and
+                            your obligation as a
+                            TRYVIO<sup>&trade;</sup> prescriber to
+                            educate your patients about the
+                            TRYVIO<sup>&trade;</sup> REMS (Risk
+                            Evaluation and Mitigation Strategy) and
+                            report any pregnancies to the REMS at
+                            1-866-429-8964. Specifically, you attest to
+                            the following:</b></p>
+                        <div class="slds-m-vertical_medium"></div>
+                        <p class="txtEmphasis">By signing this form, I
+                            agree to become certified and comply with
+                            the following TRYVIO<sup>&trade;</sup> REMS
+                            requirements:</p>
+                        <ul class="listItemDisc">
+                            <li>Review the drug’s Prescribing
+                                Information.</li>
+                            <li>Review the <span
+                                    class="docEmphasis">Prescriber and
+                                    Pharmacy Guide</span>.</li>
+                            <li>Enroll in the REMS by successfully
+                                completing the Prescriber Knowledge
+                                Assessment and completing the <span
+                                    class="docEmphasis">Prescriber
+                                    Enrollment Form</span> and
+                                submitting both to the
+                                TRYVIO<sup>&trade;</sup> REMS.</li>
+                        </ul>
+
+                        <p class="txtEmphasis">Before treatment
+                            initiation (First Dose), I must:</p>
+                        <ul class="listItemDisc">
+                            <li>Assess the patient’s reproductive status
+                                using the definitions in the <span
+                                    class="docEmphasis">Prescriber and
+                                    Pharmacy Guide</span>.</li>
+                            <li>For patients who can become pregnant,
+                                counsel the patient
+                                <ul>
+                                    <li>On the risk of embryo-fetal
+                                        toxicity</li>
+                                    <li>To use acceptable contraception,
+                                        pregnancy testing
+                                        recommendations before
+                                        initiating treatment, monthly
+                                        during treatment, and one month
+                                        after discontinuing treatment.
+                                    </li>
+                                    <li>The use of emergency
+                                        contraception using the <span
+                                            class="docEmphasis">Patient
+                                            Guide</span>.</li>
+                                </ul>
+                            </li>
+                            <li>Provide a copy of the <span
+                                    class="docEmphasis">Patient
+                                    Guide</span> to the patient.</li>
+                        </ul>
+
+                        <p class="txtEmphasis">At all times, I must:</p>
+                        <ul class="listItemDisc">
+                            <li>Report pregnancies to the REMS at <span
+                                    class="txtNoWrap">1-866-429-8964.</span>
+                            </li>
+                        </ul>
+
+                        <div class="containerEmphasis">
+                            <div class="slds-text-heading_medium">
+                                Prescriber REMS Agreement for Those Who
+                                Dispense Samples</div>
+                            <div class="slds-m-vertical_medium"></div>
+                            <p class="txtEmphasis">To dispense
+                                TRYVIO<sup>&trade;</sup> samples, I
+                                must:</p>
+                            <ul class="listItemDisc">
+                                <li>Follow the requirements of a
+                                    prescriber that I have attested to
+                                    on the <span
+                                        class="docEmphasis">Prescriber
+                                        Enrollment Form</span> above.
+                                </li>
+                                <li>Train all relevant staff involved in
+                                    dispensing on the REMS requirements,
+                                    procedures, and REMS materials.</li>
+                                <li>Establish processes and procedures
+                                    for providing the <span
+                                        class="docEmphasis">Risk of
+                                        Birth Defects with TRYVIO </span>
+                                    to each patient each time
+                                    TRYVIO<sup>&trade;</sup> is
+                                    dispensed.</li>
+                                <li>Provide the patient with the <span
+                                        class="docEmphasis">Risk of
+                                        Birth Defects with TRYVIO </span>
+                                    with each dispense.</li>
+                                <li>Report dispenses to the
+                                    TRYVIO<sup>&trade;</sup> REMS by
+                                    calling 1-866-429-8964.</li>
+                                <li>Not distribute, transfer, loan, or
+                                    sell TRYVIO<sup>&trade;</sup>.</li>
+                                <li>Maintain records of all processes
+                                    and procedures including compliance
+                                    with those processes and procedures.
+                                </li>
+                                <li>Comply with audits carried out by
+                                    Idorsia Pharmaceuticals Ltd or a
+                                    third party acting on behalf of
+                                    Idorsia Pharmaceuticals Ltd to
+                                    ensure that all processes and
+                                    procedures are in place and are
+                                    being followed.</li>
+                            </ul>
+
+                            <div class="slds-m-vertical_x-large"></div>
+                            <div class="infoContainer">
+                                <div class="slds-form-element">
+                                    <div
+                                        class="slds-form-element__control">
+                                        <div class="slds-checkbox">
+                                            <!--<abbr class="slds-required" title="required">*</abbr>   -->
+                                            <input type="checkbox"
+                                                name="sig"
+                                                id="cbSigDispense"
+                                                onclick={handleChange}>
+                                            <label
+                                                class="slds-checkbox__label"
+                                                for="cbSigDispense">
+                                                <span
+                                                    class="slds-checkbox_faux"></span>
+                                                <span
+                                                    class="slds-form-element__label">Check
+                                                    the box at the left
+                                                    and provide your
+                                                    signature below to
+                                                    indicate that you
+                                                    wish to be a Sample
+                                                    Dispensing
+                                                    Prescriber in the
+                                                    TRYVIO<sup>&trade;</sup>&nbsp;REMS and will comply
+                                                    with the above
+                                                    requirements.</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div if:true={showOthersignpad}>
+                                <!--<div id="SigDispense" class="slds-hide">-->
+                                    <div
+                                        class="slds-text-heading_medium txtEmphasis">
+                                        Sample Dispensing Prescriber
+                                        Signature</div>
+                                    <p class="txtInstructions">Use your
+                                        mouse or touchpad to sign.</p>
+                                    <div class="slds-p-bottom_large">
+                                    </div>
+                                    <div>
+                                        <!--<canvas class="sigPad"
+                                            id="myCanvas2"></canvas>-->
+                                            <c-tryvio-sign-pad id="dispensersign" onsignimagedata={handledispenseSignatureCompleted}>
+                                            </c-tryvio-sign-pad>
+                                    </div>
+                                <!--</div>--> <!-- end SigDispense   -->
+                                </div>
+                            </div> <!-- infoContainer  --> 
+
+                        </div> <!-- end containerEmphasis  -->
+                    </div> <!-- end attestations   -->
+
+
+
+                    <div class="slds-p-bottom_large"></div>
+                    <div class="slds-border_top slds-m-bottom_small">
+                    </div>
+                    <div class="infoContainer">
+                        <div
+                            class="slds-text-heading_medium txtEmphasis">
+                            Prescriber Signature</div>
+                        <p class="txtInstructions">Use your mouse or
+                            touchpad to sign.</p>
+                        <!-- <div class="slds-p-bottom_large"></div> -->
+                            <!--<c-xiaflex_canvas-signature message="greetings" onsignimagedata={signImagedata} wd="500" hg="150"></c-xiaflex_canvas-signature>-->
+                            <c-tryvio-sign-pad2 id="prescribersign" onsignimagedata={handleSignatureCompleted}>
+                            </c-tryvio-sign-pad2>
+                    </div>
+                    <div class="slds-card__footer" part="footer">
+                        <slot name="footer">
+                            <div slot="footer">
+                                <button title="Cancel" type="button" onclick={handleCancel}
+                                    class="slds-button slds-button_text-destructive">Cancel</button>
+                                <button id="resetSign"
+                                    class="slds-button slds-m-top_large slds-button_outline-brand"
+                                    onclick={handleClearSignature} aria-disabled="false"
+                                    type="button" part="button" kx-scope="button-brand"
+                                    kx-type="ripple">Clear Signature</button>
+
+                                <button onclick={handleSubmit}
+                                    class="slds-button slds-m-top_large slds-button_brand"
+                                    aria-disabled="false" type="button" part="button"
+                                    kx-scope="button-brand" kx-type="ripple">Submit</button>
+                            </div>
+                        </slot>
+                    </div>
+
+                </div> <!-- end prescriber details  -->
+            </div>
+        </slot>
+        <!-- Confirmation modal-->
+        <lightning-card if:true={showModal}>
+            <div class="slds-container_small">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Cancel</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <p>Are you sure you want to cancel Enrollment Process?</p>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button variant="neutral" class="slds-m-right_large" name="cancel" label="No" title="No"
+                                onclick={handleCancelModal}></lightning-button>
+                            <lightning-button variant="brand" name="confirm" label="Yes" title="Yes"
+                                onclick={handleCancelModal}></lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </lightning-card>
+    </div>
+</template>

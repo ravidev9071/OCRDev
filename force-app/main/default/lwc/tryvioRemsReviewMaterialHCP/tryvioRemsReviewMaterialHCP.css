@@ -1,0 +1,3 @@
+.lighting-step .slds-is-current:after { 
+    background-position: top right, left, bottom left !important;
+}

@@ -1,0 +1,243 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="REMSPagelayoutConfigComponentController" >
+    
+    <aura:method name="getPGlayout" action="{!c.getLayoutName}" access="public">
+        <aura:attribute name="pageLayoutName" type="String" default="" />
+        <aura:attribute name="objectName" type="String" default="" />
+        <aura:attribute name="recordtypeId" type="String" default="" />
+        <aura:attribute name="parentLookupObj" type="String" default="" />
+        <aura:attribute name="programName" type="String" default="" />
+        <aura:attribute name="calledByFaxTransfo" type="Boolean" default="false" />
+		<aura:attribute name="ProgramRecordType" type="String" default="" />
+    </aura:method>
+    <lightning:navigation aura:id="navService"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <aura:attribute name="pageLayoutName" type="String" default="" />
+    <aura:attribute name="objectName" type="String" default="" />
+    <aura:attribute name="recordtypeId" type="String" default="" />
+    <aura:attribute name="parentLookupObj" type="String" default="" />
+    <aura:attribute name="layoutSections" type="List" />
+    <aura:attribute name="requestorType" type="String" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="activeSections" type="List"  />
+    <aura:attribute name="ShowSaveBtn" type="Boolean" default="false" />
+    <aura:attribute name="ButtonName" type="String" />
+    <aura:attribute name="displayDupCheck" type="Boolean" default="false" />
+    <aura:attribute name="accountData" type="list" />
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="DupButton" type="Boolean" default="true" />
+    <aura:attribute name="DEAvalidation" type="Boolean" />
+    <aura:attribute name="currentDate" type="Date"/>
+    <aura:attribute name="programName" type="String" default="" />
+    <aura:attribute name="lookupfields" type="String" default="" />
+    <aura:attribute name="calledByFaxTransfo" type="Boolean" default="false" />
+    <aura:attribute name="Status" type="String" default="Initiated" />
+    <aura:attribute name="ProgramRecordType" type="String" default="" />
+    <aura:registerEvent name="ShowRecordTypeOption" type="c:ShowAccountVsCaseRecordTypeSelection"/>
+    
+    <lightning:messageChannel type="US_WSREMS__ReviewDocumentChannel__c"  aura:id="REMSReviewDocumentChannel"/>
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+        .slds-card-wrapper{
+        padding: 0rem !important;
+        }
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        
+        }
+        .slds-modal__container {
+        min-width: 60vw;
+        }
+    </aura:html>  
+    
+    <aura:if isTrue="{!v.showSpinner}" >
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    
+    <aura:if isTrue="{!v.displayDupCheck}">
+        
+        <div>
+            <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeModel}">
+                            <lightning:icon class="DupCheck_close_btn" iconName="utility:close" size="small" variant="neutral"/>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium alignLeft" id="modal-content-id-1">
+                        <lightning:datatable
+                                             keyField="id"
+                                             data="{! v.accountData }"
+                                             columns="{! v.columns }"
+                                             hideCheckboxColumn="true"
+                                             onrowaction="{! c.handleRowAction }"/>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <div class="slds-align_absolute-center" style="height:5rem">
+                            <lightning:button label="Cancel"
+                                              variant="brand" class="slds-m-top--medium"
+                                              onclick="{!c.closeModel}"/>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+    
+    
+    
+    
+    <lightning:card >
+        <p class="slds-p-horizontal_small">
+            
+            <lightning:spinner aura:id="mySpinner" alternativeText="Loading" size="small" class="slds-hide" />
+            
+            <div class="slds-card-wrapper">
+                <header>
+                    <h3 class="slds-text-heading_medium slds-text-align_center my-text_clr">
+                        <b> {!v.requestorType} </b>
+                    </h3>
+                </header>
+                <article class="slds-card slds-card_boundary">
+                    <div class="slds-card__body slds-card__body_inner">  
+                        
+                        <lightning:recordEditForm aura:id="myform"  onsubmit="{!c.handleSubmit}" recordTypeId  ="{!v.recordtypeId}"
+                                                  onsuccess="{!c.handleSuccess}" objectApiName="Case"  onerror = "{!c.handleError}" >
+                            <div class="slds-align_absolute-center" >
+                                <lightning:layout verticalAlign="center" >
+                                    
+                                    <lightning:layoutItem padding="around-medium">
+                                        <div>
+                                            <aura:if isTrue="{!v.DupButton}">
+                                                <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="DupCheck"
+                                                                  label="Check for Duplicates" onclick="{!c.CheckForDuplicates}" />
+                                            </aura:if>
+                                            
+                                            <lightning:button class="slds-m-top_small" variant="brand" 
+                                                              label="Cancel" onclick="{!c.handlePrevious}" />
+                                            <aura:if isTrue="{!v.ShowSaveBtn}" >
+                                                <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="Save"
+                                                                  label="Save" onclick="{!c.CheckForDuplicates}" />
+                                            </aura:if>                  
+                                            
+                                            
+                                        </div>
+                                        
+                                    </lightning:layoutItem>
+                                    
+                                </lightning:layout>
+                            </div>
+                            <div aura:id="lightning_message">
+                                <lightning:messages  />
+                            </div>
+                           
+                            <lightning:accordion aura:id="accordion"  allowMultipleSectionsOpen="true"  activeSectionName="{! v.activeSections }" >
+                                
+                                <aura:iteration items="{!v.layoutSections}" var="section">
+                                    <div class="slds-section slds-is-open">
+                                        
+                                        <lightning:accordionSection name="{!section.label}" label="{!section.label}">
+                                            
+                                            <div class="slds-section__content">
+                                                <lightning:layout multipleRows="{!section.totalColumns > 1 }">
+                                                    
+                                                    <aura:iteration items="{!section.lstFields}" var="field">
+                                                        
+                                                        <lightning:layoutItem size="{! 12/section.totalColumns }" flexibility="auto">
+                                                        <aura:if isTrue="{!and(field.isDatefield, !(field.isReadOnly)) }">
+                                                            <lightning:input aura:id="dateid" label="{!field.fieldlabel}" name="{!field.fieldName}" type="date"  dateStyle="short" onchange="{!c.handleFieldChange}"
+                                                            messageWhenBadInput="Your entry does not match the allowed DOB format MM/DD/YYYY"/>
+                                                            <aura:set attribute="else">
+                                                            <aura:if isTrue="{!(!field.isReadOnly)}">
+                                                                <aura:if isTrue="{!or(field.fieldName == 'US_WSREMS__Prescribing_Institution__c' , field.fieldName == 'US_WSREMS__Facility__c', field.fieldName == 'SYN_Prescriber__c'  )}">
+                                                                    
+                                                                    <lightning:inputField aura:id="InputField" fieldName="{!field.fieldName}"
+                                                                                          required="{!field.isRequired}" onchange="{!c.handleFieldChange}"/>
+                                                                    
+                                                                    <aura:set attribute="else">
+                                                                        
+                                                                        <lightning:inputField aura:id="InputField" fieldName="{!field.fieldName}"
+                                                                                              required="{!field.isRequired}" onchange="{!c.handleFieldChange}"/>
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                                
+                                                                <aura:set attribute="else">
+                                                                            <aura:if isTrue="{!field.fieldName == 'Program_Record_Type_Control__c'}">
+                                                                                <lightning:inputField aura:id="inputField" fieldName="Program_Record_Type_Control__c"
+                                                                                                      value="{!v.ProgramRecordType}" disabled="{!field.isReadOnly}" class="slds-hide" />
+                                                                                <aura:set attribute="else">
+                                                                                    <aura:if isTrue="{!field.fieldName == 'US_WSREMS__Status__c'}">
+                                                                                        <lightning:inputField aura:id="inputField" fieldName="US_WSREMS__Status__c" value="{!v.Status}"
+                                                                                                              disabled="{!field.isReadOnly}" />
+                                                                                        <aura:set attribute="else">
+                                                                                            <lightning:inputField aura:id="InputField" fieldName="{!field.fieldName}" readonly="true" />
+                                                                                        </aura:set>
+                                                                                    </aura:if>
+                                                                                </aura:set>
+                                                                            </aura:if>
+                                                                  </aura:set>
+                                                            </aura:if>
+                                                        </aura:set>
+                                                        </aura:if>
+                                                        </lightning:layoutItem>
+                                                        
+                                                    </aura:iteration>
+                                                </lightning:layout>
+                                            </div>
+                                        </lightning:accordionSection>    
+                                    </div>
+                                </aura:iteration>
+                            </lightning:accordion>
+                            <footer class="slds-card__footer">
+                                <div class="slds-align_absolute-center" style="height:5rem">
+                                    <lightning:layout verticalAlign="center" class="x-large">
+                                        
+                                        <lightning:layoutItem padding="around-large">
+                                            <div class="slds-m-top_medium">
+                                                <aura:if isTrue="{!v.DupButton}">
+                                                    <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="DupCheck"
+                                                                      label="Check for Duplicates" onclick="{!c.CheckForDuplicates}" />
+                                                </aura:if>
+                                                
+                                                <lightning:button class="slds-m-top_small" variant="brand" 
+                                                                  label="Cancel" onclick="{!c.previous}" />
+                                                <aura:if isTrue="{!v.ShowSaveBtn}" >
+                                                    <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="Save"
+                                                                      label="Save" onclick="{!c.CheckForDuplicates}" />
+                                                </aura:if>                  
+                                                
+                                                
+                                            </div>
+                                            
+                                        </lightning:layoutItem>
+                                        
+                                    </lightning:layout>
+                                </div>
+                            </footer>
+                            
+                        </lightning:recordEditForm>
+                    </div>
+                </article>
+            </div>     
+            
+            
+        </p>
+    </lightning:card>
+</aura:component>

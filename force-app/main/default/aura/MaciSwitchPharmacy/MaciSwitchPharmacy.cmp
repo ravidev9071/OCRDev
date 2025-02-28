@@ -1,0 +1,60 @@
+<aura:component controller ="SYN_SwitchPharmacyController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="pharmacyMap" type="Map"/> 
+    <aura:attribute name="selectPharmacy" type="string" default =""/>
+    <!-- storing current program Id -->
+    <aura:attribute name="programId" type="string" default =""/>
+    <!-- storing current program Id -->
+    <aura:attribute name="pharmacyType" type="string" default =""/>
+    <lightning:navigation aura:id="navigation"/>
+
+ 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;height: 45vw;">
+         <!--loading spinner start-->
+        <aura:if isTrue="{!v.ShowSpinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        
+        <div class="container-fluid h-100 px-5 py-5">
+            <div class="row h-100 d-flex justify-content-center align-items-center cnt-d">
+                <div class="col-lg-5">
+                    <div class="card p-0 rounded-0 border-0">
+                        <div class="card-header">
+                            <h5 class="card-title mt-2 fw-bold" style="color: #505050!important;">SWITCH PHARMACY</h5>
+                        </div>
+                        <div class="card-body px-4">
+                            <p style="color: #505050!important;">To switch your pharmacy, Please select pharmacy from drop down list and click switch button.</p>
+                            <form >
+                                <div class="col-lg-10 mb-2">
+                                    <label for="" class="fw-600">Select Pharmacy</label>
+                                    <div class="d-flex align-items-center">
+                                        <div class="col-lg-1 text-center">
+                                        </div>
+										<div class="col-lg-10">
+											<lightning:select aura:id="industryPicklist" value="{!v.selectPharmacy}" onchange="{!c.handleCompanyOnChange}" name="industryPicklist" label="" required="false">
+											<option value="">--None--</option>
+											<aura:iteration items="{!v.pharmacyMap}" var="ind" indexVar="key">
+											<option text="{!ind.key}" value="{!ind.value}" selected="{!ind.key==v.selectPharmacy}" />
+											</aura:iteration>
+											</lightning:select>                                       
+										</div>
+                                    </div>
+                                </div>
+                                <div class="pt-2">
+                                    <ui:button aura:id="SWITCH" label="SWITCH" press="{!c.swithpharmacy}" class="sfdc_button btn-theme float-end"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+</aura:component>

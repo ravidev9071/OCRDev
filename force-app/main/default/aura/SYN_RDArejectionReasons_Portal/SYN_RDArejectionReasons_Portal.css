@@ -1,0 +1,6 @@
+.THIS  {
+  --sds-c-accordion-summary-color-background: rgb(243 243 243);
+}
+.THIS .slds-accordion__list-item {
+    font-size: 15px;
+}

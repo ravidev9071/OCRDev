@@ -1,0 +1,177 @@
+<!-- 
+Author name   :- Samidurai Vellaiyan
+Created Date  :- 14/12/2022
+Description   :- Created for Maci Portal -> Pharmacy Information Page { Middle Context }
+-->
+<aura:component controller ="MaciPortalCustomController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+	
+   
+     <!-- storing Case State Picklist values  -->
+    <aura:attribute name="stateMap" type="Map"/> 
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="mailingAddressInfoObj" type="Map" default="{ 'Address1':'', 'AddressLine2':'', 'city':'','state':'','zipcode':''}"/>
+    <aura:attribute name="mphonesize" type="string" default ="15"/>
+    <aura:attribute name="mfaxsize" type="string" default ="15"/>
+    <aura:attribute name="sphonesize" type="string" default ="15"/>
+    <aura:attribute name="sfaxsize" type="string" default ="15"/>
+    <!-- handlter declarion  -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:registerEvent name="ShowOutPatinetScreens" type="c:MaciShowOutPatientPharmacyEnrollmentScreen"/>
+    
+    <section class="sec-one-1 pb-0" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;height: 39vw;">
+        <div class="container-fluid px-5 pb-0 h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="card p-0 rounded-0 border-0 h-100">
+                         <div class="card-header border-0 crd-hdr-m bg-blue-header">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-5">
+                                    <div class="row d-flex justify-content-left align-items-center">
+                                        <div class="col-lg-1 col-sm col-1 text-end pe-3">
+                                            <i class="fa fa-file-text fa-2x heading-i"></i>
+                                        </div>
+                                        <div class="col-lg-9 col-sm col-10 ps-2">
+                                            <h5 class="card-title mt-2 d-block heading-h fs-3">
+                                               Pharmacy Enrollment</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 modify-pro px-0">
+                                    <div class="progressbar mb-5">
+                                        <div class="progress" id="progress"></div>
+										<div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>PHARMACY TYPE SELECTION </span>
+                                        </div>
+                                        <div class="progress-block">
+                                        	<div class="progress-step"></div>
+                                          <span>INSTRUCTIONS</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span>AUTHORIZED REPRESENTATIVE INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step"></div>
+                                            <span class="text-theme"><em>PASSWORD</em></span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step progress-step-active"></div>
+                                            <span>PHARMACY INFORMATION</span>
+                                        </div>
+                                        <div class="progress-block">
+                                            <div class="progress-step last-step"></div>
+                                            <span>AGREEMENT</span>
+                                        </div>
+                                        <aura:if isTrue="{!v.pharmacyType == 'Inpatient Pharmacy'}">
+                                            <div class="progress-block">
+                                                <div class="progress-step last-step"></div>
+                                                <span>COMPLETE</span>
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body px-4 llc-dv" style="padding-bottom: 7rem;padding-top: 1.05rem;">
+                            <div class="row">
+                                <div class="col-lg-12 ps-0">
+                                    <h5 class="fw-bold mb-4">Pharmacy Information</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm">
+                                 <h6 class="fw-bold ps-lg-2 pb-4 pt-2" style="color: #182132;padding-top: 8px;padding-bottom: 27px !important;">Mailing Address</h6>
+
+                                <div class="col-lg-6 ps-lg-0">
+                                    
+                                    <div class="pe-lg-4 border-end border-dark">
+                                        <div class="form-group">
+                                            
+                                            <div class="row">
+                                                <div class="col-lg-1 px-0 col-sm col-1">
+                                                    <i class="fa fa-home pull-right pt-2" ></i>
+                                                </div>
+                                               <div class="col-lg-8 col-sm col-11 px-2">
+                                                   
+                                                    <lightning:input type="text" aura:id="primaryAddressLine1" placeholder="Address Line 1" class="form-control mb-1" value="{!v.mailingAddressInfoObj.Address1}"/>
+                                                    <lightning:input type="text" aura:id="primaryAddressLine2" placeholder="Address Line 2" class="form-control mb-1" value="{!v.mailingAddressInfoObj.AddressLine2}"/>
+                                                    <div class="row">
+                                                        <div class="col-lg-4 mb-1 pe-lg-1">
+                                                             
+                                                            <lightning:input type="text" aura:id="primaryCity" placeholder="City" class="form-control" value="{!v.mailingAddressInfoObj.city}"/>
+                                                        </div>
+                                                        <div class="col-lg-4 mb-1 pe-lg-1 ps-lg-1">
+                                                            
+                                                                 <select name="text-state" id="primaryState"  class="form-control" value="{!v.mailingAddressInfoObj.state}" onchange="{!c.handleStateOnChange}"> 
+                    												<option value="">State</option>
+                    												<aura:iteration items="{!v.stateMap}" var="ind" indexVar="key" >
+                        											<option text="{!ind.value}" value="{!ind.key}" selected="{!ind.key==v.mailingAddressInfoObj.state}" />
+                    												</aura:iteration>
+                                                                </select> 	
+                                                                                                                       
+                                                        </div>
+                                                        <div class="col-lg-4 mb-1 ps-lg-1">
+                                                            
+                                                            <lightning:input type="text" aura:id="primaryZipCode" placeholder="Zip Code" class="form-control" value="{!v.mailingAddressInfoObj.zipcode}" maxlength="5"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 ps-lg-0">
+                                    <div class="form-group px-lg-5 pe-lg-4">
+                                   
+                                       
+                                        <div class="row">
+                                          
+                                            <div class="col-lg-1 px-0 col-sm col-1">
+                                                <i class="fa fa-phone pull-right pt-2 mt-4 me-1"></i>
+                                            </div>
+                                            <div class="col-lg-8 pe-2 col-sm col-11 ps-lg-2 pe-lg-0 ps-2">
+                                                <label class="fw-bold">Phone</label>
+                                               
+                                                <lightning:input type="text" aura:id="primaryContactPhone" placeholder="(nnn) nnn-nnnn" class="form-control" value="{!v.newCase.US_WSREMS__Phone__c}" maxlength="{!v.mphonesize}" onchange = "{!c.formatMailingPhoneNumber}"/>
+                                            </div>
+                                        </div>
+
+                                                                             
+                                      
+                                        <div class="row">
+                                           
+                                            <div class="col-lg-1 px-0 col-sm col-1">
+                                                <i class="fa fa-fax fs-18 pull-right pt-2 mt-4"></i>
+                                            </div>
+                                            <div class="col-lg-8 pe-2 col-sm col-11 ps-lg-2 pe-lg-0 ps-2">
+                                                <label class="fw-bold">Fax</label>
+                                               
+                                                <lightning:input type="text" aura:id="primaryFax" placeholder="(nnn) nnn-nnnn" class="form-control" value="{!v.newCase.US_WSREMS__Fax__c}" maxlength="{!v.mfaxsize}" onchange = "{!c.formatMailingFaxNumber}"/>
+                                            </div>
+                                        </div>
+                                       
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m" style="background-color: #EBEBEB;">
+                            <div class="row">
+                                <div class="col-lg-6 col-6">
+                                    <a name="button-previous"
+                                        class="btn btn-secondary rounded-0 my-2" onclick="{!c.handlePrevious}">
+                                        <i class="fa fa-arrow-left"></i> PREVIOUS</a>
+                                    
+                                </div>
+                                <div class="col-lg-6 col-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i class="fa fa-arrow-right" ></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>

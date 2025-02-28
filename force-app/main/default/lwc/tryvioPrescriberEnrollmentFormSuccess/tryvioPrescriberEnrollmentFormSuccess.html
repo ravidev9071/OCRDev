@@ -1,0 +1,49 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageTitle prescriber">
+            <div class="slds-text-heading_medium">TRYVIO<sup>™</sup> REMS</div>
+            <div class="slds-text-heading_large"><img class="iconImg" src={iconPrescriber}> Prescribers</div>
+        </div>
+        <div class="pageContainer">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="comm-content-header comm-layout-column">
+                        <lightning-progress-indicator current-step="5" type="path" has-error="true" variant="base">
+                            <lightning-progress-step label="Register" value="1" variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Review Materials" value="2" variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Knowledge Assessment" value="3" variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Complete Enrollment" class="slds-progress__item slds-is-completed" value="4" variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Completed" value="5" class="slds-hide" variant="complete"></lightning-progress-step>
+                            
+                    </lightning-progress-indicator>
+                        <p class="slds-text-heading_medium">{presname}<br>NPI: {presnpi}</p>
+                        <div class="slds-border_bottom "></div>
+                        <div class="slds-text-heading_large">Prescriber Enrollment Submission Complete</div>
+                        <div class="slds-p-bottom_medium"></div>	
+                    <div class="prescriber"> <!-- Added by Rishitha  -->
+                        <div class="slds-text-heading_medium">Thank you for submitting your information to enroll in the TRYVIO REMS.</div>
+                        <p>A confirmation of submission has been sent to email address provided.</p>
+                        <div class="slds-p-bottom_medium"></div>
+                        <p>If you need to update any further information provided on the enrollment form, or have any additional questions, please contact the TRYVIO REMS at 1-866-429-8964.</p>
+                        <div class="slds-p-bottom_medium"></div>
+
+                            <div class="slds-m-top_xx-large"></div>
+                            <div class="slds-align_absolute-center">
+                                <button class=" slds-button btnLinkGradient" onclick={downloadEnrollmentPage}>Print / Download
+                                    Completed Enrollment Form</button>
+                            </div>
+                            <div class="slds-m-vertical_x-large  slds-border_top"></div>
+                            <div class="slds-align_absolute-center">
+                                <p class="slds-p-around_medium slds-text-align_center">If you have any questions or
+                                    require assistance, please contact the TRYVIO REMS at <span
+                                        class="txtNoWrap">1-866-429-8964</span> (Monday to Friday, 8 AM - 8 PM ET).
+                                        </p>
+                            </div>
+</div><!-- Added by Rishitha   -->
+                    </div>
+                </div>
+                <div class="slds-m-top_xx-large"></div>
+            </div>
+        </div>
+    </div>
+</template>

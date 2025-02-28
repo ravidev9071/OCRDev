@@ -1,0 +1,192 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller="SYN_ProviderRegistrationController">
+    <!--Component Start-->
+    <aura:attribute name="hideScreen2" type="Boolean" default="false"/>
+    <aura:attribute name="caseRecordTypeId" type="String"/>
+    <aura:attribute name="programId" type="String"/>
+    <aura:attribute name="AcctId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="AccountPresent" type="boolean"/>
+    <aura:attribute name="flag" type="boolean" default="True"/>
+    <aura:attribute name="AccountflagMsg" type="boolean" default="false"/>
+    <aura:attribute name="DEAInvalidMsg" type="boolean" default="false"/>
+    <!--1173:<aura:attribute name="DEAAddressInvalidMsg" type="boolean" default="false"/>-->
+    <aura:attribute name="Sche3validMsg" type="boolean" default="false"/>
+    <aura:attribute name="NPIInvalidMsg" type="boolean" default="false"/>
+    <aura:attribute name="SLNInvalidMsg" type="boolean" default="false"/>
+    <aura:attribute name="AccountCreatedMsg" type="boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="programRecordType" type="String" />
+    
+    <div align="center">
+        <fieldset class="slds-box slds-theme_default slds-container_large">
+            <aura:if isTrue="{!v.showSpinner}">
+                <lightning:spinner />
+            </aura:if>
+            <aura:if isTrue="{!v.AccountflagMsg }">
+                <span style="color:red;">An account with this information already exists. Please click on Forgot Password to reset your password or contact the<br/>
+                    Sodium Oxybate REMS at 1-833-769-7367 for assistance.</span>
+            </aura:if>
+            <aura:if isTrue="{!v.DEAInvalidMsg}">
+                <span style="color:red;">We were unable to verify your account information using your DEA number, please update the DEA number or contact the Sodium Oxybate REMS
+                    at 1-833-769-7367.</span>
+                
+            </aura:if>
+            <!--1173:<aura:if isTrue="{!v.DEAAddressInvalidMsg}">
+                <span style="color:red;">The address you provided does not match the registered DEA address. Please update the address to the registered 
+                    address associated to the DEA number or contact the Sodium Oxybate REMS at 1-833-769-7367 for assistance.</span>
+                
+            </aura:if>-->
+            
+            <aura:if isTrue="{!v.Sche3validMsg}">
+                <span style="color:red;">DEA is invalid because Prescriber does not have access to prescribe Schedule III Non-Narcotics, please update the DEA number or contact the
+                    <br/>Sodium Oxybate REMS at 1-833-769-7367.</span>
+                
+            </aura:if>
+            <aura:if isTrue="{!v.NPIInvalidMsg}">
+                <span style="color:red;">We were unable to verify your account information using your NPI number, please update the NPI number or contact the Sodium Oxybate REMS
+                    at 1-833-769-7367.</span>
+                
+            </aura:if> 
+            <aura:if isTrue="{!v.SLNInvalidMsg}">
+                <span style="color:red;">We were unable to verify your account information using your State License Number, please update the State License Number or contact the <br/>Sodium Oxybate REMS
+                    at 1-833-769-7367.</span>
+                
+            </aura:if>
+                
+            
+            <br/>
+            <aura:if isTrue="{!v.flag}">
+                <div class="slds-m-around_xx-large">
+                    
+                    <lightning:recordEditForm objectApiName="Case" aura:id="caseForm" recordTypeId = "{!v.caseRecordTypeId}" onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}" onerror = "{!c.handleError}">
+                        
+                        <p align = "left"><b>For assistance, please contact the Sodium Oxybate REMS at 1-833-769-7367.</b></p>
+                        <br />
+                        <p align = "left">  <span style="color:red;">* denotes a required field</span></p>
+                        <br/>
+                        <p align = "left"><b>Prescriber Information</b></p>
+                        <br />
+                        <div align = "left" class= "slds-grid slds-wrap">
+                            <!-- <lightning:inputField variant="label-stacked" aura:id="casefield" class="slds-p-right_small slds-col slds-size_1-of-3" fieldName="US_WSREMS__Facility__c"></lightning:inputField>-->
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> First Name</span> 
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield1" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__First_Name__c" ></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span class="headingFont"> Middle Initial</span>
+                                <lightning:inputField variant="label-hidden" aura:id="casefield2" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Middle_Name__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span> <span class="headingFont"> Last Name</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield3" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Last_Name__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <!-- Made the professional designation field not required; Changed the lable from prof. to professional -->
+                                <span style="color:red;">*</span><span class="headingFont"> Professional Designation</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="Professional_Designation__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> Medical Specialty</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="SYN_Medical_specialty__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span> <span class="headingFont"> DEA Number</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield4" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__DEA__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span> <span class="headingFont"> State License Number</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__SLN__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> NPI Number</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield5" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__NPI__c"></lightning:inputField>
+                            </div>
+                    
+                            <!-- <div class="slds-p-right_small slds-size_1-of-3">
+                    
+                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Speciality__c"></lightning:inputField>
+                </div>-->
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> Phone</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Phone__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> Fax</span>
+                                <lightning:inputField variant="label-hidden" required="true" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Fax__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span> <span class="headingFont"> Email</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Email__c"></lightning:inputField>
+                            </div>
+                            
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> Preferred Method of Contact</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3 " fieldName="US_WSREMS__Preferred_Contact_Method__c" ></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 slds-hide">
+                                <span style="color:red;">*</span><span class="headingFont"> Program record type control</span>
+                                <lightning:inputField variant="label-hidden" required="true" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3 " fieldName="Program_Record_Type_Control__c" disabled="true" value="{!v.programRecordType}"></lightning:inputField>
+                            </div>
+                            
+                            <!--  <lightning:inputField variant="label-stacked" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Facility__c"></lightning:inputField>
+                <lightning:inputField variant="label-stacked" aura:id="casefield" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Fax__c"></lightning:inputField>-->
+                            
+                        </div>
+                        <br />
+                        <p align = "left"><b>Facility Information</b></p>
+                        <br />
+                        <div align = "left" class= "slds-form slds-grid slds-wrap">
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <!-- Made the Facility field not required;  -->
+                                <span style="color:red;">*</span><span class="headingFont"> Facility/Practice Name</span>
+                                <lightning:inputField variant="label-hidden" required="true" class="slds-p-right_small slds-size_1-of-3" fieldName="SYN_Facility__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 "></div>
+                            <div class="slds-p-right_small slds-size_1-of-3 "></div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> Street Address</span>
+                                <lightning:inputField label="Address" variant=" label-hidden" required="true"  class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Address_Line_1__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 "></div>
+                            <div class="slds-p-right_small slds-size_1-of-3 "></div>
+                            <!-- <lightning:inputField label="Address" variant="label-stacked" required="true"  class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__Address_Line_1__c"></lightning:inputField>-->
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> City</span>
+                                <lightning:inputField variant="label-hidden" required="true" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__City__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> State</span>
+                                <lightning:inputField variant="label-hidden" required="true" class="slds-p-right_small slds-size_1-of-3" fieldName="US_WSREMS__State__c"></lightning:inputField>
+                            </div>
+                            <div class="slds-p-right_small slds-size_1-of-3 ">
+                                <span style="color:red;">*</span><span class="headingFont"> Zip</span>
+                                <lightning:inputField variant="label-hidden" required="true"  class="slds-p-right_small slds-size_1-of-3" fieldName="SYN_Zip_Code__c"></lightning:inputField>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-p-horizontal--x-small slds-m-top_medium slds-float_right">
+                            <lightning:button class="btnFont" variant="brand" type="submit" label="Submit"  />
+                        </div>
+                        
+                    </lightning:recordEditForm>
+                    
+                    
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.AccountCreatedMsg}">
+                <span style="color:green;">Your account request has been processed. You will receive an email with information to verify your account and create your<br/>
+                    password. Once your account credentials have been established, you will be able to certify into the Sodium Oxybate REMS by completing the Prescriber Enrollment Form.
+                    <br/>
+                    <br/>
+                If you do not receive the email to verify your account, please contact the Sodium Oxybate REMS at 1-833-769-7367.</span>
+                    
+            </aura:if>
+            
+            
+            
+        </fieldset>
+    </div>
+    <!--Component End-->
+</aura:component>

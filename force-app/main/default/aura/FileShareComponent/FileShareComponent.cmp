@@ -1,0 +1,88 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" controller ="SYN_FileShareComponentController" >
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="contentType" type="String" />
+    <aura:attribute name="isShow" type="Boolean" />
+    <aura:attribute name="versionData" type="String" />
+    <aura:attribute name="ContentList" type="Object[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:navigation aura:id="navigate" />
+    <lightning:navigation aura:id="navigatePre" />
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <lightning:card iconName="standard:work_capacity_usage" title="All Files">
+        <aura:if isTrue="{!not(empty(v.ContentList))}">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="File Name">File Name</div>
+                        </th>                        
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Created Date">Created Date</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="File Type">File Type</div>
+                        </th>
+                         <th class="slds-text-title_caps" scope="col">
+                         <aura:if isTrue="{!v.isShow}">
+                       
+                            <div class="slds-truncate" title="Action">Action</div>
+                       
+                              <aura:set attribute="else">
+                                  <div    class="slds-truncate" title="drag2" />
+                              </aura:set>
+                            </aura:if> 
+                        </th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration  items="{!v.ContentList}" var="con" indexVar="index" >
+                        <tr class="slds-hint-parent">
+                            <td data-label="File Name">
+                                <div id="{!con.content.ContentDocumentId}" class="slds-truncate" title="File Name" data-id ="{!con.content.ContentDocumentId}" onclick="{!c.handlepreviewSelect}" ><a >{!con.content.Title}</a></div>
+                                
+                                 
+                            </td>
+     
+                            
+                            <td data-label="Created Date"> 
+                                <div    class="slds-truncate" title="drag3" >                                     
+                                    <lightning:formattedDateTime value="{!con.content.CreatedDate}" year="numeric" month="numeric" day="numeric"  hour="2-digit" minute="2-digit"  />
+                                </div>  
+                            </td>
+                            <td data-label="Size"> 
+                                <div    class="slds-truncate" title="drag4" >
+                                    {!con.content.ContentDocument.FileType}
+                                </div>  
+                            </td>
+                             <td data-label="download and select Name"> 
+                             <aura:if isTrue="{!v.isShow}">
+                                
+                                <div    class="slds-truncate" title="drag2" >
+                                    <lightning:button variant="brand" label="Export File" onclick="{!c.handleDownloadselect}"  value="{!con.content.ContentDocumentId}" title="Base action" />
+                                </div>  
+                                	
+                                <aura:set attribute="else">
+                                    <div    class="slds-truncate" title="drag2" />
+                                </aura:set>
+                            </aura:if> 
+                            </td>
+                            
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            <aura:set attribute="else">
+                <div Style="text-align : center"> " There are no related Files "</div>
+            </aura:set>
+        </aura:if>
+        <div id="text1"   ondrop="{!c.handleonDrop}" ondragover ="{!c.allowDrop}" class="slds-truncate" title="drag" >
+            
+        </div>
+        <input type="file" id="exampleInput" style="display: none" />
+        
+        
+    </lightning:card>    
+</aura:component>

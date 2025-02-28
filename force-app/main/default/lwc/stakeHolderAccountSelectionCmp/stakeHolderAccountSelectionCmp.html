@@ -1,0 +1,9 @@
+<template>
+    <template if:true={showAccountOption}>
+        <p class="slds-p-horizontal_small">
+            <lightning-radio-group label="Select Stakeholder" name="radioButtonGroup" onchange={handleChange}
+                options={accountRecordTypeList} value={selectedValue} type="radio">
+            </lightning-radio-group>
+        </p>
+    </template>
+</template>

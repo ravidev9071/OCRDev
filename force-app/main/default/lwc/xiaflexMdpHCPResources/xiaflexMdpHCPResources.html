@@ -1,0 +1,77 @@
+<template>
+    <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+						<div data-region-name="content">
+							<div data-priority=""  class="ui-widget">
+								<div class="slds-text-heading_large">Forms & Resources</div>	
+								<p class="slds-m-top_large">
+									<a href="http://get.adobe.com/reader/" title="Get Adobe Reader" target="_blank"><img class="slds-p-bottom_x-small" src={adobeReader}></a>
+									<br>Adobe<sup>®</sup> Reader<sup>®</sup> is required to view all of these PDFs. If you do not have it installed, download it free <a href="http://get.adobe.com/reader/" target="_blank" title="Get Adobe Reader">here</a>.
+								</p>								
+								<div class="slds-m-bottom_large"></div>
+								<div class="slds-grid slds-wrap slds-gutters">
+									<div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_6-of-12  slds-p-right_large rixght-border">
+										<div class="resources">
+											<div class="slds-text-heading_medium">Resources</div>
+												<template if:true={isDisplayFiles}>
+													<template for:each={filesList} for:item="file">
+														<template if:false={file.form}>
+															<div class="resourceItem" key={file.value}>
+																<div class="resourceIcon">
+																<template if:false={file.icon}>
+															<img src={iconDownload}></template>
+															<template if:true={file.icon}>
+															<img src={iconVideo}></template>
+																</div>
+																<div class="resourceName"><a onclick={previewHandler}
+																		data-previewurl={file.previewurl}
+																		data-id={file.value}>{file.label}</a>
+																</div>
+															</div>
+														</template>
+													</template>
+												</template>	
+										</div> <!-- end resources   -->
+									</div> <!-- end col  -->
+									
+									<div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_6-of-12  slds-p-right_large rixght-border">
+										<div class="resources">
+											<div class="slds-text-heading_medium">Forms</div>
+											<template for:each={filesList} for:item="file">
+												<template if:true={file.form}>
+													<div class="resourceItem" key={file.value}>
+														<div class="resourceIcon">
+															<template if:false={file.icon}>
+															<img src={iconDownload}></template>
+														</div>
+														<div class="resourceName"><a target="_blank" onclick={previewHandler}
+																data-previewurl={file.previewurl}
+																data-id={file.value}>{file.label}</a>
+														</div>
+													</div>
+												</template>
+											</template>
+										</div> <!-- end resources   -->
+									</div> <!-- end col  -->									
+									
+								</div>  <!-- end row  -->											
+
+
+
+				</div>
+			
+				
+							
+							</div> <!-- end ui-widget   -->
+
+	
+					</div> <!-- end SF   -->
+				</div> <!-- end pageContent   -->
+		</div> <!-- end pageContainer   -->
+
+			</div>  <!-- end main   --> 
+    </div>
+</template>

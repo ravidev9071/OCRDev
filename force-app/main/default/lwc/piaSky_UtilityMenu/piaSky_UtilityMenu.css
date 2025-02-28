@@ -1,0 +1,10 @@
+.dummyClass{color:black;}
+.link{
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+.name{
+    font-size: .875rem;
+    font-family: "Open Sans", Arial, sans-serif;
+}

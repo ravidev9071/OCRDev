@@ -1,0 +1,113 @@
+<template>
+    <template if:false={showAlreadyExistsMsg}>
+        
+            <!--BEGIN: Search -->
+            <div class="slds-grid slds-wrap slds-gutters">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_6-of-12">
+                    <lightning-input class="search"
+                        value={searchValue} label=" NPI #" onchange={searchKeyword} required="true"
+                        min="0" formatter="decimal" disabled={disabled} maxlength="10" minlength="10" message-when-too-long ="Please enter valid NPI" message-when-too-short ="Please enter valid NPI" ></lightning-input>
+                </div>
+                    <template if:false={disabled}>
+                         <div class="slds-col slds-wrap slds-size_1-of-4 search-btn" style="margin-top: 1.7rem;">
+                    <lightning-button label="Continue"  class="btnLogin" onclick={handleSearchKeyword} variant="brand"
+                         disabled={disabled}></lightning-button>
+                </div>
+            </template>    
+               
+            </div>
+            <!--END: Search -->
+        </template>
+        <div class="slds-m-bottom_small">
+            <template if:true={showDetails}>
+            <div class="slds-border_top slds-m-bottom_small">
+            </div>
+            <div
+            class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-medium-size_6-of-12">
+                <lightning-input class="validate" value={npiRecord.firstName} label=" First Name"
+                                    name="firstName" type="text" variant="standard"
+                                required="true" onchange={handleChange}></lightning-input>
+                </div>
+                <div class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input class="validate" value={npiRecord.lastName} label=" Last Name"
+                                    name="lastName" type="text" variant="standard"
+                                required="true" onchange={handleChange}></lightning-input>
+                    </div>
+                </div>
+                <div
+                class="slds-grid slds-wrap slds-gutters slds-border_top">
+               
+                </div>
+                <!--<div
+                                                                                                            class="slds-border_top slds-m-bottom_small">
+                                                                                                        </div>-->
+            <div class="slds-grid slds-wrap slds-gutters ">
+    <div class="slds-col slds-medium-size_6-of-12">
+    
+    <lightning-input class="validate" value={npiRecord.email} label=" Email" name="email"
+         type="email" variant="standard" required="true"
+    onchange={handleChange}></lightning-input>
+    </div>
+    <div class="slds-col slds-medium-size_6-of-12">
+    <lightning-input class="validate" value={npiRecord.confirmEmail} label=" Confirm Email" name="confirmEmail"
+        type="email" variant="standard" required="true" 
+    onchange={handleChange}></lightning-input>
+    </div>
+    <div class="slds-col slds-medium-size_6-of-12">
+    <lightning-input class="validate" value={npiRecord.phone} label=" Phone" name="phone"
+        type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+    onchange={handleChange}></lightning-input>
+    </div>
+    <div
+    class="slds-col slds-medium-size_6-of-12">
+    <lightning-input value={npiRecord.fax} label=" Fax" name="fax"
+        class="validate"   type="tel" variant="standard" maxlength="10" minlength="10"
+    onchange={handleChange}></lightning-input>
+    </div>
+    </div>
+    <div class="slds-grid slds-wrap slds-gutters">
+    <div
+    class="slds-col slds-medium-size_8-of-12">
+    <lightning-radio-group name="PMC"
+    label=" Preferred
+    Method
+    of
+    Communication"
+    options={options}
+    value={}
+    onchange={handlePCM}
+    class=""
+    type="radio" required></lightning-radio-group>
+    </div>
+    </div>
+    
+                    
+                
+                
+                <br />
+    
+            </template>
+        </div>
+        <template if:true={showMsg}>
+            <!-- <div class="message">{message}</div> -->
+            <div class="slds-text-color_error">{message}</div>
+        </template>
+    
+    <div slot="footer" style = "text-align: end;">
+        <template if:true={showDetails}>
+            <lightning-button label="Submit" onclick={handleSubmitKeyword} variant="brand"
+                class="submit-button"></lightning-button>
+        </template>
+    </div>
+    
+    
+    
+    <template if:true={showLoading}>
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    
+    <template lwc:if={displaySpinner}>
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    </template>

@@ -1,0 +1,97 @@
+<template>
+  <template if:false={showNewCmp}>
+    <template if:false={showFormLayout}>
+        <div class="slds-m-around_medium">
+          <template if:true={isLoading}>
+            <lightning-spinner
+              alternative-text="Loading"
+              variant="brand"
+              size="large"
+            ></lightning-spinner>
+          </template>
+          <template if:false={showSubParticipantRadioButton}>
+            <lightning-radio-group
+            label="Select Service"
+            name="radioButtonGroup"
+            onchange={handleProgramServiceChange}
+            options={programServices}
+            value={selectedService}
+            type="radio"
+            >
+            </lightning-radio-group>
+        
+            <div class="div-Style">
+                <lightning-button
+                variant="brand"
+                label="Back"
+                title="Previous Screen"
+                onclick={handleCancel}
+                class="slds-m-left_x-small"
+              ></lightning-button>
+                <lightning-button
+                  variant="brand"
+                  label="Next"
+                  title="Next Screen"
+                  onclick={handleNextClick}
+                  class="slds-m-left_x-small"
+                ></lightning-button>
+              </div>
+            </template>
+        </div>
+        
+            
+        <div class="slds-m-around_medium">
+              <template if:true={showSubParticipantRadioButton}>
+                <lightning-radio-group
+                 label="Sub Participant Type"
+                  name="subradioButtonGroup"
+                  onchange={handleSubParticipantChange}
+                  options={subParticipantValues}
+                  value={selectedSubParticipant}
+                  type="radio"
+                  required
+                >
+                </lightning-radio-group>
+                <div class="div-Style">
+                  <lightning-button
+                  variant="brand"
+                  label="Back"
+                  title="Previous Screen"
+                  onclick={handleSubPtPrev}
+                  class="slds-m-left_x-small"
+                ></lightning-button>
+                  <lightning-button
+                    variant="brand"
+                    label="Next"
+                    title="Next Screen"
+                    onclick={handleSubPtNextClick}
+                    class="slds-m-left_x-small"
+                  ></lightning-button>
+                </div>
+                </template>
+                </div>
+            </template>
+            </template>
+              <template if:true={showFormLayout}>
+                <c-stake-holder-account-creation-cmp
+                  participant-type={participantType}
+                  service-type={selectedService}
+                  onprevious={handlePrevious}
+                  oncancel={handleCancel}
+                  service-from-account="true"
+                  account-id={recordId}  current-program-id={programId} current-user-program-name={currentUserProgramName}
+                >
+              
+              </c-stake-holder-account-creation-cmp>
+   </template>
+              <template if:true={showNewCmp}>
+                <c-stakeholder-service-case-cmp
+                  participant-type={participantType}
+                  service-type={selectedService}
+                  onprevious={handlePrevious}
+                  oncancel={handleCancel}
+                  service-from-account="true"
+                  account-id={recordId}  current-program-id={programId} current-user-program-name={currentUserProgramName}
+                ></c-stakeholder-service-case-cmp>
+              </template>
+</template>

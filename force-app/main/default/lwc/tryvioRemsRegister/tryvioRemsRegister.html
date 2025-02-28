@@ -1,0 +1,162 @@
+<template>
+
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageTitle prescriber">
+            <div class="slds-text-heading_medium">TRYVIO<sup>&trade;</sup> REMS</div>
+            <div class="slds-text-heading_large"><img class="iconImg" src={iconPrescriber}> Prescribers</div>
+
+        </div>
+        <div class="pageContainer">
+            <div class="pageContent">
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+                        <lightning-progress-indicator type="path" has-error="true" variant="base">
+                            <lightning-progress-step label="Register" value="1"
+                                variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Review Materials" value="2"
+                                variant="complete"></lightning-progress-step>
+                            <lightning-progress-step label="Knowledge Assessment" value="3"
+                                variant="active"></lightning-progress-step>
+                            <lightning-progress-step label="Complete Enrollment" value="4"
+                                variant="incomplete"></lightning-progress-step>
+                        </lightning-progress-indicator>
+                        <div class="slds-p-bottom_x-large"></div>
+                        <div class="slds-grid slds-gutters slds-wrap slds-large-nowrap xslds-grid_align-center">
+                            <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_6-of-12">
+                                <div class="XfrmRegister">
+                                    <div class="frmPrescriber">
+                                        <div class="frmContainer">
+                                            <article class="slds-card" part="card">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header
+                                                        class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__figure"></div>
+                                                        <div class="slds-media__body">
+                                                            <h2 class="slds-card__header-title">
+                                                                <span>Register / Resume Enrollment </span>
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner" part="body">
+                                                    <p class="frmInstructions">
+                                                        To begin or resume your enrollment, please enter your Prescriber
+                                                        NPI and click "Continue".
+                                                        <br><br><span class="slds-text-body_medium"><span
+                                                                class="slds-text-color_destructive">*</span> indicates fields
+                                                            required</span>
+                                                    </p>
+                                                    <div class="slds-text-heading_medium txtEmphasis"> Prescriber
+                                                        Information</div>
+                                                    <div class="slds-grid slds-wrap slds-gutters">
+                                                        <div class="slds-col slds-large-size_2-of-3 slds-size_3-of-3">
+                                                                <lightning-input class="search slds-form-element"
+                                                                    label=' Prescriber NPI' value={searchValue}
+                                                                    onchange={searchKeyword} disabled={disabled}
+                                                                    maxlength="10" minlength="10"
+                                                                    message-when-too-long="Please enter valid NPI"
+                                                                    message-when-too-short="Please enter valid NPI"
+                                                                    required>
+                                                                </lightning-input>
+                                                            </div>
+                                                            <div class="slds-col slds-large-size_1-of-3 slds-size_3-of-3 slds-p-top_x-large">
+                                                                <template if:false={disabled} >
+                                                                <lightning-button class="brand-button " variant="brand"
+                                                                    label="Continue" onclick={handleSearchKeyword}
+                                                                    disabled={disabled}>
+                                                                    <button id="BtnSearch"
+                                                                        class="slds-button slds-m-top_large slds-button_brand"
+                                                                        type="button" part="button"
+                                                                        kx-scope="button-brand"
+                                                                        kx-type="ripple">Continue</button>
+                                                                </lightning-button>
+                                                                </template>
+                                                            </div>
+                                                        <template lwc:if={displayInvalidNpi}>
+                                                            <div class="slds-text-color_error">{label.DocumentFieldWM}
+                                                            </div>
+                                                        </template>
+                                                        <template lwc:if={displayInvalidNPIINVeeva}>
+                                                            <div class="slds-text-color_error">{label.inValidNPI}</div>
+                                                        </template>
+                                                        <template if:true={showLoading}>
+                                                            <lightning-spinner alternative-text="Loading"
+                                                                size="large"></lightning-spinner>
+                                                        </template>
+
+                                                        <template lwc:if={displaySpinner}>
+                                                            <lightning-spinner alternative-text="Loading"
+                                                                size="large"></lightning-spinner>
+                                                        </template>
+
+
+                                                    </div> <!-- end row  -->
+                                                    <div class="slds-m-bottom_small"></div>
+                                                    <template if:true={isvisible}>
+                                                        <div id="PrescriberDetails" class={prescriberDetailsClass}>
+                                                            <div class="slds-border_top slds-m-bottom_small"></div>
+                                                            <div class="slds-grid slds-wrap slds-gutters">
+                                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                                    <lightning-input
+                                                                        class="validate search slds-form-element"
+                                                                        label=" First Name" required="true"
+                                                                        value={npiRecord.firstName}
+                                                                        onchange={handleChange} name="lastName"
+                                                                        type="text"></lightning-input>
+                                                                </div>
+                                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                                    <lightning-input
+                                                                        class="validate search slds-form-element"
+                                                                        label=" Last Name" required="true"
+                                                                        value={npiRecord.lastName}
+                                                                        onchange={handleChange} name="firstName"
+                                                                        type="text"></lightning-input>
+                                                                </div>
+                                                            </div> <!-- end row  -->
+                                                            <div class="slds-m-bottom_small"></div>
+                                                            <div class="slds-grid slds-wrap slds-gutters">
+                                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                                    <lightning-input
+                                                                        class="validate search slds-form-element"
+                                                                        label=" Email" value={npiRecord.email}
+                                                                        required="true" onchange={handleChange}
+                                                                        name="email" type="email"></lightning-input>
+                                                                </div>
+                                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                                    <lightning-input
+                                                                        class="validate search slds-form-element"
+                                                                        label=" Confirm Email" value="" required="true"
+                                                                        onchange={handleConfirmEmail}
+                                                                        name="confirmEmail"
+                                                                        type="email"></lightning-input>
+                                                                </div>
+                                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                                    <lightning-input
+                                                                        class="validate search slds-form-element"
+                                                                        label=" Office Phone" value={npiRecord.phone}
+                                                                        required="true" onchange={handleChange}
+                                                                        name="phone" type="tel"></lightning-input>
+                                                                </div>
+                                                            </div> <!-- end row  -->
+                                                            <div class="slds-m-vertical_x-large"></div>
+                                                            <div class="slds-card__footer" part="footer">
+                                                                <lightning-button class="brand-button" label="Continue"
+                                                                    variant="brand" disabled={secDisabled}
+                                                                    onclick={navigateToReviewMaterials}></lightning-button>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </article>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end main -->
+
+</template>

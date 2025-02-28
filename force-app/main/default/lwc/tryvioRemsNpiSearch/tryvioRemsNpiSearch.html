@@ -1,0 +1,22 @@
+<template>
+    <template if:false={showAlreadyExistsMsg}>
+        <div  class="slds-grid slds-wrap slds-gutters">
+             <div  class="slds-col slds-medium-size_9-of-12 slds-large-size_4-of-12">
+                   <lightning-input  class="search slds-form-element" label={npiLabel} value={searchValue} onchange={searchKeyword}
+                    disabled={disabled} maxlength="10" minlength="10" message-when-too-long ="Please enter valid NPI" message-when-too-short ="Please enter valid NPI" required>
+                   </lightning-input>
+             </div>
+             <div class="slds-size_1-of-4 slds-p-top_x-large search-btn">
+                   <lightning-button  class="brand-button " variant="brand" label="Continue" onclick={handleSearchKeyword} disabled={disabled}>
+                        <button id="BtnSearch"   class="slds-button slds-m-top_large slds-button_brand"  type="button" part="button" kx-scope="button-brand" kx-type="ripple">Continue</button>
+                   </lightning-button>
+             </div>
+        </div>
+        <template lwc:if={displayInvalidNpi}>
+            <div class="slds-text-color_error">{label.DocumentFieldWM}</div>
+        </template>
+    </template>
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+</template>

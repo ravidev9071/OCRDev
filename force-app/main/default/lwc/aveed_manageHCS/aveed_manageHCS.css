@@ -1,0 +1,20 @@
+.pendingothercsss {
+    background: #f1eeb8f0;
+    color: #383333;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: .9rem;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.slds-badge_inverse {
+    --slds-c-badge-color-background: var(--slds-c-badge-inverse-color-background, var(--sds-c-badge-inverse-color-background, var(--slds-g-color-neutral-base-50, #747474)));
+    --slds-c-badge-text-color: var(--slds-c-badge-inverse-text-color, var(--sds-c-badge-inverse-text-color, var(--slds-g-color-neutral-base-100, #fff)));
+}
+
+.required-text {
+    color: var(--slds-g-color-error-base-40, var(--lwc-colorTextError, rgb(234, 0, 30)));
+}

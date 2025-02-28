@@ -1,0 +1,562 @@
+<template>
+    <div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+        <div class="pageContainer">
+            <div class="pageContent">
+
+                <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+                    <div class="slds-col--padded comm-content-header comm-layout-column">
+
+                        <div data-region-name="content">
+                            <div data-priority="" class="ui-widget">
+                                <div class="slds-text-heading_large">Manage Healthcare Providers</div>
+                                <div class="slds-m-bottom_large"></div>
+
+                                <template lwc:if={isLoading}>
+                                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                                </template>
+
+                                <div class="tileCards summary">
+
+                                    <article class="slds-card slds-card_boundary">
+                                        <div class="slds-card__header slds-grid">
+                                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                <div class="slds-media__figure">
+                                                    <span class="slds-icon_container slds-icon-standard-contact"
+                                                        title="contact">
+                                                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                            <use
+                                                                xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact">
+                                                            </use>
+                                                        </svg>
+                                                        <span class="slds-assistive-text">contact</span>
+                                                    </span>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <h2 class="slds-card__header-title">
+
+                                                        <span>Associated Healthcare Providers</span>
+
+                                                    </h2>
+                                                </div>
+                                                <div class="slds-no-flex">
+                                                    <button onclick={openAssociateModal}
+                                                        class="slds-button slds-button_brand">Associate Another
+                                                        Healthcare Provider</button>
+                                                </div>
+                                            </header>
+                                        </div>
+
+                                        <div class="slds-card__body slds-card__body_inner">
+                                            <ul class="slds-grid slds-wrap slds-grid_pull-padded">
+                                                <template for:each={hcproviders} for:item="record" for:index="index">
+                                                    <li key={record.Id}
+                                                        class="slds-p-horizontal_small slds-size_1-of-1 slds-large-size_1-of-3">
+                                                        <article
+                                                            class="slds-tile slds-media slds-card__tile slds-hint-parent">
+                                                            <div class="slds-media__figure">
+                                                                <span
+                                                                    class="slds-icon_container slds-icon-standard-contact"
+                                                                    title="Description of icon when needed">
+                                                                    <svg class="slds-icon slds-icon_small"
+                                                                        aria-hidden="true">
+                                                                        <use
+                                                                            xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact">
+                                                                        </use>
+                                                                    </svg><span
+                                                                        class="slds-assistive-text">Contact</span>
+                                                                </span>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate slds-cell-wrap"
+                                                                    data-label="Wrapped, line clamped">
+                                                                    <h3 class="slds-tile__title slds-truncate slds-line-clamp"
+                                                                        title={record.Name}>
+                                                                        {record.Name}<br />
+
+                                                                        <template lwc:if={record.isCertified}>
+                                                                            <div class="status certified"
+                                                                                style="margin-left: 0px;">
+                                                                                {record.status}
+                                                                            </div>
+                                                                        </template>
+                                                                        <template lwc:elseif={record.isPending}>
+                                                                            <div class="pendingothercsss">
+                                                                                {record.status}
+                                                                            </div>
+                                                                        </template>
+                                                                        <template
+                                                                            lwc:elseif={record.isDecerifiedOrDeactivated}>
+                                                                            <div class="slds-badge_inverse">
+                                                                                {record.status}
+                                                                            </div>
+                                                                        </template>
+                                                                        <template lwc:else>
+                                                                            <div class="pendingothercsss">
+                                                                                {record.status}
+                                                                            </div>
+                                                                        </template>
+                                                                    </h3>
+                                                                    <div class="slds-shrink-none">
+                                                                        <button
+                                                                            class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+                                                                            aria-haspopup="true" title="More options">
+                                                                            <svg class="slds-button__icon slds-button__icon_hint"
+                                                                                aria-hidden="true">
+                                                                                <use
+                                                                                    xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down">
+                                                                                </use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">More
+                                                                                options</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-tile__detail">
+                                                                    <div class="slds-truncate">
+                                                                        <span title={record.associatedHCSNames}
+                                                                            style="font-size: medium; font-weight: bold">
+                                                                            {record.associatedHCSNames}
+                                                                        </span>
+                                                                    </div>
+                                                                   
+                                                                    <p class='slds-form-element__static'>
+                                                                        <template
+                                                                            lwc:if={record.addressLine1}>{record.addressLine1}&nbsp;</template>
+                                                                        <template
+                                                                            lwc:if={record.addressLine1}>{record.addressLine2}<br></template>
+                                                                        <template
+                                                                            lwc:if={record.city}>{record.city},&nbsp;</template>
+                                                                        <template
+                                                                            lwc:if={record.state}>{record.state}&nbsp;</template>
+                                                                        <template
+                                                                            lwc:if={record.zip}>{record.zip}</template>
+                                                                    </p>
+                                                                    <div class="slds-form__row">
+                                                                        <div class="slds-form__item" role="listitem">
+                                                                            <div
+                                                                                class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                                <span
+                                                                                    class="slds-form-element__label">Enrollment
+                                                                                    ID</span>
+                                                                                <div class="slds-form-element__control">
+                                                                                    <div
+                                                                                        class="slds-form-element__static">
+                                                                                        {record.US_WSREMS__REMS_ID__c}
+                                                                                    </div>
+                                                                                    <button
+                                                                                        class="slds-button slds-button_icon"
+                                                                                        title="">
+                                                                                        <svg class="slds-button__icon slds-button__icon_hint"
+                                                                                            aria-hidden="true">
+                                                                                            <use
+                                                                                                xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                                            </use>
+                                                                                        </svg>
+                                                                                        <span
+                                                                                            class="slds-assistive-text"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end form item  -->
+                                                                        <div class="slds-form__item" role="listitem">
+                                                                            <div
+                                                                                class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                                <span
+                                                                                    class="slds-form-element__label">NPI
+                                                                                    Number</span>
+                                                                                <div class="slds-form-element__control">
+                                                                                    <div
+                                                                                        class="slds-form-element__static">
+                                                                                        {record.US_WSREMS__National_Provider_Identifier__c}
+                                                                                    </div>
+                                                                                    <button
+                                                                                        class="slds-button slds-button_icon"
+                                                                                        title="">
+                                                                                        <svg class="slds-button__icon slds-button__icon_hint"
+                                                                                            aria-hidden="true">
+                                                                                            <use
+                                                                                                xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                                            </use>
+                                                                                        </svg>
+                                                                                        <span
+                                                                                            class="slds-assistive-text"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end form item  -->
+                                                                        <div class="slds-form__item" role="listitem">
+                                                                            <div
+                                                                                class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+                                                                                <span
+                                                                                    class="slds-form-element__label">DEA</span>
+                                                                                <div class="slds-form-element__control">
+                                                                                    <div
+                                                                                        class="slds-form-element__static">
+                                                                                        {record.US_WSREMS__DEA__c}
+                                                                                    </div>
+                                                                                    <button
+                                                                                        class="slds-button slds-button_icon"
+                                                                                        title="">
+                                                                                        <svg class="slds-button__icon slds-button__icon_hint"
+                                                                                            aria-hidden="true">
+                                                                                            <use
+                                                                                                xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit">
+                                                                                            </use>
+                                                                                        </svg>
+                                                                                        <span
+                                                                                            class="slds-assistive-text"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end form item  -->
+                                                                    </div>
+                                                                </div>
+                                                                <footer class="slds-card__footer">
+                                                                    <a class="slds-card__footer-action slds-button slds-button_outline-brand"
+                                                                        data-id={record.Id} data-index={index}
+                                                                        onclick={disassociateHandler}>Disassociate
+                                                                        <span
+                                                                            class="slds-assistive-text">Disassociate</span>
+                                                                    </a>
+                                                                </footer>
+                                                            </div>
+                                                        </article>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div> <!-- end ui-widget   -->
+                        </div>
+                    </div> <!-- end SF   -->
+                </div> <!-- end pageContent   -->
+            </div> <!-- end pageContainer   -->
+
+        </div> <!-- end main   -->
+    </div>
+    <template lwc:if={disassociateModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- modal header start -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Are you sure ?</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>Are you sure you want to disassociate this Healthcare Provider from your Healthcare Setting(s)?
+                    </p><br>
+                    <p>The selected Healthcare Setting(s) will no longer be associated with this Healthcare Provider,
+                        and the Healthcare Provider may need to restart the process to be associated with the selected
+                        Healthcare Setting(s) in the system again. This could include the REMS Certification Process.
+                        This action cannot be undone.</p>
+
+                    <div class="slds-p-around_small">
+                        <template lwc:if={showMultiple}>
+                            <div class="slds-scrollable_y" style="height: 230px;">
+                                <template for:each={hcsRelatedToProvider} for:item="record">
+                                    <article class="slds-card" key={record.hcsAccountId}>
+                                        <div class="slds-card__header slds-grid">
+                                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                <div class="slds-media__body">
+                                                    <h2 class="slds-card__header-title">
+                                                        <p class="slds-text-heading_medium" style="font-size: 1.5rem;"
+                                                            title={record.hcSettingName}>
+                                                            {record.hcSettingName}
+                                                        </p>
+                                                    </h2>
+                                                </div>
+                                                <div class="slds-no-flex">
+                                                    <button class="slds-button slds-button_neutral"
+                                                        onclick={handleDisassociateHCS}
+                                                        data-id={record.hcsAccountId}>Disassociate</button>
+                                                </div>
+                                            </header>
+                                        </div>
+                                    </article>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <footer class="slds-modal__footer">
+                   
+                    <button title="Cancel" type="button"
+                        class="brand-button slds-button slds-button_text-destructive cancelbtn"
+                        onclick={handleDisassociateCancel}>Cancel</button>
+                    <template lwc:if={showConfirmBtn}>
+                        <button title="Confirm" type="button" class="slds-p-left_small slds-button slds-button_brand"
+                            onclick={handleDisassociateSubmit}>Confirm</button>
+                    </template>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template lwc:if={associateAnotherHCP}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" id="ModalHCP"
+            class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <button onclick={closeModal}
+                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    X
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Associate Healthcare Provider
+                    </h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <div class="frmContainer">
+                        <article class="slds-card " part="card">
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure"></div>
+                                    <div class="slds-media__body">
+                                        <h2 class="slds-card__header-title">
+                                            <span>Healthcare Provider Information</span>
+
+                                        </h2>
+                                    </div>
+                                </header>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner" part="body">
+                                <p class="frmInstructions">To associate a Prescribing Healthcare Provider to your
+                                    Healthcare
+                                    Setting, please select the Healthcare Setting, search type, enter the information,
+                                    and click "Search".
+
+                                    <br><br><span class="slds-text-body_medium"><span
+                                            class="slds-text-color_destructive">*</span> fields required</span>
+                                </p>
+
+                                <div class="">
+                                    <div class="slds-text-heading_medium">Healthcare Setting Information</div>
+
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-combobox class="search slds-form-element" label=" Healthcare Setting"
+                                            required options={healthcareSettings} onchange={handleSelectHCS}
+                                            name="HealthCareSetting" data-id="hcsettingsData"
+                                            placeholder="-- Please Select --"></lightning-combobox>
+                                    </div>
+                                </div>
+                                <div class="slds-p-bottom_small"></div>
+                                <div class="dividerSolid"></div>
+                                <div class="slds-p-top_small">
+                                    <div class="slds-text-heading_medium">Healthcare Provider Information</div>
+
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-form-element__legend slds-form-element__label">
+                                            <abbr class="slds-required" title="required">* </abbr>Search by:
+                                        </legend>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-radio_button-group">
+                                                <span class="slds-button slds-radio_button">
+                                                    <input type="radio" name="rbType" id="rbType1" value="1"
+                                                        checked={showSearchHCPById} onclick={handleOptionById}>
+                                                    <label class="slds-radio_button__label" for="rbType1">
+                                                        <!--RT 10-10-24 styling changes-->
+                                                        <span class="hcp-btn-label slds-radio_faux"> HCP Enrollment ID (REMS #)</span>
+                                                    </label>
+                                                </span>
+                                                <span class="slds-p-left_small slds-button slds-radio_button">
+                                                    <input type="radio" name="rbType" id="rbType2" value="2"
+                                                        onclick={handleOptionName} checked={showSearchHCPByName}>
+                                                    <label class="slds-radio_button__label" for="rbType2">
+                                                        <!--RT 10-10-24 styling changes-->
+                                                        <span class="hcp-btn-label slds-radio_faux">HCP Name</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <template lwc:if={showSearchHCPById}>
+                                        <div id="SearchHCPID">
+                                            <div class="slds-grid slds-wrap slds-gutters">
+                                                <div class="slds-col slds-medium-size_9-of-12 slds-large-size_12-of-12">
+                                                    <div lwc-enmikoh2qu="" part="input-text">
+
+                                                        <lightning-input data-id="enrollmentId"
+                                                            label=" Enrollment ID (REMS #)" name="remsId"
+                                                            onchange={handleREMSId} required></lightning-input>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template lwc:if={showSearchHCPByName}>
+                                        <div id="SearchName">
+                                            <div class="slds-grid slds-wrap slds-gutters ">
+                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                    <div class="slds-form-element">
+                                                        <lightning-combobox data-id="enrollmentByName"
+                                                            class="search slds-form-element" label=" State" required
+                                                            options={stateOptions} onchange={handleSelectState}
+                                                            name="state"></lightning-combobox>
+                                                    </div>
+                                                </div> <!-- end col   -->
+                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                    <div part="input-text">
+
+                                                        <lightning-input data-id="enrollmentByName" label=" Last Name"
+                                                            name="lastName" onchange={handleInputChange}
+                                                            required></lightning-input>
+                                                    </div>
+                                                </div> <!-- end col  -->
+
+
+                                                <div class="slds-col slds-medium-size_6-of-12">
+                                                    <div part="input-text">
+
+                                                        <lightning-input data-id="enrollmentByName" label=" First Name"
+                                                            name="firstName"
+                                                            onchange={handleInputChange}></lightning-input>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end row  -->
+                                        </div>
+                                    </template>
+
+                                    <template lwc:if={showHCPSearchedResults}>
+                                        <div id="PrescriberResultsNPI" class="tblContainer">
+
+                                            <h2 id="element-with-table-label"
+                                                class="slds-text-heading_medium slds-m-bottom_xx-small">Healthcare
+                                                Provider
+                                                Search Results</h2>
+                                            <p class="txtInstructions">If your search results contain the Healthcare
+                                                Provider
+                                                you were looking for, click "Associate" to affiliate them to your
+                                                Healthcare
+                                                Setting.</p>
+                                                <!-- RT 14-10-24 table changes -->
+                                                <div class="slds-scrollable" style="height: 40vh;">
+                                                    <table
+                                                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                                                    aria-labelledby="element-with-table-label other-element-with-table-label">
+                                                    <thead>
+                                                        <tr class="slds-line-height_reset">
+                                                            <th class="slds-text-align_right" scope="col"
+                                                                style="width:3.25rem">
+                                                                <div class="slds-truncate slds-assistive-text"
+                                                                    id="column-group-header-provider"
+                                                                    title="Choose a row to select">
+                                                                    Choose a row to select</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="REMS #">REMS #</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="Name">Name</div>
+                                                            </th>
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="Stackholder Type">
+                                                                    Stakeholder Type
+                                                                </div>
+                                                            </th>
+    
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="Address">Address</div>
+                                                            </th>
+    
+                                                            <th class="slds-is-sortable" scope="col">
+                                                                <div class="slds-truncate" title="Status">Status
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template lwc:if={hasSearchProviderResults}>
+                                                            <template for:each={searchProviderResults} for:item="result">
+                                                                <tr class="slds-hint-parent" key={result.Id}>
+                                                                    <td class="slds-text-align_right" role="gridcell">
+                                                                        <span class="slds-radio"
+                                                                            onclick={handleSelectedProviderRow}
+                                                                            data-id={result.Id}>
+                                                                            <input type="radio"
+                                                                                name="searchProviderResultsRadio"
+                                                                                tabindex="-1" value={result.Id}
+                                                                                checked={result.checked} />
+                                                                            <label class="slds-radio__label"
+                                                                                for="rbHCSProvider"
+                                                                                id="radio-button-label-provider"><span
+                                                                                    class="slds-radio_faux"></span></label>
+                                                                        </span>
+                                                                    </td>
+                                                                    <td data-label="REMS #">
+                                                                    <div class="slds-cell-wrap">
+                                                                        {result.US_WSREMS__REMS_ID__c}
+                                                                        </div>
+                                                                    </td>
+                                                                    <td data-label="Name">
+                                                                        <div class="slds-cell-wrap">{result.Name}</div>
+                                                                    </td>
+    
+                                                                    <td data-label="Stakeholder type">
+                                                                        <div class="slds-cell-wrap">
+                                                                            {result.US_WSREMS__User_Type__c}</div>
+                                                                    </td>
+    
+                                                                    <td data-label="Address">
+                                                                        <div class="slds-truncate" title={result.address}>
+                                                                            <template
+                                                                                lwc:if={result.addressLine1}>{result.addressLine1}&nbsp;</template>
+                                                                            <template
+                                                                                lwc:if={result.addressLine1}>{result.addressLine2}&nbsp;</template>
+                                                                            <template
+                                                                                lwc:if={result.city}>{result.city},&nbsp;</template>
+                                                                            <template
+                                                                                lwc:if={result.state}>{result.state}&nbsp;</template>
+                                                                            <template
+                                                                                lwc:if={result.zip}>{result.zip}</template>
+                                                                        </div>
+                                                                    </td>
+    
+                                                                    <td data-label="Status">
+                                                                        <div class="slds-truncate"
+                                                                            title={result.US_WSREMS__Status__c}>
+                                                                            {result.US_WSREMS__Status__c}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </template>
+                                                        </template>
+                                                    </tbody>
+                                                    </table>
+                                                </div>
+                                            <template if:false={hasSearchProviderResults}>
+                                                <p class="txtInstructions slds-p-around_small">No results found.</p>
+                                            </template>
+                                        </div> <!-- end PrescResults  -->
+                                    </template>
+
+                                    <div class="slds-card__footer" part="footer">
+                                        <button title="Cancel" onclick={closeModal} type="button"
+                                            class="slds-button slds-button_text-destructive">Cancel</button>
+
+                                        <button id="BtnSearch" onclick={handleSearchResults}
+                                            class="slds-button slds-m-top_large slds-button_brand" type="button"
+                                            part="button">Search</button>
+
+                                        <template if:true={showAssociateButton}>
+                                            <button id="BtnContinue" onclick={handleHCPAssociate}
+                                                class="slds-button slds-m-top_large slds-button_brand" type="button"
+                                                part="button">Associate</button>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div> <!-- end enrollmentForm  -->
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

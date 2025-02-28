@@ -1,0 +1,33 @@
+<template>
+<lightning-layout>
+   
+    <lightning-layout-item  size="12">
+        <div class="slds-m-bottom_x-small">
+<lightning-record-edit-form object-api-name={childObjectApiName}>
+    <span style="color:red;">*</span>
+<label for="fieldid"  class="slds-form-element__label slds-rich-text-editor__output">{fieldLabel}</label>
+<lightning-input-field id="fieldid"                                 
+                        variant="label-hidden"
+                        field-name={targetFieldApiName}
+                        value={value}
+                        onchange={handleChange} 
+                        disabled={disabled}
+                        required={required}>
+</lightning-input-field>
+</lightning-record-edit-form>
+</div>
+</lightning-layout-item>  
+
+<lightning-layout-item padding="horizontal-large" size="12">  
+ <div class="slds-m-bottom_x-small">
+<lightning-record-view-form record-id={value} object-api-name="Product2">
+    <span style="color:red;">*</span>
+    <label  class="slds-form-element__label slds-rich-text-editor__output">NDC</label>
+    <lightning-output-field  field-name="SYN_NDC__c" variant="label-hidden"></lightning-output-field>
+    
+</lightning-record-view-form>
+</div>
+</lightning-layout-item>
+    
+</lightning-layout>
+</template>

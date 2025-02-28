@@ -1,0 +1,65 @@
+<aura:component>
+
+    <aura:attribute name="totalRecords" type="Integer" />
+    <aura:attribute name="recordsPerPage" type="Integer" />
+    <aura:attribute name="currentPage" type="Integer" default="1" />
+    <aura:attribute name="pageNumbersToDisplay" type="Integer[]" />
+    <aura:attribute name="allRecordsToDisplay" type="Object[]" />
+    <aura:attribute name="currentRecordsToDisplay" type="Object[]" />
+    <aura:attribute name="startIndex" type="Integer" />
+    <aura:attribute name="endIndex" type="Integer" />
+    <aura:attribute name="startPage" type="Integer" default="1" />
+    <aura:attribute name="endPage" type="Integer" />
+    <aura:attribute name="totalPages" type="Integer" />
+
+    <!-- default handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:method name="RefreshPagination" action="{!c.doInit}" />
+
+    <!-- Events  -->
+    <aura:registerEvent name="ChangePage" type="c:SYN_ChangePage" />
+
+    <lightning:layout class="slds-p-around_small">
+        <lightning:layoutItem class="slds-align-middle slds-col">
+            <ui:outputText value="{! v.startIndex}" class="bold" />
+            to
+            <ui:outputText value="{!v.endIndex}" class="bold" />
+            of
+            <ui:outputText value="{!v.totalRecords}" class="bold" />
+        </lightning:layoutItem>
+        <lightning:layoutItem flexibility="no-flex">
+            <lightning:buttonGroup>
+                <lightning:button name="first" label="First" value="{! v.startPage}" onclick="{!c.paginate}"
+                    disabled="{! v.currentPage == v.startPage}" />
+
+                <lightning:buttonIcon iconName="utility:back" value="{! sub(v.currentPage,1)}" onclick="{!c.paginate}"
+                    disabled="{! v.currentPage == v.startPage}" variant="border-filled" alternativeText="previous" />
+
+                <aura:if isTrue="{! sub(v.currentPage,3) gt v.startPage}">
+                    <lightning:buttonIcon iconName="utility:threedots" disabled="true"
+                        class="threeDotsButtonIconClass" />
+                </aura:if>
+
+                <aura:iteration items="{!v.pageNumbersToDisplay}" var="pageNumber">
+                    <lightning:button name="{!pageNumber}" label="{!pageNumber}"
+                        variant="{! (pageNumber == v.currentPage) ? 'brand' : 'neutral'}" value="{!pageNumber}"
+                        onclick="{!c.paginate}" />
+                </aura:iteration>
+
+                <aura:if isTrue="{! add(v.currentPage,3) lt v.endPage}">
+                    <lightning:buttonIcon iconName="utility:threedots" disabled="true"
+                        class="threeDotsButtonIconClass" />
+                </aura:if>
+
+                <lightning:buttonIcon iconName="utility:forward" value="{! add(v.currentPage,1)}"
+                    onclick="{!c.paginate}" disabled="{! v.currentPage == v.endPage}" variant="border-filled"
+                    alternativeText="next" />
+
+                <lightning:button name="last" label="Last" value="{! v.endPage}" onclick="{!c.paginate}"
+                    disabled="{! v.currentPage == v.endPage}" />
+            </lightning:buttonGroup>
+        </lightning:layoutItem>
+
+    </lightning:layout>
+</aura:component>

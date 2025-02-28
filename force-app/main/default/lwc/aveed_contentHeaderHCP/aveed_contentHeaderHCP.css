@@ -1,0 +1,16 @@
+.aveedcss {
+   color: black !important;
+   text-decoration: none;
+}
+a {
+	color: black !important;
+} 
+
+.highlightpanel {
+   text-decoration: none !important;
+   border-bottom: 3px solid #e17000 !important;
+}
+
+a:hover {
+   color: #e17000 !important;
+}

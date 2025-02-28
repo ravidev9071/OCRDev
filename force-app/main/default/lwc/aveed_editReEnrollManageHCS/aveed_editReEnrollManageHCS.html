@@ -1,0 +1,458 @@
+<template>
+    <div class="frmContainer hcs">
+        <article class="slds-card " part="card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure"></div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            Edit/Re-enroll Healthcare Setting
+                        </h2>
+                    </div> <!-- ed  -->
+                </header>
+            </div>
+
+            <template lwc:if={showSpinner}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </template>
+
+            <div class="slds-card__body slds-card__body_inner" part="body">
+                <div class="slds-text-heading_medium">Instructions</div>
+                <p class="frmInstructions"><span class="slds-text-body_medium">
+                        <span class="slds-text-color_destructive">*</span> fields required</span>
+                </p>
+                <fieldset class="slds-form-element">
+                    <legend class="slds-form-element__legend slds-form-element__label">
+                        <abbr class="slds-required" title="required">* </abbr>Function
+                    </legend>
+                    <div class="slds-form-element__control">
+                        <template for:each={functionOptions} for:item="option">
+                            <span key={option.key} for:index={option.index} data-key={option.key}
+                                data-value={option.value} class={radioClass} onclick={handleFunctionClick}>
+                                <input type="radio" value={option.value} checked={option.checked}
+                                    name="functionOptionRadio" class={option.inputClass} />
+                                <label class="slds-radio__label">
+                                    <span class="slds-radio_faux"></span>
+                                    <span class="slds-form-element__label">&nbsp;{option.label}</span>
+                                </label>
+                            </span>
+                        </template>
+                        <template lwc:if={functionNotSelected}>
+                            <div class="slds-form-element__help required-text" role="status">Complete this
+                                field.</div>
+                        </template>
+                    </div>
+                </fieldset>
+                <div class="dividerSolid"></div>
+
+                <div class="slds-show">
+                    <div class="slds-text-heading_medium">Authorized Representative Information</div>
+
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-large-size_3-of-12">
+                            <div part="input-text">
+                                <lightning-input onchange={handleOnChangeEvt} data-id="arInputs"
+                                    class="search slds-form-element" name="firstName" pattern="[a-zA-Z0-9.\-'\s]*"
+                                    message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                    value={currentAccountInfo.FirstName} label=" First Name" required>
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-large-size_2-of-12">
+                            <lightning-input name="middleName" value={currentAccountInfo.MiddleName}
+                                class="search slds-form-element" onchange={handleOnChangeEvt} label="MIT"
+                                data-id="arInputs">
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-large-size_3-of-12">
+                            <lightning-input onchange={handleOnChangeEvt} name="lastName" data-id="arInputs"
+                                class="search slds-form-element" value={currentAccountInfo.LastName}
+                                pattern="[a-zA-Z0-9.\-'\s]*"
+                                message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                label=" Last Name" required>
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-large-size_1-of-12">
+                            <div part="input-text">
+                                <lightning-input onchange={handleOnChangeEvt} name="title"
+                                    class="search slds-form-element" data-id="arInputs"
+                                    value={currentAccountInfo.US_WSREMS__Title__c} label=" Title">
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-large-size_3-of-12">
+                            <lightning-input class="search slds-form-element" value={currentAccountInfo.PersonEmail}
+                                label=" Email Address" required disabled>
+                            </lightning-input>
+                        </div>
+
+                    </div>
+                    <div class="slds-m-bottom_small"></div>
+
+                    <div class="slds-border_top slds-m-bottom_small"></div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-medium-size_3-of-12">
+                            <lightning-input onchange={handleOnChangeEvt} data-id="arInputs"
+                                class="search slds-form-element phoneNumber" value={currentAccountInfo.Phone}
+                                pattern="\(\d{3}\) \d{3}-\d{4}"
+                                message-when-pattern-mismatch="Please enter a valid Phone number" label=" Phone Number"
+                                name="phoneNumber" required>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-medium-size_1-of-12">
+                            <lightning-input onchange={handleOnChangeEvt} data-id="arInputs" name="extension"
+                                class="search slds-form-element" label="Ext" pattern="\d*"
+                                message-when-pattern-mismatch="Please enter a valid Ext"
+                                value={currentAccountInfo.US_WSREMS__EXT__c}>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-medium-size_3-of-12">
+                            <lightning-input onchange={handleOnChangeEvt} name="faxNumber"
+                                class="search slds-form-element faxNumber" pattern="\(\d{3}\) \d{3}-\d{4}"
+                                data-id="arInputs" message-when-pattern-mismatch="Please enter a valid Fax number"
+                                value={currentAccountInfo.Fax} label=" Fax Number" required>
+                            </lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+
+                            <fieldset class="slds-form-element" style="display: inline-block">
+                                <legend class="slds-form-element__legend slds-form-element__label">
+                                    <abbr class="slds-required" title="required">*</abbr>
+                                    &nbsp;Preferred Method of
+                                    Communication
+                                    (please select one)
+                                </legend>
+                                <div class="slds-form-element__control">
+                                    <template for:each={contactMethods} for:item="option">
+                                        <span key={option.key} for:index={option.index} data-key={option.key}
+                                            data-value={option.value} class={radioClass}
+                                            onclick={handleContactMethodClick}>
+                                            <input type="radio" value={option.value} checked={option.checked}
+                                                name="contactMethodRadio" class={option.inputClass} />
+                                            <label class="slds-radio__label">
+                                                <span class="slds-radio_faux"></span>
+                                                <span class="slds-form-element__label">&nbsp;{option.label}</span>
+                                            </label>
+                                        </span>
+                                    </template>
+                                    <template lwc:if={contactMethodNotSelected}>
+                                        <div class="slds-form-element__help required-text" role="status">Complete this
+                                            field.</div>
+                                    </template>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div> <!-- end row  -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <fieldset class="slds-form-element" style="display: inline-block">
+                                <legend class="slds-form-element__legend slds-form-element__label">
+                                    <abbr class="slds-required" title="required">*</abbr>
+                                    &nbsp;Role (please select one)
+                                </legend>
+                                <div class="slds-form-element__control">
+                                    <template for:each={credentialOptions} for:item="option">
+                                        <span key={option.key} for:index={option.index} data-key={option.key}
+                                            data-value={option.value} class={radioClass} onclick={handleDegreeClick}>
+                                            <input type="radio" value={option.value} checked={option.checked}
+                                                name="credentialsRadio" class={option.inputClass} />
+                                            <label class="slds-radio__label">
+                                                <span class="slds-radio_faux"></span>
+                                                <span class="slds-form-element__label">&nbsp;{option.label}</span>
+                                            </label>
+                                        </span>
+                                    </template>
+                                    <template lwc:if={credentialNotSelected}>
+                                        <div class="slds-form-element__help required-text" role="status">Complete this
+                                            field.</div>
+                                    </template>
+                                </div>
+                                <template lwc:if={showFreeTextForDegree}>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input onchange={handleOnChangeEvt} type="text"
+                                                name="othercredentials" label=" Other Position/Credential" required
+                                                value={prescriberRecord.othercredentials}
+                                                data-id="arInputs"></lightning-input>
+                                        </div>
+                                    </div>
+                                </template>
+                            </fieldset>
+                        </div>
+                    </div> <!-- end row  -->
+
+                    <div class="containerEmphasis">
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__legend slds-form-element__label">
+                                Does this healthcare setting have the
+                                necessary on-site equipment and personnel to manage
+                                POME
+                                or anaphylaxis?
+                            </legend>
+                            <div class="slds-form-element__control">
+                                <template for:each={yesNoOptions} for:item="option">
+                                    <span key={option.key} for:index={option.index} data-key={option.key}
+                                        data-value={option.value} class={radioClass} onclick={handleYesNoClick}>
+                                        <input type="radio" value={option.value} checked={option.checked}
+                                            name="yesNoOptionRadio" class={option.inputClass} />
+                                        <label class="slds-radio__label">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">&nbsp;{option.label}</span>
+                                        </label>
+                                    </span>
+                                </template>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="dividerSolid"></div>
+                </div> <!-- end hide AR details  -->
+
+                <div class="slds-text-heading_medium">Healthcare Setting Information</div>
+                <p class="txtInstructions"></p>
+
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-medium-size_8-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" Healthcare Setting Name" name="name"
+                                pattern="[a-zA-Z0-9.\-'\s]*" value={healthCareSettingRecord.name}
+                                message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                onchange={handleSettingInputChange} required></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-wrap slds-medium-size_6-of-12 slds-large-size_8-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" maxlength="9"
+                                label=" DEA Number (On file with distributor account)" name="dea"
+                                value={healthCareSettingRecord.dea} onchange={handleSettingInputChange}
+                                pattern="^[a-zA-Z]{2}[a-zA-Z0-9]*$"
+                                message-when-pattern-mismatch="Please enter a valid DEA number"
+                                required></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-grid slds-wrap slds-wrap slds-gutters">
+                    <div class="slds-col slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" Address Line 1" name="addressLine1"
+                                pattern="[a-zA-Z0-9.\-'\s]*" value={healthCareSettingRecord.addressLine1}
+                                message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                onchange={handleSettingInputChange} required></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-wrap slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" Address Line 2" name="addressLine2"
+                                pattern="[a-zA-Z0-9.\-'\s]*" value={healthCareSettingRecord.addressLine2}
+                                message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                onchange={handleSettingInputChange}></lightning-input>
+                        </div>
+                    </div>
+
+                </div> <!-- end row  -->
+
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-medium-size_4-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" City" name="city"
+                                pattern="[a-zA-Z0-9.\-'\s]*" value={healthCareSettingRecord.city}
+                                message-when-pattern-mismatch="Please enter only alphanumeric characters, spaces, and the symbols . - '."
+                                onchange={handleSettingInputChange}></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                        <div class="slds-form-element">
+                            <lightning-combobox data-id="affiliationData" class="search slds-form-element"
+                                label=" State" value={healthCareSettingRecord.state} required options={stateOptions}
+                                onchange={handleSettingInputChange} name="state"></lightning-combobox>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" ZIP" pattern="^(\d{5}|\d{5}-\d{4})$"
+                                value={healthCareSettingRecord.zip}
+                                message-when-pattern-mismatch="Please enter a valid 5-digit or a 10-character format like '12345-6789' zip."
+                                name="zip" onchange={handleSettingInputChange} required></lightning-input>
+                        </div>
+                    </div>
+
+                </div> <!-- end row  -->
+
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <fieldset class="slds-form-element" style="display: inline-block">
+                            <legend class="slds-form-element__legend slds-form-element__label">
+                                &nbsp;Setting Type (please select one)
+                            </legend>
+                            <div class="slds-form-element__control">
+                                <template for:each={settingTypeOptions} for:item="option">
+                                    <span key={option.key} for:index={option.index} data-key={option.key}
+                                        data-value={option.value} class={radioClass} onclick={handleSettingTypeClick}>
+                                        <input type="radio" value={option.value} checked={option.checked}
+                                            name="settingTypeRadio" class={option.inputClass} />
+                                        <label class="slds-radio__label">
+                                            <span class="slds-radio_faux"></span>
+                                            <span class="slds-form-element__label">&nbsp;{option.label}</span>
+                                        </label>
+                                    </span>
+                                </template>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div> <!-- end row  -->
+
+                <div class="slds-grid slds-wrap slds-gutters ">
+                    <div class="slds-col slds-medium-size_3-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" Phone Number" name="phone"
+                                value={hcsAccountRecord.Phone} onchange={handleSettingInputChange} type="tel"
+                                pattern="\(\d{3}\) \d{3}-\d{4}"
+                                message-when-pattern-mismatch="Please enter a valid Phone number"
+                                required></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-medium-size_3-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" Fax Number" name="faxNumber"
+                                value={hcsAccountRecord.Fax} onchange={handleSettingInputChange} type="tel"
+                                pattern="\(\d{3}\) \d{3}-\d{4}"
+                                message-when-pattern-mismatch="Please enter a valid Fax number"
+                                required></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-medium-size_3-of-12">
+                        <div part="input-text">
+                            <lightning-input data-id="affiliationData" label=" Email Address" name="emailAddress"
+                                onchange={handleSettingInputChange} type="email"
+                                value={healthCareSettingRecord.emailAddress}
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+                                message-when-pattern-mismatch="Please enter a valid Email address."
+                                required></lightning-input>
+                        </div>
+                    </div>
+                </div>
+
+                <template lwc:if={isReEnroll}>
+                    <div id="Attestations">
+                        <div class="slds-m-top_x-large"></div>
+                        <div class="dividerSolid"></div>
+                        <div class="frmAttestations">
+                            <div class="slds-text-heading_medium">Authorized Representative Responsibilities</div>
+                            <p>I am the Authorized Representative designated by my healthcare setting to coordinate the
+                                activities of the AVEED REMS. I agree to comply with the following program requirements:
+                            </p>
+                            <ul class="listItemDisc">
+                                <li>I understand that my healthcare setting must be certified with the AVEED REMS and
+                                    have at
+                                    least one certified prescriber associated with my facility to be able to order,
+                                    receive or
+                                    administer AVEED.</li>
+                                <li>I have completed the AVEED REMS Education Program for Healthcare Settings.</li>
+                                <li>I understand the risks of serious pulmonary oil microembolism (POME) reactions and
+                                    anaphylaxis following the administration of AVEED.</li>
+                                <li>I understand this healthcare setting must verify the current Authorized
+                                    Representative
+                                    annually and renew its enrollment in the AVEED REMS every two years from the date of
+                                    initial
+                                    enrollment.</li>
+                                <li>This healthcare setting has immediate access on-site to equipment and personnel to
+                                    manage
+                                    POME or anaphylaxis.</li>
+                                <li>This healthcare setting will establish procedures and protocols that are subject to
+                                    audit,
+                                    to help ensure compliance with the safe use conditions required in the AVEED REMS,
+                                    including
+                                    the following:
+                                    <ul class="listItemNDash">
+                                        <li>All Healthcare Providers (HCPs) who prescribe AVEED in my healthcare setting
+                                            are
+                                            specially certified prior to prescribing AVEED and a record of such training
+                                            must be
+                                            maintained.</li>
+                                        <li>All non-prescribing HCPs who administer AVEED in my healthcare setting are
+                                            trained
+                                            and a record regarding such training must be maintained.</li>
+                                        <li>Prior to initiating treatment and before each injection, review with and
+                                            provide a
+                                            copy of “What You Need To Know About AVEED Treatment: A Patient Guide” to
+                                            each
+                                            patient to inform them about the risks of serious POME reactions and
+                                            anaphylaxis.
+                                        </li>
+                                        <li>To observe each patient administered AVEED for <b>30 minutes</b> at my
+                                            healthcare
+                                            setting following each injection in order to provide appropriate medical
+                                            treatment
+                                            in the event of serious POME reactions or anaphylaxis following the
+                                            administration
+                                            of AVEED.</li>
+                                    </ul>
+                                </li>
+                                <li>Not to loan, sell or transfer AVEED to another pharmacy, healthcare setting,
+                                    prescriber,
+                                    institution or distributor, except in the case where the transfer is to another
+                                    certified
+                                    healthcare setting (unique ship-to site address) where I am also the Authorized
+                                    Representative.</li>
+                                <li>This healthcare setting must not dispense AVEED for home or patient
+                                    self-administration.
+                                </li>
+                                <li>To make available to Endo USA, Inc. (Endo), and/or a designated third party or the
+                                    FDA,
+                                    documentation to verify understanding of, and adherence to, the requirements of the
+                                    AVEED
+                                    REMS.</li>
+                                <li>I understand that this certified healthcare setting must recertify in the AVEED REMS
+                                    if the
+                                    healthcare setting designates a new Authorized Representative.</li>
+                            </ul>
+
+                            <div class="slds-m-vertical_x-large"></div>
+                            <div class="containerEmphasis hcs">
+                                <div class="slds-text-heading_medium">Authorized Representative Signature</div>
+                                <p class="txtInstructions">Use your mouse or touchpad to sign.</p>
+                                <div class="slds-m-vertical_x-large"></div>
+                                <p>I understand that this enrollment only applies to me as the designated Authorized
+                                    Representative of this healthcare setting.
+                                    I will complete a separate enrollment form for each healthcare setting (unique
+                                    ship-to site
+                                    address) for which my designation and responsibilities extend.
+                                    Failure to enroll a healthcare setting and have certified healthcare providers in
+                                    the AVEED
+                                    REMS will result in the inability to receive shipments of AVEED.</p>
+                                <c-rems-sign-pad onsignimagedata={handleSignatureCompleted}></c-rems-sign-pad>
+
+                                <template if:true={signatureRequired}>
+                                    <div class="slds-form-element__help required-text" role="status">Signature required
+                                        for completion.</div>
+                                </template>
+                            </div>
+                            <div class="slds-m-vertical_x-large"></div>
+                        </div>
+                    </div> <!-- end hide attestations  -->
+                </template>
+            </div> <!-- end cardbody   -->
+
+
+            <div class="slds-card__footer" part="footer">
+                <slot name="footer">
+                    <div slot="footer">
+                        <button title="Cancel" type="button" class="slds-button slds-button_text-destructive"
+                            onclick={handleCancel}>Cancel</button>
+                        <template lwc:if={isReEnroll}>
+                            <button id="BtnResetSig" class="slds-button slds-m-top_large slds-button_outline-brand"
+                                type="button" part="button" onclick={handleClear}>
+                                Clear Signature</button>
+                        </template>
+                        <button onclick={handleSubmitForm} class="slds-button slds-m-top_large slds-button_brand"
+                            aria-disabled="false" type="button" part="button">Submit</button>
+                    </div>
+                </slot>
+            </div>
+        </article>
+    </div>
+</template>

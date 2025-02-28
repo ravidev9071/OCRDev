@@ -1,0 +1,26 @@
+.custom-container{
+	color : black;
+}
+.heading1{
+	color: #002e5d;
+    font-weight: 400;
+    font-family: "Roboto Condensed";
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+.parag{
+	padding-left: 17px;
+	height:65px;
+}
+.dummy{
+	color : black;
+}
+
+ @media only screen and (max-width: 600px) {
+
+	/* make horizontal */
+	
+	.slds-grid{
+		display: block !important;
+	}
+}

@@ -1,0 +1,75 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-24-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div class="pageContainer">	
+        <div class="slds-text-heading_large">Prescribers</div>
+
+        <div class="slds-text-heading_medium">To become certified, the prescriber must:</div>
+        <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+            <div class="steps-container">
+                <div class="stepone" style="padding: 0;border-right: 2px solid #003b71;">
+                    <div class="stepNum">Step<br>1</div>
+                    <div class="stepText">Review the following materials
+                            <ul class="listItemDiscs">
+                                <li><a href="https://www.gene.com/download/pdf/piasky_prescribing.pdf" target="_blank">Prescribing Information</a></li>
+                                <li><a href="https://syneoshealth4.my.salesforce.com/sfc/p/5f000001BTYC/a/5f000000qWXi/J_foUPUtfsbZyo.69mqH9ko7nCE.1WSp1pVEZVVghpI" target="_blank">Patient Guide</a></li>
+                                <template if:true={isDisplayFiles}>
+                                    <template for:each={resourcesList} for:item="file">  
+                                        <li key={file.value}><a href={file.url}>{file.label}</a></li>
+                                    </template>
+                                </template>
+                            </ul>
+                    </div>
+                </div>
+                
+                <div class="steptwo">
+                    <div class="stepNum">Step<br>2</div>
+                    <div class="stepText">
+                        Enroll in the PIASKY REMS by completing and submitting the </br><b>Prescriber Enrollment Form:</b>
+                        <ul class="listItemDiscs">
+                            <li>Online</li> 
+                            <li>Fax
+                            <ul class="nestedListStyle"><li>Fax the completed form to the PIASKY REMS at <br><span class="txtNoWrap">1-833-670-4840</span></li></ul></li>
+                        </ul>
+                    </div>
+                </div>						  
+            </div>  
+        </div>
+                    
+        <div data-global-id="148:142;a" class="slds-p-bottom_large slds-align_absolute-center slds-shrink-none" data-aura-rendered-by="193:142;as">
+            <a href="piasky-prescriber-enrollment" class="bannerLayoutButton slds-button slds-button_brand  btnLink"  data-aura-rendered-by="194:142;a" tabindex="0">
+                    Start Online Prescriber Enrollment <img src={piaskyArrow}>
+            </a>
+        </div>
+                    
+        <p class="slds-text-body_small  slds-align_absolute-center"><i>Or - Print and fax to PIASKY REMS:</i></p>
+        <p class="slds-text-body_small  slds-align_absolute-center txtUnderline"><a class="slds-text-color_weak" href={prscriberEnlmntFrm.url}>Prescriber Enrollment Form</a></p>
+        
+
+        <div class="dividerSolid"></div>
+        <div class="slds-text-heading_medium">Key Prescriber Requirements</div>
+        <div class="slds-grid slds-wrap slds-gutters xslds-grid_align-center">
+            <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-large-size_6-of-12">
+                <ul class="listItemDisc">
+                    <li>Assess the patient for unresolved meningococcal infection.</li>
+                    <li>For patients with an unresolved serious meningococcal infection: Not initiate PIASKY.</li>
+                    <li>Assess the patient’s vaccination status for meningococcal serogroups A, C, W, Y, and B and vaccinate as needed according to the current Advisory Committee on Immunization Practices (ACIP) recommendations for patients receiving a complement inhibitor. </li>
+                    <li>For patients who are not up to date with meningococcal vaccines at least two weeks prior to initiation of treatment and who must start PIASKY urgently: Provide the patient with a prescription for antibacterial drug prophylaxis.</li>
+                </ul>	
+            </div>
+            <div class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-large-size_6-of-12">
+                <ul class="listItemDisc">
+                    <li>Counsel the patient using the <span class="docEmphasis">Patient  Guide</span> and <span class="docEmphasis">Patient Safety Card</span> and provide a copy of these materials to the patient.</li>
+                    <li>Counsel the patient on the need to carry the <span class="docEmphasis">Patient Safety Card</span> at all times and for 11 months after their last dose of PIASKY.</li>
+                    <li>Assess the patient for early signs and symptoms of meningococcal infection and evaluate immediately if infection is suspected. </li>
+                    <li>Vaccinate patients as needed according to the current ACIP recommendations for meningococcal vaccinations for patients receiving a complement inhibitor.</li>
+                </ul>	
+            </div>
+        </div>
+    </div>
+</template>

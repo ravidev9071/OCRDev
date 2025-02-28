@@ -1,0 +1,60 @@
+<template>
+    <lightning-card title="OCR/ECMS Response" icon-name="custom:custom63">
+        <lightning-layout>
+            <lightning-layout-item padding="around-medium">
+                <template if:true={jsonData.length}>
+                    <table>                        
+                        <tbody>
+                            <template for:each={jsonData} for:item="row">
+                                <tr key={row.id}>
+                                    
+                                    <td>
+                                      NPIName: &nbsp; <input value={row.NPINumber}/>
+                                            
+                                       </td></tr>
+                                <tr key={row.id}>
+                                    
+                                    <td>
+                                      First Name: &nbsp; <input value={row.Fname}/>
+                                            
+                                       </td></tr>
+                                       <tr key={row.id}>
+                                    
+                                        <td>
+                                          Last Name: &nbsp; <input value={row.Lname}/>
+                                                
+                                           </td></tr>
+
+                                           <tr key={row.id}>
+                                    
+                                            <td>
+                                                Address: &nbsp; <input value={row.Address}/>
+                                                    
+                                               </td></tr>
+                                            <tr key={row.id}>
+                                                <td> City :  &nbsp; &nbsp; <input value={row.City}/>                                       
+                                            
+                                        
+                                        </td></tr>
+                                        <tr key={row.id}>
+                                            <td> State :  &nbsp;<input value={row.State}/>
+                                        </td></tr>
+                                        <tr key={row.id}>
+                                            <td> Postalcode :  &nbsp;<input value={row.Postalcode}/>
+                                        </td></tr>
+                                        <tr key={row.id}>
+                                            <td> <br/>
+                                        </td></tr>
+                                        <tr key={row.id}>
+                                            <td>
+                                        <lightning-button label="Save & Proceed" data-id={row.id} onclick={handleEdit}></lightning-button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </template>                
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

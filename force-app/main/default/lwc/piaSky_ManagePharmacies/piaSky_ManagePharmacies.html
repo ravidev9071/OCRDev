@@ -1,0 +1,577 @@
+<template>
+    <div if:true={showManageHCS} class="pageContainer">
+        <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+			<div class="">
+				<div class="pageContent">
+			
+	
+					<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+						<div class="slds-col--padded comm-content-header comm-layout-column">
+		
+							<div data-region-name="content">
+								<div data-priority=""  class="ui-widget">
+									<div class="slds-text-heading_large">Manage Pharmacies</div>	
+									<div class="slds-m-bottom_large"></div>
+									<div class="manageDel">
+									
+	<div class="slds-page-header" style="background: #fff; padding: 0;">
+		<div class="slds-page-header__row">
+			<div class="slds-page-header__col-title" >
+				<div class="slds-media">
+					<div class="slds-media__figure" style="display: none;">
+						<span class="slds-icon_container slds-icon-standard-opportunity">
+							<svg class="slds-icon slds-page-header__icon" aria-hidden="true">
+								<use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use>
+							</svg>
+						</span>
+					</div>
+					<div class="slds-media__body" style="justify-content: to;">
+						<div class="slds-page-header__name" style="align-items: center;">
+							<div class="slds-page-header__name-title" style="font-size: 1.75rem; padding-top: 10px;">
+								<h1>
+									<span>Pharmacy Listing</span>
+									<span class="slds-page-header__title slds-truncate" title="Recently Viewed" style="display: none;"></span>
+								</h1>
+							</div>
+							<div class="slds-page-header__name-switcher">
+								<div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+									<button class="slds-button slds-button_icon slds-button_icon-small" aria-haspopup="true" title="Switch list view">
+										<svg class="slds-button__icon slds-icon_x-small" aria-hidden="true">
+											<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+										</svg>
+										<span class="slds-assistive-text">Switch list view</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="slds-page-header__col-actions">
+				<div class="slds-page-header__controls">
+					<div class="slds-page-header__control">
+						<ul class="slds-button-group-list">
+						 
+							<li style="display: none;">
+								<div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+									<button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="More Actions">
+										<svg class="slds-button__icon" aria-hidden="true">
+											<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+										</svg>
+										<span class="slds-assistive-text">More Actions</span>
+									</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="slds-page-header__row" style="display: none;">
+			<div class="slds-page-header__col-meta">
+				<p class="slds-page-header__meta-text">10 items • Updated 13 minutes ago</p>
+			</div>
+			<div class="slds-page-header__col-controls">
+				<div class="slds-page-header__controls">
+					<div class="slds-page-header__control">
+						<div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+							<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" aria-expanded="false" title="List View Controls">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#settings"></use>
+								</svg>
+								<svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+									<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+								</svg>
+								<span class="slds-assistive-text">List View Controls</span>
+							</button>
+						</div>
+					</div>
+					<div class="slds-page-header__control">
+						<div class="slds-dropdown-trigger slds-dropdown-trigger_click">
+							<button class="slds-button slds-button_icon slds-button_icon-more" aria-haspopup="true" aria-expanded="false" title="Change view">
+								<svg class="slds-button__icon" aria-hidden="true">
+									<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#table"></use>
+								</svg>
+								<svg class="slds-button__icon slds-button__icon_x-small" aria-hidden="true">
+									<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+								</svg>
+								<span class="slds-assistive-text">Change view</span>
+							</button>
+						</div>
+					</div>
+					<div class="slds-page-header__control">
+						<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Edit List">
+							<svg class="slds-button__icon" aria-hidden="true">
+								<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+							</svg>
+							<span class="slds-assistive-text">Edit List</span>
+						</button>
+					</div>
+					<div class="slds-page-header__control">
+						<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Refresh List">
+							<svg class="slds-button__icon" aria-hidden="true">
+								<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#refresh"></use>
+							</svg>
+							<span class="slds-assistive-text">Refresh List</span>
+						</button>
+					</div>
+					<div class="slds-page-header__control">
+						<ul class="slds-button-group-list">
+							<li>
+								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Charts">
+									<svg class="slds-button__icon" aria-hidden="true">
+										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chart"></use>
+									</svg>
+									<span class="slds-assistive-text">Charts</span>
+								</button>
+							</li>
+							<li>
+								<button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Filters">
+									<svg class="slds-button__icon" aria-hidden="true">
+										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#filterList"></use>
+									</svg>
+									<span class="slds-assistive-text">Filters</span>
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+									
+									
+										<div class="tileCards">								
+											<div class="slds-card-wrapper">
+												<article class="slds-card">
+													<div class="slds-card__header slds-grid">
+														<header class="slds-media slds-media_center slds-has-flexi-truncate">
+															<div class="slds-media__figure">
+																<span class="slds-icon_container slds-icon-standard-contact" title="contact">
+																	<svg class="slds-icon slds-icon_small" aria-hidden="true">
+																		 <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
+																	</svg>
+																	<span class="slds-assistive-text"></span>
+																</span>
+															</div>
+															 <div class="slds-media__body">
+																  <h2 class="slds-card__header-title">
+																	<span>{pharmaUser.Name} 
+																	<span class="status certified">{pharmaUser.US_WSREMS__Status__c}</span>	
+																	<br>Pharmacy Enrollment ID:  {pharmaUser.US_WSREMS__REMS_ID__c}
+																	</span>
+																	
+																</h2>
+															 </div>
+															 <div class="slds-no-flex">
+															 </div>
+														</header>
+													</div>
+													<div class="slds-card__body">	
+	
+														<div class="slds-form__row">
+															<div class="slds-form__item" role="listitem">
+																<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																	<span class="slds-form-element__label">Address Line 1</span>
+																		<div class="slds-form-element__control">
+																			<div class="slds-form-element__static">{pharmaUser.Address_1_Secondary_Office__c}</div>
+																			<button class="slds-button slds-button_icon" title="">
+																				 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																							<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																				 </svg>
+																				 <span class="slds-assistive-text"></span>
+																			</button>  
+																		</div>
+																	</div>
+																  </div><!-- end form item  -->
+																  <div class="slds-form__item" role="listitem">
+																			 <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																						<span class="slds-form-element__label">Address Line 2</span>
+																						<div class="slds-form-element__control">
+																								  <div class="slds-form-element__static">{pharmaUser.Address_2_Secondary_Office__c}</div>
+																			<button class="slds-button slds-button_icon" title="">
+																											 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																														<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																											 </svg>
+																											 <span class="slds-assistive-text"></span>
+																								  </button>  
+																						</div>
+																			 </div>
+																  </div><!-- end form item  -->																 
+																  <div class="slds-form__item" role="listitem">
+																<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																	<span class="slds-form-element__label">City</span>
+																	<div class="slds-form-element__control">
+																		<div class="slds-form-element__static">{pharmaUser.ShippingCity}</div>
+																		<button class="slds-button slds-button_icon" title="">
+																			 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																						<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																			 </svg>
+																			 <span class="slds-assistive-text"></span>
+																		  </button>  
+																	</div>
+																</div>
+															  </div><!-- end form item  -->
+	
+	
+															  <div class="slds-form__item" role="listitem">
+																<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																	<span class="slds-form-element__label">State</span>
+																	<div class="slds-form-element__control">
+																		<div class="slds-form-element__static">{pharmaUser.US_WSREMS__State__c}</div>
+																		<button class="slds-button slds-button_icon" title="">
+																			 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																						<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																			 </svg>
+																			 <span class="slds-assistive-text"></span>
+																		</button>  
+																	</div>
+																</div>
+															</div><!-- end form item  -->	
+	
+															<div class="slds-form__item" role="listitem">
+																<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																	<span class="slds-form-element__label">Zip Code</span>
+																	<div class="slds-form-element__control">
+																		<div class="slds-form-element__static">{pharmaUser.ShippingPostalCode}</div>
+																		<button class="slds-button slds-button_icon" title="">
+																			 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																						<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																			 </svg>
+																			 <span class="slds-assistive-text"></span>
+																		</button>  
+																	</div>
+																</div>
+															</div><!-- end form item  -->	
+	
+	
+															<div class="slds-form__item" role="listitem">
+																<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																	<span class="slds-form-element__label">Phone Number</span>
+																	<div class="slds-form-element__control">
+																		<div class="slds-form-element__static">{pharmaUser.Phone}</div>
+																			<button class="slds-button slds-button_icon" title="">
+																				 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																							<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																				 </svg>
+																				 <span class="slds-assistive-text"></span>
+																			</button>  
+																		</div>
+																	</div>
+																  </div><!-- end form item  -->	
+																  <div class="slds-form__item" role="listitem">
+																		<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+																			<span class="slds-form-element__label">Fax Number</span>
+																			<div class="slds-form-element__control">
+																				<div class="slds-form-element__static">{pharmaUser.Fax}</div>
+																				<button class="slds-button slds-button_icon" title="">
+																					 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+																								<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+																					 </svg>
+																					 <span class="slds-assistive-text"></span>
+																				</button>  
+																			</div>
+																		</div>
+																  </div><!-- end form item  -->		  
+															</div>	 <!-- end form-row  -->
+	
+														</div> <!-- end card body  -->
+	
+													
+													</article>
+													
+																	
+													
+													
+													
+													
+													
+													
+													
+		<article class="slds-card slds-card_boundary">
+			<div class="slds-card__header slds-grid">
+				<header class="slds-media slds-media_center slds-has-flexi-truncate">
+					<div class="slds-media__figure">
+						<span class="slds-icon_container slds-icon-standard-contact" title="contact">
+							<svg class="slds-icon slds-icon_small" aria-hidden="true">
+								<use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
+							</svg>
+							<span class="slds-assistive-text">contact</span>
+						</span>
+					</div>
+					<div class="slds-media__body">
+						<h2 class="slds-card__header-title">
+	
+								<span>Office Staff</span>
+	
+						</h2>
+					</div>
+					<div class="slds-no-flex">
+						<button onclick={openModal} class="slds-button slds-button_brand">Add Staff</button>
+					</div>
+				</header>
+			</div>
+			  
+			  
+					  
+			<div class="slds-card__body slds-card__body_inner">
+		
+							<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" aria-labelledby="element-with-table-label other-element-with-table-label">
+								<thead>
+								  <tr class="slds-line-height_reset">
+										<th aria-sort="ascending" class="xxxslds-is-resizable slds-is-sortable slds-is-sorted slds-is-sorted_asc slds-cell_action-mode" scope="col">
+											<div class="slds-truncate" title="">Last Name
+											<lightning-icon icon-name='utility:arrowup' variant="inverse" data-title="CreatedDate" size="xx-small" onclick={sortAffiliatedAcc}></lightning-icon>
+											</div>
+										</th>							
+	
+										<th class="slds-is-sortable" scope="col">
+											 <div class="slds-truncate" title="">First Name</div>
+										</th>
+										<th class="slds-is-sortable" scope="col">
+											 <div class="slds-truncate" title=" ">Status</div>
+										</th>
+										<th class="slds-is-sortable" scope="col">
+											 <div class="slds-truncate" title=" ">Email</div>
+										</th>	
+										<th class="slds-is-sortable" scope="col">
+											 <div class="slds-truncate" title=" ">Office Phone</div>
+										</th>	
+										<th class="slds-is-sortable" scope="col">
+											 <div class="slds-truncate" title=" ">Staff Type</div>
+										</th>	
+										<th class="slds-is-sortable" scope="col">
+											 <div class="slds-truncate" title=" ">Action</div>
+										</th>										
+									</tr>
+									</thead>
+									<tbody>
+										<template for:each={affiliatedAcc} for:item="arrRec" for:index="arrIndex">
+	
+									<tr class="slds-hint-parent" key={arrRec.id}>
+										<td data-label=" ">
+											 <div class="slds-truncate" title=" ">{arrRec.US_WSREMS__Pharmacy_User__r.LastName}</div>
+									 
+										</td>			
+										<td data-label="">
+											 <div class="slds-truncate" title="  ">{arrRec.US_WSREMS__Pharmacy_User__r.FirstName}</div>
+										</td>
+										<td data-label="">
+											 <div if:true={arrRec.US_WSREMS__isActive__c} class="slds-truncate status certified" title="">Active</div>
+											 <div if:false={arrRec.US_WSREMS__isActive__c} class="slds-truncate status pending" title="">Inactive</div>
+										</td>
+										<td data-label="">
+											 <div class="slds-truncate" title="">{arrRec.US_WSREMS__Pharmacy_User__r.US_WSREMS__Email__c}</div>
+										</td>
+							
+										<td data-label="">
+											 <div class="slds-truncate" title="">{arrRec.US_WSREMS__Pharmacy_User__r.Phone}</div>
+										</td>
+										<td data-label="">
+											 <div class="slds-truncate" title="">{arrRec.US_WSREMS__User_Role__c}</div>
+										</td>									
+										<td data-label="">
+											 <div class="slds-truncate" title="">
+											
+												<button onclick={removeStaff} data-index={arrIndex} class="removeStaffbtn" value={arrRec.Id} type="button" part="button">Remove Staff User</button>
+											</div>
+										</td>									
+									</tr></template>
+									</tbody>
+								</table>			
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+		  
+			</div>
+	
+	
+	
+	
+	
+	
+	
+	<footer class="slds-card__footer slds-hide">
+				<a class="slds-card__footer-action" href="#">
+					View All
+					<span class="slds-assistive-text">Contacts</span>
+				</a>
+			</footer> 
+		</article>
+	</div>
+									
+	</div>  <!-- end tileCards   -->
+	
+	</div>  <!-- end manageDel  -->
+				
+								</div> <!-- end ui-widget   -->
+							</div>		
+		
+						</div> <!-- end SF   -->
+					</div> <!-- end pageContent   -->
+			</div> <!-- end pageContainer   -->
+	
+				</div>  <!-- end main   -->
+						
+	
+						 
+						 
+				</div>
+			
+			  
+			  
+			  <template if:true={boolVisible}>
+	
+			  <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" id="ModalAR" class="slds-modal slds-fade-in-open   slds-modal_medium">
+			 <div class="slds-modal__container">
+				  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+						<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+							 <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+						</svg>
+						<span class="slds-assistive-text">Cancel and close</span>
+				  </button>
+				  <div class="slds-modal__header">
+						<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Pharmacy Staff User</h1>
+				  </div>
+				  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<div class="frmContainer">
+					<article class="slds-card " part="card">
+						 <div class="slds-card__header slds-grid">
+							<header class="slds-media slds-media_center slds-has-flexi-truncate">
+								<div class="slds-media__figure"></div>
+								<div class="slds-media__body">
+									<h2 class="slds-card__header-title">
+										
+										<span>Staff Information</span>
+									
+									</h2>
+								</div>
+							</header>
+						 </div>
+						 <div class="slds-card__body  slds-card__body_inner" part="body">
+							<p class="frmInstructions">Please enter staff information and click "Submit".  
+							<br><br>Upon successful submission, the staff user will receive an email with instructions on how to create their login credentials.
+							<br><br><span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span> fields required</span></p>
+	
+										<div class="slds-m-bottom_small"></div>
+										<fieldset class="slds-form-element" disabled={disableStaffType}>
+												<legend class="slds-form-element__legend slds-form-element__label">
+													 <abbr class="slds-required" title="required">* </abbr>Staff Type</legend>
+												<div class="slds-form-element__control">
+													<span class="slds-radio">
+														<input type="radio" id="rb-1" checked="" value="Staff" name="rbPMOC" onclick={handleStaffType}>
+														<label class="slds-radio__label" for="rb-1">
+															<span class="slds-radio_faux"></span>
+															<span class="slds-form-element__label">Staff</span>
+														</label>
+													</span>
+													<span class="slds-radio">
+														<input type="radio" id="rb-2" value="Secondary AR" name="rbPMOC" onclick={handleStaffType}> 
+														<label class="slds-radio__label" for="rb-2">
+															<span class="slds-radio_faux"></span>
+															<span class="slds-form-element__label">Secondary Authorized Representative</span>
+														</label>
+													</span>
+													
+												</div>
+											</fieldset>
+										<div class="slds-border_top slds-m-bottom_small"></div>										
+									 
+										<div  class="slds-grid  slds-wrap  slds-gutters">
+											  <div  class="slds-col slds-medium-size_6-of-12">
+													<lightning-input  class="search slds-form-element modalSubmit" lwc-66unc5l95ad-host="" name="FirstName" label=" First Name" required>
+														 <lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host="" variant="standard">
+															  <div lwc-enmikoh2qu="" part="input-text">
+																	<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">
+																		<abbr class="slds-required" title="required">* </abbr>First Name</label>
+																	<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																		 <input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" id="input-11" part="input" placeholder="" type="text" />
+																	</div>
+															  </div>
+														 </lightning-primitive-input-simple>
+													</lightning-input>
+											  </div>
+											  <div  class="slds-col slds-medium-size_6-of-12">
+													<lightning-input  class="search slds-form-element modalSubmit" lwc-66unc5l95ad-host="" name="LastName" label=" Last Name" required>
+														 <lightning-primitive-input-simple lwc-66unc5l95ad="" aria-errormessage="help-message-10" lwc-enmikoh2qu-host="" variant="standard">
+															  <div lwc-enmikoh2qu="" part="input-text">
+																	<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label">
+																		<abbr class="slds-required" title="required">* </abbr>Last Name</label>
+																	<div lwc-enmikoh2qu="" class="slds-form-element__control slds-grow" part="input-container" type="text">
+																		 <input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" id="lastName" part="input" placeholder="" type="text" />
+																	</div>
+															  </div>
+														 </lightning-primitive-input-simple>
+													</lightning-input>
+											  </div>										  
+										  </div>  
+										  
+										<div  class="slds-grid  slds-wrap slds-wrap slds-gutters">
+											  <div  class="slds-col slds-medium-size_6-of-12 slds-large-size_6-of-12">
+													<lightning-input  class="validate search slds-form-element modalSubmit" lwc-66unc5l95ad-host="" value="" label=" Email" name="email"
+														placeholder="Email" type="email" variant="standard" required="true"
+														onchange={handleChange}>
+												</lightning-input>
+											  </div>											 
+											  <div  class="slds-col slds-medium-size_6-of-12 slds-large-size_6-of-12">
+													<lightning-input  class="validate search slds-form-element modalSubmit" lwc-66unc5l95ad-host="" value="" label=" Office Phone Number" name="phone"
+														placeholder="Phone" type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+														onchange={handleChange}>
+													</lightning-input>
+											  </div>	
+										  
+										 </div>	 <!-- end row  -->										
+							</div>
+							 <div class="slds-card__footer" part="footer">
+							 <slot name="footer">
+								<div  slot="footer">
+								<lightning-button class="brand-button" variant="brand" label="Cancel" onclick={closeModal}>
+								<button title="Cancel" onclick={closeModal} type="button" class="slds-button slds-button_text-destructive">Cancel</button>
+								</lightning-button>							
+								<lightning-button class="brand-button" variant="brand" label="Submit" onclick= {handleSubmit}>
+									 <button  onclick= {handleSubmit} class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button>
+								</lightning-button>
+								</div>
+							</slot>
+						 </div>									 
+					</article>	 
+										</div> <!-- end prescriber details  -->									 
+										 
+										 
+										 
+									</div>
+						 
+						 </div>
+	
+					</div>  <!-- end enrollmentForm  -->
+					
+				  </div>
+			
+			 </div>
+		</section>
+			  </template>
+			  <template if:true={isConfirmationModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>{confirmationModalMessage}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleNo}>No</button>
+                    <button class="slds-button slds-button_brand" onclick={handleYes}>Yes</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+			<template lwc:if={displaySpinner}>
+				<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+			</template>
+
+	</div>
+		</template>

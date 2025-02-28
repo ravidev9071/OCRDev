@@ -1,0 +1,43 @@
+<template>
+
+    <div class="pageContainer">
+        <div class="themeHeader forceCommunityThemeHeaderBase forceCommunityThemeHeaderCompact">
+
+            <div class="centerAlignLogo-false showNavMenuOnLeft-true">
+                 <div  id="commThemeNav" class="themeNav slds-grid slds-wrap">
+                     <div data-region-name="nav slds-size_1-of-2">
+                         <div data-priority=""  class="ui-widget">
+                             <nav class="jepsonHomeHeader commThemeCmp comm-navigation themeNavContainer navMenuType-expanded alignPanel-left forceCommunityThemeNav doneRendering">
+                                 <ul class="visible-links themeNav-align-right slds-list_horizontal">
+                                     <li class=" mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+                                         <a id="RDA"   href="remsverification" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn">REMS Dispense Authorization</a>
+                                     </li>
+                                     <template if:true={showRdaHistory}>
+                                     <li class=" slds-p-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+                                         <a id="RDAHistory" href="rdahistory" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn">RDA History</a>
+                                     </li>
+                                     </template>					
+                                     <li if:true={showManageHCS} class=" slds-p-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item">
+                                         <a id="ManageHCS"   href="manage-pharmacies" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn">Manage Pharmacies</a>
+                                     </li>	 
+                                     <li class=" slds-p-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item slds-m-left_none">
+                                         <a id="MyProfile"   href="my-profile" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn slds-m-left_none">My Profile</a>
+                                     </li>
+                                 </ul>
+                             </nav>
+                         </div>
+                     </div>
+                 </div>
+            <div class="slds-float_right" >
+                <template if:true={isLogined}> 
+                    {userName}
+                    <lightning-button-menu onselect={handleOnselect}  variant="container" menu-alignment ='right'>
+                        <lightning-menu-item value="logout" label="Logout"></lightning-menu-item>
+                    </lightning-button-menu>
+                </template>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div  class="themeBottomBorder slds-m-top_large" ></div>
+</template>

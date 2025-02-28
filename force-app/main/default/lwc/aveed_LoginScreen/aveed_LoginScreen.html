@@ -1,0 +1,430 @@
+<template>
+	
+	<div role="banner" class="a11y-banner">
+		<div class="header">
+			<div data-region-name="themeHeader">
+				<div data-priority="" class="ui-widget">
+					<div class="themeHeader forceCommunityThemeHeaderBase forceCommunityThemeHeaderCompact">
+						<!-- COMMON UTILITY   -->
+					</div>
+					<!-- end themeHeader   -->
+				</div>
+				<!-- end ui-widget  -->
+			</div>
+			<!-- end regionthemeheader  -->
+		</div>
+		<!-- end header  -->
+	</div>
+	<!--  end ally-banner  -->
+	<div role="main" tabindex="-1" class="body mainBody isPageWidthFixed-true" aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+						<div class="slds-grid slds-gutters slds-wrap slds-large-nowrap">
+							<div class="slds-col--padded slds-size_12-of-12">
+								<div data-region-name="content">
+									<div data-priority="" class="ui-widget">
+										<div class="slds-text-heading_large">
+											Log In / Sign Up
+										</div>
+										<div class="slds-m-vertical_large"></div>
+										<div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+											<div
+												class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_4-of-12">
+												
+												<div class="frmContainer login">
+													<article class="slds-card" part="card">
+														<div class="slds-card__header slds-grid">
+															<header
+																class="slds-media slds-media_center slds-has-flexi-truncate">
+																<div class="slds-media__figure"></div>
+																<div class="slds-media__body">
+																	<h2 class="slds-card__header-title">
+																		<span>Log In</span>
+																	</h2>
+																</div>
+															</header>
+														</div>
+														<div class="slds-card__body slds-card__body_inner" part="body">
+															<p class="frmInstructions">
+																Login is available to ...
+																<!-- certified pharmacy users to verify patient REMS requirements are met prior to dispensing EPYSQLI.-->
+																<br>
+																<br>
+																<span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span>
+																fields required</span>
+															</p>
+															<div part="input-text">
+																<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Email address</label>
+																<div class="slds-form-element__control slds-grow"
+																	part="input-container" type="text">
+																	<input lwc-enmikoh2qu="" id="NPI" class="slds-input" part="input" type="text">
+                                                </div>
+																</div>
+																<div lwc-enmikoh2qu="" part="input-text">
+																	<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Password</label>
+																	<div class="slds-form-element__control slds-grow"
+																		part="input-container" type="text">
+																		<input id="PW" class="slds-input" part="input" type="password">
+                                                </div>
+																	</div>
+																	<p class="txtInstructions slds-m-bottom_xx-large"><a
+																			href="">Forgot your password?</a></p>
+																	<div class="slds-card__footer" part="footer">
+																		<button class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Log In</button>
+																	</div>
+																</div>
+													</article>
+												</div>
+												<!-- end enrollmentForm  -->
+											</div>
+											<!-- end col  -->
+											<div
+												class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_2-of-12">
+											</div>
+											<div
+												class="slds-col slds-p-horizontal_medium slds-size_12-of-12 slds-medium-size_6-of-12">
+												<div class="frmRegister">
+													<div class="slds-text-heading_medium slds-m-top_none">
+														Register to Create an Online Account
+													</div>
+													<div class="frmContainer">
+														<article class="slds-card" part="card">
+															<div class="slds-card__header slds-grid">
+																<header
+																	class="slds-media slds-media_center slds-has-flexi-truncate">
+																	<div class="slds-media__figure"></div>
+																	<div class="slds-media__body">
+																		<h2 class="slds-card__header-title">
+																			<span>Sign Up</span>
+																		</h2>
+																	</div>
+																</header>
+															</div>
+															<div class="slds-card__body slds-card__body_inner"
+																part="body">
+																<p class="frmInstructions">To create your account,
+																	select if you are a Healthcare Setting Authorized
+																	Representative or a Prescribing Healthcare Provider,
+																	then complete the fields below.<br>
+																	<br>
+																	<span class="slds-text-body_medium"><span class="slds-text-color_destructive">*</span>
+																	fields required</span>
+																</p>
+																<!--<p class="txtInstructions"></p>  -->
+																<fieldset class="slds-form-element">
+																	
+																	<lightning-radio-group name="radioGroup"
+																		label="I am a:" options={options} value={value}
+																		type="radio" onchange={handleChange}>
+																	</lightning-radio-group>
+																</fieldset>
+																
+																<template if:true={isHealthcareRep}>
+																	<div id="ConfirmHCS">
+																		<div class="containerInfo">
+																			<p class="txtInstructions">
+																				<b>Healthcare Setting Authorized Representative:</b><br>
+                                                            An individual responsible for enrolling their Healthcare Setting in the AVEED REMS. This individual may be a prescribing or non-prescriber Healthcare Provider, a Practice Manager, or any responsible individual within the Healthcare Setting suitable to attest to the enrollment requirements. A Healthcare Setting may be certified in the AVEED REMS and have at least one certified prescriber associated with the facility to be able to order, receive, or administer AVEED.
+                                                         </p>
+																		</div>
+																		<button class="slds-button slds-m-top_large slds-button_brand slds-button_full-width slds-text-align_center" onclick={handleConfirmClick}>Confirm and Continue</button>
+																	</div>
+																</template>
+															
+																<template if:true={isPrescribingProvider}>
+																	<div id="ConfirmHCP">
+																		<div class="containerInfo">
+																			<p class="txtInstructions">
+																				<b>Prescribing Healthcare Provider:</b><br>
+                                                            A Prescribing Healthcare Provider is responsible for prescribing AVEED...
+                                                         </p>
+																		</div>
+																		<button id="BtnConfirmHCP" class="slds-button slds-m-top_large slds-button_brand slds-button_full-width slds-text-align_center">Confirm and Continue</button>
+																	</div>
+																</template>
+
+
+																<template if:true={showInfoHCS}>
+																	<div id="InfoHCS">
+																		<div class="frmHeadingSmall">
+																			Healthcare Setting Authorized Representative
+																			Information
+																		</div>
+																		<div class="slds-grid slds-wrap slds-gutters">
+																			<template for:each={fields}
+																				for:item="field">
+																				<div class="slds-col slds-size_1-of-2"
+																					key={field.id}>
+																					<lightning-input label={field.label}
+																						name={field.name}
+																						value={field.value}
+																						required={field.required}
+																						onchange={handleInput}>
+																					</lightning-input>
+																				</div>
+																			</template>
+																		</div>
+																		<div class="slds-card__footer" part="footer">
+																			<button class="slds-button slds-m-top_large slds-button_brand" onclick={createAccount}>Submit</button>
+																		</div>
+																	</div>
+																</template>
+
+
+
+																<!-- end confirmHCP   -->
+																<div id="RegisterDetails" class="slds-hide">
+																	<!--   HEALTHCARE SETTING AR   -->
+																	<div id="InfoHCS1" class="slds-hide">
+																		<div class="frmHeadingSmall">
+																			Healthcare Setting Authorized Representative
+																			Information
+																		</div>
+																		<div class="slds-grid slds-wrap slds-gutters">
+																			<div
+																				class="slds-col slds-medium-size_6-of-12">
+																				<div part="input-text">
+																					<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> First Name</label>
+																					<div class="slds-form-element__control slds-grow"
+																						part="input-container"
+																						type="text">
+																						<input class="slds-input" aria-errormessage="help-message-11" id="input-101" value="" part="input" placeholder="" type="text">
+                                                               </div>
+																					</div>
+																				</div>
+																				<div
+																					class="slds-col slds-medium-size_6-of-12">
+																					<div part="input-text">
+																						<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Last Name</label>
+																						<div class="slds-form-element__control slds-grow"
+																							part="input-container"
+																							type="text">
+																							<input class="slds-input" id="input-121" value="" part="input" placeholder="" type="text">
+                                                               </div>
+																						</div>
+																					</div>
+																					<div
+																						class="slds-col slds-medium-size_6-of-12">
+																						<div part="input-text">
+																							<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Email Address</label>
+																							<div class="slds-form-element__control slds-grow"
+																								part="input-container"
+																								type="text">
+																								<input lwc-enmikoh2qu="" class="slds-input" value="" id="input-131" part="input" placeholder="" type="text">
+                                                               </div>
+																							</div>
+																						</div>
+																						<div
+																							class="slds-col slds-medium-size_6-of-12">
+																							<div part="input-text">
+																								<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Phone Number</label>
+																								<div class="slds-form-element__control slds-grow"
+																									part="input-container"
+																									type="text">
+																									<input class="slds-input" value="" id="input-191" part="input" placeholder="" type="text">
+                                                               </div>
+																								</div>
+																							</div>
+																						</div>
+																						<!-- end row  -->
+																						<div
+																							class="slds-m-vertical_x-large">
+																						</div>
+																						<div class="slds-card__footer"
+																							part="footer">
+																							<button class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button>
+																						</div>
+																					</div>
+																					<!-- end HCS    -->
+																					<!-- ====================================================   -->
+																					<!--   PRESCRIBING HEALTHCARE PROVIDER    -->
+																					<div id="InfoHCP" class="slds-hide">
+																						<div class="frmHeadingSmall">
+																							Prescribing Healthcare
+																							Provider Information
+																						</div>
+																						<div
+																							class="slds-grid slds-wrap slds-gutters">
+																							<div
+																								class="slds-col slds-medium-size_9-of-12 slds-large-size_6-of-12">
+																								<div lwc-enmikoh2qu=""
+																									part="input-text">
+																									<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Prescriber NPI</label>
+																									<div lwc-enmikoh2qu=""
+																										class="slds-form-element__control slds-grow"
+																										part="input-container"
+																										type="text">
+																										<input class="slds-input" id="input-141" part="input" type="text">
+                                                               </div>
+																									</div>
+																								</div>
+																								<div
+																									class="slds-col slds-wrap slds-size_1-of-4 search-btn">
+																									<button id="BtnSearch" class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Continue</button>
+																								</div>
+																							</div>
+																							<!-- end row  -->
+																							<div
+																								class="slds-m-bottom_small">
+																							</div>
+																							<div id="PrescriberDetails"
+																								class="slds-hide">
+																								<div
+																									class="slds-border_top slds-m-bottom_small">
+																								</div>
+																								<div
+																									class="slds-grid slds-wrap slds-gutters">
+																									<div
+																										class="slds-col slds-medium-size_6-of-12">
+																										<div
+																											part="input-text">
+																											<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> First Name</label>
+																											<div class="slds-form-element__control slds-grow"
+																												part="input-container"
+																												type="text">
+																												<input class="slds-input" id="input-151" value="Steve" part="input" placeholder="" type="text">
+                                                                  </div>
+																											</div>
+																										</div>
+																										<div
+																											class="slds-col slds-medium-size_6-of-12">
+																											<div lwc-enmikoh2qu=""
+																												part="input-text">
+																												<label lwc-enmikoh2qu="" class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Last Name</label>
+																												<div lwc-enmikoh2qu=""
+																													class="slds-form-element__control slds-grow"
+																													part="input-container"
+																													type="text">
+																													<input lwc-enmikoh2qu="" class="slds-input" aria-errormessage="help-message-11" id="input-161" value="Meru" part="input" placeholder="" type="text">
+                                                                  </div>
+																												</div>
+																											</div>
+																										</div>
+																										<!-- end row  -->
+																										<div
+																											class="slds-grid slds-wrap slds-gutters">
+																											<div
+																												class="slds-col slds-medium-size_6-of-12">
+																												<div
+																													part="input-text">
+																													<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> DEA Number</label>
+																													<div class="slds-form-element__control slds-grow"
+																														part="input-container"
+																														type="text">
+																														<input class="slds-input" id="input-171" part="input" placeholder="" type="text">
+                                                                  </div>
+																													</div>
+																												</div>
+																											</div>
+																											<!-- endrow  -->
+																											<div
+																												class="slds-border_top slds-m-bottom_small">
+																											</div>
+																											<div
+																												class="slds-grid slds-wrap slds-gutters">
+																												<div
+																													class="slds-col slds-medium-size_6-of-12">
+																													<div
+																														part="input-text">
+																														<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Email Address</label>
+																														<div class="slds-form-element__control slds-grow"
+																															part="input-container"
+																															type="text">
+																															<input lwc-enmikoh2qu="" class="slds-input" id="input-181" part="input" placeholder="" type="text">
+                                                                  </div>
+																														</div>
+																													</div>
+																													<div
+																														class="slds-col slds-medium-size_6-of-12">
+																														<div
+																															part="input-text">
+																															<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Phone</label>
+																															<div class="slds-form-element__control slds-grow"
+																																part="input-container"
+																																type="text">
+																																<input class="slds-input" id="input-1991" part="input" placeholder="" type="text">
+                                                                  </div>
+																															</div>
+																														</div>
+																														<div
+																															class="slds-col slds-medium-size_6-of-12">
+																															<div
+																																part="input-text">
+																																<label class="slds-form-element__label slds-no-flex" for="input-11" part="label"><abbr class="slds-required" title="required">*</abbr> Fax</label>
+																																<div class="slds-form-element__control slds-grow"
+																																	part="input-container"
+																																	type="text">
+																																	<input class="slds-input" id="input-11" part="input" placeholder="" type="text">
+                                                                  </div>
+																																</div>
+																															</div>
+																														</div>
+																														<!-- end row  -->
+																														<fieldset
+																															class="slds-form-element">
+																															<legend
+																																class="slds-form-element__legend slds-form-element__label">
+																																<abbr class="slds-required" title="required">*</abbr>
+																																Preferred
+																																Method
+																																of
+																																Communication
+																															</legend>
+																															<div
+																																class="slds-form-element__control">
+																																<span class="slds-radio"><input type="radio" id="rb-1" value="rb-1" name="rbPMOC"> <label class="slds-radio__label" for="rb-1"><span class="slds-form-element__label">Email</span></label></span>
+																																<span class="slds-radio"><input type="radio" id="rb-2" value="rb-2" name="rbPMOC"> <label class="slds-radio__label" for="rb-2"><span class="slds-form-element__label">Fax</span></label></span>
+																															</div>
+																														</fieldset>
+																														<div
+																															class="slds-m-vertical_x-large">
+																														</div>
+																														<div class="slds-card__footer"
+																															part="footer">
+																															<button class="slds-button slds-m-top_large slds-button_brand" aria-disabled="false" type="button" part="button" kx-scope="button-brand" kx-type="ripple">Submit</button>
+																														</div>
+																													</div>
+																													<!-- end HCP   -->
+																												</div>
+																												<!-- end RegisterDetails   -->
+																											</div>
+																										</div>
+														</article>
+													</div>
+													<!-- end frmContainer  -->
+												</div>
+												<!-- end register  -->
+											</div>
+											<!-- end col  -->`
+										</div>
+										<!-- end row  -->
+										<div class="slds-p-vertical_medium"></div>
+									</div>
+									<!-- end layout   -->
+								</div>
+							</div>
+							<!-- end SF   -->
+						</div>
+						<!-- end pageContent   -->
+					</div>
+					<!-- end pageContainer   -->
+				</div>
+				<!-- end main   -->
+			</div>
+			<!-- end 888   -->
+		</div>
+		<div class="footer siteFooter" aria-hidden="false">
+			<div data-region-name="themeFooter">
+				<div data-priority="" class="ui-widget">
+					<div class="" data-aura-class="forceCommunityRichText forceCommunityRichTextInline">
+						<div dir="ltr" class="uiOutputRichText" data-aura-class="uiOutputRichText">
+							<!-- COMMON FOOTER   -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

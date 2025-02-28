@@ -1,0 +1,17 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" controller="SYN_InvitePharamcyStaffController">
+    <aura:attribute name="accountRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false" />
+
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    
+    <force:recordData aura:id="remServiceLoader"
+                      recordId="{!v.recordId}"
+                      fields="Id,Name,US_WSREMS__Status__c,US_WSREMS__REMS_Program__c,PersonContactId,Email_address__c,US_WSREMS__Email__c,IsCustomerPortal"
+                      recordUpdated="{!c.handleRecordChanged }"
+                      targetFields="{!v.accountRecord}"
+                      targetError="{!v.recordLoadError}"
+                      />	
+</aura:component>

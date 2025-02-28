@@ -1,0 +1,48 @@
+<template>
+     <div class="pageContainer">
+          <div class="pageMainHeader">
+               <div class="slds-grid slds-gutters slds-wrap">
+                    <div class=" slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_2-of-12">		
+                         <div class="themeLogo">
+                               <a href={homeUrl} class="logo">
+                                    <img  src={logo}>
+                                    <span class="slds-assistive-text">REMS Digital</span>
+                               </a>
+                         </div>	
+                    </div> <!-- end col  -->
+                    <div class="slds-size_12-of-12 slds-max-medium-size_12-of-12 slds-large-size_10-of-12">	
+                         <!--RT 10-10-24 changes-->	
+                         <nav class="topnav" id="CustomMainNav" data-id="navBar">
+                              <ul class="nav">
+                                   <li>
+                                        <a id="Home" data-id="" data-name="Home"  onclick={redirectURL} class={aveedHome}>Home</a>
+                                   </li>
+                                   <li>
+                                        <a id="Lookup" data-name="hcs-hcp-lookup"  href="hcs-hcp-lookup"  class={hcshcpLookup}>Healthcare Setting & Healthcare Provider Lookup</a>  
+                                   </li>
+                                   <li>
+                                        <a id="Prescriber" data-name="health-care-provider-certification" href="health-care-provider-certification"   class={hcpPage}>Healthcare Provider Certification</a>
+                                   </li>
+                                   <li>
+                                        <a id="HCS" data-name="health-care-setting-certification" href="health-care-setting-certification"  class={hcsPage}>Healthcare Setting Certification</a>  
+                                   </li>
+                                   <li>
+                                        <a id="PCT" onclick={previewHandler}    target="_blank"  class="mainNavLink">Patient Counseling Tool</a>  
+                                   </li>	
+                                   <li>		
+                                        <button onclick={handleLoginClick} class="slds-button btnLogin" title="Login / Sign Up">Log In / Sign Up</button>		
+                                   </li>			
+                                   <li>
+                                        <!--RT 10-10-24  changes-->
+                                        <span class="icon" onclick={handleHamburgerMenu}>
+                                             <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                        </span>
+                                   </li>
+                              </ul>
+                         </nav>	
+                    </div> <!-- end col  -->
+               </div> <!-- end row  -->
+          </div> <!-- end pageMainHeader  -->			
+     </div>  <!-- end pageContainer  -->	
+     <div class="headerBorder"></div>
+</template>

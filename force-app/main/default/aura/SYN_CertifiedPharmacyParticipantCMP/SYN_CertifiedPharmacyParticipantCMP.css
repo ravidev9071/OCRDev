@@ -1,0 +1,56 @@
+.THIS .customFont{
+    font-family:Sans-serif;
+    font-size: 16px;
+    
+}
+.THIS .customFontsmall{
+    font-family:Sans-serif;
+    font-size: 14px;
+    
+    
+}
+.THIS .slds-hint-parent tr:nth-child(even) {
+    background-color:#f8f8f8 !important;
+}
+.THIS .slds-hint-parent tr:nth-child(odd) {
+    background-color:#f1f1f1 !important;
+}
+.THIS .fixedHeightstyle{
+    padding-right:5px;
+    height:80px;
+    word-wrap: break-word;
+    font-family:Sans-serif;
+    font-size: 14px;
+    
+}
+.THIS .ButtonFont{
+    color: white;
+    font-family:Sans-serif;
+    font-size: 13px;
+}
+.THIS.c-container {    
+    margin: 0;
+    min-height: calc(100vh - 250px);
+}
+.THIS.full-height {
+    height: 100%;
+}
+.THIS .headerFont{
+    font-family:Sans-serif;
+    font-size: 14px;
+   color:white !important;    
+}
+.THIS.customfamily{
+    font-family: Sans-serif;
+    font-size:14px;
+}
+.THIS .headerfontColor{
+     background-color: #2949AD;
+}
+
+.THIS .slds-table_striped{
+     color: gray;
+}
+.THIS.emptybox {
+    height: calc(100vh - 320px);
+}

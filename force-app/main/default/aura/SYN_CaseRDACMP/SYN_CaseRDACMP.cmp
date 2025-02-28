@@ -1,0 +1,222 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" controller ="SYN_CaseRDACtrl" >
+	<aura:attribute name="CaseList" type="Object[]" />
+    <aura:attribute name="PrescriberNameSearch" type="String" />
+    <aura:attribute name="AuthNUM" type="String" />
+    <aura:attribute name="PatientName" type="String" />
+    <aura:attribute name="PatientDOB" type="String" />
+    <aura:attribute name="PrescriberName" type="String" />
+    <aura:attribute name="DEA" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- Pagination -->
+    <aura:handler name="ChangePage" event="c:SYN_ChangePage" action="{!c.handlePagination}" />
+    <aura:attribute name="CaseListToBeShown" type="List"/>
+    <aura:attribute name="PaginationList" type="Case"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="noOfCallsToBeShown" type="Integer" default="30"/>
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    <aura:attribute name="haveSearchTerm" type="Boolean"  />
+     <aura:attribute name="haveAccess" type="boolean" />
+    <aura:attribute name="errorMessage" type="String" />
+    <aura:if isTrue="{!v.haveAccess}">
+    <lightning:card>
+       <aura:set attribute="title">
+            <!-- <lightning:icon iconName="utility:questions_and_answers" size="small"/>-->
+            <b>REMS Dispense Activity</b>
+        </aura:set> 
+        <div class="slds-scope">
+             <div class="myapp">
+            <div class="slds-grid slds-wrap ">
+                 <div class= "marginCss3">
+               <!--   <div class="slds-grid slds-wrap  slds-align_absolute-center">-->
+                        <div class="slds-text-align_center slds-m-around--x-small">
+                            <lightning:input
+                                             label="RDA Authorization Number"
+                                             variant="label-hidden"
+                                             value="{!v.AuthNUM}"
+                                             placeholder="RDA Authorization Number"
+                                             aura:id="AuthNUM"
+                                             />
+                    </div>
+                     </div>
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-4 slds-medium-size--1-of-6">
+                    <div class="slds-text-align_center slds-m-around--x-small">
+                        <lightning:input
+                                         label="Patient Name"
+                                         variant="label-hidden"
+                                         value="{!v.PatientName}"
+                                         placeholder="Patient Name"
+                                         aura:id="PatientName"
+                                         />
+                    </div>
+                     </div>
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-6">
+                    <div class="slds-text-align_center slds-m-around--x-small ">
+                        <lightning:input
+                                         label="Patient DOB"
+                                         variant="label-hidden"
+                                         type="date"
+                                         value="{!v.PatientDOB}"
+                                         placeholder="Patient DOB"
+                                         aura:id="PatientDOB"
+                                         />
+                    </div>
+                     </div>
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-6">
+                        <div class="slds-text-align_center slds-m-around--x-small">
+                            <lightning:input
+                                             label="Prescriber Name"
+                                             variant="label-hidden"
+                                             value="{!v.PrescriberName}"
+                                             placeholder="Prescriber Name"
+                                             aura:id="PrescriberName"
+                                             />
+                        </div>
+                    </div> 
+                  <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-6">
+                        <div class="slds-text-align_center slds-m-around--x-small">
+                            <lightning:input
+                                             label="Prescriber DEA"
+                                             variant="label-hidden"
+                                             value="{!v.DEA}"
+                                             placeholder="Prescriber DEA"
+                                             aura:id="DEA"
+                                             />
+                        </div>
+                    </div>   
+                     <!-- <div class="slds-align_absolute-center ">-->
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-12">
+                        <div class="slds-text-align_center slds-m-around--x-small">
+                           
+                                <div class="slds-float_left">
+                                    <lightning:button variant="brand" name="SearchBtn" label="Search" onclick="{!c.onSearchTermChange}"/>
+                                </div>     
+                            </div>
+                       </div>
+                     <!--</div>-->
+                 <!-- </div>-->
+                </div>
+               </div>
+            
+                 <aura:if isTrue="{!not(empty(v.CaseListToBeShown))}">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_large " aria-label="Example table of Opportunities with striped rows">
+                        <thead>
+                            <tr class="slds-line-height_reset" scope="col">
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="RDA Authorization Number">Authorization Number</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col" >
+                                    <div class="slds-truncate headerFont" title="Patient Name">Patient Name</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="Patient DOB">Patient DOB</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="Prescriber Name">Prescriber Name</div>
+                                </th>
+                                 <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="Prescriber DEA">Prescriber DEA</div>
+                                </th>
+                                 <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="RDA Date of Fill">RDA Date of Fill</div>
+                                </th>
+                                <th class="slds-text-title_bold headerfontColor" scope="col">
+                                    <div class="slds-truncate headerFont" title="RDA Status">RDA Status</div>
+                                </th>
+                                
+                                
+                            </tr>
+                        </thead>
+                        <tbody  class="slds-hint-parent">
+                            <aura:iteration  items="{!v.CaseListToBeShown}" var="CasRDA" indexVar="index" >
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Authorization Number">
+                                        <div class="slds-truncate" title="AuthNum">{!CasRDA.RDA_Authorization_Code__c}</div>
+                                    </td>
+                                    <td data-label="Patient Name">
+                                        <div class="slds-truncate" title="PFirstName">{!CasRDA.US_WSREMS__Patient__r.Name}</div>
+                                    </td>
+                                    <!--<td data-label="Patient LN">
+                                        <div class="slds-truncate" title="PLastName">{!CasRDA.US_WSREMS__Patient__r.LastName}</div>
+                                    </td>-->
+                                     <td data-label="Patient DOB">
+                                         <div class="slds-truncate"  title="PatientDOB"><lightning:formattedDateTime value="{!CasRDA.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" ></lightning:formattedDateTime> </div>
+                                    </td>
+                                     <td data-label="Prescriber Name">
+                                        <div class="slds-truncate" title="PresciberName">{!CasRDA.SYN_Prescriber__r.Name}</div>
+                                    </td>
+                                    <td data-label="Prescriber DEA">
+                                        <div class="slds-truncate" title="DEA">{!CasRDA.US_WSREMS__DEA__c}</div>
+                                    </td>
+                                    <td data-label="RDA Date of Fill">
+                                        <div class="slds-truncate" title="DateofFill"><lightning:formattedDateTime value="{!CasRDA.date_of_Fill__c}" year="numeric" month="numeric" day="numeric" ></lightning:formattedDateTime></div>
+                                    </td>
+                                    <td data-label="RDA Status">
+                                        <div class="slds-truncate" title="status">{!CasRDA.US_WSREMS__Outcome__c}</div>
+                                    </td>
+                                  <!--  <td class="slds-cell-wrap" data-label="Address">
+                                        <div >
+                                            <aura:if isTrue="{!acc.ShippingStreet !=null }">
+                                                {!acc.ShippingStreet}
+                                                <br/>
+                                                <aura:set attribute="else">
+                                                    <br/>
+                                                </aura:set>
+                                            </aura:if>
+                                            <aura:if isTrue="{!acc.ShippingCity !=null }">
+                                                <aura:if isTrue="{!acc.ShippingState !=null }">
+                                                    {!acc.ShippingCity},
+                                                    <aura:set attribute="else">
+                                                        {!acc.ShippingCity}
+                                                    </aura:set> 
+                                                </aura:if>
+                                            </aura:if>
+                                            <aura:if isTrue="{!acc.ShippingState !=null }">
+                                                {!acc.ShippingState}
+                                            </aura:if>
+                                            <aura:if isTrue="{!acc.ShippingPostalCode !=null }">
+                                                <ui:outputText value=" "/>
+                                                {!acc.ShippingPostalCode}                                                
+                                            </aura:if>
+                                        </div>
+                                    </td>
+                                    <td data-label="Phone Number">
+                                        <div class="slds-truncate" title="compay"><lightning:formattedPhone value="{!acc.Phone}" disabled="true"></lightning:formattedPhone></div>
+                                    </td>
+                                    <td data-label="Prospecting">
+                                        <div class="slds-truncate" title="Prospecting">
+                                            <lightning:formattedPhone value="{!acc.Fax}" disabled="true"></lightning:formattedPhone></div>
+                                    </td> -->
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table> 
+                    <aura:set attribute="else">
+                        <div class="slds-notify slds-notify--alert slds-theme--info slds-theme--alert-texture" role="alert">
+                            <span class="slds-assistive-text">Info</span>
+                            <h2>
+                                <lightning:icon iconName="utility:info" variant="inverse"  size="x-small" class="slds-m-right--x-small" />
+                                No RDA Cases available for selected search criteria
+                            </h2>
+                        </div>
+                    </aura:set>
+                </aura:if>
+              </div>
+            <aura:if isTrue="{!v.CaseList.length > 0}">
+            <c:SYN_Pharmacy_PaginationForDataTable aura:id="cPagination" totalRecords="{!v.CaseList.length}" recordsPerPage="{!v.noOfCallsToBeShown}"/>
+        </aura:if>
+       
+    </lightning:card>
+        <aura:set attribute="else">
+            <lightning:card>
+                <aura:set attribute="title">
+                    <!-- <lightning:icon iconName="utility:questions_and_answers" size="small"/>-->
+                    {!v.errorMessage}
+                </aura:set>
+            </lightning:card>
+            <div class="emptybox"></div>
+        </aura:set>
+    </aura:if>
+</aura:component>

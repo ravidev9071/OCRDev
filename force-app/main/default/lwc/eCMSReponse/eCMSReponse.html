@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title="OCR/ECMS JSON Table Display" icon-name="custom:custom63">
+        <div class="container">
+                <div>
+                    <span style="width: 15px;"> &nbsp;</span>
+                </div>
+                <div>
+                    <template if:true={jsonData}>
+                    <!-- <lightning-datatable
+                            key-field="id"
+                            data={jsonData}
+                            columns={columns}
+                            hide-checkbox-column="true">
+                        </lightning-datatable> -->
+                        <ul>
+                            <template for:each={jsonData} for:item="app">
+                                <li key={app.Id}>
+                                <div>
+                                    <table style="width:200px" border="0">
+                                        <tr><td>&nbsp;</td></td><td>NPINumber: </td><td>&nbsp;</td><td> <lightning-input  value={app.NPINumber}></lightning-input></td></tr>
+                                        <tr><td>&nbsp;</td><td>Fname: </td><td>&nbsp;</td><td> <lightning-input  value={app.Fname}></lightning-input></td></tr>
+                                        <tr><td>&nbsp;</td><td>Lname: </td><td>&nbsp;</td><td> <lightning-input  value={app.Lname}></lightning-input></td></tr>
+                                        <tr><td>&nbsp;</td><td>Address: </td><td>&nbsp;</td><td> <lightning-input  value={app.Address}></lightning-input></td></tr>
+                                        <tr><td>&nbsp;</td><td>City: </td><td>&nbsp;</td><td> <lightning-input  value={app.City}></lightning-input></td></tr>
+                                        <tr><td>&nbsp;</td><td>State: </td><td>&nbsp;</td><td> <lightning-input  value={app.State}></lightning-input></td></tr>
+                                        <tr><td>&nbsp;</td><td>Postalcode: </td><td>&nbsp;</td><td> <lightning-input  value={app.Postalcode}></lightning-input></td></tr>
+                                        <tr><td colspan="4">&nbsp;</td></tr>
+                                        <tr><td colspan="4">&nbsp;</td></tr>
+                                        <tr><td></td><td></td><td colspan="2"> <lightning-button label="Save & Proceed"></lightning-button></td></tr>
+                                    </table>
+                                </div>
+                            </li>
+                                
+                            </template>
+                        </ul>
+                    </template>
+                    <template if:true={error}>
+                        <!--<c-error-panel errors={error}></c-error-panel>-->
+                    </template>
+                    <template if:true={isLoading}>
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

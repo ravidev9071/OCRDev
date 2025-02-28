@@ -1,0 +1,13 @@
+.custom-container{
+	color : black;
+}
+dummy{
+	color : black;
+}
+.heading1{
+	color: #002e5d;
+    font-weight: 400;
+    font-family: "Roboto Condensed";
+    font-size: 2rem;
+    margin-top: 1rem;
+}

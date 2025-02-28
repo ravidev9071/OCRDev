@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="link" label="link" description="link" />
+    <design:attribute name="Dashboardlink" label="Dashboardlink" description="Dashboardlink" />
+    <design:attribute name="portalName" label="portalName" description="portalName" />
+</design:component>

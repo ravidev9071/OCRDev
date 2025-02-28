@@ -1,0 +1,87 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global"  > <!-- controller ="PharmacyLookupController" -->
+    
+    <aura:attribute name="ProductList" type="Object[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="ProductDummy" type="String[]" default="['1', '2', '3','4', '5', '6','7', '8']" />
+    
+    <lightning:card>
+        <aura:set attribute="title">
+            
+            <!-- <lightning:icon iconName="utility:questions_and_answers" size="small"/>-->
+            
+            <b>Sodium Oxybate Products </b>
+            
+        </aura:set>
+        <aura:set attribute="footer">
+            <aura:if isTrue="{!not(empty(v.ProductDummy))}">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout" aria-label="Example table of Opportunities with striped rows" >
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-title_bold slds-size_5-of-24" scope="col">
+                                <div class="slds-truncate headerFont" title="ProductName">Drug Name</div>
+                            </th>
+                            <th class="slds-text-title_bold slds-size_5-of-24" scope="col">
+                                <div class="slds-truncate headerFont" title="GenericName">Generic Name</div>
+                            </th>
+                            <th class="slds-text-title_bold slds-size_5-of-24" scope="col">
+                                <div class="slds-truncate headerFont" title="Company">Company</div>
+                            </th>
+                            <th class="slds-text-title_bold slds-size_5-of-24" scope="col">
+                                <div class="slds-truncate headerFont" title="Phone Number">Phone Number</div>
+                            </th>
+                            <th class="slds-text-title_bold slds-size_5-of-24" scope="col">
+                                <div class="slds-truncate headerFont" title="Links">Links</div>
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration  items="{!v.ProductDummy}" var="prd" indexVar="index" >
+                            <tr class="slds-hint-parent">
+                                <td data-label="Drug Name"    class="slds-size_5-of-24" >
+                                    <div class="slds-truncate" title="prdname">Drug Name{!prd}</div>
+                                </td>
+                                <td data-label="Account Name" class="slds-size_5-of-24" >
+                                    <div class="slds-truncate" title="prdname">Sodium Oxybate{!prd}</div>
+                                </td>
+                                <td data-label="Close Date" class="slds-size_5-of-24" >
+                                    <div class="slds-truncate" title="compay"> Company Name{!prd}</div>
+                                </td>
+                                <td data-label="Prospecting"  class="slds-size_5-of-24" >
+                                    <div class="slds-truncate" title="Prospecting">XXX-XXX-XXXX</div>
+                                </td>
+                                <td data-label="Links"  class="slds-size_5-of-24" >
+                                    <div class="slds-truncate" title="Links" >
+                                        <a style="color:#000cff; text-decoration: underline;" href="https://www.salesforce.com">
+                                            Prescribing Information/Medication Guide </a></div>
+                                </td>
+                                
+                            </tr>
+                        </aura:iteration>
+                        
+                    </tbody>
+                </table> 
+                <aura:set attribute="else">
+                    <div Style="text-align : center"> </div>
+                </aura:set>
+            </aura:if>
+        </aura:set>
+        <!--
+            <div class="slds-p-horizontal_small ">
+                
+                <div class="slds-p-left_x-large">
+                    Phone: XXX-XXX-XXXX 
+                </div>
+                <div class="slds-p-left_x-large">
+                    Fax: XXX-XXX-XXXX 
+                </div>
+                <div class="slds-p-left_x-large">
+                    Hours Of Operation: XXX-XXX-XXXX 
+                </div>
+                <div class="slds-p-left_x-large">
+                    Holidays: XXX-XXX-XXXX 
+                </div>
+            </div>
+   -->
+    </lightning:card>
+</aura:component>

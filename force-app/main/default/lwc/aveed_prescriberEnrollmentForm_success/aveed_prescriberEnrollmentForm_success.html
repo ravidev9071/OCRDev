@@ -1,0 +1,99 @@
+<template>
+    <div role="main" tabindex="-1" class="body isPageWidthFixed-true" aria-hidden="false">
+    </div><div class="pageContainer">
+        <div class="pageContent">
+
+            <div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+            
+                <div class="slds-col--padded comm-content-header comm-layout-column">					
+                    <lightning-progress-indicator>
+                        <div class="slds-path">
+                            <div class="slds-grid slds-path__track">
+                                <div class="slds-grid slds-path__scroller-container justifyCenter">
+                                    <div role="application" class="slds-path__scroller">
+                                        <div class="slds-path__scroller_inner">
+                                            <ul role="listbox" aria-orientation="horizontal" class="slds-path__nav">
+                                                <slot>
+                                                     <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+                                                        <a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+                                                             <span class="slds-path__stage">
+                                                                  <lightning-primitive-icon>
+                                                                <img src="files/check.svg" style="width: 40%">
+                                                                   
+                                                                 </lightning-primitive-icon>
+                                                                  <span class="slds-assistive-text">Education Program</span>
+                                                             </span>
+                                                             <span class="slds-path__title">Education Program</span>
+                                                        </a>
+                                                     </lightning-progress-step>
+                                                     <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+                                                        <a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+                                                             <span class="slds-path__stage">
+                                                                  <lightning-primitive-icon>
+                                                                <img src="files/check.svg" style="width: 40%">
+                                                                   
+                                                                 </lightning-primitive-icon>
+                                                                  <span class="slds-assistive-text">Knowledge Assessment</span>
+                                                             </span>
+                                                             <span class="slds-path__title">Knowledge Assessment</span>
+                                                        </a>
+                                                     </lightning-progress-step>
+                                                     <lightning-progress-step role="listitem" class="slds-path__item slds-is-complete">
+                                                        <a aria-selected="false" href="javascript:void(0);" role="option" tabindex="-1" class="slds-path__link">
+                                                             <span class="slds-path__stage">
+                                                                <lightning-primitive-icon>
+                                                                <img src="files/check.svg" style="width: 40%">
+                                                                   
+                                                                    </lightning-primitive-icon>
+                                                            </span>
+                                                            <span class="slds-path__title">Complete Enrollment</span>
+                                                        </a>
+                                                    </lightning-progress-step>
+                                                </slot>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning-progress-indicator>			
+                 
+             
+                 
+                <div class="comm-content-header comm-layout-column">
+            <div class="slds-text-heading_large">Enrollment Form Successfully Submitted</div>
+
+        </div>
+                      <div data-region-name="content">
+                                <div class="forceCommunityRichText forceCommunityRichTextInline">
+                                    <div dir="ltr" class="uiOutputRichText">
+                                                 
+                    <div class="slds-text-heading_medium">Thank you for submitting your information to enroll in the AVEED REMS.</div>	
+                    <p>Additional messaging.....</p>
+                    
+                    <div class="slds-border_top slds-m-vertical_xx-large"></div>
+                    <div class="slds-align_absolute-center">
+                                        </div>						
+                </div>
+            </div>
+        </div>
+
+            </div>
+                 
+        </div>
+        <div class="footer siteFooter" data-aura-rendered-by="337:0" aria-hidden="false">
+            <div data-region-name="themeFooter" data-item-id="32b5b598-985d-4077-b2fa-437791ffe075" data-aura-rendered-by="316:0">
+                <div data-priority="" data-item-id="ddaed0bd-8d9f-496f-a0e3-88c94e64f182" class="ui-widget" data-aura-rendered-by="313:0">
+                    <div data-aura-rendered-by="304:0" class="" data-aura-class="forceCommunityRichText forceCommunityRichTextInline">
+                        <div dir="ltr" data-aura-rendered-by="308:0" class="uiOutputRichText" data-aura-class="uiOutputRichText">
+
+                        </div>								 
+                         
+                        </div>
+                        <div class="clear" data-aura-rendered-by="310:0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

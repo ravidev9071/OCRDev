@@ -1,0 +1,3 @@
+<apex:page >
+    <c:knowledgeAssesmentFailedAnswersEmail caseValId="a1R3C000000luIQUAY" ></c:knowledgeAssesmentFailedAnswersEmail>
+</apex:page>

@@ -1,0 +1,58 @@
+<template>
+<div class="frmHeadingSmall">
+    Healthcare Setting Authorized Representative
+    Information
+</div>
+<div class="slds-grid slds-wrap slds-gutters">
+    <div
+        class="slds-col slds-medium-size_6-of-12">
+        <lightning-input class="validate" value={FirstName} label=" First Name"
+                                name="firstName" type="text" variant="standard"
+                                required="true" onchange={handleChange}></lightning-input>
+                                </div>
+        <div
+            class="slds-col slds-medium-size_6-of-12">
+            <lightning-input class="validate" value={LastName} label=" Last Name"
+            name="lastName" type="text" variant="standard"
+            required="true" onchange={handleChange}></lightning-input>
+            
+            </div>
+            <div
+                class="slds-col slds-medium-size_6-of-12">
+                
+            <lightning-input class="validate" value={Email} label=" Email Address" name="email"
+            type="email" variant="standard" required="true"
+            onchange={handleChangeEmail}></lightning-input>
+                </div>
+                <div class="slds-col slds-medium-size_6-of-12">
+                     <lightning-input class="search slds-form-element submitData" name="PersonEmail" type="email" pattern={emailPattern} 
+                         message-when-pattern-mismatch="Enter a valid confirm email address" value={confirmEmail} onchange={handlConfirmEmailChange} label=" Confirm Email Address" required="true">
+                     </lightning-input>
+                </div>
+                <div
+                    class="slds-col slds-medium-size_6-of-12">
+                    <lightning-input class="validate" value={Phone} label=" Phone Number" name="phone"
+                    type="tel" variant="standard" required="true" maxlength="10" minlength="10"
+                    onchange={handleChange}></lightning-input>
+                        
+                    </div>
+                
+                <!-- end row  -->
+                <div
+                    class="slds-m-vertical_x-large">
+                </div>
+        <div class="slds-card__footer"
+            part="footer">
+            <lightning-button label="Submit" onclick={handleSubmitKeyword} variant="brand"
+            class="submit-button"></lightning-button>
+        </div>
+            </div>
+            
+    <template if:true={showLoading}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+</template>

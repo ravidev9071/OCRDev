@@ -1,0 +1,49 @@
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	<aura:attribute name="ShowPatientAgmntInstructions" type="Boolean" default="true"/>
+    <aura:attribute name="ShowPatientInformation" type="Boolean" default="false"/>
+    <aura:attribute name="ShowAlternateContactInformation" type="Boolean" default="false"/>
+    <aura:attribute name="ShowAlternateContactInformation2" type="Boolean" default="false"/>
+    <aura:attribute name="ShowPotentialStatusInformation" type="Boolean" default="false"/>
+    <aura:attribute name="ShowPatientAgreementInformation" type="Boolean" default="false"/>
+    <!-- storing current program Id -->
+    <aura:attribute name="programId" type="string" default =""/>
+    <aura:attribute name="cAccount" type="Account" />
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="confirmEmail" type="string" default =""/>
+    <aura:attribute name="stateMap" type="Map"/> 
+    <aura:attribute name="isPatientMinor" type="boolean" default ="false"/>
+    <aura:attribute name="pCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="lCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="rCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="alternateContactObj" type="Map" default="{'lgfirstName':'', 'lglastName':'', 'lgconfirmEmail':'', 'emergencyContactFirstName':'','emergencyContactLastName':'','emergencyContactRelationship':'','emergencyContactPhoneNum':''}"/>
+
+    
+	<aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    
+    <aura:handler name="ShowPatientEnrollmentScreens" event="c:MaciPrescriber_ShowPatientEnrollmentScreen" action="{!c.handleShowScreen}"/> 
+    
+    <aura:if isTrue="{!v.ShowPatientAgmntInstructions}">
+    	<c:MaciPatientEnrollment  cAccount="{!v.cAccount}" isOfficeContact="false"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowPatientInformation}">
+    	<c:MaciPatientEnrollmentPatientInformation cAccount="{!v.cAccount}" newCase="{!v.newCase}" stateMap="{!v.stateMap}" confirmEmail="{!v.confirmEmail}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowAlternateContactInformation}" >
+    	<c:MaciPatientEnrollmentAlternateContact cAccount="{!v.cAccount}" pCase="{!v.pCase}" isPatientMinor="{!v.isPatientMinor}" alternateContactObj="{!v.alternateContactObj}"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.ShowAlternateContactInformation2}" >
+    	<c:MaciPatientEnrollmentAlternateContact2 cAccount="{!v.cAccount}" pCase="{!v.pCase}" lCase="{!v.lCase}" isPatientMinor="{!v.isPatientMinor}" alternateContactObj="{!v.alternateContactObj}"/>
+    </aura:if>
+   
+    <aura:if isTrue="{!v.ShowPotentialStatusInformation}">
+    	<c:MaciReproductivePotentialStatus programId = "{!v.programId}" cAccount="{!v.cAccount}" newCase="{!v.newCase}" pCase="{!v.pCase}" rCase="{!v.rCase}" lCase="{!v.lCase}" isPatientMinor="{!v.isPatientMinor}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowPatientAgreementInformation}">
+    	<c:MaciPatientAgreement cAccount="{!v.cAccount}"/>
+    </aura:if>
+
+</aura:component>

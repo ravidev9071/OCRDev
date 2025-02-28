@@ -1,0 +1,442 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Header { Common for all the pages }
+-->
+
+
+<aura:component controller="SYN_PortalEnrollmentController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+  	<aura:attribute name="currentUser" type="User" />  
+    <aura:attribute name="showManagePatient" type="boolean" default="false"/>
+    <aura:attribute name="showManageOfficeContact" type="boolean" default="false"/>
+    <aura:attribute name="showManageOffice" type="boolean" default="false"/>
+    <aura:attribute name="showInpatientManageOffice" type="boolean" default="false"/>
+    <aura:attribute name="Pharmacyacc" type="String" />
+	<aura:attribute name="showPreLaunchModal" type="boolean" default="false"/>
+    <aura:attribute name="showPreLaunchTab" type="boolean" default="false"/> 
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+
+	
+     <lightning:navigation aura:id="navigation"/>
+     <ltng:require styles="{!join(',',$Resource.MacitentanAssets + '/assets/css/bootstrap.min.css', 
+                           $Resource.MacitentanAssets + '/assets/css/font-awesome.min.css',
+                           $Resource.MacitentanAssets + '/assets/css/custom.css')}" 
+                   			afterScriptsLoaded="{!c.getActiveTabName}"/> 
+ 		
+    <head>
+        <title>Home</title>       
+    </head>   
+   
+    <body class="d-flex flex-column h-100">
+        <aura:if isTrue="{! v.ShowSpinner }">
+            <lightning:spinner alternativeText="Loading" class="spinnerClass"/>
+        </aura:if>
+     <nav class="navbar navbar-top navbar-expand-lg navbar-light py-0" style="margin-top:-32px;">
+        <div class="container-fluid px-5">
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a href="prescriber-information" class="nav-link dropdown-toggle"   id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Prescribing Information
+                        </a>
+                        <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="https://www.dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1e484a50-55db-4b85-8c57-6cd1b0353abd" target="_blank">Actelion Pharmaceuticals US, Inc.,<br/> a Johnson &amp; Johnson Company (Opsumit)</a></li>
+                            <li><a class="dropdown-item" href="https://www.dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6945b183-18d3-40de-afd1-c88e33cc1a63" target="_blank">Actelion Pharmaceuticals US, Inc.,<br/> a Johnson &amp; Johnson Company (Opsynvi)</a></li>
+                            <!--<li><a class="dropdown-item" href="prescriber-information">Prescribing Information 2</a></li>-->
+                        </ol>
+                    </li>
+                       <li class="nav-item">
+                            <aura:if isTrue="{!v.currentUser.Role__c}">
+                                <a class="nav-link" aura:id="faqs" onclick="{!c.navigateToFaqsPage}">FAQs</a>
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.currentUser.UserType == 'Guest'}">
+                                        <a class="nav-link" aura:id="faqs" href="faqs">FAQs</a>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-0">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href=" /s/">
+               <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"></img>
+            </a>
+            <button id="toggleButton" class="navbar-toggler" type="button"  data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="myDiv" style="display: none;" class="collapse navbar-collapse" >
+                
+               
+                    <ul style="{!v.currentUser.UserType == 'Guest' ? 'display:flex;' : 'display:none;'}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link df" id="general-link" aura:id="general" href="general">GENERAL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="patient-link" aura:id="patient" href="patient">PATIENT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pharmacy-link" aura:id="pharmacy" href="pharmacy">PHARMACY</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="prescriber-link" aura:id="prescriber" href="prescriber">PRESCRIBER</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus-link" href="contact-us">CONTACT US</a>
+                        </li>
+                        <li class="nav-item">
+                            <aura:if isTrue="{!v.showPreLaunchTab}">
+                                <a class="nav-link login-link" onclick="{!c.navigateToPrelaunchPage}"><i class="fa fa-user-circle-o"></i>LOGIN</a>
+                                <aura:set attribute="else">
+                                    <a class="nav-link login-link" href="login"><i class="fa fa-user-circle-o"></i>LOGIN</a>
+                                </aura:set>
+                            </aura:if>
+                        </li>
+                    </ul>
+              
+                
+               
+                    <ul style="{!v.currentUser.UserType == 'Standard' ? 'display:flex;' : 'display:none;'}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link" id="general-link" aura:id="general" onclick="{!c.navigateToGeneralPage}">GENERAL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="patient-link" aura:id="patient" href="patient">PATIENT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pharmacy-link" aura:id="pharmacy" href="pharmacy">PHARMACY</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="prescriber-link" aura:id="prescriber" href="prescriber">PRESCRIBER</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus-link" onclick="{!c.navigateToContactUsPage}">CONTACT US</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                               {!v.currentUser.Email}
+                            </a>
+                            <ol class="dropdown-menu" aria-labelledby="navbarDropdown-Email-cc">
+                                <li><a class="dropdown-item" onclick="{!c.navigateToProfile}">PROFILE</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.logout}">LOGOUT</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.navigateToChangePassword}" >CHANGE PASSWORD</a></li>
+                            </ol>
+                        </li>   
+                    </ul>
+               
+                    <ul style="{!v.currentUser.Role__c == 'Prescriber' ? 'display:flex;' : 'display:none;'}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link" id="general-link-dd" aura:id="general" onclick="{!c.navigateToGeneralPage}">GENERAL</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="prescriber" id="navbarDropdown prescriber-link" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                PRESCRIBER
+                            </a>
+                            <aura:if isTrue="{!v.showManagePatient}">
+                                <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToManagePatientPage}">MANAGE PATIENTS</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToPrescriberPreferencePage}">PREFERENCES</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.downloadPrescriberEnrollmentForm}">PRINT ENROLLMENT FORM</a></li>
+                                 </ol>
+                                
+                            </aura:if>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus-link-dd" onclick="{!c.navigateToContactUsPage}">CONTACT US</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {!v.currentUser.Email}
+                            </a>
+                            <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" onclick="{!c.navigateToPrescriberPreferencePage}">PROFILE</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.logout}">LOGOUT</a></li>
+                                 <li><a class="dropdown-item" onclick="{!c.navigateToChangePassword}" >CHANGE PASSWORD</a></li>
+                            </ol>
+                        </li>   
+                    </ul>
+                    <!---Office Contact Changes-->
+                    <ul style="{!v.currentUser.Role__c == 'Office Contact' ? 'display:flex;' : 'display:none;'}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link" id="general-link-dd" aura:id="general" onclick="{!c.navigateToGeneralPage}">GENERAL</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="officecontacthome" id="navbarDropdown officecontact-link" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                               OFFICE CONTACT
+                            </a>
+                            <aura:if isTrue="{!v.showManageOfficeContact}">
+                                <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToManagePatientOfficeContactPage}">MANAGE PATIENTS</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToOfficeContactPreferencePage}">PREFERENCES</a></li>
+                                 </ol>
+                                
+                            </aura:if>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus-link-dd" onclick="{!c.navigateToContactUsPage}">CONTACT US</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {!v.currentUser.Email}
+                            </a>
+                            <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" onclick="{!c.navigateToPrescriberPreferencePage}">PROFILE</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.logout}">LOGOUT</a></li>
+                                 <li><a class="dropdown-item" onclick="{!c.navigateToChangePassword}" >CHANGE PASSWORD</a></li>
+                            </ol>
+                        </li>   
+                    </ul>
+               
+                    <ul style="{!v.currentUser.Role__c == 'Inpatient Pharmacy' ? 'display:flex;' : 'display:none;'}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link" id="general-link-cc" aura:id="general" onclick="{!c.navigateToGeneralPage}">GENERAL</a>
+                        </li>
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="prescriber" id="navbarDropdown-PHARMACY-cc pharmacy-link-cc" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                PHARMACY
+                            </a>
+                            <aura:if isTrue="{!v.showManageOffice}">
+                                <ol class="dropdown-menu" aria-labelledby="navbarDropdown-PHARMACY-cc">
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToInPatientMangePharmacyPage}">MANAGE PHARMACY</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToInpatientPharmacyPreferencePage}">PREFERENCES</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.downloadInPatientPharmayEnrollmentForm}" >PRINT ENROLLMENT FORM</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToInpatientSwitchPharmacyPage}" >SWITCH PHARMACY</a></li>
+                                </ol>
+                            </aura:if>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus-link-cc" onclick="{!c.navigateToContactUsPage}">CONTACT US</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-Email-cc" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {!v.currentUser.Email}
+                            </a>
+                            <ol class="dropdown-menu" aria-labelledby="navbarDropdown-Email-cc">
+                                <li><a class="dropdown-item" onclick="{!c.navigateToInpatientPharmacyPreferencePage}">PROFILE</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.logout}">LOGOUT</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.navigateToChangePassword}" >CHANGE PASSWORD</a></li>
+                            </ol>
+                        </li>  
+                    </ul>
+                
+                    <ul style="{!v.currentUser.Role__c == 'Outpatient Pharmacy' ? 'display:flex;' : 'display:none;'}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link" id="general-link-bb" aura:id="general" onclick="{!c.navigateToGeneralPage}">GENERAL</a>
+                        </li>
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="prescriber" id="navbarDropdown pharmacy-link-dd" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                PHARMACY
+                            </a>
+                            <aura:if isTrue="{!v.showManageOffice}">
+                                <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToMangePharmacyPage}">MANAGE PHARMACY</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToOutpatientPharmacyPreferencePage}">PREFERENCES</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.downloadOutPatientPharmayEnrollmentForm}" >PRINT ENROLLMENT FORM</a></li>
+                                    <li><a class="dropdown-item" onclick="{!c.navigateToSwitchPharmacyPage}" >SWITCH PHARMACY</a></li>
+                                </ol>
+                            </aura:if>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus-link-bb" onclick="{!c.navigateToContactUsPage}">CONTACT US</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {!v.currentUser.Email}
+                            </a>
+                            <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" onclick="{!c.navigateToOutpatientPharmacyPreferencePage}">PROFILE</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.logout}">LOGOUT</a></li>
+                                <li><a class="dropdown-item" onclick="{!c.navigateToChangePassword}" >CHANGE PASSWORD</a></li>
+                            </ol>
+                        </li>  
+                    </ul>
+                
+                    <ul style="{!v.currentUser.Role__c == 'Patient' ? 'display:flex;' : 'display:none;'}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"> 
+                            <a class="nav-link" id="general-link-aa" aura:id="general" onclick="{!c.navigateToGeneralPage}">GENERAL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="patient-link-aa" aura:id="patient" href="patient">PATIENT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contactus-link-aa" onclick="{!c.navigateToContactUsPage}">CONTACT US</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {!v.currentUser.Email}
+                            </a>
+                            <ol class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">PROFILE</a></li>
+                                <li><a class="dropdown-item" href="#">LOGOUT</a></li>
+                            </ol>
+                        </li>   
+                    </ul>
+                
+            </div>
+        </div>
+    </nav>
+ 
+    </body>
+    
+    <!-- Pre Launch Modal/Popup Box starts here-->
+    <aura:if isTrue="{!v.showPreLaunchModal}" >
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container popup">
+                 <!-- Modal/Popup Box Header Starts here-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closePreLaunchModal }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close "
+                                              size="large"/>
+               
+                <div class="slds-modal__content slds-p-around_medium popupPadding" id="modal-content-id-1">
+                    <div class="float:right" style="border-bottom: 5px solid #011338;">
+                        <a class="navbar-brand" href=" /macitentan/s/">
+                            <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"></img>
+                        </a>
+                        <Br/>
+                    </div >
+                    <h1 ></h1>
+                   <div class="WordSection1">
+
+                       <p class="MaciBOLDREDTEXT">
+                           <b>The Opsumit REMS will transition to the Macitentan REMS effective Monday, July 24, 2023.</b>
+                           The Macitentan REMS will be a single, shared system REMS for OPSUMIT<sup>®</sup> and all generic formulations of macitentan. OPSUMIT<sup>®</sup>
+                           remains the only macitentan product on the market, and there are currently no generics.
+                       </p>
+                       
+                       <p class="MaciNormal"><span lang="EN-US"></span></p>
+                       
+                       <p class="MaciNormal">All stakeholders will be able to view, download, and print
+                           Macitentan REMS program materials from the Macitentan REMS website 
+                           <a href="http://www.macitentanrems.com/" style="color:blue">www.MacitentanREMS.com</a> and fax an enrollment form to the Macitentan
+                           REMS Coordinating Center at 1-833-681-0003 as of <b>June 26, 2023.</b> The Macitentan REMS
+                           Coordinating Center will begin processing Macitentan REMS Enrollment Forms
+                           received via fax starting <b>July 24, 2023</b>. The ability to self-enroll
+                           online will be available starting <b>July 24, 2023</b>.</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>PRESCRIBERS:</b>
+                           All prescribers who are currently certified in the Opsumit REMS will be
+                           migrated into the {!$Label.c.Macitentan_Containing_Products_REMS}, and <b style='mso-bidi-font-weight:normal'><u>re-certification
+                           will <span style='mso-bidi-font-weight:bold'>not </span>be required</u></b>.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l1 level1 lfo5'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>Starting <b>June 26, 2023</b>,
+                           prescribers may call the Macitentan REMS Coordinating Center at 1-888-572-2934
+                           if they have any questions about the Macitentan REMS.</p>
+
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l1 level1 lfo5'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>On <b>July 24, 2023</b>, an
+                           email will be sent to the migrated prescriber, if an email address is on file,
+                           with a link to allow the prescriber to create an account in the {!$Label.c.Macitentan_Containing_Products_REMS}
+                           to manage patients under their care, or to complete online functions such as
+                           enrolling a new patient.</p>
+
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l1 level1 lfo5'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                   </span></span></span>Starting <b>July 24, 2023</b>,
+                           prescribers may call the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center at 1-888-572-2934
+                           to create an account to manage patients under their care.</p>                      
+                       
+                       
+                      
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>PATIENTS:</b> Patients
+                           who are currently enrolled in the Opsumit REMS will be migrated to the
+                           {!$Label.c.Macitentan_Containing_Products_REMS}. <b><u>R</u></b><b style='mso-bidi-font-weight:normal'><u>e-enrollment
+                           of patients will not be required</u></b>.</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>INPATIENT PHARMACIES:</b>
+                           Inpatient pharmacies that are currently certified in the Opsumit
+                           REMS and have a valid National Provider Identifier (NPI) on file will be
+                           migrated to the {!$Label.c.Macitentan_Containing_Products_REMS}, and <b style='mso-bidi-font-weight:normal'><u>re-certification
+                           will not be required</u></b>. Inpatient pharmacies that are not migrated to the {!$Label.c.Macitentan_Containing_Products_REMS} 
+                           <b style='mso-bidi-font-weight: normal'><u>will need to re-certify in the {!$Label.c.Macitentan_Containing_Products_REMS} </u></b>
+      					   in order to continue dispensing {!$Label.c.macitentan_containing_products} starting
+                           July 24, 2023. These pharmacies without an NPI on file will receive a
+                           letter detailing the need to complete and fax the {!$Label.c.Macitentan_Containing_Products_REMS} Inpatient
+                           Pharmacy Enrollment Form to the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center at
+                           1-833-681-0003 to continue dispensing {!$Label.c.macitentan_containing_products} starting July 24, 2023.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l5 level1 lfo6'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>Starting <b>June 26, 2023</b>,
+                           the authorized representative may call the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center
+                           at 1-888-572-2934 if they have any questions about the {!$Label.c.Macitentan_Containing_Products_REMS}.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l5 level1 lfo6'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>On <b>July 24, 2023</b>, if an
+                           email address is on file, an email will be sent to the authorized
+                           representative currently managing the inpatient pharmacy to create an account
+                           in the {!$Label.c.Macitentan_Containing_Products_REMS} in order to verify patient
+                           enrollment and prescriber certification online.</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>OUTPATIENT PHARMACIES</b>: Outpatient pharmacies that are currently certified in the Opsumit
+                           REMS will <b style='mso-bidi-font-weight:normal'><u>not</u></b> be migrated and
+                           <b style='mso-bidi-font-weight:normal'><u>will need to re-certify in
+                           the {!$Label.c.Macitentan_Containing_Products_REMS}</u></b>. For further information on the Outpatient Pharmacy
+                           certification process, please reach out to the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating
+                           Center at 1-888-572-2934. &nbsp;</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>COORDINATING CENTER HOURS:</b></p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l6 level1 lfo8'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>From Monday, <b>June 26, 2023</b>
+                           through Friday, <b>July 21, 2023</b>, the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center
+                           will be available by phone at 1-888-572-2934, Monday through Friday, from
+                           9:00am ET to 5:00pm ET.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l2 level1 lfo7'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-bidi-font-weight:bold'>
+                           <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                           </span></span>Starting Monday, <b>July 24,
+                           2023</b>, the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center business hours will be Monday
+                           through Friday from 8:00am ET to 8:00pm ET.</p>
+                       
+                       
+                    </div>
+                    <div class="text-center">                                  
+                            <a class="btn btn-primary-m my-2 rounded-0" onclick="{!c.closePreLaunchModal}">Close</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <!-- Pre Launch Modal/Popup Box End here-->
+    
+</aura:component>

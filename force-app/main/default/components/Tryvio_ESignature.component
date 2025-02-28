@@ -1,0 +1,39 @@
+<apex:component controller="Tryvio_ESignatureEmailTemplateController" access="global">
+    
+    <apex:attribute name="caseRecordId" type="Id" description="Id of the case" assignTo="{!caseId}" />
+    <br/>
+    <div style="text-align:left;padding-left:30px;">
+        Dear {!caseFLName},
+        <br/>
+        <br/>You may now complete the enrollment by signing the agreement.
+        <br/>
+        <br/> Click the button below to complete your enrollment.
+        <br/>
+        <br/>
+        <div style="text-align:center">
+            <a href="{!enrollmentFormUrl}" target="_blank" style="border: none; color: white; padding: 15px 20px; text-decoration-line: none; display: inline-block; margin: 4px 2px; cursor: pointer; background-color: rgb(11, 2, 59);">
+                Continue Enrollment
+            </a>
+        </div>
+        <br/>
+        <br/> Sincerely,
+        <br/> The {!currentCase.US_WSREMS__Program_Name__c}
+        <br/> Phone:{!currentCase.US_WSREMS__Program_Phone_Number__c}
+        <br/> Fax: {!currentCase.US_WSREMS__Program_Fax__c}
+        <br/> www.TRYVIOREMS.com
+        <br/>
+        <br/> Report pregnancies to the {!currentCase.US_WSREMS__Program_Name__c} by calling 1-888-572-2934. Report adverse events
+        to FDA by visiting
+        <a href="www.fda.gov/medwatch" target="_blank">www.fda.gov/medwatch</a> or call 1-800-FDA-1088.
+        <br/>
+        <br/> Confidentiality Notice: This email, its contents, and attachments (if any) are for the intended recipient(s) only
+        and may contain information which is confidential and/or proprietary. No confidentiality is waived or lost by any
+        transmission errors. If you are not the intended recipient, please notify the sender, and then please delete and
+        destroy all copies of the email and attachments. Be advised that any review, dissemination, or taking any action
+        in reliance on, the information contained in or attached to this email is prohibited. This email is not intended
+        for distribution to, or use by, any person or entity in any location where such distribution or use would be contrary
+        to law or regulation. The transmission and content of this email cannot be guaranteed to be secure or free of errors
+        or viruses and the Program accepts no liability for any damage caused by any virus transmitted by this email. Please
+        do not reply to this unattended email address.
+    </div>
+</apex:component>

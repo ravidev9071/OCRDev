@@ -1,0 +1,133 @@
+<aura:component controller="SYN_PatientSearchController" extends="c:SYN_BaseAccessCmp" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+     <aura:import library="lightning:alert" property="LightningAlert" />
+    <aura:registerEvent name="SYN_PatientAccountsLoaded" type="c:SYN_PatientAccountsLoaded"/>
+     <aura:handler event="c:SYN_PharmacySortEve" action="{!c.onAccountsSorted}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    <aura:attribute name="FirstNameSearch" type="String" />
+    <aura:attribute name="LastNameSearch" type="String" />
+    <aura:attribute name="DOBSearch" type="String" />
+    <aura:attribute name="PhoneSearch" type="String" />
+    <aura:attribute name="ZipSearch" type="String" />
+    <aura:attribute name="sortedBy" type="String" default="LastName"/>
+    <aura:attribute name="sortedDirection" type="String" default="desc" />
+   <aura:attribute name="myPatientsBool" type="Boolean" />
+    <aura:attribute name="searchTermBool" type="Boolean" />
+    <aura:attribute name="LoadRadioBtnRecs" type="Boolean" />
+    <aura:attribute name="LoadMYPatRadioBtnRecs" type="Boolean" />
+    <aura:attribute type="List" name="allData"/>
+     <lightning:notificationsLibrary aura:id="notifLib" />
+    <aura:handler name="change" value="{!v.haveAccess}" action="{!c.doInit}"/>
+    <aura:attribute name="options" type="List" default="[
+                                                        { 'value': 'mypatients', 'label': 'My Patients' },
+                                                        { 'value': 'allpatients', 'label': 'All Program Patients' }
+                                                        ]"/>
+    <aura:attribute name="value" type="String" default="mypatients"/>
+   
+    <form class="slds-form_stacked">
+        <!--<lightning:card title="Patient Search" iconName="standard:search"> -->
+        <lightning:card>     
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:search" size="small" class="slds-m-bottom_small"> </lightning:icon>
+            Patient Search - Please search with two identifiers to display Patient Results.
+        </aura:set>
+            
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds-scope">
+                
+                <!-- PRIMARY CONTENT WRAPPER -->
+                
+                <!-- RESPONSIVE GRID EXAMPLE -->
+                <div class="myapp">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--3-of-4">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:radioGroup name="radioGroup"
+                                                      label=""
+                                                      options="{! v.options }"
+                                                      value="{! v.value }"
+                                                      type="radio"  
+                                                      variant="label-inline"  
+                                                      onchange="{!c.onSearchTermChangeRadioBtn}"
+                                                      style="display:inline-block !important"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-3">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 label="Prescribing Institution/Pharmacy Search"
+                                                 variant="label-hidden"
+                                                 value="{!v.FirstNameSearch}"
+                                                 onchange="{!c.onSearchTermChangeWhenNull}"
+                                                 placeholder="First Name"
+                                                 aura:id="FirstName"
+                                                 /></div>
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-3">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 label="Prescribing Institution/Pharmacy Search"
+                                                 variant="label-hidden"
+                                                 value="{!v.LastNameSearch}"
+                                                 onchange="{!c.onSearchTermChangeWhenNull}"
+                                                 placeholder="Last Name"
+                                                 aura:id="LastName"
+                                                 />
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-3">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 aura:id="DOBfield"
+                                                 label="Prescribing Institution/Pharmacy Search"
+                                                 variant="label-hidden"
+                                                 type="date"
+                                                 value="{!v.DOBSearch}"
+                                                 onchange="{!c.onSearchTermChangeWhenNull}"
+                                                 placeholder="DOB"
+                                                 />
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-3">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 label="Prescribing Institution/Pharmacy Search"
+                                                 variant="label-hidden"
+                                                 value="{!v.PhoneSearch}"
+                                                 onchange="{!c.onSearchTermChangeWhenNull}"
+                                                 placeholder="Phone"
+                                                 type="Phone"
+                                                 aura:id="Phone"
+                                                 />
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-3">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <lightning:input
+                                                 label="Prescribing Institution/Pharmacy Search"
+                                                 variant="label-hidden"
+                                                 value="{!v.ZipSearch}"
+                                                 onchange="{!c.onSearchTermChangeWhenNull}"
+                                                 placeholder="Zip Code"
+                                                 />
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-3">
+                            <div class="slds-text-align_center slds-m-around--x-small">
+                                <div class="slds-p-horizontal--x-large slds-m-top_medium">
+                                    <div class="slds-float_right">
+                                        <lightning:button variant="brand" name="SearchBtn" label="Search" onclick="{!c.onSearchTermChange}"/>
+                                    </div>     
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- / RESPONSIVE GRID EXAMPLE -->
+            </div>
+            
+        </lightning:card>
+    </form> 
+</aura:component>

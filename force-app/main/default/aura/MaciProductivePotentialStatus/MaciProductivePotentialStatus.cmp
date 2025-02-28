@@ -1,0 +1,268 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 14/09/2022
+Description   :- Created for Maci Portal -> Productive Potential Status { Middle Context }
+-->
+
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="patientID" type="String"/>
+    <aura:attribute name="programId" type="String" default=""/>
+<aura:attribute name="patRiskCat" type="String" default=""/>
+    <aura:attribute name="patRiskCatNew" type="String" default=""/>
+    <aura:attribute name="patientAccount" type="Account" />
+    <aura:attribute name="prescriberAccount" type="Account" />
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+    <aura:attribute name="FemalesofReproductivePotentialValue" type="boolean" default="false"/>
+    <aura:attribute name="PrepubertalFemaleValue" type="boolean" default="false"/>
+    <aura:attribute name="PostmenopausalFemaleValue" type="boolean" default="false"/>
+    <aura:attribute name="OtherMedicalValue" type="boolean" default="false"/>
+    <aura:attribute name="Physiological" type="boolean" default="false"/>
+    <aura:attribute name="MedicalSurgical" type="boolean" default="false"/>
+    <aura:attribute name="Other" type="boolean" default="false"/>
+    <aura:attribute name="annualCheck" type="boolean" default="false"/>
+    <aura:attribute name="rCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <lightning:navigation aura:id="navigation"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/pharmacy.jpg');background-size: cover;background-repeat: no-repeat;background-attachment: fixed;height: 180vh;">
+        
+        <div class="container-fluid px-5 h-100">
+            <aura:if isTrue="{! v.ShowSpinner }">
+                <lightning:spinner alternativeText="Loading" class="spinnerClass"/>
+            </aura:if>
+            <div class="row h-100">
+                <div class="col-lg-12 h-100">
+                    <div class="card p-0 rounded-0 border-0 h-100">
+                        
+                        <div class="col-lg-12">
+                            <div class="heading-top d-flex justify-content-between border-bottom-0"  style="background-color: #EBEBEB">
+                               <div class="col-lg-7 col-sm col-8 text-start">
+                                    
+                                    <div class="row ps-3">
+                                        <div class="col-1" style="width: 39px;">
+                                            <span class="text-theme">
+                                                <i class="fa fa-user-md fs-1 me-0 mt-0" style="position: relative;top: 6px;"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-9 ps-4">
+                                            <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                {!v.prescriberAccount.Name}&nbsp;{!v.prescriberAccount.SYN_Professional_Designation__c}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="row ps-3" style="position: relative;top: -10px;">
+                                        <div class="col-1" style="width: 39px;"></div>
+                                        <div class="col-9 ps-4">
+                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                NPI: {!v.prescriberAccount.US_WSREMS__NPI__c}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-sm col-4 text-end pe-4">
+                                    <span class=" text-muted">Program Status:&nbsp; <span class="text-theme fw-bold">Enrolled as of <span name="enrolled-number" id="enrolled-number"><lightning:formattedDateTime timeZone="GMT" value="{!v.prescriberAccount.Date_Enrolled__c}" year="numeric" month="numeric" day="numeric" /></span> <i class="fa fa-check-circle ps-1"></i></span></span>
+                                </div>
+                            </div>
+                           <div class="border-bottom-0 mx-0" style="background-color: #EBEBEB">
+                              <div class="row px-1">
+                                  <div class="col-lg-12 col-sm col-12 text-start">
+                                
+                                        <div class="row ps-4">
+                                            <div class="col-1 pe-0" style="width: 39px;">
+                                                <span class="text-theme">
+                                                    <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt="" style="width: 31px;"></img>
+                                                </span>
+                                            </div>
+                                            <div class="col-1" style="width: 39px;">
+                                                <span class="text-theme">
+                                                    <span class="text-theme">
+                                                        <i class="fa fa-user text-info fs-1" style="position: relative;top: 6px;left: 7.5px;"></i>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <div class="col-9 ps-4">
+                                                <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> 
+                                                    {!v.patientAccount.Name}</h3>
+                                            </div>
+                                        </div>
+                                        <div class="row ps-4" style="position: relative;top: -10px;">
+                                            <div class="col-1  pe-0" style="width: 39px;"></div>
+                                            <div class="col-1" style="width: 39px;"></div>
+                                            <div class="col-9 ps-4">
+                                                <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number" class="text-black-50">
+                                                    <span class="fs-6 text-black-50 fw-bold">Date of Birth: <strong style="color: #011338;"><lightning:formattedDateTime timeZone="GMT" value="{!v.patientAccount.US_WSREMS__DOB__c}" year="numeric" month="numeric" day="numeric" /></strong></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                  </div>
+                               </div>
+                            </div>
+                        </div>
+                        
+                       
+                        <div class="card-body px-4 llc-dv">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold mb-3">Change in Reproductive Potential Status and Pre-Pubertal Annual Verification</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm">
+                                <div class="col-lg-8">
+                                    <p class="fw-bold">Select the female patient's current reproductive status below</p>
+                                    <div class="border p-4 mb-3">
+                                        <p><span>Females of Reproductive Potential:</span></p>
+                                        <div class="row">
+                                            <div class="col-lg-1 d-flex justify-content-center align-items-center">
+                                                <div class="form-check ms-4">
+                                                     <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                    id="Females-of-Reproductive-Potential" checked="{!v.FemalesofReproductivePotentialValue}" onclick="{!c.FemaleOfReproductivePotentialSelect}"></input>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-11 ps-0">
+                                                <label class="fw-bold m-0" >Females of Reproductive Potential </label>
+                                                <div class="list-bullets">
+                                                    <ul class="p-inline-s">
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                Females of reproductive potential include girls who have entered
+                                                            puberty and all females who have a uterus and have not passed
+                                                            through menopause.
+                                                            Menopause is defined as 12 months of spontaneous amenorrhea (not
+                                                            amenorrhea induced by a medical condition or medical therapy) or
+                                                            post-surgical from
+                                                            bilateral oophorectomy. 
+                                                            </div>
+                                                        </li>
+                                                        <li class="d-flex">
+                                                         <i class="fa fa-circle pt-2"></i>
+                                                            <div>
+                                                                For the purposes of this REMS, puberty includes those girls who
+                                                            are at least Tanner Stage 3 and have not yet had a menses
+                                                            (premenarchal).
+                                                            </div>
+                                                        </li>
+                                                        <li class="d-flex">
+                                                            <i class="fa fa-circle pt-3"></i>
+                                                           <div>
+                                                            For the purposes of this REMS, females who have undergone <strong>tubal
+                                                                sterilization</strong> are classified as females of <strong>reproductive</strong>
+                                                            potential.
+                                                           </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <label class="fw-bold m-0" >Females of Non-Reproductive Potential:</label>
+                                            <div class="col-lg-12 my-3">
+                                                <div class="form-check ms-4 mb-2">
+                                                    <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                    id="PrepubertalFemal" checked="{!v.PrepubertalFemaleValue}" onclick="{!c.PrepubertalFemaleSelect}"></input>
+                                                    <label class="form-check-label ps-4 m-0 fw-normal" for="PrepubertalFemal">
+                                                       <b> Pre-pubertal Female: </b> includes females who are at Tanner Stages 1
+                                                        and 2 are not considered to be of reproductive potential
+                                                    </label>
+                                                </div>
+                                                <div class="form-check ms-4 mb-2">
+                                                <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                    id="PostmenopausalFemale" checked="{!v.PostmenopausalFemaleValue}" onclick="{!c.PostmenopausalFemaleSelect}"></input>
+                                                    <label class="form-check-label ps-4 m-0 fw-normal" for="PostmenopausalFemale">
+                                                        <b>Post-menopausal Female -</b> females who have passed through
+                                                        menopause. Menopause is defined as 12 months of spontaneous
+                                                        amenorrhea (not amenorrhea induced by a medical condition or
+                                                        medical therapy) or postsurgical from bilateral oophorectomy
+                                                    </label>
+                                                </div>
+                                                <div class="form-check ms-4 mb-2">
+                                                    
+                                                    <input class="form-check-input" type="radio" name="Females-of-Reproductive-Potential"
+                                                    id="Othermedical" checked="{!v.OtherMedicalValue}" onclick="{!c.OtherMedicalSelect}"></input>
+                                                    
+                                                    <label class="form-check-label ps-4 m-0 fw-normal" for="Othermedical">
+                                                        Other medical reasons for permanent, irreversible infertility
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="border p-4 mb-3">
+                                        <div class="row">
+                                            <label class="fw-bold m-0" >Reason for change in classification</label>
+                                            <div class="col-lg-12 my-3">
+                                                <div class="form-check ms-4 mb-2">
+
+                                                    <input class="form-check-input" type="radio" name="Change-Classfication"
+                                                    id="Physiological" checked="{!v.Physiological}" onclick="{!c.PhysiologicalSelect}"></input>
+                                                    <label class="form-check-label ps-4 m-0" style="font-weight: 100;" for="Physiological">
+                                                       Physiological transition 
+                                                    </label>
+                                                </div>
+                                                <div class="form-check ms-4 mb-2">
+                                                    <input class="form-check-input" type="radio" name="Change-Classfication"
+                                                    id="MedicalSurgical" checked="{!v.MedicalSurgical}" onclick="{!c.MedicalSurgicalSelect}"></input>
+                                                    <label class="form-check-label ps-4 m-0" style="font-weight: 100;" for="MedicalSurgical">
+                                                        Medical/Surgical (Please specify below)
+                                                    </label>
+                                                </div>
+                                                <div class="form-check ms-4 mb-2">
+                                                  <input class="form-check-input" type="radio" name="Change-Classfication"
+                                                    id="Other" checked="{!v.Other}" onclick="{!c.OtherSelect}"></input>
+                                                    <label class="form-check-label ps-4 m-0" style="font-weight: 100;" for="Other">
+                                                        Other (Please specify below)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label for="" class="m-0">Please Specify</label>
+                                            <div>
+                                                <lightning:input type="text" aura:id="Pleasespecify" placeholder="Please Specify" class="form-control" value="{!v.rCase.Please_specify__c}"/>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border p-4" >
+                                         <div class="row">
+                                             <label class="fw-bold m-0" >Annual Verification for Pre-Pubertal Status</label>
+                                             <div class="col-lg-12 my-3">
+                                                 <div class="form-check ms-4 mb-2">
+                                                     <input class="form-check-input" type="checkbox" name="Annual-Verification"
+                                                    id="AnnualVerify" checked="{!v.annualCheck}" onclick="{!c.annualSelect}"></input>
+                                                     
+                                                     <label class="form-check-label ps-4 m-0" style="font-weight: 100;" for="AnnualVerify">
+                                                         Patient remains a Pre-pubertal Female (8 years of age or older) 
+                                                     </label>
+                                                 </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="border-start border-light ps-3">
+                                        <h5 class="fw-bold mb-3"><i class="fa fa-info pe-3"></i> Information</h5>
+                                        <p style="font-size:14px;">To change a patient's reproductive status:</p>
+                                        <p style="font-size:14px;">1. Select the patient's current reproductive status within 10 business days of awareness of the change</p>
+                                        <p style="font-size:14px;">2. Select the Reason for the patient's change in classification</p>
+                                        <p style="font-size:14px;">3. Complete the annual verification of the reproductive potential status for pre-pubertal females 8 years of age or older, if applicable</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <a name="button-next" 
+                                        class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleComplete}">COMPLETE</a>
+                                </div>
+                            </div>
+                        </div>
+          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>

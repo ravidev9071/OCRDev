@@ -1,0 +1,4 @@
+<design:component>
+	 <design:attribute name="PatientID" label="PatientID" description="PatientID" />
+    	
+</design:component>

@@ -1,0 +1,412 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Login Page { Middle context }
+-->
+
+<aura:component controller="CustomLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="enableTwoFactoryAuthentication" type="boolean" default="false"/>
+    <aura:attribute name="showPreLaunchModal" type="boolean" default="false"/>
+
+    <ltng:require styles="{!join(',',$Resource.MacitentanAssets + '/assets/css/bootstrap.min.css', 
+                           $Resource.MacitentanAssets + '/assets/css/font-awesome.min.css',
+                           $Resource.MacitentanAssets + '/assets/css/custom.css')}"
+                   
+                  
+                  scripts="{!join(',', 
+                           $Resource.MacitentanAssets + '/assets/js/bootstrap.bundle.min.js',  
+                           $Resource.MacitentanAssets + '/assets/js/jquery-3.6.0.min.js')}"
+                 /> 
+ 
+    <aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    <aura:attribute name="usernameLabel" type="String" required="false" default="Username"/>
+    <aura:attribute name="passwordLabel" type="String" required="false" default="Password"/>
+    <aura:attribute name="loginButtonLabel" type="String" required="false" default="Log in"/>
+    
+    <aura:attribute name="forgotPasswordLabel" type="String" required="false" default="Forgot your password?"/>
+    <aura:attribute name="selfRegisterLabel" type="String" required="false" default="Not a member?"/>
+    <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/ForgotPassword"/>
+    <aura:attribute name="selfRegisterUrl" type="String" required="false" default="/SelfRegister"/>
+    
+    <aura:attribute name="isUsernamePasswordEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="isSelfRegistrationEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
+    <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
+    
+    <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <aura:dependency resource="c:setStartUrl" type="EVENT"/>
+    <aura:dependency resource="siteforce:registerQueryEventMap" type="EVENT"/>
+    <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/>
+    
+    <aura:attribute name="programName" type="String"  description="Program Name"/>
+    <aura:attribute name="selectedRole" type="String"/>
+    <aura:attribute name="Selectedvalue" type="string" default=""/>
+    <aura:attribute name="showModal" type="boolean" default="false"/>
+    <aura:attribute name="roles" type="List" 
+                    default="['Select Role','Prescriber','Pharmacy','Patient']"/>
+    <aura:attribute name="verificationCode" type="string" default =""/>
+    <aura:attribute name="userName" type="String"  default=""/>
+    <aura:attribute name="passWord" type="String"  default=""/>
+    <aura:attribute name="showpassword" type="Boolean" default="false"/>
+
+    <aura:attribute name="confirmPassword" type="string" default =""/>
+    <!-- storing Case Credentials Picklist values  -->
+    <aura:attribute name="userRolesMap" type="Map"/>
+    <aura:attribute name="ShowSpinner" type="boolean" default="false"/>
+
+    <!-- Storing 2 Factor Authentication Options -->
+    <aura:attribute name="options2FA" type="List" default="[
+    {'label': 'Two-Factor Authentication Opt-In', 'value': 'Opt-In'},
+    {'label': 'Two-Factor Authentication Opt-Out', 'value': 'Opt-Out'}]"/>
+
+    <aura:attribute name="value2FA" type="String"/>
+    <aura:attribute name="show2FAOptOut" type="boolean" default="false"/>
+    <aura:attribute name="show2FAOptions" type="boolean" default="false"/>  
+
+   <lightning:navigation aura:id="navigation"/>
+    <nav class="navbar navbar-top navbar-expand-lg navbar-light py-3" style="margin-top:-32px;">
+        <div class="container-fluid px-5">
+            <div class="navbar-collapse">
+                
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-0">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href=" /s/">
+                <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"></img>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href=" /s/" class="text-nav text-hover-link text-decoration-none" style="color: #616161;"><i class="fa fa-undo me-1"></i>return to client</a>
+        </div>
+    </nav>
+        
+    <!-- main body start here -->
+    <div>
+        <aura:renderIf isTrue="{!v.isUsernamePasswordEnabled}">
+            
+            <span>
+                <aura:renderIf isTrue="{!v.showError}">
+                    <div id="error">
+                        <ui:outputRichText value="{!v.errorMessage}"/>
+                    </div>
+                </aura:renderIf>
+            </span>
+
+    <section class="sec-one-1" style="background-image: url('/resource/MaciImages/img/bg-img-1.jpeg'); height:39vw;background-size: cover;">
+         
+        <div class="container-fluid h-100 px-5">
+            <!--loading spinner start-->
+            <aura:if isTrue="{!v.ShowSpinner}">
+                <div aura:id="spinnerId" class="slds-spinner_container">
+                    <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                        <span class="slds-assistive-text">Loading...</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </aura:if>
+            <c:maciCustomToastNotification aura:id="maciCustomNotification" sticky = "false" timeout = "500"/> 
+            <div class="row py-4 h-100 d-flex justify-content-center align-items-center cnt-d">
+                <div class="col-lg-5">
+                    <aura:if isTrue="{!!v.enableTwoFactoryAuthentication}" >
+                        <div class="card p-0 rounded-0 border-0">
+                            <div class="card-header" style="border-bottom: 0px">
+                                <h5 class="card-title mt-2 fw-bold" style="color: #505050!important;">Login</h5>
+                            </div>
+                            <div class="card-body px-4">
+                                <p style="color: #505050!important;"><strong>Welcome.</strong> Please log in.</p>
+                                <form >
+                                    <div class="col-lg-10 mb-2">
+                                        <label for=""  style="color: #505050!important;">Enter your username</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="col-lg-1 text-center">
+                                                <i class="fa fa-user-circle text-theme fs-6 pe-1"></i>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                
+                                                <lightning:input type="text" aura:id="username" placeholder="{!v.usernameLabel}" class="form-control" value=""/>                                          
+                                            </div>
+                                            <i class="fa fa-info text-theme login-info-icon border-end pe-3 py-2" style="border-right: 1px solid #dee2e6 !important;" title="Username is your email address listed in the Macitentan-Containing Products REMS application."></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-10 mb-2">
+                                        <label for=""  style="color: #505050!important;">Enter your password</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="col-lg-1 text-center pe-1">
+                                                <img src="/resource/MaciImages/img/key.png" alt="key" style="width:1.07vw;" ></img>
+                                            </div>
+                                            <div class="col-lg-10 d-flex justify-content-end align-items-center">
+                                                <lightning:input variant = "label-hidden" type="{!v.showpassword ? 'text':'password'}" class="form-control" placeholder="Password" 
+                                                                 aura:id="password" value=""/>                                    
+                                                
+                                                <lightning:buttonIcon  aura:id="pwrdIcon" class="slds-button slds-input__icon slds-text-color--default position-absolute me-3 passwordIcon" 
+                                                                      iconName="{!v.showpassword ? 'utility:preview':'utility:hide'}" 
+                                                                      alternativeText="Some text" onclick="{!c.togglePassword}"/>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-2">
+                                        <aura:if isTrue="{!v.show2FAOptions}">
+                                            <div>
+                                                <Span class="headingTwoFA">Why Opt-In for 2FA?</Span>
+                                                <p class="detailTwoFA">
+                                                    <b>- Enhanced Security:</b> 2FA adds an extra layer of defense, ensuring that only authorized<br/>
+                                                        users can access your account, even if your password is compromised.<br/>
+                                                    
+                                                    <b>- Protect Patient Confidentiality:</b> Safeguard your patients' sensitive information from<br/>
+                                                        unauthorized access, preserving their trust in your practice.<br/>
+                                                    
+                                                    <b>- Regulatory Compliance:</b> Maintain compliance with healthcare regulations like HIPAA<br/>
+                                                        by implementing robust security measures.<br/>
+                                                    <br/>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <div class="radioGroupLabel">
+                                                    <lightning:radioGroup  name="options2FARadioGroup"
+                                                                            options="{! v.options2FA }"
+                                                                            value="{! v.value2FA }"
+                                                                            onchange="{! c.handleFAChange }"/>
+                                                </div>    
+                                                <aura:if isTrue="{!v.show2FAOptOut}">                                            
+                                                        
+                                                    <Span class="headingTwoFA">Opt Out? Consider the risks. If you choose to Opt Out of the 2FA, Please beware of the following risks.</Span>
+                                                    <p class="detailTwoFA">
+                                                        <b>- Increased Vulnerability:</b> Without 2FA, your account is more susceptible to<br/>
+                                                            unauthorized access, potentially exposing your patients' PHI to malicious actors.<br/>
+                                                        
+                                                        <b>- Potential Data Breach:</b> In the event of a security breach, your patients' sensitive<br/>
+                                                            information could be compromised, leading to legal and financial consequences.<br/>
+                                                        
+                                                        <b>- Loss of Trust:</b> Patients entrust you with their confidential information.<br/> A breach could erode their trust in your practice.<br/>
+                                                        Note: You will be able to change your 2FA selection in your user profile screen later if you choose to do so<br/>
+                                                    </p>                                                
+                                                    
+                                                </aura:if> 
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!$Label.c.Is_Maci_Program_Live == 'No'}"> 
+                                            <a class="text-main font-sm  link-text" style="color: #505050!important;font-size: 14px;">Forgot your password?</a>
+                                            <ui:button aura:id="submitButton" label="LOGIN"  class="sfdc_button btn-theme float-end"/>
+                                            <aura:set attribute="else">
+                                                <a href="ForgotPassword" class="text-main font-sm  link-text" style="color: #505050!important;font-size: 14px;">Forgot your password?</a>
+                                                <ui:button aura:id="submitButton" label="LOGIN" press="{!c.handleLogin1}" class="sfdc_button btn-theme float-end"/>
+                                            </aura:set> 
+                                        </aura:if>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="card p-0 rounded-0 border-0">
+                            <div class="card-header">
+                                <h5 class="card-title mt-2 fw-bold" style="color: #505050!important;">Enter Verification Code</h5>
+                            </div>
+                            <div class="card-body px-4">
+                                
+                               
+                                    <div class="col-lg-10 mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="col-lg-10">
+                                                <ui:inputText aura:id="verificationCode" placeholder="XXXXX"  class="input sfdc_usernameinput sfdc form-control" value="{!v.verificationCode}" />
+                                            </div>
+                                            <i class="fa fa-info text-theme login-info-icon border-end pe-3 py-2" title="Please find the verification code in your email"></i>
+                                        </div>
+                                    </div>
+                                    <div class="pt-2">
+                                        <ui:button aura:id="submitButton1" label="VERIFY" press="{!c.validateCode}" class="sfdc_button btn-theme float-end"/>
+                                    </div>
+                               
+                            </div>
+                        </div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        </section>
+        </aura:renderIf>
+    </div>
+    
+    <aura:if isTrue="{!v.showModal}" >
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please select the portal from dropdown.</h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <select name="text-state" id="role"  class="form-control" value="{!v.Selectedvalue}" onchange="{!c.handleRoleOnChange}"> 
+                        <option value="">--None--</option>
+                        <aura:iteration items="{!v.userRolesMap}" var="ind" indexVar="key" >
+                            <option text="{!ind.key}" value="{!ind.value}" />
+                        </aura:iteration>
+                    </select> 
+                    
+                    <br/>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+    <!-- Pre Launch Modal/Popup Box starts here-->
+    <aura:if isTrue="{!v.showPreLaunchModal}" >
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container popup">
+                 <!-- Modal/Popup Box Header Starts here-->
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closePreLaunchModal }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close "
+                                              size="large"/>
+               
+                <div class="slds-modal__content slds-p-around_medium popupPadding" id="modal-content-id-1">
+                    <div class="float:right" style="border-bottom: 5px solid #011338;">
+                        <a class="navbar-brand" href=" /s/">
+                            <img src="{!$Resource.MaciImages + '/img/macitentan.png'}" class="img-fluid"></img>
+                        </a>
+                        <Br/>
+                    </div >
+                    <h1 ></h1>
+                   <div class="WordSection1">
+
+                       <p class="MaciBOLDREDTEXT">
+                           <b>The Opsumit REMS will transition to the {!$Label.c.Macitentan_Containing_Products_REMS} effective Monday, July 24, 2023.</b>
+                           The {!$Label.c.Macitentan_Containing_Products_REMS} will be a single, shared system REMS for OPSUMIT<sup>®</sup> and all generic formulations of {!$Label.c.macitentan_containing_products}. OPSUMIT<sup>®</sup>
+                           remains the only {!$Label.c.macitentan_containing_products} product on the market, and there are currently no generics.
+                       </p>
+                       
+                       <p class="MaciNormal"><span lang="EN-US"></span></p>
+                       
+                       <p class="MaciNormal">All stakeholders will be able to view, download, and print
+                           {!$Label.c.Macitentan_Containing_Products_REMS} program materials from the {!$Label.c.Macitentan_Containing_Products_REMS} website 
+                           <a href="http://www.macitentanrems.com/" style="color:blue">www.MacitentanREMS.com</a> and fax an enrollment form to the {!$Label.c.macitentan_containing_products}
+                           REMS Coordinating Center at 1-833-681-0003 as of <b>June 26, 2023.</b> The {!$Label.c.Macitentan_Containing_Products_REMS}
+                           Coordinating Center will begin processing {!$Label.c.Macitentan_Containing_Products_REMS} Enrollment Forms
+                           received via fax starting <b>July 24, 2023</b>. The ability to self-enroll
+                           online will be available starting <b>July 24, 2023</b>.</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>PRESCRIBERS:</b>
+                           All prescribers who are currently certified in the Opsumit REMS will be
+                           migrated into the {!$Label.c.Macitentan_Containing_Products_REMS}, and <b style='mso-bidi-font-weight:normal'><u>re-certification
+                           will <span style='mso-bidi-font-weight:bold'>not </span>be required</u></b>.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l1 level1 lfo5'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>Starting <b>June 26, 2023</b>,
+                           prescribers may call the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center at 1-888-572-2934
+                           if they have any questions about the {!$Label.c.Macitentan_Containing_Products_REMS}.</p>
+
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l1 level1 lfo5'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>On <b>July 24, 2023</b>, an
+                           email will be sent to the migrated prescriber, if an email address is on file,
+                           with a link to allow the prescriber to create an account in the {!$Label.c.Macitentan_Containing_Products_REMS}
+                           to manage patients under their care, or to complete online functions such as
+                           enrolling a new patient.</p>
+
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l1 level1 lfo5'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                   </span></span></span>Starting <b>July 24, 2023</b>,
+                           prescribers may call the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center at 1-888-572-2934
+                           to create an account to manage patients under their care.</p>                      
+                       
+                       
+                      
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>PATIENTS:</b> Patients
+                           who are currently enrolled in the Opsumit REMS will be migrated to the
+                           {!$Label.c.Macitentan_Containing_Products_REMS}. <b><u>R</u></b><b style='mso-bidi-font-weight:normal'><u>e-enrollment
+                           of patients will not be required</u></b>.</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>INPATIENT PHARMACIES:</b>
+                           Inpatient pharmacies that are currently certified in the Opsumit
+                           REMS and have a valid National Provider Identifier (NPI) on file will be
+                           migrated to the {!$Label.c.Macitentan_Containing_Products_REMS}, and <b style='mso-bidi-font-weight:normal'><u>re-certification
+                           will not be required</u></b>. Inpatient pharmacies that are not migrated to the {!$Label.c.Macitentan_Containing_Products_REMS} 
+                           <b style='mso-bidi-font-weight: normal'><u>will need to re-certify in the {!$Label.c.Macitentan_Containing_Products_REMS} </u></b>
+      					   in order to continue dispensing {!$Label.c.macitentan_containing_products} starting
+                           July 24, 2023. These pharmacies without an NPI on file will receive a
+                           letter detailing the need to complete and fax the {!$Label.c.Macitentan_Containing_Products_REMS} Inpatient
+                           Pharmacy Enrollment Form to the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center at
+                           1-833-681-0003 to continue dispensing {!$Label.c.macitentan_containing_products} starting July 24, 2023.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l5 level1 lfo6'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>Starting <b>June 26, 2023</b>,
+                           the authorized representative may call the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center
+                           at 1-888-572-2934 if they have any questions about the {!$Label.c.Macitentan_Containing_Products_REMS}.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l5 level1 lfo6'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>On <b>July 24, 2023</b>, if an
+                           email address is on file, an email will be sent to the authorized
+                           representative currently managing the inpatient pharmacy to create an account
+                           in the {!$Label.c.Macitentan_Containing_Products_REMS} in order to verify patient
+                           enrollment and prescriber certification online.</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>OUTPATIENT PHARMACIES</b>: Outpatient pharmacies that are currently certified in the Opsumit
+                           REMS will <b style='mso-bidi-font-weight:normal'><u>not</u></b> be migrated and
+                           <b style='mso-bidi-font-weight:normal'><u>will need to re-certify in
+                           the {!$Label.c.Macitentan_Containing_Products_REMS}</u></b>. For further information on the Outpatient Pharmacy
+                           certification process, please reach out to the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating
+                           Center at 1-888-572-2934. &nbsp;</p>
+                       
+                       <p class="MaciNormal" style='margin-left:36.0pt'></p>
+                       
+                       <p class="MaciNormal"><b>COORDINATING CENTER HOURS:</b></p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l6 level1 lfo8'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol'>
+                               <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                               </span></span>From Monday, <b>June 26, 2023</b>
+                           through Friday, <b>July 21, 2023</b>, the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center
+                           will be available by phone at 1-888-572-2934, Monday through Friday, from
+                           9:00am ET to 5:00pm ET.</p>
+                       
+                       <p class="MaciListParagraphBullet" style='text-indent:-18.0pt;mso-list:l2 level1 lfo7'>
+                           <span style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-bidi-font-weight:bold'>
+                           <span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                           </span></span>Starting Monday, <b>July 24,
+                           2023</b>, the {!$Label.c.Macitentan_Containing_Products_REMS} Coordinating Center business hours will be Monday
+                           through Friday from 8:00am ET to 8:00pm ET.</p>
+                       
+                       
+                    </div>
+                    <div class="text-center">                                  
+                            <a class="btn btn-primary-m my-2 rounded-0" onclick="{!c.closePreLaunchModal}">Close</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <!-- Pre Launch Modal/Popup Box End here-->
+</aura:component>

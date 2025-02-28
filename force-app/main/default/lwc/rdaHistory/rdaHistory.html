@@ -1,0 +1,187 @@
+<template>
+        <lightning-card>
+            <div style="padding-left: 45px;padding-right:45px;">
+                <div style="background-color: #f1f1f1; padding: 10px; border-radius: 4px;margin-bottom:25px">
+                    <div style="display: flex; align-items: center;" class= "icon" if:true={account}>
+                         <img src="/resource/MaciImages/img/rx1.png" alt="img" style="margin: 6px;width:29px;">
+                        <!-- Text Section -->
+                        <div style="flex-grow: 1; padding-left: 18px;">
+                            <div>
+                                <p style="margin-bottom: 0px; font-weight: 500;">{account.Name}</p>
+                                <!-- <strong>Town And Country Compounding</strong> -->
+                            </div>
+                            <div style="color: #939191;">
+                                NPI: {account.US_WSREMS__NPI__c}
+                            </div>
+                        </div>
+        
+                        <!-- Program Status Section -->
+                        <div style="display: flex; align-items: center;">
+                            <div style="color: #6B6B6B; margin-right: 5px;">
+                                Program Status:
+                            </div>
+                            <div style="color: #011338;  font-weight: bold;">
+                                Enrolled as of {accountCreatedDate}
+                                <lightning-icon icon-name="utility:success" size="xx-small" alternative-text="Enrolled"></lightning-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div if:true={account}>
+                    <h5 class="mt-3 mb-3 fw-bold">RDA History</h5>
+                    <h5 class="mt-3 mb-3 fw-bold">Outpatient Pharmacy</h5>
+                
+                    <div style="padding-left: 50px; padding-bottom: 5px; line-height: 1;">
+                        <!-- Phone and Pharmacy Enrollments Section aligned in parallel -->
+                        <div class="row mb-2 l-29" style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <!-- Phone Section -->
+                             <!--RT 08-10-24 defect changes  -->
+                            <div class="d-flex align-items-baseline mb-2">
+                                <i class="fa fa-phone fa-flip-horizontal" style="margin-right: 15px; margin-left: -10px; font-size: 1.4rem;"></i>
+                                <span class="text-uppercase">{account.Phone}<br>
+                                    {account.Address_1_Secondary_Office__c} </span>
+                            </div>
+                
+                            <!-- Pharmacy Enrollment Section -->
+                            <div class="d-flex align-items-start">
+                                <i class="fa fa-id-card" style="margin-right: 15px; margin-left: -10px; font-size: 1.4rem;"></i>
+                                <div>
+                                    <!--RT 08-10-24 defect changes  -->
+                                    <span class="text-uppercase">PHARMACY ENROLLMENTS</span><br>
+                                    <span>{account.City_Secondary_Office__c}, {account.State_Secondary_Office__c}&nbsp;{account.Zip_Secondary_Office__c}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+                <div class="filter-container" style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <!-- Left Side: Start Date, End Date, REMS ID, Filter Button -->
+                    <div style="display: flex; flex-direction: column; width: 75%;">
+                        <!-- Date Range Section -->
+                        <div class="date-range" style="display: flex; align-items: baseline;">
+                            <span style="margin-right: 5px; white-space: nowrap;">Date Range:</span>
+                
+                            <div style="display: flex; align-items: baseline; margin-right: 50px;">
+                                <span style="margin-right: 15px;">Start Date:</span> 
+                                <lightning-input class="custom-box no-help-text" 
+                                                 placeholder="Start Date" 
+                                                 style="width: 150px;" 
+                                                 type="date" 
+                                                 value={startDate} 
+                                                 onchange={handleStartDateChange}>
+                                </lightning-input>
+                            </div>
+                
+                            <div style="display: flex; align-items: baseline; margin-left: 18px;">
+                                <span style="margin-right: 5px;">End Date:</span>
+                                <lightning-input class="custom-box no-help-text" 
+                                                 placeholder="End Date" 
+                                                 style="width: 150px;" 
+                                                 type="date" 
+                                                 value={endDate} 
+                                                 onchange={handleEndDateChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                
+                        <!-- REMS ID Section directly below Start Date -->
+                        <div class="rems-id" style="display: flex; align-items: center; margin-top: 10px;">
+                            <span style="margin-right: 5px;">Filter by Patient REMS ID:</span>
+                            <lightning-input class="custom-box" 
+                                             placeholder="Patient Rems ID" 
+                                             style="width: 150px;" 
+                                             value={remsId} 
+                                             onchange={handleRemsIdChange}>
+                            </lightning-input>
+                        </div>
+                
+                        <!-- Filter Button aligned to the bottom-left corner -->
+                        <div style="margin-top: 10px;">
+                            <lightning-button class="filter-button" style="color: blue" label="FILTER" onclick={handleFilter}></lightning-button>
+                        </div>
+                    </div>
+                
+                    <!-- Right Side: Download Button aligned to bottom-right corner -->
+                    <div style="display: flex; justify-content: flex-end; align-items: flex-end; width: 25%;">
+                        <lightning-button class="download-button" label="DOWNLOAD" onclick={handleDownloadCSV}></lightning-button>
+                    </div>
+                </div>
+            
+            <div class="table-top">
+                <h1 class="top">RDA HISTORY</h1>
+            </div>
+                <lightning-datatable
+                    key-field="Id"
+                    data={cases}
+                    columns={columns}
+                    onsave={handleSave}
+                    resize-column-disabled="true"
+                    hide-checkbox-column="true"
+                    default-sort-direction="asc"
+                    sorted-direction={sortDirection}
+                    sorted-by={sortBy}
+                    onsort={handleSort}
+                    pagination-enabled
+                    page-size={pageSize}
+                    onrowaction={handleRowAction} 
+                    class="custom-datatable"
+                >
+                </lightning-datatable>  
+                <div class="reverse-rda"  style="display:flex;justify-content: right;padding:10px;cursor:pointer">
+                    <div style="display:flex;align-items:center">
+                        <lightning-icon
+                        icon-name="utility:delete"
+                        size="x-small"
+                        style="fill: #011338;"
+                        alternative-text="delete"
+                        class="custom-icon"
+                      ></lightning-icon> 
+                      <p class="custom-text">Reverse RDA</p>
+                    </div>
+                   <!-- <p><i class="fa fa-trash fs-13"></i> Remove Pharmacy Staff</p>  -->
+                </div> 
+        
+                <!-- Pagination Controls -->
+                <div class="slds-m-top_medium slds-grid slds-grid_align-end" style="align-items: center;">
+                    <lightning-button label="<  Previous" onclick={handlePreviousPage} disabled={isPreviousDisabled}></lightning-button>
+                    <span class="page-info">{pageInfo}</span>
+                    <lightning-button label="Next  >" onclick={handleNextPage} disabled={isNextDisabled}></lightning-button>
+                </div>
+            </div>
+        </lightning-card>
+   
+
+    <!-- RDA Popup Model-->
+<template if:true={openRDAModel}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal-backdrop-color-background slds-fade-in-open" style="background-color: rgba(11, 11, 11, 0.6); ">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModel}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small"
+                        style="color: gray;" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <!-- <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Search Groups</h2> -->
+            </header>
+            <!--RT 10-11-24 Defect changes. Changed to dynamically display {selectedCode} for a personalized configuration message-->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p>Are you sure you want to reverse {selectedCode} ?</p>
+            </div>
+            <footer class="slds-modal__footer">
+                <div class="slds-col slds-col slds-size_4-of-4 slds-p-around-large slds-align_absolute-Center  slds-text-align_center">
+                    <lightning-button variant="brand" label="Yes" title="Yes" onclick={handleYes} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="Nutral" label="No" title="No" onclick={closeModel} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </footer>
+        </div>
+    </section>
+</template>
+   
+<template if:true={isLoading}>
+    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+</template>
+</template>

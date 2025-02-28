@@ -1,0 +1,12 @@
+<apex:component controller="SYN_FailedKnowledgeAssesEmailTryvio" access="global">
+    <!-- Get values from email template -->
+    <apex:attribute name="assessValId" assignTo="{!assessSubId}" description="This is the assessment submission Id passed from the email template." type="Id"/>  
+    <apex:repeat value="{!KnowledgeAssesmemnts}" var="cse" id="theRepeatA">
+        <!-- Print out each Failed Knowledge Assesment in a div -->
+            <br/>
+            {!cse.US_WSREMS__Assessment_Question__r.US_WSREMS__Serial__c}) {!cse.US_WSREMS__Question__c}<br/>    
+            <apex:outputPanel rendered="{!cse.US_WSREMS__Assessment_Submission__r.US_WSREMS__Case__r.US_WSREMS__Program_Name__c == 'TRYVIO REMS'}">
+                <apex:outputText rendered="{!NOT(ISBLANK(cse.US_WSREMS__Assessment_Question__r.US_WSREMS__Response_Values__c))}">&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!SUBSTITUTE(cse.US_WSREMS__Assessment_Question__r.US_WSREMS__Response_Values__c,';;','<br/>&nbsp;&nbsp;&nbsp;&nbsp;')}" style="white-space:pre;" escape="false"/></apex:outputText>
+            </apex:outputPanel>  
+    </apex:repeat>
+</apex:component>

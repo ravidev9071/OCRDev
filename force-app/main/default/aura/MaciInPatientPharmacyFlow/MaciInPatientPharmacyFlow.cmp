@@ -1,0 +1,61 @@
+<aura:component controller ="MaciPortalCustomController" implements="lightning:isUrlAddressable,force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes">
+   
+    <!-- Screens related attributes -->
+    <aura:attribute name="showInPatientPharmacyEnrollmentScreen" type="Boolean" default="true"/>
+    <aura:attribute name="ShowAuthorizedRepresentativeInformationScreen" type="Boolean" default="false"/>
+    <aura:attribute name="ShowPasswordScreen" type="Boolean" default="false"/>
+    <aura:attribute name="ShowPasswordConfirmScreen" type="Boolean" default="false"/>
+  
+    
+    <!-- storing current program Id -->
+    <aura:attribute name="programId" type="string" default =""/>
+    
+    <!-- storing current portal profile Id -->
+    <aura:attribute name="profileId" type="string" default =""/>
+    
+    <!-- storing current portal user role -->
+    <aura:attribute name="userrole" type="string" default =""/>
+    
+    <!-- storing portal user id when user gets created at password screen -->
+    <aura:attribute name="portalUserId" type="String" default=""/>
+    
+    <!-- storing Prescriver data info -->
+    <aura:attribute name="oPharmyInfo" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    
+    <!-- storing Case Credentials Picklist values  -->
+    <aura:attribute name="credentialsMap" type="Map"/> 
+    
+    <!-- storing Case Title Picklist values  -->
+    <aura:attribute name="titleMap" type="Map"/> 
+    
+    <!-- storing current pharmacy Type -->
+    <aura:attribute name="pharmacyType" type="string" default =""/>
+    
+    
+    <!-- handlter declarion  -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+    
+    <!-- lightning Event -->
+    <aura:handler name="ShowInPatinetScreens" event="c:MaciShowInPatientPharmacyEnrollmentScreen" action="{!c.handleShowScreen}"/>
+    
+    
+    <!-- Main Frame Starts Here -->
+   
+    <aura:if isTrue="{!v.showInPatientPharmacyEnrollmentScreen}">
+    	<c:MaciInpatientPharmacyCerificationbyEnrollment/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowAuthorizedRepresentativeInformationScreen}">
+    	<c:MaciPharmacyCertificationbyEnrollment  oPharmyInfo="{!v.oPharmyInfo}" credentialsMap="{!v.credentialsMap}" titleMap="{!v.titleMap}" userrole="{!v.userrole}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowPasswordScreen}">
+    	<c:MaciPharmacyCertificationPassword oPharmyInfo="{!v.oPharmyInfo}" userrole="{!v.userrole}" programId="{!v.programId}" profileId="{!v.profileId}" pharmacyType="{!v.pharmacyType}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowPasswordConfirmScreen}">
+    	<c:MaciPharmacyConfirmEmail oPharmyInfo="{!v.oPharmyInfo}" portalUserId="{!v.portalUserId}" pharmacyType="{!v.pharmacyType}"/>
+    </aura:if>
+	
+</aura:component>

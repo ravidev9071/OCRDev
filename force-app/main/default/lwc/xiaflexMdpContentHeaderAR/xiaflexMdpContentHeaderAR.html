@@ -1,0 +1,101 @@
+<template>
+
+    <div class="header">
+    <div class="util-top" data-aura-rendered-by="74:2;a">
+            <div class="pageContainer navbar-top"  data-aura-rendered-by="277:0">
+            <ul class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space">
+                <li class="slds-item">
+                    <a href="https://endodocuments.com/XIAFLEX/PI" target="_blank">Full Prescribing Information</a>
+                </li>
+                <li class="slds-item">
+                    <a href="https://endodocuments.com/XIAFLEX_DC/MG" target="_blank">Medication Guide</a>
+                </li>
+                <li class="slds-item">
+                    <a  onclick={isiSection}>Important Safety Information</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+        <div class="pageContainer">
+            <div class="pageMainHeader">
+            
+            <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-x-small-size_6-of-12 slds-small-size_9-of-12 slds-medium-size_9-of-12 slds-large-size_9-of-12" style="margin-left:10px;">		
+                            <div>
+                                <a class="logo">
+                                <img  src={xiaflexlogo}>
+                                <span class="slds-assistive-text">REMS Digital</span>
+                            </a>
+                            </div>	
+                    </div> <!-- end col  -->
+                     <div class="themeUtils  slds-size_1-of-12 slds-align_absolute-right marginleft">
+                        <div class="themeUtilsContainer">
+                            <div class="themeUtil themeProfileMenu">
+                                <div data-region-name="themeHeaderProfileMenu">
+                                    <div data-priority="" class="ui-widget">
+                                        <div>
+                                            <div class="slds-form-element themeUtil themeProfileMenu">
+                                                <template if:true={isLogined}>
+                                            <lightning-button-menu onselect={handleOnselect}  variant="container" menu-alignment ='right' label = {userName}>
+                                                            <lightning-menu-item value="logout" label="Logout"></lightning-menu-item>
+                                                    </lightning-button-menu>
+                                                </template>
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div> <!-- end uiwidget -->
+                                </div><!-- end profileMenu  -->
+                            </div><!-- end themUtil  -->
+                        </div>
+                    </div> 	                        
+                   
+                    <div class=" slds-size_12-of-12 slds-small-size_9-of-12  slds-medium-size_10-of-12">
+                        <div class="userProfile">
+                            <div class="userProfileContainer">
+                                <div class="userProfileMenu">
+                            
+                               
+                                </div> <!-- end userProfileContainer  -->
+                                
+                            </div>	<!-- end userProfileMenu  -->
+                        </div><!-- end userProfile  -->
+
+                    </div>  <!-- end col  -->
+            </div>  <!-- end row  -->	
+            <!-- tab menu items code rewritten by pratap  -->    	
+                <div  id="commThemeNav" class="themeNav slds-grid slds-wrap">
+                        <div data-region-name="nav slds-size_1-of-2">
+                         <div data-priority=""  class="ui-widget">
+                                <nav class="jepsonHomeHeader commThemeCmp comm-navigation themeNavContainer navMenuType-expanded alignPanel-left forceCommunityThemeNav  doneRendering">
+                                    <ul class=" nav visible-links themeNav-align-right horizontal">
+                                        <li class=" mainNavItem  comm-navigation__top-level-item comm-navigation__menu-item " style="line-height:2.5rem;">
+                                            <a id="ManageHCS"  href="manage-hcs" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn activeColor" >Manage Pharmacies/Healthcare Settings</a>
+                                </li>
+                                        <li class=" slds-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item" style="line-height:2.5rem;">
+                                            <a id="ManageHCP"  href="manage-hcp" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn activeColor">Manage Healthcare Providers</a>
+                                </li>
+                                                            
+                                        <li  class=" slds-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item" style="line-height:2.5rem;">
+                                            <a id="Resources"   href="resources" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn activeColor">Forms &amp; Resources</a>
+                                </li>
+                                        <li class=" slds-left_large mainNavItem comm-navigation__top-level-item comm-navigation__menu-item slds-m-left_none " style="line-height:2.5rem;">
+                                            <a id="MyProfile"   href="my-profile" class="comm-navigation__top-level-item-link js-top-level-menu-item linkBtn slds-m-left_none activeColor">My Profile</a>
+                                        </li>
+                            
+                            </ul>
+                        </nav>	
+                            </div>
+                        </div>
+                </div>         
+                    
+                
+        </div> <!-- end pageMainHeader  -->	
+    </div>  <!-- end pageContainer  -->	
+        		
+    <div class="headerBorder"></div>
+    </div>
+</template>

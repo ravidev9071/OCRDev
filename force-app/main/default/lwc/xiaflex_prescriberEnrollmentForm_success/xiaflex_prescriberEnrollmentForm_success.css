@@ -1,0 +1,7 @@
+.dummy{
+	color : black;
+}
+.custompath-css {
+	--lwc-colorBackgroundPathComplete:#002e5d;
+	--lwc-colorBackgroundPathCompleteHover:#002e5d;
+  }

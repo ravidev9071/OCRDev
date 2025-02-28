@@ -1,0 +1,262 @@
+<template>
+
+    <div role="main" tabindex="-1"  class="body mainBody isPageWidthFixed-true"  aria-hidden="false">
+		<div class="pageContainer">
+			<div class="pageContent">
+		
+
+				<div class="siteforceSldsTwoCol84SidebarFeaturedLayout siteforceContentArea">
+					<div class="slds-col--padded comm-content-header comm-layout-column">
+	
+						<div data-region-name="content">
+							<div data-priority=""  class="ui-widget">
+								<div class="slds-text-heading_large">Manage Healthcare Providers</div>	
+								<div class="slds-m-bottom_large"></div>
+								
+								
+			<div class="tileCards summary">	
+			
+<article class="slds-card slds-card_boundary">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-contact" title="contact">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use>
+                        </svg>
+                        <span class="slds-assistive-text">contact</span>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        
+                            <span>Affiliated Healthcare Providers</span>
+
+                    </h2>
+                </div>
+                <div class="slds-no-flex slds-m-top_medium">
+		<button onclick={openAffiliateModal} class="slds-button slds-button_brand">Affiliate Another Healthcare Provider</button>
+                </div>
+				 <template if:true={showAddAffiliationModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" id="ModalHCP"
+        class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <button onclick={closeModal}
+                    class="slds-button slds-button_icon slds-modal__close">
+                    X
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Affiliate Healthcare Provider</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <c-xiaflex-_prescriber-affiliate-modal acc-type="HCP"  onclosemodal={closeModal}> </c-xiaflex-_prescriber-affiliate-modal>
+                </div>
+            </div>
+        </section>
+        <div id="ModalBackdrop" class="slds-backdrop xxslds-backdrop_open" role="presentation"></div>
+    </template> 
+
+            </header>
+        </div>
+		          
+        <div class="slds-card__body slds-card__body_inner">
+            <ul class="slds-grid slds-wrap slds-grid_pull-padded">
+				<template for:each={presPharmaList} for:item="pharmAcc" for:index="index">
+                <li key={pharmAcc.Id} class="slds-p-horizontal_small slds-size_1-of-1 slds-large-size_1-of-3">
+                    <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-contact" title="Description of icon when needed">
+                                <svg class="slds-icon slds-icon_small" aria-hidden="true"><use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg><span class="slds-assistive-text">Contact</span>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                <h3 class="slds-tile__title slds-truncate" title="HCP 1">{pharmAcc.US_WSREMS__Prescriber__r.Name}  <!--<span class="status certified">Certified</span>--></h3>
+								
+                                <div class="slds-shrink-none">
+                                    <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
+                                        <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true"><use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use></svg>
+                                        <span class="slds-assistive-text"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="slds-tile__detail">
+				<div class="status certified">{pharmAcc.US_WSREMS__Prescriber__r.US_WSREMS__Status__c}</div>   
+				<br>
+				<template if:true={pharmAcc.US_WSREMS__Health_Care_Setting__r}>
+										{pharmAcc.US_WSREMS__Health_Care_Setting__r.Name}
+				</template>
+				<p>
+				<template if:true={pharmAcc.US_WSREMS__Health_Care_Setting__r}>
+				{pharmAcc.US_WSREMS__Health_Care_Setting__r.US_WSREMS__Address_Line_1__c}
+				</template>
+				<br>
+				<template if:true={pharmAcc.US_WSREMS__Health_Care_Setting__r}>
+				{pharmAcc.US_WSREMS__Health_Care_Setting__r.US_WSREMS__City__c}
+				</template> 
+				<template if:true={pharmAcc.US_WSREMS__Health_Care_Setting__r}>
+				, {pharmAcc.US_WSREMS__Health_Care_Setting__r.US_WSREMS__State__c}
+				</template>
+				<template if:true={pharmAcc.US_WSREMS__Health_Care_Setting__r}>
+				 , {pharmAcc.US_WSREMS__Health_Care_Setting__r.US_WSREMS__Zip__c}
+				</template> 
+				
+				 </p>
+				<div class="slds-form__row">
+					<div class="slds-form__item" role="listitem">
+						<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+							<span class="slds-form-element__label">Enrollment ID</span>
+							<div class="slds-form-element__control">
+								<div class="slds-form-element__static">{pharmAcc.US_WSREMS__Prescriber__r.US_WSREMS__REMS_ID__c}</div>
+								<button class="slds-button slds-button_icon" title="">
+									 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+												<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+									 </svg>
+									 <span class="slds-assistive-text"></span>
+								</button>  
+							</div>
+						</div>
+					</div><!-- end form item  -->				
+					<div class="slds-form__item" role="listitem">
+						<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_horizontal slds-hint-parent">
+							<span class="slds-form-element__label">Role</span>
+							<div class="slds-form-element__control">
+								<div class="slds-form-element__static">{pharmAcc.US_WSREMS__Prescriber__r.US_WSREMS__Role__c}</div>
+								<button class="slds-button slds-button_icon" title="">
+									 <svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
+												<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+									 </svg>
+									 <span class="slds-assistive-text"></span>
+								</button>  
+							</div>
+						</div>
+					</div>
+
+				</div>
+                            </div>
+									 
+			 <footer class="slds-card__footer">
+				<a class="slds-card__footer-action" data-index={index}  onclick={handleRemoveModal}>Remove Affiliation
+					 <span class="slds-assistive-text"></span>
+				</a>				
+
+			 </footer>   								 
+									 
+                        </div>
+                    </article>
+                </li>
+                <template if:true={showRemoveAffiliation}>
+        <section key={pharmAcc.Id} role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02" id="ModalHCP2"
+        class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container">
+                <button onclick={closeModal}
+                    class="slds-button slds-button_icon slds-modal__close">
+                    X
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-02"  class="slds-modal__title slds-hyphenate">Affiliate Healthcare Provider</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <div class="frmContainer">
+        <article class="slds-card " part="card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure"></div>
+                    <div class="slds-media__body">
+                        <h2 class="">
+                            <span>Healthcare Provider Information</span>
+
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body  slds-card__body_inner" part="body">
+                <p class="frmInstructions">To affiliate a Prescribing Healthcare Provider to your Healthcare
+                    Setting, please select the search type, enter the information, and click "Search".
+
+                    <br><br><span class="slds-text-body_medium"><span
+                            class="slds-text-color_destructive">*</span> fields required</span></p>
+                            <div class="slds-text-heading_medium">Pharmacy  / Healthcare Setting Information</div>		
+                                <div class="slds-grid  slds-wrap  slds-gutters">
+                                    <div class="slds-col slds-medium-size_4-of-12  slds-large-size_6-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="select-01"><abbr class="slds-required" title="required">* </abbr>Pharmacy / Healthcare Setting</label>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                    <select data-index={index} class="slds-select" id="select-01" name="state" required onchange={handleSelectedPharma}>
+                                                       
+                                                        <template for:each = {pharmaList} for:item="pharma" for:index="optionIndex">
+                                                            <option value={pharma.Id} key={pharma.Id}>{pharma.Name}</option>
+                                                        </template>
+                                                    </select>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>											  
+                                
+                                </div>		
+                                <div class="dividerSolid"></div>
+                            <slot>
+                                <div class="slds-card__footer" part="footer">
+
+                                    <button title="Cancel" type="button"
+                                        class="slds-button slds-button_text-destructive"
+                                        onclick={closeModal}>Cancel</button>
+                                    <button data-index={index} onclick={handleRemove}
+                                        class="slds-button slds-m-top_large slds-button_brand"
+                                        aria-disabled="false" type="button"
+                                        part="button" kx-scope="button-brand"
+                                        kx-type="ripple">Remove</button>
+                                </div>
+                            </slot>          
+                        </div>
+                     </article>
+                    </div> <!-- end enrollmentForm  -->
+                </div>
+            </div>
+        </section>
+        <div key={pharmAcc.Id} id="ModalBackdrop2" class="slds-backdrop xxslds-backdrop_open" role="presentation"></div>
+    </template> 
+				</template>
+            </ul>
+        </div>
+	<footer class="slds-card__footer slds-hide">
+		<a class="slds-card__footer-action" href="#">
+			 View All
+			 <span class="slds-assistive-text">Contacts</span>
+		</a>
+        </footer> 
+    </article>
+	 
+	 
+</div> <!-- end tile cards  -->
+
+
+   	
+				
+							
+							</div> 
+						</div>		
+	
+					</div> 
+				</div> 
+		</div> 
+
+			</div>  
+								 
+					 
+            </div>
+
+    <template lwc:if={displaySpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+
+</template>

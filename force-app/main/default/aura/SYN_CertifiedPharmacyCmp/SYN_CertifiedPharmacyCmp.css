@@ -1,0 +1,42 @@
+.THIS .cardcolor{
+    background: #f0faff;
+    box-shadow: 5px 5px 5px #aaaaaa;
+    ;
+    
+}
+.THIS .customFont{
+    font-family:Sans-serif;
+    font-size: 16px;
+    
+}
+.THIS .customFontsmall{
+    font-family:Sans-serif;
+    font-size: 14px;
+    
+    
+}
+.THIS .fixedHeightstyle{
+    padding-right:5px;
+    height:80px;
+    word-wrap: break-word;
+    font-family:Sans-serif;
+    font-size: 14px;
+    
+}
+.THIS .ButtonFont{
+    color: white;
+    font-family:"Sans-serif";
+}
+.THIS.c-container {    
+    margin: 0;
+    min-height: calc(100vh - 250px);
+}
+.THIS.full-height {
+    height: 100%;
+}
+.THIS .headerFont{
+    font-family:Sans-serif;
+    font-size: 14px;
+    color:black;
+    
+}

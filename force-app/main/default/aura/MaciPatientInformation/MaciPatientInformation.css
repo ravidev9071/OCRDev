@@ -1,0 +1,10 @@
+.THIS {
+}
+.THIS.hrefdisaple {
+    cursor: not-allowed;
+   pointer-events: none;
+    color: rgba(255, 255, 255, 0.25);
+}
+.THIS .customcursor{
+    cursor: pointer;
+}

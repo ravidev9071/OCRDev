@@ -1,0 +1,41 @@
+<template>
+    <lightning-record-edit-form object-api-name={childObjectApiName}>
+        <label for="fieldid"  class="slds-form-element__label slds-rich-text-editor__output">{fieldLabel}</label>
+        <lightning-input-field id="fieldid"                                 
+                               variant="label-hidden"
+                               field-name={targetFieldApiName}
+                               value={value}
+                               onchange={handleChange} 
+                               disabled={disabled}
+                               required={required}>
+        </lightning-input-field>
+        </lightning-record-edit-form>
+   
+
+        <lightning-record-view-form record-id={value} object-api-name="Account">
+        
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="12">
+            <label  class="slds-form-element__label slds-rich-text-editor__output">First Name</label>
+            <lightning-output-field field-name="FirstName" variant="label-hidden"></lightning-output-field>
+            </lightning-layout-item>    
+            <lightning-layout-item padding="around-small" size="12">   
+            <label  class="slds-form-element__label slds-rich-text-editor__output">Last Name</label>             
+            <lightning-output-field field-name="LastName" variant="label-hidden"></lightning-output-field>
+            </lightning-layout-item>
+            </lightning-layout>
+
+        <lightning-layout>     
+            <lightning-layout-item padding="around-small" size="12">  
+            <label class="slds-form-element__label slds-rich-text-editor__output">DEA Number</label>
+            <lightning-output-field field-name="US_WSREMS__DEA__c" variant="label-hidden"></lightning-output-field>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="12">
+            <label  class="slds-form-element__label slds-rich-text-editor__output">Prescriber REMS ID</label>
+            <lightning-output-field field-name="SYN_Ref_Id__c" label="Prescriber REMS ID" variant="label-hidden"></lightning-output-field>
+            </lightning-layout-item>
+        </lightning-layout>
+
+</lightning-record-view-form>
+   
+</template>

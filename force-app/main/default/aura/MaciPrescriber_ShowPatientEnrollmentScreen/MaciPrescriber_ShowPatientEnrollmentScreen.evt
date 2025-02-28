@@ -1,0 +1,14 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="showScreen" type="Boolean"/>
+    <aura:attribute name="screenName" type="String" default=""/>
+    <aura:attribute name="newCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="confirmEmail" type="string" default =""/>
+    <aura:attribute name="isPatientMinor" type="boolean" default ="false"/>
+    <aura:attribute name="pCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="lCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="alternateContactObj" type="Map" default="{'lgfirstName':'', 'lglastName':'', 'lgconfirmEmail':'', 'emergencyContactFirstName':'','emergencyContactLastName':''}"/>
+    <aura:attribute name="rCase" type="Case" default="{ 'sobjectType': 'Case'}"/>
+    <aura:attribute name="prescriberName" type="String" default=""/>
+    <aura:attribute name="prescriberNPI" type="String" default=""/>
+
+</aura:event>

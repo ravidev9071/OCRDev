@@ -1,0 +1,9 @@
+.THIS {
+}
+.THIS.disabledDiv {
+    opacity: 0.4;
+}
+.THIS .spinnerClass {
+    z-index: 10000;
+    position: fixed
+}

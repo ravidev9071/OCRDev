@@ -1,0 +1,179 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> 
+                Under Pharmacy Page   -> PharmacyFAQS Page { Middle context }
+-->
+
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<section class="sec-one py-5"
+            style="background-image: url('/resource/MaciImages/img/banner.jpg');background-size: cover;background-repeat: no-repeat; background-attachment: fixed;height:87vh;">
+    <div class="container-fluid px-5" style="overflow-y: scroll;height: 33vw;">
+        <div class="row accordion-main"  >
+            <div class="col-lg-12">
+            <div class="row mt-0">
+                <div class="col-lg-12">
+                    <h4  class="me-5">Pharmacy FAQs
+                        <a class="expand-all">
+                                <button class="button-no" >
+                                    <span class="Expand-All"><i class="fa fa-angle-right text-theme fw-bold pe-2"></i>  Expand All</span> 
+                                    <span class="Collapse-All"><i class="fa fa-angle-down text-theme fw-bold pe-2" ></i>Collapse All</span>
+                                </button>
+                            </a>
+                        </h4>
+                    <div class="accordion accordion-white list-unstyled">
+                        <span class="target-fix" id="accordion"></span>
+                        
+                        <div class="ac-24">
+                            <span class="target-fix" id="accordion-pharmacy-1"></span>
+                            <a href="#accordion-pharmacy-1" id="open-accordion-pharmacy-1" class="general-1" title="open"><i class="fa fa-angle-right"></i> How does a patient enroll in the Macitentan-Containing Products REMS?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-1" class="general-2" title="close"><i class="fa fa-angle-down"></i> How does a patient enroll in the Macitentan-Containing Products REMS?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px">Only female patients are required to enroll in the Macitentan-Containing Products REMS. To enroll a female patient, the certified prescriber must complete a <em class="fw-bold">Patient Enrollment Form</em>. 
+                                                The form may be completed and submitted online via the Macitentan-Containing Products REMS website or by printing and faxing a completed form to the REMS Coordinating Center at 1-833-681-0003.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="ac-25">
+                            <span class="target-fix" id="accordion-pharmacy-2"></span>
+                            <a href="#accordion-pharmacy-2" id="open-accordion-pharmacy-2" class="general-1" title="open"><i class="fa fa-angle-right"></i> How does a pharmacy certify in the Macitentan-Containing Products REMS?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-2" class="general-2" title="close"><i class="fa fa-angle-down"></i> How does a pharmacy certify in the Macitentan-Containing Products REMS?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px"> In order to dispense macitentan-containing products, the pharmacy must certify by enrolling in the REMS.
+                                    Pharmacies must complete an enrollment form specific to its pharmacy type
+                                    (outpatient or inpatient). Pharmacies may enroll online via the Macitentan-Containing Products REMS
+                                    website <u>or</u> by faxing a completed enrollment form to the REMS Coordinating Center.
+                                    Additional information can be found in the <em class="fw-bold">Prescriber and Pharmacy
+                                    Guide</em>.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="ac-26">
+                            <span class="target-fix" id="accordion-pharmacy-3"></span>
+                            <a href="#accordion-pharmacy-3" id="open-accordion-pharmacy-3" class="general-1" title="open"><i class="fa fa-angle-right"></i> What happens if the pharmacy's authorized representative
+                                leaves or changes?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-3" class="general-2" title="close"><i class="fa fa-angle-down"></i> What happens if the pharmacy's authorized representative
+                                leaves or changes?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px"> If the pharmacy's authorized representative leaves or changes, the new authorized
+                                    representative must recertify the pharmacy in the Macitentan-Containing Products REMS by
+                                    completing the appropriate Pharmacy Enrollment Form. </p>
+                            </div>
+                        </div>
+
+                        <div class="ac-27">
+                            <span class="target-fix" id="accordion-pharmacy-4"></span>
+                            <a href="#accordion-pharmacy-4" id="open-accordion-pharmacy-4" class="general-1" title="open"><i class="fa fa-angle-right"></i>Do all outpatient pharmacy locations need to certify in the Macitentan-Containing Products REMS? </a>
+                            <a href="#accordion" id="close-accordion-pharmacy-4" class="general-2" title="close"><i class="fa fa-angle-down"></i>Do
+                                all outpatient pharmacy locations need to certify in the Macitentan-Containing Products REMS? </a>
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px">No. Only one outpatient pharmacy location per organization is required to
+                                    certify; all outpatient pharmacy locations within the organization are not required to additionally certify, as
+                                    these locations will be considered certified under the primary pharmacy organization’s certification. </p>
+                            </div>
+                        </div>
+                        
+                        <div class="ac-28">
+                            <span class="target-fix" id="accordion-pharmacy-5"></span>
+                            <a href="#accordion-pharmacy-5" id="open-accordion-pharmacy-5" class="general-1" title="open"><i class="fa fa-angle-right"></i> Do pharmacies need to recertify annually in
+                                the Macitentan-Containing Products REMS?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-5" class="general-2" title="close"><i class="fa fa-angle-down"></i> Do pharmacies need to recertify annually in
+                                the Macitentan-Containing Products REMS?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px">No, pharmacies do not need to recertify annually in the Macitentan-Containing Products REMS.
+                                    However, if the pharmacy’s authorized representative leaves or changes, the new authorized representative must recertify the pharmacy
+                                    in the Macitentan-Containing Products REMS by completing the appropriate Pharmacy Enrollment Form.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="ac-29">
+                            <span class="target-fix" id="accordion-pharmacy-6"></span>
+                            <a href="#accordion-pharmacy-6" id="open-accordion-pharmacy-6" class="general-1" title="open"><i class="fa fa-angle-right"></i> What are the Macitentan-Containing Products REMS requirements for pharmacies?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-6" class="general-2" title="close"><i class="fa fa-angle-down"></i> What are the Macitentan-Containing Products REMS requirements for pharmacies?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px"> The Macitentan-Containing Products REMS requirements for pharmacies depend on the pharmacy type. For
+                                    specific information on pharmacy requirements, please refer to the <em class="fw-bold">Prescriber and Pharmacy Guide</em>.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="ac-30">
+                            <span class="target-fix" id="accordion-pharmacy-7"></span>
+                            <a href="#accordion-pharmacy-7" id="open-accordion-pharmacy-7" class="general-1" title="open"><i class="fa fa-angle-right"></i> How are pharmacies classified in the Macitentan-Containing Products REMS?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-7" class="general-2" title="close"><i class="fa fa-angle-down"></i> How are pharmacies classified in the Macitentan-Containing Products REMS?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-0 pb-1 pt-1 fw-bold text-white" style="font-size:18px">An Outpatient Pharmacy</p>
+                                <p class="mb-0  text-white" style="font-size:18px">
+                                    Pharmacies that dispense macitentan-containing products for outpatient use must be enrolled and certified as an
+                                    outpatient pharmacy and must ensure they are contracted with a manufacturer in the Macitentan-Containing Products REMS
+                                    Group.
+                                </p>
+                                <p class="mb-0 pb-1 pt-2 fw-bold  text-white" style="font-size:18px">An Inpatient Pharmacy</p>
+                                <p class="mb-0  text-white" style="font-size:18px">An inpatient pharmacy is a pharmacy that dispenses prescriptions in an inpatient
+                                    setting such as a hospital, nursing home, hospice, asylum/mental facility, assisted
+                                    living, prison, or rehabilitation. Inpatient pharmacies are a filling pharmacy.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="ac-31">
+                            <span class="target-fix" id="accordion-pharmacy-8"></span>
+                            <a href="#accordion-pharmacy-8" id="open-accordion-pharmacy-8" class="general-1" title="open"><i class="fa fa-angle-right"></i> What is a REMS Dispense Authorization (RDA)?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-8" class="general-2" title="close"><i class="fa fa-angle-down"></i> What is a REMS Dispense Authorization (RDA)?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px">An RDA is a REMS Dispense Authorization and is necessary for the <u>outpatient</u> pharmacy
+                                    to obtain in order to fill a prescription for macitentan-containing products for a female patient.  An RDA is issued once 
+                                    it is confirmed that the prescriber is certified, the pharmacy is certified, the patient is enrolled, 
+                                    and for a female of reproductive potential, a pregnancy test has been completed.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="ac-32">
+                            <span class="target-fix" id="accordion-pharmacy-9"></span>
+                            <a href="#accordion-pharmacy-9" id="open-accordion-pharmacy-9" class="general-1" title="open"><i class="fa fa-angle-right"></i> How does a pharmacy obtain a REMS Dispense Authorization
+                                (RDA)?</a>
+                            <a href="#accordion" id="close-accordion-pharmacy-9" class="general-2" title="close"><i class="fa fa-angle-down"></i> How does a pharmacy obtain a REMS Dispense Authorization
+                                (RDA)?</a> 
+                            <div class="accordion-content text-white">
+                                <p class="mb-2" style="font-size:18px"><strong>Outpatient Pharmacies</strong>
+                                    <br></br>
+                                    The pharmacy must obtain an RDA from the Macitentan-Containing Products REMS website 
+                                    (<a href="http://www.macitentanrems.com/" style ="color: #00008B;font-size: 18px;left: 0px !important;"><u>www.MacitentanREMS.com</u></a>.) 
+                                    or by calling the REMS Coordinating Center at 1-888-572-2934 and providing the patient's first and last name, 
+                                    the patient's date of birth, the prescriber’s NPI number, confirmation of a 
+                                    completed pregnancy test for Females of Reproductive Potential (FRP) patients or indicate a prescriber 
+                                    authorization to refill, confirmation that counseling has been completed, manufacturer 
+                                    information, product/NDC code, and days’ supply.
+                                    <br> </br>
+                                    If an RDA cannot be obtained for the patient, the pharmacy must contact the patient or prescriber to obtain the information that is missing or preventing the issuance of an RDA. 
+                                    <br></br>
+                                    The system will allow the outpatient pharmacy to obtain an RDA once all requirements have 
+                                    been met. The pharmacy, pharmacy participant, prescriber name, patient name, patient date of 
+                                    birth, manufacturer, NDC code, and days’ supply, reason for days’ supply greater than 30 days (if 
+                                    applicable and for FRP patients only), did patient have a delay in treatment of five or more days, 
+                                    and reason for delay in treatment (if applicable), will be presented with the RDA number.
+                                </p>
+                                <p class="mb-2" style="font-size:18px">
+                                    <strong>Inpatient Pharmacies</strong>
+                                    <br> <br> </br></br>
+                                    An RDA is not required for inpatient pharmacies. Before dispensing to a female patient, the certified inpatient pharmacy must verify the female patient is under the supervision and care of a certified prescriber, 
+                                    and that she is enrolled or will be enrolled in the Macitentan-Containing Products REMS prior to discharge. 
+                                    The inpatient pharmacy may verify the patient’s enrollment status and prescriber’s certification status online or by calling the REMS Coordinating Center at 1-888-572-2934. 
+                                    To verify online, the authorized representative or pharmacy staff will login to the REMS website and click on “Verify Prescriber Certification and Patient Enrollment” button. 
+                                    The authorized representative or pharmacy staff will be prompted to enter the prescriber’s individual NPI number and the patient’s name and date of birth.
+                                </p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+</aura:component>

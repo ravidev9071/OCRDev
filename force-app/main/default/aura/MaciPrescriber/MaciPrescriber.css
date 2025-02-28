@@ -1,0 +1,39 @@
+.THIS .customcursor{
+    cursor: pointer;
+}
+.THIS .popup{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 50rem;
+    min-width: 50rem;
+}
+
+.THIS .popupPadding{
+    border: 8px solid #37afb6;
+    padding: 15px;
+}
+
+.THIS .MaciBOLDREDTEXT {
+	margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	font-size:11.0pt;
+	font-family:"Calibri";
+	color:#C00000;
+}
+
+.THIS .MaciNormal {
+	font-size:11.0pt;
+	font-family:"Calibri"
+}
+
+.THIS .MaciListParagraphBullet{
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:107%;
+	font-family:"Calibri";
+    font-size:11.0pt;
+}

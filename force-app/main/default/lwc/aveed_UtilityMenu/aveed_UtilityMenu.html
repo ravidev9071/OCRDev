@@ -1,0 +1,18 @@
+<template>
+    <nav class="util-top">
+        <div class="pageContainer navbar-top" >
+         
+            
+            <ul class="slds-list_horizontal slds-has-dividers_right slds-has-block-links_space">
+                        <template for:each={filteredRedirectData} for:item="redirect" >
+                            <li key={redirect.name} class="slds-item">
+                        <a  data-id={redirect.name} onclick={handleRedirect} class="slds-item link">
+                            <span class="name"> {redirect.name} </span> 
+                        </a>
+                        </li>
+                        </template>
+            </ul>
+            
+        </div>
+    </nav>
+</template>

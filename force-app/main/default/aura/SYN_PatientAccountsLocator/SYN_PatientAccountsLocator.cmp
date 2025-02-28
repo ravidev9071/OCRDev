@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+        <lightning:layout horizontalAlign="space" multipleRows="true">
+            <lightning:layoutItem size="9"
+                                  mediumDeviceSize="12"
+                                  padding="around-small">
+                <c:SYN_PatientAccountsSearch/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="9"
+                                  mediumDeviceSize="12"
+                                  padding="around-small">
+                <c:SYN_PatientAccountsList/>
+            </lightning:layoutItem>
+        </lightning:layout>
+</aura:component>

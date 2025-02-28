@@ -1,0 +1,27 @@
+<template>
+    
+        <!--div class="slds-p-horizontal_small">
+            <lightning-combobox name="progress" value={value} placeholder="Select Participant" options={options}
+                onchange={handleChange}></lightning-combobox>&nbsp;
+                class="slds-align_absolute-center"
+                title="Are you Prescriber/Pharmacist?"
+        </div-->
+        <br />
+        <p style="font-size: 20px; text-align: center;">
+           <b>I am a </b>
+        </p>&nbsp; &nbsp;
+        <div class="slds-align_absolute-center">
+         <lightning-button  variant="brand" label="Prescriber" type="Navigate"
+                onclick={handlePrescriberSubmit}>
+            </lightning-button>&nbsp;&nbsp;
+
+            <lightning-button variant="brand" label="Pharmacy Participant" type="NavigatePharmacist"
+                onclick={handlePharmacistSubmit}>
+            </lightning-button>&nbsp;&nbsp;
+
+           
+        </div>
+
+    
+
+</template>

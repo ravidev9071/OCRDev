@@ -1,0 +1,196 @@
+<template>
+    <lightning-modal-header label={modalTitle}></lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-card class="slds-p-top_xx-small">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+            </template>
+            <template if:true={hideDefault}>
+                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}
+                    class="accordian">
+                    <lightning-accordion-section name="Select Filter Criteria" label="Select Filter Criteria">
+                        <div style="margin-left:3%;">
+                            <template for:each={options} for:item="item">
+                                <fieldset key={item.value} style="display: block; float: left;">
+                                    <div class="slds-form-element__control">
+                                        <span class="slds-radio">
+                                            <input name="radiogroup" id={item.value} type="radio" value={item.value}
+                                                onchange={handleSelected} />
+                                            <label class="slds-radio__label" for={item.value}>
+                                                <span class="slds-radio_faux"></span>
+                                                <span class="slds-form-element__label">{item.label}</span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </fieldset>
+                            </template><br /><br />
+                        </div>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Office Contact Information" label="Office Contact Information">
+                        <lightning-layout>
+                            <lightning-layout-item size="8">
+                                <div class="slds-grid slds-gutters div-grid">
+                                    <div class="slds-col">
+                                        <div>
+                                            <lightning-input name="enter-search" type="search"
+                                                onchange={fetchPrescriberRecord} value={inputValue}
+                                                class="input-field-layout"></lightning-input>
+                                            <template if:true={showDropDown}>
+
+                                                <div style="background-color:LightBlue;" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                                                    role="listbox">
+                                                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                        <template for:each={returnedPrescriberList} for:item="rec">
+                                                            <li key={rec.Id} data-id={rec.Id} data-name={rec.Name}
+                                                                data-email={rec.US_WSREMS__Email__c}
+                                                                data-rems={rec.US_WSREMS__REMS_Program__c}
+                                                                onclick={handlePrescriberSelection} role="presentation">
+                                                                <span class="slds-lookup__item-action" role="option">
+                                                                    <span class="slds-truncate">{rec.Name} |
+                                                                        {rec.US_WSREMS__Status__c} | {rec.SYN_Ref_Id__c}
+                                                                        | {rec.Phone} |
+                                                                        {rec.US_WSREMS__NPI__c}</span>
+                                                                </span>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <lightning-input type="tel" label="Phone Number (Optional)" name="phone"
+                                                value={phoneNumber} maxlength="10" onchange={phoneNumberChange}></lightning-input>
+                                            <lightning-combobox name="notification" label="Notifications" value={notificationValue}
+                                                placeholder="Select Notification" options={notificationOptions}
+                                                onchange={handleNotificationChange}></lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-p-around_large div-button">
+                                        <lightning-button variant="brand" label="Search Office Contact"
+                                            onclick={addSelectedRecord}>
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                                
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Selected Office Contact" label="Selected Office Contact">
+                        <lightning-layout>
+                            <div class="slds-p-top_medium slds-p-left_xx-small">
+                                <template if:true={showTable}>
+                                    <c-maci-office-contact-mapping-child table-data={accountList}
+                                        onrowselect={handleChildEvent} onrecordevent={handleRecordSelection}
+                                        onsaveselected={handleSaveEvent} is-office-contact={officeContactType}>
+                                    </c-maci-office-contact-mapping-child>
+                                </template>
+                                <template if:false={showTable}>
+                                    <h1>No Prescriber Selected</h1>
+                                </template>
+                            </div>
+                        </lightning-layout>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </template>
+            <template if:false={hideDefault}>
+                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}
+                    class="accordian">
+                    <lightning-accordion-section name="Select Filter Criteria" label="Select Filter Criteria">
+                        <div style="margin-left:3%;">
+                            <template for:each={options} for:item="item">
+                                <fieldset key={item.value} style="display: block; float: left;">
+                                    <div class="slds-form-element__control">
+                                        <span class="slds-radio">
+                                            <input name="radiogroup" id={item.value} type="radio" value={item.value}
+                                                onchange={handleSelected} />
+                                            <label class="slds-radio__label" for={item.value}>
+                                                <span class="slds-radio_faux"></span>
+                                                <span class="slds-form-element__label">{item.label}</span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </fieldset>
+                            </template><br /><br />
+                        </div>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Prescriber Information" label="Prescriber Information">
+                        <lightning-layout>
+                            <lightning-layout-item size="8">
+                                <div class="slds-grid slds-gutters div-grid">
+                                    <div class="slds-col">
+                                        <div>
+                                            <lightning-input name="enter-search" type="search"
+                                                onchange={fetchPrescriberRecord} value={inputValue}
+                                                class="input-field-layout"></lightning-input>
+                                            <template if:true={showDropDown}>
+
+                                                <div style="background-color:LightBlue;" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
+                                                    role="listbox">
+                                                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                        <template for:each={returnedPrescriberList} for:item="rec">
+                                                            <li key={rec.Id} data-id={rec.Id} data-name={rec.Name}
+                                                                data-email={rec.US_WSREMS__Email__c}
+                                                                data-rems={rec.US_WSREMS__REMS_Program__c}
+                                                                onclick={handlePrescriberSelection} role="presentation">
+                                                                <span class="slds-lookup__item-action" role="option">
+                                                                    <span class="slds-truncate">{rec.Name} |
+                                                                        {rec.US_WSREMS__Status__c} | {rec.SYN_Ref_Id__c}
+                                                                        | {rec.Phone} |
+                                                                        {rec.US_WSREMS__NPI__c}
+                                                                    </span>
+                                                                </span>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+
+                                            </template>
+                                        </div>
+                                        <div>
+                                            <lightning-input type="tel" label="Phone Number (Optional)" name="phone"
+                                                value={phoneNumber} maxlength="10" onchange={phoneNumberChange}></lightning-input>
+                                            <lightning-combobox name="notification" label="Notifications" value={notificationValue}
+                                                placeholder="Select Notification" options={notificationOptions}
+                                                onchange={handleNotificationChange}></lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-p-around_large div-button">
+                                        <lightning-button variant="brand" label="Search Prescriber"
+                                            onclick={addSelectedRecord}>
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Selected Prescriber" label="Selected Prescriber">
+                        <lightning-layout>
+                            <div class="slds-p-top_medium slds-p-left_xx-small">
+                                <template if:true={showTable}>
+                                    <c-maci-office-contact-mapping-child table-data={accountList}
+                                        onrowselect={handleChildEvent} onrecordevent={handleRecordSelection}
+                                        onsaveselected={handleSaveEvent} is-office-contact={officeContactType}>
+                                    </c-maci-office-contact-mapping-child>
+                                </template>
+                                <template if:false={showTable}>
+                                    <h1>No Prescriber Selected</h1>
+                                </template>
+                            </div>
+                        </lightning-layout>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </template>
+        </lightning-card>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <div class="slds-align_absolute-center">
+            <lightning-button label="Cancel" onclick={closeAction}></lightning-button>
+            <lightning-button variant="brand" label="Remove" class="slds-p-left_xx-small" title="Remove"
+                disabled={disableRemove} onclick={removeSelectedRecords}>
+            </lightning-button>
+            <lightning-button variant="brand" class="slds-p-left_xx-small" label="Save" name="Save"
+                onclick={handleRecordSubmit}></lightning-button>
+        </div>
+    </lightning-modal-footer>
+</template>

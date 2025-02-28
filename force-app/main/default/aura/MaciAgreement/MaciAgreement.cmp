@@ -1,0 +1,336 @@
+<!-- 
+Author name   :- Dnyaneshwar Gothakade
+Created Date  :- 12/09/2022
+Description   :- Created for Maci Portal -> Agreement Page { Middle context }
+-->
+<aura:component controller ="SYN_PortalEnrollmentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="SignatureStatus" type="string" default=""/>
+    <aura:attribute name="termsFlag" type="boolean" default="false"/>
+    <aura:attribute name="cAccount" type="Account" /> 
+    <aura:attribute name="DisableSignatureStatus" type="boolean" default="true"/>
+    
+    <ltng:require scripts="{!$Resource.signaturePad}" afterScriptsLoaded="{!c.doInit}" />
+    <lightning:navigation aura:id="navigation"/>
+    <aura:method name="SaveSignature" action="{!c.saveSignatureOnClick}" description="Save Signature" />
+    
+    <aura:method name="IsCanvasEmpty" action="{!c.IsCanvasEmpty}" description="Check Signature is done or not" />
+    
+    <!-- Id of the Parent record for which this signature pad will be saved -->
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:attribute name="IsImageDrawn" type="Boolean" default="false" />
+    <aura:attribute name="signaturePad" type="Object" /> 
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false"/>
+    <aura:registerEvent name="ShowAgreementScreens" type="c:MaciShowPrescriberAgreementScreen"/>
+    
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <section class="sec-one-1 pb-0" style="background-image: url('/resource/MaciImages/img/prescriber.jpg');background-size: cover;background-repeat: no-repeat;background-attachment: fixed">
+        <div class="container-fluid px-5 pb-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card p-0 rounded-0 border-0 bg-white-2" style="height: 86vh;">
+                        
+                        <div class="card-header border-0 crd-hdr-m">
+                            
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-lg-12">
+                                    <div class="heading-top d-flex justify-content-between border-bottom-0"
+                                         style="margin: 0px 4px;background-color: #EBEBEB">
+                                        <div>
+                                            
+                                        </div>
+                                        <div class="col-lg-7 col-sm col-6 text-start">
+                                            <h3 class="mb-0 fw-lighter fs-3" style=" font-size: 23px !important;"> <span class="text-theme"><i
+                                                                                                                                               class="fa fa-user-md fs-1 ms-4 me-0 mt-0"
+                                                                                                                                               style="position: relative;top: 15px;"></i></span> {!v.cAccount.Name}</h3>
+                                            <span name="Pharmacy-NPI-Number" id="Pharmacy-NPI-Number"
+                                                  class="text-black-50 fw-bold ps-5 ms-3">NPI: {!v.cAccount.US_WSREMS__NPI__c}</span>
+                                        </div>
+                                        <div class="col-lg-5 text-end pe-4">
+                                            <span class="fs-6 text-muted">Program Status:&nbsp; <span class="text-theme fw-bold">Pending
+                                                Execution of REMS Agreement
+                                                <img src="{!$Resource.MaciImages + '/img/clock-alert.png'}" style="width: 15px;"></img></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border-bottom-0 mx-1" style="background-color: #EBEBEB">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <h5 class="mb-0 fw-lighter ps-4 mt-4" style="color: #4c4c4c !important;margin-left: 18px;">
+                                            <img src="{!$Resource.MaciImages + '/img/arrow-up.png'}" alt=""
+                                                 style="width: 35px; margin-top: -26px; margin-left: -6px;"></img>
+                                            <i class="fa fa-file-text fs-3 ps-3 ms-2 pe-2" style="position: relative;left: -7px;padding-right: 2px !important;color: #4c4c4c !important;"></i> Prescriber Certification
+                                        </h5>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="progressbar">
+                                            <div class="progress" id="progress"></div>
+                                            
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>PRESCRIBER INFORMATION</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>PRIMARY OFFICE PRACTICE/CLINICAL
+                                                    INFORMATION</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>SECONDARY OFFICE PRACTICE/CLINICAL
+                                                    INFORMATION</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step">
+                                                </div>
+                                                <span>PASSWORD</span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step progress-step-active">
+                                                </div>
+                                                <span class="text-theme"><em>AGREEMENT</em></span>
+                                            </div>
+                                            <div class="progress-block">
+                                                <div class="progress-step last-step">
+                                                </div>
+                                                <span>COMPLETE</span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="card-body px-4">
+                            
+                            <div class="row mb-4">
+                                <div class="col-lg-12">
+                                    <h5 class="fw-bold mb-0 text-theme">Agreement</h5>
+                                </div>
+                            </div>
+                            <div class="row pharma-frm">
+                                <div class="col-lg-12" style="
+                                                              padding: 0px 34px;
+                                                              ">
+                                    <p class="mb-0">Please read and accept the following terms:</p>
+                                    <div class="border p-4">
+                                        <p><b>{!$Label.c.Macitentan_Containing_Products_REMS} Prescriber Agreement</b>:<br></br>
+                                            By signing below, you signify your understanding of the risks of {!$Label.c.macitentan_containing_products}
+                                            treatment and your obligation as a {!$Label.c.macitentan_containing_products} prescriber to educate your
+                                            female patients about the {!$Label.c.Macitentan_Containing_Products_REMS} (Risk Evaluation and Mitigation
+                                            Strategy),
+                                            monitor them appropriately, and report any pregnancies to the REMS
+                                            Coordinating Center.
+                                            Specifically, you attest to the following:</p>
+                                        
+                                        <div class="list-bullets">
+                                            <ul>
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div> 
+                                                        I have reviewed the Prescribing Information and the <em>Prescriber and
+                                                        Pharmacy Guide</em> and
+                                                        agree to comply with the {!$Label.c.Macitentan_Containing_Products_REMS} requirements.
+                                                    </div>    
+                                                </li>
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        For all Females I will:
+                                                        <ul class="p-inline-s">
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    assess the patient's reproductive status using the definitions
+                                                                    in the <em>Prescriber and
+                                                                    Pharmacy Guide </em> and document and submit the results using the
+                                                                    <em>Patient Enrollment Form</em> .
+                                                                </div> 
+                                                            </li>
+                                                            
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    counsel the female patient that {!$Label.c.macitentan_containing_products} is only available through a restricted distribution program called the {!$Label.c.Macitentan_Containing_Products_REMS}.
+                                                                </div>
+                                                            </li>
+                                                            
+                                                            <li class="d-flex align-items-center">
+                                                                <i class="fa fa-circle-o"></i>
+                                                                <div>
+                                                                    enroll all female patients by completing and submitting the <em>Patient Enrollment Form</em>.
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        For Females of Reproductive Potential, I will:
+                                                        <ul class="p-inline-s">
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    counsel the Females of Reproductive Potential about the risk of
+                                                                    embryo-fetal toxicity, the need to use reliable contraception
+                                                                    during treatment and for one month following treatment
+                                                                    discontinuation, and emergency contraception using the <em>Guide for
+                                                                    Female Patients</em>.
+                                                                </div>
+                                                            </li>
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    assess the patient's pregnancy status by ordering and reviewing
+                                                                    a pregnancy test before the start of treatment, monthly during
+                                                                    treatment, and for one month after
+                                                                    stopping treatment.
+                                                                </div>
+                                                            </li>
+                                                            
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    counsel the patient if she is not complying with the required
+                                                                    testing or if she is not using appropriate contraception, and to
+                                                                    contact her prescriber if she misses a
+                                                                    menstrual period or suspects that she is pregnant.
+                                                                </div>    
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        For Pre-pubertal Females I will:
+                                                        <ul  class="p-inline-s">
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    counsel the Pre-Pubertal Female patient and her parent/guardian
+                                                                    on the risk of embryo-fetal toxicity and to immediately contact her prescriber if she begins
+                                                                    to menstruate using the <em>Guide for Female Patients</em>.
+                                                                </div>    
+                                                            </li>
+                                                            
+                                                            <li class="d-flex align-items-center">
+                                                                <i class="fa fa-circle-o"></i>
+                                                                <div>
+                                                                    regularly assess the reproductive status of each Pre-Pubertal
+                                                                    Female during their treatment with {!$Label.c.macitentan_containing_products}.
+                                                                </div>    
+                                                            </li>
+                                                            
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    document the reproductive potential status of Pre-Pubertal
+                                                                    Females who are at least 8 years or older and submit to the REMS
+                                                                    at least annually using the <em> Change in Reproductive Potential
+                                                                    Status and Pre-pubertal Annual Verification Form</em>.
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li class="d-flex">
+                                                    <i class="fa fa-circle pt-2"></i>
+                                                    <div>
+                                                        At all times, I will:
+                                                        <ul  class="p-inline-s">
+                                                            <li class="d-flex">
+                                                                <i class="fa fa-circle-o pt-2"></i>
+                                                                <div>
+                                                                    report any change or misclassification in reproductive status to
+                                                                    the REMS by submitting a <em>Change in Reproductive Potential Status
+                                                                    and Pre-pubertal Annual
+                                                                    Verification Form</em> within 10 business days of becoming aware
+                                                                    of the change.
+                                                                </div>
+                                                            </li>
+                                                            
+                                                            <li class="d-flex align-items-center">
+                                                                <i class="fa fa-circle-o"></i>
+                                                                <div>
+                                                                    report any pregnancies to the REMS at 1-888-572-2934.
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12">
+                                            <div class="form-check">
+                                                
+                                                <lightning:input name="text-agree" aura:id="termsFlag" type="checkbox" label=" I understand and agree to all the terms above" checked="{!v.termsFlag}" class="form-check-label m-0 customcheckbox" />
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12 ps-lg-4">
+                                            <p class="ps-lg-3 mt-5">Prescriber Signature:</p>
+                                            <p class="ps-lg-3 mt-4">Please use your mouse to sign your name,
+                                                {!v.cAccount.Name}, in the box below:</p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center mt-4">
+                                        <div class="col-lg-7" style="overflow:hidden;padding-right: 0;">
+                                            <div class=" space-md border signClass">
+                                                <canvas id="signature-pad" aura:id="signature-pad" class="signature-pad" style ="height:32rem"></canvas>
+                                                <canvas id='blank' aura:id="blank" class="signature-pad" style='display:none'></canvas>                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 mt-2 d-flex align-items-center justify-content-center">
+                                            <aura:if isTrue="{!v.DisableSignatureStatus}">
+                                                <a class="btn btn-primary-m mx-1 my-2" onclick="{!c.saveSignatureOnClick}">SAVE</a>
+                                                <a class="btn btn-primary-m mx-1 my-2" onclick="{!c.clearSignatureOnClick}">CLEAR</a>
+                                                <aura:set attribute="else">
+                                                    <a class="btn btn-secondary mx-1 my-2 btn-block">SAVE</a>
+                                                    <a class="btn btn-secondary mx-1 my-2 btn-block">CLEAR</a>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                    <div class="py-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-0 crd-hdr-m">
+                            <div class="row">
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-6">
+                                    <a name="button-next" class="btn btn-primary-m my-2 pull-right rounded-0" onclick="{!c.handleNext}">NEXT <i class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</aura:component>
