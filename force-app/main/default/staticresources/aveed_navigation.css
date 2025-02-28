@@ -1,0 +1,1001 @@
+            .forceCommunityThemeLogo {
+                display: inline-block;
+            }
+            .forceCommunityThemeLogo .logoImage {
+                xxxbackground-image: var(--lwc-brandLogoImage, url(/remsdigital/file-asset/remsdev2__SyneosHealthlogo?v=1));
+		 background-image: url(logo.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center center;
+                height: 50px;
+				}		
+
+				
+            .forceCommunityThemeHeaderBase {
+                color: var(--lwc-colorTextLink, rgb(17, 17, 17));
+                width: 100%;
+                position: relative;
+                z-index: 5;
+            }
+            .forceCommunityThemeHeaderBase .themeBgImage,
+            .forceCommunityThemeHeaderBase .themeBgOverlay {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 0;
+            }
+            .forceCommunityThemeHeaderBase .themeBgImage {
+                z-index: 1;
+            }
+            .forceCommunityThemeHeaderBase .themeBgOverlay {
+                z-index: 2;
+            }
+            .forceCommunityThemeHeaderBase .themeBottomBorder {
+                width: 100%;
+                height: 8px;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 3;
+		 /* LII   */ 
+					background: #002e5d;
+
+            }
+            @media only screen and (max-width: 47.9375em) {
+                .forceCommunityThemeHeaderBase {
+                    /* height: 48px; */
+						  height: auto;
+                }
+            }
+
+            .forceCommunityThemeHeaderCompact {
+                padding-left: 20px;
+                padding-right: 20px;
+					 /* LII    */
+					 padding: 0;
+            }
+            .forceCommunityThemeHeaderCompact .themeHeaderInner {
+                opacity: 1;
+                display: flex;
+                position: relative;
+                z-index: 3;
+                align-items: center;
+                height: 100%;
+                min-height: 34px;
+                max-width: 100%;
+					 padding: 15px;
+                     max-width: 1920px;
+					 margin: 0 auto;
+            }
+            .forceCommunityThemeHeaderCompact .themeLogo {
+                display: flex;
+            }
+            .forceCommunityThemeHeaderCompact .themeNav {
+                flex-grow: 1;
+                flex-basis: 0;
+                min-width: 0;
+            }
+            .forceCommunityThemeHeaderCompact .themeNavOverlay {
+                z-index: 5001;
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                max-width: 100vw;
+                max-height: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                transition: opacity 0.3s, max-height 0s 0.3s;
+                opacity: 0;
+            }
+            .forceCommunityThemeHeaderCompact .themeNavOverlay.visible {
+                opacity: 1;
+                max-height: 100vh;
+                transition: opacity 0.3s, max-height 0s;
+            }
+            .forceCommunityThemeHeaderCompact .themeUtil .slds-button:focus {
+                box-shadow: 0 0 1px 1px #1589ee;
+                outline: none;
+            }
+            .forceCommunityThemeHeaderCompact .themeUtils {
+                flex-grow: 0;
+                text-align: right;
+                padding-left: 60px;
+		<!-- LII  -->
+		padding-left: 0;
+		
+	
+            }
+            .forceCommunityThemeHeaderCompact .themeUtils .themeUtilsContainer {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+            }
+            .forceCommunityThemeHeaderCompact .themeUtils .themeUtil {
+                margin-left: 20px;
+                display: flex;
+					 <!-- LII   -->
+					 margin-left: 0;
+            }
+            .forceCommunityThemeHeaderCompact .themeUtils .themeUtil .slds-icon_container {
+                margin: 0;
+                width: 18px;
+                height: 18px;
+            }
+            .forceCommunityThemeHeaderCompact .themeUtils .themeCartIcon svg {
+                margin: 0;
+                max-height: 18px;
+                max-width: 18px;
+            }
+            .forceCommunityThemeHeaderCompact .themeUtils .themeUtil .slds-icon-waffle_container {
+                display: flex;
+            }
+            .forceCommunityThemeHeaderCompact .themeAppLauncher .forceHeaderButton .tooltipTrigger {
+                vertical-align: baseline;
+            }
+            .forceCommunityThemeHeaderCompact .themeNotifications:empty {
+                display: none;
+            }
+            .forceCommunityThemeHeaderCompact .themeUtils .themeUtil .uiTooltip .tooltip-invisible {
+                max-width: 100%;
+            }
+            .forceCommunityThemeHeaderCompact .themeNotifications .unsNotificationsCounter {
+                margin: 0;
+                padding: 0;
+                width: auto;
+            }
+            .forceCommunityThemeHeaderCompact .comm-hide {
+                display: none;
+            }
+            .forceCommunityThemeHeaderCompact.search-expanded .themeHeaderInner {
+                justify-content: space-between;
+            }
+            .forceCommunityThemeHeaderCompact.search-expanded .themeNotifications,
+            .forceCommunityThemeHeaderCompact.search-expanded .themeProfileMenu,
+            .forceCommunityThemeHeaderCompact.search-expanded .themeAppLauncher,
+            .forceCommunityThemeHeaderCompact.search-expanded .themeCartIcon {
+                display: none;
+            }
+            .forceCommunityThemeHeaderCompact.search-expanded .themeHeaderInner.centerAlignLogo-false .themeNav {
+                visibility: hidden;
+            }
+            .forceCommunityThemeHeaderCompact.search-expanded .search-triggercloseButton {
+                display: block;
+            }
+            .forceCommunityThemeHeaderCompact .themeAppLauncher .forceHeaderButton,
+            .forceCommunityThemeHeaderCompact .themeNotifications .unsNotificationsCounter {
+                box-shadow: none;
+            }
+            .forceCommunityThemeHeaderCompact .themeAppLauncher .forceHeaderButton:hover,
+            .forceCommunityThemeHeaderCompact .themeAppLauncher .forceHeaderButton:focus,
+            .forceCommunityThemeHeaderCompact .themeNotifications .unsNotificationsCounter:hover,
+            .forceCommunityThemeHeaderCompact .themeNotifications .unsNotificationsCounter:focus {
+                background-color: transparent;
+                background-image: none;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-container {
+                border: 1px solid rgba(80, 80, 80, 0.5);
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-field-wrapper {
+                display: block;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-field {
+                min-height: initial;
+                border-radius: 0;
+                height: 30px;
+                padding: 0 72px 0 12px;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-field:focus {
+                padding-left: 12px;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-button,
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .has-input .search-button,
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-button.focus {
+                width: 60px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding: 0 8px;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .mobile-search-icon svg,
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .zero-state-panel svg,
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .forceCommunityDeflectionOption .search-icon.slds-icon_container svg,
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .forceCommunityDeflectionOption .forceChatterCompactFeedMetric svg {
+                fill: rgba(0, 0, 0, 0.7) !important;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .mobile-search-icon .slds-icon-utility-search.slds-icon_container {
+                height: 15px;
+                position: relative;
+                right: 10px;
+                top: -1px;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox.show-result .result-container {
+                margin-top: 4px;
+            }
+            .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .forceCommunityDeflectionOption .search-icon.slds-icon_container {
+                margin-top: 0;
+                height: 35px;
+            }
+            .forceCommunityThemeHeaderCompact .fadein {
+                display: block;
+                animation: fadein 0.3s;
+            }
+            @keyframes fadein {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            @media only screen and (min-width: 48em) {
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true .themeLogo {
+                    margin-right: 40px;
+                    margin-left: 40px;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true .themeNav {
+                    flex-grow: 1;
+                    flex-basis: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true .themeUtils {
+                    flex-grow: 1;
+                    flex-basis: 0;
+                    padding-left: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true .themeNavTriggerContainer {
+                    flex-grow: 1;
+                    flex-basis: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils .themeUtil {
+                    margin-right: 20px;
+                    margin-left: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils {
+                    justify-content: flex-start;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils .themeUtilsContainer {
+                    justify-content: flex-start;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeProfileMenu {
+                    margin-left: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeNavTriggerContainer {
+                    flex-grow: 1;
+                    flex-basis: 0;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-true .themeNavTriggerContainer {
+                    display: flex;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true .themeNavTriggerContainer.open {
+                    visibility: hidden;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.searchStyle-expanded .themeUtils .themeSearch {
+                    width: 100%;
+                    max-width: 310px;
+						 max- width: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-false.searchStyle-expanded .themeUtils .themeSearch {
+                    width: 310px;						  
+
+						  width: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-false.searchStyle-expanded .themeUtils .themeUtilsContainer {
+                    max-width: 50vw;
+                }
+                .forceCommunityThemeHeaderCompact .themeNav.panel {
+                    position: fixed;
+                    top: 0;
+                    bottom: 0;
+                    width: 300px;
+                    max-height: 100vh;
+                    overflow: auto;
+                    z-index: 5002;
+                    visibility: hidden;
+                }
+                .forceCommunityThemeHeaderCompact .themeNav.panel-left {
+                    left: -300px;
+                    transform: translate3d(0, 0, 0);
+                    transition: transform 0.3s ease-in-out, visibility 0s linear 0.3s;
+                }
+                .forceCommunityThemeHeaderCompact .themeNav.panel-left.open {
+                    visibility: visible;
+                    transform: translate3d(300px, 0, 0);
+                    transition: transform 0.3s ease-in-out, visibility 0s linear;
+                }
+                .forceCommunityThemeHeaderCompact .themeNav.panel-right {
+                    right: -300px;
+                    left: initial;
+                    transform: translate3d(0, 0, 0);
+                    transition: transform 0.3s ease-in-out, visibility 0s linear 0.3s;
+                }
+                .forceCommunityThemeHeaderCompact .themeNav.panel-right.open {
+                    visibility: visible;
+                    transform: translate3d(-300px, 0, 0);
+                    transition: transform 0.3s ease-in-out, visibility 0s linear;
+                }
+                .forceCommunityThemeHeaderCompact .themeLogo {
+                    margin-right: 40px;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils .themeUtil svg {
+                    height: 100%;
+                }
+                .forceCommunityThemeHeaderCompact.search-expanded .themeUtils {
+                    width: 100%;
+                }
+                .forceCommunityThemeHeaderCompact.search-expanded .themeHeaderInner.centerAlignLogo-false .themeUtils .themeSearch,
+                .forceCommunityThemeHeaderCompact.search-expanded .themeHeaderInner.centerAlignLogo-true .themeUtils .themeSearch {
+                    width: 100%;
+                    max-width: 475px;
+                }
+            }
+            @media only screen and (max-width: 47.9375em) {
+                .forceCommunityThemeHeaderCompact {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeLogo {
+                    position: relative;
+                   /* left: 50%;
+                    transform: translateX(-50%);   */
+                    padding: 10px 0 20px;
+						  width: 100%;
+						  display:block;
+						  text-align: center;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner[style] {
+                    /* padding: 10px 12px !important; */
+                    min-height: auto;
+						  display:block;
+                }
+                .forceCommunityThemeHeaderCompact .themeNav {
+                    position: fixed;
+                    top: 49px;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    max-height: calc(100% - 48px);
+                    overflow: auto;
+                    z-index: 5002;
+                    color: #fff;
+                }
+                .forceCommunityThemeHeaderCompact .themeNavOverlay {
+                    top: 49px;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils {
+                    flex-grow: 1;
+                    text-align: right;
+                    padding-left: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils .themeUtil {
+                    margin-left: 2px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils .themeUtilsContainer:not(:last-child) {
+                    margin-right: 10px;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils .themeUtil.themeAppLauncher {
+                    display: none;
+                }
+                .forceCommunityThemeHeaderCompact .themeNotifications .unsNotificationsCounter svg {
+                    width: 19px;
+                    height: 21px;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils .themeNotifications,
+                .forceCommunityThemeHeaderCompact .themeUtils .themeCartIcon {
+                    margin-left: 9px;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils .themeUtil.themeNotifications:empty {
+                    display: none;
+                }
+                .forceCommunityThemeHeaderCompact .themeUtils .themeProfileMenu {
+                    /* margin-left: 11px;
+                    position: relative;
+                    top: 1px;   */
+						  display:block;
+						  width: 100%;
+						  height: auto;
+                }
+                .forceCommunityThemeHeaderCompact.search-expanded .themeNotifications,
+                .forceCommunityThemeHeaderCompact.search-expanded .themeProfileMenu,
+                .forceCommunityThemeHeaderCompact.search-expanded .themeLogo,
+                .forceCommunityThemeHeaderCompact.search-expanded .themeNavTriggerContainer,
+                .forceCommunityThemeHeaderCompact.search-expanded .themeCartIcon {
+                    display: none !important;
+                }
+                .forceCommunityThemeHeaderCompact.search-expanded .themeSearch {
+                    width: 100%;
+                }
+                .forceCommunityThemeHeaderCompact.search-expanded .themeNav {
+                    visibility: none;
+                }
+                .forceCommunityThemeHeaderCompact.search-expanded .themeUtilsContainer {
+                    display: block;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeNavTriggerContainer {
+                    order: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeLogo {
+                    order: 1;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils {
+                    order: 2;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils .themeSearch {
+                    order: 0;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils .themeAppLauncher {
+                    order: 1;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils .themeNotifications {
+                    order: 2;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner.centerAlignLogo-true.showNavMenuOnLeft-false .themeUtils .themeProfileMenu {
+                    order: 3;
+                }
+                .forceCommunityThemeHeaderCompact .themeHeaderInner .themeNavTriggerContainer {
+                    display: flex;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-input-group {
+                    display: initial;
+                    border-radius: initial;
+                    overflow: initial;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-field-wrapper.smallOnlyDisplay {
+                    display: inline-block;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-field {
+                    width: 100%;
+                    height: 3rem;
+                    padding-left: 14px;
+                    padding-right: 72px;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .search-field:focus {
+                    padding-left: 14px;
+                    outline: 0;
+                    border-color: rgb(21, 137, 238);
+                    border-width: 0 0 1px 0;
+                    border-style: solid;
+                    background-color: rgb(255, 255, 255);
+                    box-shadow: 0 0 3px #0070d2;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .mobile-search-icon {
+                    display: none;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox.show-result .result-container {
+                    margin-top: 0;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .zero-state-panel .zero-state-icon {
+                    margin-right: 8px;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .body-search {
+                    opacity: 0;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox.focused .body-search {
+                    opacity: 1;
+                }
+                .forceCommunityThemeHeaderCompact .forceCommunitySearchBox .forceCommunityDeflectionOption .search-icon.slds-icon_container {
+                    margin-top: 12px;
+                }
+            }
+            @media only screen and (max-width: 350px) {
+                .forceCommunityThemeHeaderCompact .themeLogo {
+                    left: 103px;
+                }
+            }
+
+
+ 
+ 
+
+            .forceCommunityThemeHeroBase {
+                z-index: 4;
+                position: relative;
+            }
+            .forceCommunityThemeHeroBase .bgImage,
+            .forceCommunityThemeHeroBase .bgOverlay {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 2;
+            }
+            .forceCommunityThemeHeroBase .content {
+                color: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                z-index: 3;
+            }
+            .forceCommunityThemeHeroBase .contentCaption {
+                font-size:2.5rem;
+		color: #007934 !important;
+		font-family: "Roboto Condensed";
+		font-weight: 700;
+					 
+					 
+		 
+            }
+            .forceCommunityThemeHeroBase .contentTitle {
+                font-size: 3.5rem;
+                line-height: 1.1;
+                margin-top: 12px;
+            }
+            .forceCommunityThemeHeroBase .contentSubtitle {
+                margin-top: 18px;
+                font-size: 1.5rem;
+            }
+            .forceCommunityThemeHeroBase .align-left {
+                justify-content: flex-start;
+                text-align: left;
+            }
+            .forceCommunityThemeHeroBase .align-center {
+                justify-content: center;
+                text-align: center;
+            }
+            .forceCommunityThemeHeroBase .align-right {
+                justify-content: flex-end;
+                text-align: right;
+            }
+            @media only screen and (max-width: 47.9375em) {
+                .forceCommunityThemeHeroBase[style] {
+                    padding: 5.5rem 1rem !important;
+                }
+                .forceCommunityThemeHeroBase .widthContainer[style] {
+                    width: 100% !important;
+                }
+                .forceCommunityThemeHeroBase .content[style] {
+                    width: 100% !important;
+                }
+                .forceCommunityThemeHeroBase .contentCaption {
+                    font-size: 18px;
+                    line-height: 1.5;
+                }
+                .forceCommunityThemeHeroBase .contentTitle {
+                    font-size: 36px;
+                    line-height: 1.5;
+                    margin-top: 8px;
+                }
+                .forceCommunityThemeHeroBase .contentSubtitle {
+                    font-size: 18px;
+                    line-height: 1.5;
+                    margin-top: 16px;
+                }
+                .forceCommunityThemeHeroBase .align-left,
+                .forceCommunityThemeHeroBase .align-right {
+                    justify-content: center;
+                    text-align: center;
+                }
+            }
+            .forceCommunityThemeHeroBase .comm-hide {
+                display: none;
+            }
+            .forceCommunityThemeHeroBase .comm-is-relative {
+                position: relative;
+            }
+            .forceCommunityThemeHeroBase .comm-is-absolute {
+                position: absolute;
+            }
+
+            .forceCommunityThemeHeroStarter .searchRegion {
+                margin-top: 2.5rem;
+                width: 100%;
+            }
+            .forceCommunityThemeHeroStarter .ctaButtons {
+                margin-top: 24px;
+            }
+            .forceCommunityThemeHeroStarter .ctaBtnOne,
+            .forceCommunityThemeHeroStarter .ctaBtnTwo {
+                display: inline-block;
+                border-width: 2px;
+                border-style: solid;
+                padding: 5px 24px;
+                min-width: 135px;
+                transition: all 0.2s;
+            }
+            .forceCommunityThemeHeroStarter .ctaBtnOne {
+                color: var(--lwc-colorTextBrandPrimary, rgb(17, 17, 17));
+                background-color: var(--lwc-colorBackgroundButtonBrand, rgb(255, 103, 31));
+                border-color: var(--lwc-buttonColorBorderBrandPrimary, rgb(255, 103, 31));
+            }
+            .forceCommunityThemeHeroStarter.commThemeCmp .ctaBtnOne:hover,
+            .forceCommunityThemeHeroStarter.commThemeCmp .ctaBtnOne:focus {
+                color: var(--lwc-colorTextBrandPrimary, rgb(17, 17, 17));
+                background-color: var(--lwc-colorBackgroundButtonBrandHover, #eb4c00);
+            }
+            .forceCommunityThemeHeroStarter .ctaBtnTwo {
+                margin-left: 15px;
+            }
+            @media only screen and (max-width: 47.9375em) {
+                .forceCommunityThemeHeroStarter .searchRegion {
+                    margin-top: 1rem;
+                }
+                .forceCommunityThemeHeroStarter .ctaButtons {
+                    flex-direction: column;
+                    width: 100%;
+                }
+                .forceCommunityThemeHeroStarter .ctaBtnTwo {
+                    margin-left: 0;
+                    margin-top: 1rem;
+                }
+                .forceCommunityThemeHeroStarter .ctaBtnOne,
+                .forceCommunityThemeHeroStarter .ctaBtnTwo {
+                    width: 100%;
+                    line-height: 1.875rem;
+                    font-weight: 400;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .curtain-blur {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .curtain-blur.enabled {
+                    opacity: 0.5;
+                    visibility: visible;
+                    background-color: black;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .body-search {
+                    position: initial;
+                    top: auto;
+                    bottom: auto;
+                    left: auto;
+                    z-index: 5000;
+                    height: auto;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .search-wrapper,
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .post-wrapper {
+                    padding: 0;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox .search-field-wrapper {
+                    display: block;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .search-container {
+                    border: none;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox .zero-state-panel {
+                    display: none;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox .mobile-search-icon {
+                    display: none;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox .search-button {
+                    display: inline;
+                    padding: 0 8px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    width: 85px;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .close-button.slds-button,
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .close-button.uiButton {
+                    display: none;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox .search-button span.label {
+                    display: block;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox .search-field {
+                    padding-right: 100px;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused .search-field {
+                    border-top: none;
+                    border-right: none;
+                    border-left: none;
+                }
+                .forceCommunityThemeHeroStarter .forceCommunitySearchBox.focused.show-result .result-container {
+                    margin-top: 0;
+                }
+            }
+            .forceCommunityThemeHeroStarter .comm-hide {
+                display: none;
+            }
+
+            .forceCommunityRichText {
+                word-wrap: break-word;
+            }
+            .forceCommunityRichText img.sfdcCbImage {
+                max-width: 100%;
+                height: auto !important;
+            }
+            .forceCommunityRichText .sfdcCbVideoContainer {
+                position: relative;
+                padding-bottom: 56.25%;
+                height: 0;
+                overflow: hidden;
+                max-width: 100%;
+            }
+            .forceCommunityRichText .sfdcCbVideoContainer iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+            .forceCommunityRichText a {
+                color: var(--lwc-colorTextLink, rgb(17, 17, 17));
+            }
+            .forceCommunityRichText a:focus,
+            .forceCommunityRichText a:hover {
+                text-decoration: underline;
+            }
+            .forceCommunityRichText a:hover {
+                color: var(--lwc-colorTextLinkHover, #000000);
+            }
+            .forceCommunityRichText a:focus,
+            .forceCommunityRichText a:active {
+                color: var(--lwc-colorTextLinkActive, #000000);
+            }
+            .forceCommunityRichText ol,
+            .forceCommunityRichText ul {
+              xxxpadding-left: 1.5em;
+		padding-top: .5rem;
+            }
+            .forceCommunityRichText ol > li,
+            .forceCommunityRichText ul > li {
+                list-style-type: none;
+            }
+            .forceCommunityRichText ul > li:before {
+                content: "\2022";
+            }
+            .forceCommunityRichText ul[data-checked="true"],
+            .forceCommunityRichText ul[data-checked="false"] {
+                pointer-events: none;
+            }
+            .forceCommunityRichText ul[data-checked="true"] > li:before,
+            .forceCommunityRichText ul[data-checked="false"] > li:before {
+                color: var(--slds-g-color-neutral-base-50, #777);
+                cursor: pointer;
+                pointer-events: all;
+            }
+            .forceCommunityRichText ul[data-checked="true"] > li:before {
+                content: "\2611";
+            }
+            .forceCommunityRichText ul[data-checked="false"] > li:before {
+                content: "\2610";
+            }
+            .forceCommunityRichText li:before {
+                display: inline-block;
+                margin-right: 0.3em;
+                text-align: right;
+                white-space: nowrap;
+                width: 1.2em;
+            }
+            .forceCommunityRichText li:not(.ql-direction-rtl):before {
+                margin-left: -1.5em;
+            }
+            .forceCommunityRichText ol li,
+            .forceCommunityRichText ul li {
+                padding-left: 1.5em;
+					 /* LI */
+    font-size: 1.1rem;
+    padding-bottom: .375rem;
+            }
+            .forceCommunityRichText ol li {
+                counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+                counter-increment: list-num;
+            }
+            .forceCommunityRichText ol li:before {
+                content: counter(list-num, decimal) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-1 {
+                counter-increment: list-1;
+            }
+            .forceCommunityRichText ol li.ql-indent-1:before {
+                content: counter(list-1, lower-alpha) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-1 {
+                counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-2 {
+                counter-increment: list-2;
+            }
+            .forceCommunityRichText ol li.ql-indent-2:before {
+                content: counter(list-2, lower-roman) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-2 {
+                counter-reset: list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-3 {
+                counter-increment: list-3;
+            }
+            .forceCommunityRichText ol li.ql-indent-3:before {
+                content: counter(list-3, decimal) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-3 {
+                counter-reset: list-4 list-5 list-6 list-7 list-8 list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-4 {
+                counter-increment: list-4;
+            }
+            .forceCommunityRichText ol li.ql-indent-4:before {
+                content: counter(list-4, lower-alpha) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-4 {
+                counter-reset: list-5 list-6 list-7 list-8 list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-5 {
+                counter-increment: list-5;
+            }
+            .forceCommunityRichText ol li.ql-indent-5:before {
+                content: counter(list-5, lower-roman) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-5 {
+                counter-reset: list-6 list-7 list-8 list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-6 {
+                counter-increment: list-6;
+            }
+            .forceCommunityRichText ol li.ql-indent-6:before {
+                content: counter(list-6, decimal) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-6 {
+                counter-reset: list-7 list-8 list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-7 {
+                counter-increment: list-7;
+            }
+            .forceCommunityRichText ol li.ql-indent-7:before {
+                content: counter(list-7, lower-alpha) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-7 {
+                counter-reset: list-8 list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-8 {
+                counter-increment: list-8;
+            }
+            .forceCommunityRichText ol li.ql-indent-8:before {
+                content: counter(list-8, lower-roman) ". ";
+            }
+            .forceCommunityRichText ol li.ql-indent-8 {
+                counter-reset: list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-9 {
+                counter-increment: list-9;
+            }
+            .forceCommunityRichText ol li.ql-indent-9:before {
+                content: counter(list-9, decimal) ". ";
+            }
+            .forceCommunityRichText .ql-indent-1:not(.ql-direction-rtl) {
+                padding-left: 3em;
+            }
+            .forceCommunityRichText li.ql-indent-1:not(.ql-direction-rtl) {
+                padding-left: 4.5em;
+            }
+            .forceCommunityRichText .ql-indent-1.ql-direction-rtl.ql-align-right {
+                padding-right: 3em;
+            }
+            .forceCommunityRichText li.ql-indent-1.ql-direction-rtl.ql-align-right {
+                padding-right: 4.5em;
+            }
+            .forceCommunityRichText .ql-indent-2:not(.ql-direction-rtl) {
+                padding-left: 6em;
+            }
+            .forceCommunityRichText li.ql-indent-2:not(.ql-direction-rtl) {
+                padding-left: 7.5em;
+            }
+            .forceCommunityRichText .ql-indent-2.ql-direction-rtl.ql-align-right {
+                padding-right: 6em;
+            }
+            .forceCommunityRichText li.ql-indent-2.ql-direction-rtl.ql-align-right {
+                padding-right: 7.5em;
+            }
+            .forceCommunityRichText .ql-indent-3:not(.ql-direction-rtl) {
+                padding-left: 9em;
+            }
+            .forceCommunityRichText li.ql-indent-3:not(.ql-direction-rtl) {
+                padding-left: 10.5em;
+            }
+            .forceCommunityRichText .ql-indent-3.ql-direction-rtl.ql-align-right {
+                padding-right: 9em;
+            }
+            .forceCommunityRichText li.ql-indent-3.ql-direction-rtl.ql-align-right {
+                padding-right: 10.5em;
+            }
+            .forceCommunityRichText .ql-indent-4:not(.ql-direction-rtl) {
+                padding-left: 12em;
+            }
+            .forceCommunityRichText li.ql-indent-4:not(.ql-direction-rtl) {
+                padding-left: 13.5em;
+            }
+            .forceCommunityRichText .ql-indent-4.ql-direction-rtl.ql-align-right {
+                padding-right: 12em;
+            }
+            .forceCommunityRichText li.ql-indent-4.ql-direction-rtl.ql-align-right {
+                padding-right: 13.5em;
+            }
+            .forceCommunityRichText .ql-indent-5:not(.ql-direction-rtl) {
+                padding-left: 15em;
+            }
+            .forceCommunityRichText li.ql-indent-5:not(.ql-direction-rtl) {
+                padding-left: 16.5em;
+            }
+            .forceCommunityRichText .ql-indent-5.ql-direction-rtl.ql-align-right {
+                padding-right: 15em;
+            }
+            .forceCommunityRichText li.ql-indent-5.ql-direction-rtl.ql-align-right {
+                padding-right: 16.5em;
+            }
+            .forceCommunityRichText .ql-indent-6:not(.ql-direction-rtl) {
+                padding-left: 18em;
+            }
+            .forceCommunityRichText li.ql-indent-6:not(.ql-direction-rtl) {
+                padding-left: 19.5em;
+            }
+            .forceCommunityRichText .ql-indent-6.ql-direction-rtl.ql-align-right {
+                padding-right: 18em;
+            }
+            .forceCommunityRichText li.ql-indent-6.ql-direction-rtl.ql-align-right {
+                padding-right: 19.5em;
+            }
+            .forceCommunityRichText .ql-indent-7:not(.ql-direction-rtl) {
+                padding-left: 21em;
+            }
+            .forceCommunityRichText li.ql-indent-7:not(.ql-direction-rtl) {
+                padding-left: 22.5em;
+            }
+            .forceCommunityRichText .ql-indent-7.ql-direction-rtl.ql-align-right {
+                padding-right: 21em;
+            }
+            .forceCommunityRichText li.ql-indent-7.ql-direction-rtl.ql-align-right {
+                padding-right: 22.5em;
+            }
+            .forceCommunityRichText .ql-indent-8:not(.ql-direction-rtl) {
+                padding-left: 24em;
+            }
+            .forceCommunityRichText li.ql-indent-8:not(.ql-direction-rtl) {
+                padding-left: 25.5em;
+            }
+            .forceCommunityRichText .ql-indent-8.ql-direction-rtl.ql-align-right {
+                padding-right: 24em;
+            }
+            .forceCommunityRichText li.ql-indent-8.ql-direction-rtl.ql-align-right {
+                padding-right: 25.5em;
+            }
+            .forceCommunityRichText .ql-indent-9:not(.ql-direction-rtl) {
+                padding-left: 27em;
+            }
+            .forceCommunityRichText li.ql-indent-9:not(.ql-direction-rtl) {
+                padding-left: 28.5em;
+            }
+            .forceCommunityRichText .ql-indent-9.ql-direction-rtl.ql-align-right {
+                padding-right: 27em;
+            }
+            .forceCommunityRichText li.ql-indent-9.ql-direction-rtl.ql-align-right {
+                padding-right: 28.5em;
+            }
+            .forceCommunityRichText h1 {
+                font-size: var(--lwc-fontSizeHeadingLarge, 1.5rem);
+            }
+            .forceCommunityRichText h2 {
+                font-size: var(--lwc-fontSizeHeadingMedium, 1.125rem);
+                font-weight: var(--lwc-fontWeightBold, 700);
+            }
+            .forceCommunityRichText h3,
+		h3				{
+                font-size: var(--lwc-fontSizeHeadingMedium, 1.125rem);
+					 /*  LII   */
+			    font-weight: 700;
+		 font-family: "Roboto Condensed";
+		 font-size: 1.75rem;
+	 margin-top: 1rem;
+		 
+            }
+
+            .forceCommunityRichText h4 {
+                font-size: var(--lwc-fontSizeHeadingSmall, 0.875rem);
+                font-weight: var(--lwc-fontWeightBold, 700);
+            }
+            .forceCommunityRichText h5 {
+                font-size: var(--lwc-fontSizeHeadingSmall, 0.875rem);
+            }
+            .forceCommunityRichText h6 {
+                font-size: var(--lwc-fontSizeHeadingXSmall, 0.75rem);
+                font-weight: var(--lwc-fontWeightBold, 700);
+            }
