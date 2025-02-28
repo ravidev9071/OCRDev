@@ -1,0 +1,175 @@
+.header {
+	box-shadow: 0px 8px 18px -8px #979a9c;
+}		
+.pageMainHeader {
+	padding: 15px 0;
+}
+a.logo img {
+	width: auto;
+	margin: 10px 20px;
+}	
+.topnav {
+	margin: 0 5px;
+	position: relative;
+}
+.topnav .nav {
+  overflow: hidden;
+  background: transparent;
+}
+.topnav  ul.nav {
+	width: auto;
+	display: flex;
+	margin: 0 10px;
+	padding-top: 10px;
+	
+}
+.topnav ul.nav >  li {
+	float: left;
+	padding: 0 30px 0px 0;
+}
+.topnav  ul.nav > li > a {
+	display: inline-block;
+	color: #333;
+	text-align: center;
+	padding: 0 5px;
+	text-decoration: none;
+	text-align: center;
+	font-size: 1.5rem;
+	font-family: "Roboto Condensed";
+	font-weight: 700;
+	color: #eb5903;
+	line-height: 1.5rem;
+}
+
+.topnav .nav a:hover {
+  color: #f58848;
+}
+
+.topnav .nav a.active {
+	border-bottom: 3px solid #ff671f;
+	color: #093e74;
+	font-weight: 400;
+}
+
+.topnav .nav .icon {
+  display: none;
+}
+.headerBorder {
+	height: 0px;
+	background: transparent;
+
+}	
+.slds-button.btnLogin {
+	    border-color: rgba(0, 0, 0, 0);
+    color: #fff;
+    background-color: rgb(255, 103, 31);
+    box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0) inset, 0 0 1px 0px rgba(0, 0, 0, 0);
+    border-radius: 15px;
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    font-family: 'roboto condensed';
+    border-radius: 8px;
+    background: #e17000;
+    line-height: 1.4rem;
+}
+.slds-button.btnLogin:hover {
+    background: rgba(255, 103, 31, 0.8);
+
+}
+@media screen and (max-width: 600px) {
+  .topnav ul.nav > li:not(:first-of-type)  >a   {	  
+	  display: none;
+	  }
+	  
+	.topnav  ul.nav {
+		width: auto;
+		display: block;
+		
+	}	  
+	.topnav ul.nav > li> a {
+		float: none;
+		text-align: left;
+		display: block;
+		display:none;
+	}			
+
+	  .topnav > ul.nav > li >  span.icon {	  
+		 float: right;
+		 display: block;
+		 position: absolute;
+		 right: 5px;
+		 top: 0;
+		border: 2px solid #e6662f;
+        border-radius: 3px;
+		  padding: 15px;
+	  }
+	  .icon-bar {
+		  background: red;
+		      top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+	}
+	.icon-bar + .icon-bar {
+		margin-top: 4px;
+	}
+	.headerBorder {
+		margin-top: 30px;
+	}
+ }
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive .nav {
+		position: relative;
+		padding-top: 50px;
+	}
+
+  .topnav.responsive .nav .icon {
+    position: absolute;
+    right: 15px;
+    top: 0;
+	 padding: 15px;
+  }
+  .topnav.responsive ul.nav > li  {
+		width: 100%;
+		padding: 0 0 15px;
+  }	  
+  .topnav.responsive ul.nav > li > a,
+    .topnav.responsive ul.nav > li > span {
+    float: none;
+    display: block;
+    text-align: left;
+	 padding-left: 0;
+  }
+	.slds-button.btnLogin {
+		margin-left: 0px;
+	}	
+	.themeLogo {
+		text-align: center;
+		margin-bottom: 15px;
+	} 	
+}
+.userProfile {
+	float: right;
+}
+.userProfileContainer {
+	    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.userProfileMenu {
+	background: #f3f3f3;
+    padding: 15px;
+    border-radius: 5px;
+	 margin: 15px;
+}	
+@media screen and (max-width: 600px) {
+	.userProfileMenu {
+		margin: 10px 15px 30px;
+	}
+}	

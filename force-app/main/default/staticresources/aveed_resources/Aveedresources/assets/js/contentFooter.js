@@ -1,0 +1,12 @@
+document.write( '<p>For additional information about the AVEED REMS Program, please call <span class=\"sldls-nowrap\">1-855-755-0494.</span></p>\n' );
+document.write( '<ul class=\"slds-list_horizontal slds-has-dividers_right slds-has-block-links_space slds-p-vertical_small\">\n' );
+document.write( '	<li class=\"slds-item\">\n' );
+document.write( '		<a href=\"#\" target=\"_blank\">Privacy Policy</a>\n' );
+document.write( '	</li>\n' );
+document.write( '	<li class=\"slds-item\">\n' );
+document.write( '		<a href=\"#\" target=\"_blank\">Terms of Use</a>\n' );
+document.write( '	</li>\n' );
+document.write( '	<li class=\"slds-item\">\n' );
+document.write( '		<a href=\"contactUs.html\">Contact Us</a>\n' );
+document.write( '	</li>\n' );
+document.write( '</ul>' );

@@ -1,0 +1,346 @@
+
+            .forceCommunityThemeNav.themeNavContainer.navMenuType-expanded {
+                min-height: 32px;
+                opacity: 0;
+            }
+            .forceCommunityThemeNav.themeNavContainer.navMenuType-expanded.doneRendering {
+                opacity: 1;
+            }
+            .forceCommunityThemeNav.themeNavContainer .slds-icon_container {
+                padding-left: 7px;
+            }
+            .forceCommunityThemeNav .visible-links {
+                display: flex;
+                flex-direction: row;
+            }
+            .forceCommunityThemeNav .uiMenuList--default .scrollable {
+                max-height: 30rem;
+                overflow-y: auto;
+            }
+            .forceCommunityThemeNav .mainNavItem {
+                padding-left: 60px;
+                position: relative;
+                line-height: 1rem;
+                white-space: normal;
+            }
+            .forceCommunityThemeNav .comm-navigation__top-level-item.mainNavItem:first-child {
+                padding-left: 0;
+            }
+            .forceCommunityThemeNav .comm-navigation__top-level-item.noPadding .themeNavMoreLink {
+                padding-left: 0;
+            }
+            .forceCommunityThemeNav .mainNavItem a {
+                display: block;
+            }
+            .forceCommunityThemeNav .mainNavItem .linkBtn {
+                border: none;
+                background: none;
+                padding: 0 5px;
+                width: 100%;
+                text-align: left;
+					 text-align: center;
+					 font-size: 18px;
+					 font-family: "Roboto Condensed";
+					 color: #333;
+            }
+            .forceCommunityThemeNav .uiMenuList {
+                transform: none;
+                top: 0;
+                left: 60px;
+                right: inherit;
+                margin-top: 40px;
+                padding: 0;
+                width: 175px;
+                border: none;
+                box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+            }
+            .forceCommunityThemeNav .comm-navigation__top-level-item.noPadding .uiMenuList {
+                left: 0;
+            }
+            .forceCommunityThemeNav .uiMenuList .subMenu,
+            .forceCommunityThemeNav .uiMenuList .subMenu ul {
+                border-radius: 4px;
+            }
+            .forceCommunityThemeNav .uiMenuList .uiMenuItem > a {
+                padding: 5px 10px;
+                font-size: inherit;
+            }
+            .forceCommunityThemeNav .uiMenuList--default .uiMenuItem:first-child > a {
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+            .forceCommunityThemeNav .uiMenuList--default .uiMenuItem:last-child > a {
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+            .forceCommunityThemeNav .uiMenuList--default .uiMenuItem > a:hover,
+            .forceCommunityThemeNav .uiMenuList--default .uiMenuItem > a:focus,
+            .forceCommunityThemeNav .uiMenuList--default .uiMenuItem > span:hover,
+            .forceCommunityThemeNav .uiMenuList--default .uiMenuItem > span:focus {
+                background-color: unset;
+                text-decoration: none;
+                outline: none;
+            }
+            .forceCommunityThemeNav .slds-nubbin_top-left.popupTargetContainer:before {
+                background-color: unset;
+            }
+            .forceCommunityThemeNav .slds-nubbin_top-left.popupTargetContainer:after {
+                box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+            }
+            .forceCommunityThemeNav .mainNavItem .uiMenuItem a {
+                border-bottom: 1px solid #ececec;
+            }
+            .forceCommunityThemeNav .mainNavItem .nestedSubMenu a,
+            .forceCommunityThemeNav .mainNavItem .uiMenuItem:last-child a,
+            .forceCommunityThemeNav .mainNavItem .nestedSubMenuItem:not(.finalNestedSubMenuItem) a {
+                border: none;
+            }
+            .forceCommunityThemeNav .mainNavItem .nestedSubMenuItem a {
+                padding-left: 30px;
+            }
+            .forceCommunityThemeNav .mainNavItem.expanded svg {
+                transform: rotate(-180deg);
+                transition: transform 150ms ease;
+            }
+            .forceCommunityThemeNav .mainNavItem a {
+                text-decoration: none;
+            }
+            .forceCommunityThemeNav ul.themeNav-align-left {
+                justify-content: flex-start;
+            }
+            .forceCommunityThemeNav ul.themeNav-align-right {
+                justify-content: flex-end;
+            }
+            .forceCommunityThemeNav ul.themeNav-align-center {
+                justify-content: center;
+            }
+            .forceCommunityThemeNav ul.themeNav-align-distributed {
+                justify-content: space-around;
+            }
+            .forceCommunityThemeNav ul.themeNav-align-spaceBetween {
+                justify-content: space-between;
+            }
+            .forceCommunityThemeNav .hidden-menu {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            @media only screen and (min-width: 48em) {
+                .forceCommunityThemeNav.closePanelTrigger {
+                    display: flex;
+                    align-items: center;
+                }
+                .forceCommunityThemeNav.closePanelTrigger.alignTrigger-right {
+                    justify-content: flex-end;
+                    margin-right: 17px;
+                }
+                .forceCommunityThemeNav.closePanelTrigger.alignTrigger-left {
+                    justify-content: flex-start;
+                    margin-left: 17px;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .visible-links {
+                    flex-direction: column;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .uiMenuList {
+                    position: relative;
+                    margin-top: 0;
+                    border-radius: 0;
+                    border: none;
+                    left: 0;
+                    width: 100%;
+                    box-shadow: none;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .subMenu {
+                    position: static;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .comm-navigation__top-level-item-link:focus,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .comm-navigation__top-level-item-link a:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .uiMenuList--default .uiMenuItem:first-child > a,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .uiMenuList--default .uiMenuItem:last-child > a,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .uiMenuList .subMenu,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .uiMenuList .subMenu ul {
+                    border-radius: 0;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .slds-nubbin_top-left:before,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .slds-nubbin_top-left:after {
+                    display: none;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem .subMenuItem:not(.finalSubMenuItem) a {
+                    border: none;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel li.mainNavItem:first-child a {
+                    border-top: 1px solid #ececec;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem:not(.expanded) .linkBtn,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem .uiMenuItem:last-child a {
+                    border-bottom: 1px solid #ececec;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem {
+                    display: block;
+                    padding: 0;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem a,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem .linkBtn {
+                    padding: 10px 20px;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem.expanded {
+                    display: block;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .themeNavMoreLink {
+                    display: none;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem .subMenuItem a {
+                    padding: 5px 40px;
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel.themeNavContainer .slds-icon_container {
+                    padding-left: 0;
+                    position: absolute;
+                    right: 20px;
+                    line-height: inherit;
+                }
+                .forceCommunityThemeNav.themeNavContainer .slds-nubbin_top-left.reverseDropdown:before,
+                .forceCommunityThemeNav.themeNavContainer .slds-nubbin_top-left.reverseDropdown:after,
+                .forceCommunityThemeNav.themeNavContainer .reverseDropdown .slds-nubbin_top-left:before,
+                .forceCommunityThemeNav.themeNavContainer .reverseDropdown .slds-nubbin_top-left:after {
+                    left: 9rem;
+                }
+                .forceCommunityThemeNav.themeNavContainer .uiMenuList.reverseDropdown {
+                    right: 0;
+                    left: initial;
+                }
+            }
+            @media only screen and (max-width: 47.9375em) {
+                .forceCommunityThemeNav .visible-links {
+                    flex-direction: column;
+                }
+                .forceCommunityThemeNav .uiMenuList {
+                    position: relative;
+                    margin-top: 0;
+                    border-radius: 0;
+                    left: 0;
+                    border: none;
+                    box-shadow: none;
+                }
+                .forceCommunityThemeNav .subMenu {
+                    width: 100vw;
+                    position: static;
+                }
+                .forceCommunityThemeNav .comm-navigation__top-level-item-link:focus,
+                .forceCommunityThemeNav .comm-navigation__top-level-item-link a:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+                .forceCommunityThemeNav .uiMenuList--default .uiMenuItem:first-child > a,
+                .forceCommunityThemeNav .uiMenuList--default .uiMenuItem:last-child > a,
+                .forceCommunityThemeNav .uiMenuList .subMenu,
+                .forceCommunityThemeNav .uiMenuList .subMenu ul {
+                    border-radius: 0;
+                }
+                .forceCommunityThemeNav .slds-nubbin_top-left:before,
+                .forceCommunityThemeNav .slds-nubbin_top-left:after {
+                    display: none;
+                }
+                .forceCommunityThemeNav .mainNavItem .subMenuItem:not(.finalSubMenuItem) a {
+                    border: none;
+                }
+                .forceCommunityThemeNav .mainNavItem:not(.expanded) .linkBtn,
+                .forceCommunityThemeNav .mainNavItem .uiMenuItem:last-child a {
+                    border-bottom: 1px solid #ececec;
+                }
+                .forceCommunityThemeNav .mainNavItem {
+                    display: block;
+                    padding: 0;
+                }
+                .forceCommunityThemeNav .mainNavItem a,
+                .forceCommunityThemeNav .mainNavItem .linkBtn {
+                    font-size: 16px !important;
+                    padding: 10px 20px;
+                }
+                .forceCommunityThemeNav .mainNavItem.expanded {
+                    display: block;
+                }
+                .forceCommunityThemeNav .themeNavMoreLink {
+                    display: none;
+                }
+                .forceCommunityThemeNav .mainNavItem .subMenuItem a {
+                    padding: 5px 40px;
+                }
+                .forceCommunityThemeNav.themeNavContainer .slds-icon_container {
+                    padding-left: 0;
+                    position: absolute;
+                    right: 20px;
+                    line-height: inherit;
+                }
+            }
+            .forceCommunityThemeNav .uiMenuList.comm-hide {
+                display: none;
+            }
+            .forceCommunityThemeNav .focus-hide {
+                outline: none;
+            }
+            @media only screen and (max-width: 47.9375em) {
+                .forceCommunityThemeNav .mainNavItem a,
+                .forceCommunityThemeNav .mainNavItem .linkBtn {
+                    color: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                }
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem a:hover,
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem a:focus,
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem .linkBtn:hover,
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem .linkBtn:focus {
+                    color: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                    background-color: var(--lwc-colorBackgroundRowHover, rgba(255, 103, 31, 0.05));
+                }
+                .forceCommunityThemeNav .mainNavItem .linkBtn svg {
+                    fill: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                }
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem .linkBtn:hover svg {
+                    fill: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                }
+            }
+            @media only screen and (min-width: 48em) {
+                .forceCommunityThemeNav .mainNavItem .subMenu .uiMenuItem a,
+                .forceCommunityThemeNav.closePanelTrigger .closePanelTriggerIcon,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem a,
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem .linkBtn {
+                    color: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                }
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem .subMenu .uiMenuItem a:hover,
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem .subMenu .uiMenuItem a:focus,
+                .forceCommunityThemeNav.commThemeCmp.closePanelTrigger .closePanelTriggerIcon:hover,
+                .forceCommunityThemeNav.commThemeCmp.themeNavContainer.navMenuType-panel .mainNavItem a:hover,
+                .forceCommunityThemeNav.commThemeCmp.themeNavContainer.navMenuType-panel .mainNavItem a:focus,
+                .forceCommunityThemeNav.commThemeCmp.themeNavContainer.navMenuType-panel .mainNavItem .linkBtn:hover,
+                .forceCommunityThemeNav.commThemeCmp.themeNavContainer.navMenuType-panel .mainNavItem .linkBtn:focus {
+                    color: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                    background-color: var(--lwc-colorBackgroundRowHover, rgba(255, 103, 31, 0.05));
+                }
+                .forceCommunityThemeNav.themeNavContainer.navMenuType-panel .mainNavItem .linkBtn svg {
+                    fill: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                }
+                .forceCommunityThemeNav.commThemeCmp.themeNavContainer.navMenuType-panel .mainNavItem .linkBtn:hover svg {
+                    fill: var(--lwc-colorTextDefault, rgba(0, 0, 0, 0.8));
+                }
+                .forceCommunityThemeNav.navMenuType-expanded .mainNavItem .linkBtn.comm-navigation__top-level-item-link--active {
+                    border-bottom: 2px solid var(--lwc-colorBorderBrand, rgb(255, 103, 31));
+                }
+                .forceCommunityThemeNav.navMenuType-panel.alignPanel-left .mainNavItem .linkBtn.comm-navigation__top-level-item-link--active {
+                    border-left: 3px solid var(--lwc-colorBorderBrand, rgb(255, 103, 31));
+                    padding-left: 17px;
+                }
+                .forceCommunityThemeNav.navMenuType-panel.alignPanel-right .mainNavItem .linkBtn.comm-navigation__top-level-item-link--active {
+                    border-right: 3px solid var(--lwc-colorBorderBrand, rgb(255, 103, 31));
+                }
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem .subMenu .uiMenuItem:hover:before,
+                .forceCommunityThemeNav.commThemeCmp .mainNavItem .subMenu .uiMenuItem:focus:before {
+                    border-bottom-color: var(--lwc-colorBackgroundRowHover, rgba(255, 103, 31, 0.05));
+                }
+            }
+            @media only screen and (min-width: 48em) {
+                .forceCommunityThemeNav .hideNubbin.uiMenuList {
+                    margin-top: 36px;
+                    width: auto;
+                }
+            }
