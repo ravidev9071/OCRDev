@@ -38,7 +38,7 @@
                   <template lwc:if={serviceFields}>
                     <template for:each={serviceFields} for:item="Objects">
                         <lightning-record-edit-form object-api-name={Objects.Object} onsubmit={handleSubmit} onload={handleOnLoad} key={Objects.Object} data-object={Objects.Object}
-                          data-recordtype={Objects.recordTypeId} onsuccess={handleOnSuccess} onerror={handleError} record-type-id={Objects.recordTypeId} record-id={draftCaseId}>
+                          data-recordtype={Objects.recordTypeId} onsuccess={handleOnSuccess} onerror={handleError} record-type-id={Objects.recordTypeId}>
                       <lightning-messages></lightning-messages>
                       <lightning-accordion allow-multiple-sections-open="true"
                         active-section-name={setActiveSectionsList}>
@@ -118,13 +118,12 @@
                   </template>
                   </template>
                   <footer class="slds-modal__footer slds-m-top_medium slds-text-align_center">
-                    <!--<lightning-button variant="brand" label="Previous" title="Previous" class="butnClass"
-                      size="small" type="Previous" onclick={handlePrevious}></lightning-button>-->
-                      <lightning-button variant="brand" label="Cancel" title="Cancel" class="butnClass" size="small"
-                      type="Cancel" onclick={handleCancel}></lightning-button>&nbsp;
-                      <lightning-button variant="brand" label="Submit" title="Submit" class="butnClass" size="small"
+                    <lightning-button variant="brand" label="Previous" title="Previous" class="butnClass"
+                      size="small" type="Previous" onclick={handlePrevious}></lightning-button>
+                    <lightning-button variant="brand" label="Submit" title="Submit" class="butnClass" size="small"
                     onclick={handleSubmitAll}></lightning-button>&nbsp;
-                   
+                    <lightning-button variant="brand" label="Cancel" title="Cancel" class="butnClass" size="small"
+                      type="Cancel" onclick={handleCancel}></lightning-button>&nbsp;
                   </footer>
                 </div>
               </article>

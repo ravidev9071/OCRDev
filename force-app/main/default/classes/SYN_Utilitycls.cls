@@ -97,7 +97,6 @@ public with sharing class SYN_Utilitycls {
     public static final String Legal_Guardian_ErrorMsg = 'Legal Guardian Name,Phone and Relationship  are required if the patient is under the age of 18.';
     public static final String PiaSky_REMS_Task_Queue = 'PiaSky_REMS_Task_Queue'; //BT1005-112
     public static final String Maci_REMS_Task_Queue='Macitentan REMS Task Queue';
-    public static final String Maci_REMS_Fax_Queue_Name='Macitentan_REMS_Fax_Queue';
 
 	public static final String SYN_Inpatient_Pharmacy = 'SYN_Inpatient_Pharmacy';
     public static final String SYN_Inpatient_Pharmacy_Reenrollment = 'SYN_Inpatient_Pharmacy_Reenrollment';

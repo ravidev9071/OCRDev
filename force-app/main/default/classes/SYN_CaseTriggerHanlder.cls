@@ -504,7 +504,7 @@ public static void DEAvalidationAfterInsert(List<Case> caseList){
             if(mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'Patient_Enrollement' || mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'Patient_Reenrollment'){//Added or condition for reenrollment record types            
                 a.US_WSREMS__Participant__c = a.US_WSREMS__Patient__c;
             }else if(mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'Prescriber_enrollment' || mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'Prescriber_Reenrollment'){//Added or condition for reenrollment record types
-                a.US_WSREMS__Participant__c = a.SYN_Prescriber__c??a.US_WSREMS__Participant__c;
+                a.US_WSREMS__Participant__c = a.SYN_Prescriber__c;
             }else if(mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'SYN_Distributor_Enrollment' || mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'Distributor_Reenrollment'){//Added or condition for reenrollment record types
                 a.US_WSREMS__Participant__c = a.US_WSREMS__Distributor__c;
             }else if(mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'Pharmacy_Enrollment' || mapCaseRecordTypesById.get(a.RecordTypeId).getDeveloperName() == 'Pharmacy_Reenrollment'){//Added or condition for reenrollment record types

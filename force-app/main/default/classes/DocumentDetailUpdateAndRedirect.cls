@@ -1,76 +1,54 @@
-/**
- * @File Name    : DocumentDetailUpdateAndRedirect.cls
- * @Description  : This class handles the update of DocumentChecklistItem and ReceivedDocument records 
- *                 and then redirects the user based on the document status.
- *
- * @Author             : Wilco
- * @Last Modified By   : Wilco
- * @Last Modified On   : February 28, 2025
- * @Modification Log   :
- * ==============================================================================
- * Ver | Date             | Author | Modification
- * ==============================================================================
- * 1.0 | February 28, 2025 |        | Initial Version
- **/
-
-public with sharing class DocumentDetailUpdateAndRedirect {
+public class DocumentDetailUpdateAndRedirect {
+    public Id recordId { get; set; }
     
-    // Record IDs from the current page parameters
-    public Id recDocId { get; set; }
-    public Id docId { get; set; }
-    
-    // Constructor to initialize record IDs
+    // Constructor: Retrieve the record Id from the URL parameters.
     public DocumentDetailUpdateAndRedirect() {
-        recDocId = ApexPages.currentPage().getParameters().get('parentId');
-        docId = ApexPages.currentPage().getParameters().get('Id');
+        recordId = ApexPages.currentPage().getParameters().get('id');
     }
     
-    // Method to update DocumentChecklistItem and ReceivedDocument records, then redirect the user
+    // This method performs the update (if applicable) and then redirects.
     public PageReference updateAndRedirect() {
-        // List to hold all records to update
-        List<SObject> recordsToUpdate = new List<SObject>();
-        
-        // Variables to capture the status and UIPath task id from the matching DocumentChecklistItem record
-        String strStatus,uiPathTaskId;
-        
-        // Query DocumentChecklistItem records related to the ReceivedDocument
-        for (DocumentChecklistItem dci : [
-            SELECT Id, Status, OwnerId, ReceivedDocumentId, UIPathTaskId__c, 
-                   ReceivedDocument.OwnerId, ReceivedDocument.Processing_Status__c
-            FROM DocumentChecklistItem
-            WHERE ReceivedDocumentId = :recDocId
-        ]) {
-            // If the current record matches the document id, capture its status and UIPath task id
-            if (docId == dci.Id) {
-                strStatus = dci.Status;
-                uiPathTaskId = dci.UIPathTaskId__c;
+        if (recordId != null) {
+            try {
+                // Query the DocumentChecklistItem record.
+                DocumentChecklistItem dci = [
+                    SELECT Id, Status, OwnerId, ReceivedDocumentId
+                    FROM DocumentChecklistItem
+                    WHERE Id = :recordId
+                    LIMIT 1
+                ];
+                
+                // If the Status is not "OCR Review" or "Complete", update the records.
+                if (dci.Status != 'OCR Review' && dci.Status != 'Complete') {
+                    // Update DocumentChecklistItem owner to the current user.
+                    //dci.OwnerId = UserInfo.getUserId();
+                    update dci;
+                    
+                    // If the parent ReceivedDocument exists, update it.
+                    if (dci.ReceivedDocumentId != null) {
+                        ReceivedDocument rd = [
+                            SELECT Id, OwnerId, Processing_Status__c
+                            FROM ReceivedDocument
+                            WHERE Id = :dci.ReceivedDocumentId
+                            LIMIT 1
+                        ];
+                        //rd.OwnerId = UserInfo.getUserId();
+                        rd.Processing_Status__c = 'Assigned';
+                        update rd;
+                    }
+                }
+                
+                // Redirect to the DocumentChecklistItem detail page.
+                PageReference detailPage = new PageReference('/' + recordId);
+                detailPage.setRedirect(true);
+                return detailPage;
+            } catch (Exception ex) {
+                ApexPages.addMessage(new ApexPages.Message(
+                    ApexPages.Severity.ERROR, 
+                    'An error occurred: ' + ex.getMessage()
+                ));
             }
-            
-            // Update DocumentChecklistItem owner to the current user
-            dci.OwnerId = UserInfo.getUserId();
-            recordsToUpdate.add(dci);
         }
-        
-        // Update the ReceivedDocument record with new owner and processing status
-        recordsToUpdate.add(new ReceivedDocument(
-            Id = recDocId,
-            OwnerId = UserInfo.getUserId(),
-            Processing_Status__c = System.Label.ReceivedDocumentValueAssigned
-        ));
-        
-        // Attempt to update records in the database
-        try {
-            List<Database.SaveResult> results = Database.update(recordsToUpdate, false);
-        } catch (DmlException e) {
-            System.debug(LoggingLevel.Debug, 'Error Updating: ' + e.getMessage());
-        }
-        
-        // Determine the redirect URL based on the document status
-        String redirectUrl = (strStatus == System.Label.DCIStatusValueOCRReviewPending)
-            ? System.Label.UiPath_Task + uiPathTaskId
-            : '/' + docId;
-        
-        // Redirect to the built URL
-        return new PageReference(redirectUrl).setRedirect(true);
+        return null;
     }
 }

@@ -1,4 +1,5 @@
 import { LightningElement, track, api, wire } from "lwc";
+
   // Apex methods
   import getNameSpace from "@salesforce/apex/OCRFormCtrl.getNameSpace";
   import getPermissionSets from "@salesforce/apex/OCRFormCtrl.getPermissionSets";
@@ -15,7 +16,6 @@ import { LightningElement, track, api, wire } from "lwc";
   import updateSubstakeholderData from "@salesforce/apex/OCRFormCtrl.updateSubstakeholder";
   import getCasesForStakeholder from "@salesforce/apex/OCRFormCtrl.getCasesForStakeholder";
   import getAccountData from '@salesforce/apex/OCRFormCtrl.getStakeholderrecord';
-  import getRecordTypeMap from '@salesforce/apex/OCRFormCtrl.getRecordTypeMap';
   import createARAccount from "@salesforce/apex/OCRFormCtrl.createARAccount";
   import getServiceCreation from "@salesforce/apex/OCRFormCtrl.getServiceCreation";
   import validateNpiStatus from "@salesforce/apex/OCRFormCtrl.validateNpiStatus";
@@ -71,7 +71,6 @@ import { LightningElement, track, api, wire } from "lwc";
     phoneFieldsList = [];
     duplicateAccColumns = [];
     duplicatesFound = false;
-    recordTypeMapping=new Map();       
     duplicateAccRecs = [];
     label = {
       accountErrorMsg,
@@ -98,9 +97,6 @@ import { LightningElement, track, api, wire } from "lwc";
     fieldValues = [];
     activeSectionsList = [];
     caseRecordId;
-    @track
-    draftCaseId;
-    draftServiceId;
     expandButton = true;
     setActiveSectionsList = [];
     requeried;
@@ -363,9 +359,6 @@ import { LightningElement, track, api, wire } from "lwc";
 
        getReadonlyFields({objectName:this.serviceConfigRecord[`${this.namespaceVar}Object__c`]}).then((result) => {
         this.readOnlyFieldsList =result;
-          getRecordTypeMap({sourceRecordType:this.serviceConfigRecord[`${this.namespaceVar}Account_Record_Type__c`],programName:this.currentUserProgramName}).then((result)=>{
-           this.recordTypeMapping=result;
-        })
        });
  
         getServiceCreation({serviceConfigObj: this.serviceConfigRecord,documentCheckListId:this.documentCheckListId
@@ -400,11 +393,13 @@ import { LightningElement, track, api, wire } from "lwc";
               this.fileDisplay = true;
             }
             let returnedData;
-            let recordTypeName =this.serviceConfigRecord[`${nameSpace}Case_Record_Type__c`];;
-            console.log('recordTypeName : ',recordTypeName);
+            let recordTypeName;
+           
+            recordTypeName = this.serviceConfigRecord[`${nameSpace}Case_Record_Type__c`];
+             
             this.getRecordTypeDataHandler(recordTypeName, "Case")
               .then((result) => {
-                 returnedData =result;
+                returnedData = result;
                 this.recordTypeData = returnedData;
                 for(const objectName in this.orginalData){
                 var objectMap = JSON.parse(objectName);
@@ -625,16 +620,11 @@ import { LightningElement, track, api, wire } from "lwc";
     async getCases(){
       await getCasesForStakeholder({accountId:this.accountId, serviceConfigObj : this.serviceConfigRecord})
         .then(result =>{
-           this.caseNumbers = '';
+          this.isCaseOpen = result.length > 0;
+          this.caseNumbers = '';
           let caseNumberArray = [];
           for (let i = 0; i < result.length; i++) {
-            if(result[i].Status=='Draft'){
-              this.draftCaseId=result[i].Id;
-              this.draftServiceId=result[i].US_WSREMS__REMS_Service_Summary__c;
-            }else{
-              this.isCaseOpen=true;
-            }
-            caseNumberArray.push(result[i].CaseNumber);
+          caseNumberArray.push(result[i].CaseNumber);
           }
           this.caseNumbers = caseNumberArray.toString();
         })
@@ -736,11 +726,13 @@ import { LightningElement, track, api, wire } from "lwc";
         return this.serviceType === 'Knowledge Assessment' && this.participantType === 'Prescriber';
       }
 
-      @track selectedDuplicateRecord={};
+      @track selectedDuplicateRecord;
       handleRowSelection = event => {
+        if(!this.selectedDuplicateRecord){
+          this.selectedDuplicateRecord = {};
+        }
         let targetId = event.target.dataset.targetId;
         let selectedRows = event.detail.selectedRows;
-        console.log('Selected Rows: ',selectedRows);
         if(selectedRows.length > 0){
           this.selectedDuplicateRecord[targetId] = selectedRows[0];
         }
@@ -866,7 +858,8 @@ import { LightningElement, track, api, wire } from "lwc";
             let isMainStakeNew = false;
             let isSubStakeNew = false;
             let selectedDupAccountTypes = Object.keys(this.selectedDuplicateRecord);
-             for (let type in this.duplicateAccounts) {
+            console.log('selectedDupAccountTypes: ',selectedDupAccountTypes);
+            for (let type in this.duplicateAccounts) {
               if(selectedDupAccountTypes.indexOf(type) === -1 && this.duplicateAccounts[type].length == 0){
                 if(type !== 'mainstake'){
                   isSubStakeNew = true;
@@ -880,7 +873,7 @@ import { LightningElement, track, api, wire } from "lwc";
                 } else {
                   const substakeConfig = this.currentDuplicateConfigs.filter((config) =>
                       !config[nameSpace + 'Main_Stakeholder_Account__c'] &&
-                      (config[nameSpace+'Account_RecordTypeName__c'] === type || config[`${nameSpace}Source_Reference_Field__c`] === type));
+                      config[nameSpace+'Account_RecordTypeName__c'] === type);
                   this.dupConfigIds.push(substakeConfig[0].Id);
                   isSubStakeNew = true;
                 }
@@ -946,26 +939,29 @@ import { LightningElement, track, api, wire } from "lwc";
             }
             if((showConfirm && isConfirmed) || this.skipDupcheck){
               for (let type in this.duplicateAccounts) {
-               
                 if (type === 'mainstake' && this.duplicateAccounts[type].length > 0 && !isMainStakeNew && !this.isCaseOpen) {
                   this.isCaseOpen = false;
                   this.recordTypeData = this.enrollmentRecordType;
+                   if(this.isKAPrescriber){
                      const Configs = this.currentDuplicateConfigs.filter((config) =>
                         config[nameSpace + 'Main_Stakeholder_Account__c'] );
                     let config = Configs[0];
 
-                    let sourceF=config[`${nameSpace}Source_Reference_Field__c`];
-                    let source_fields=(sourceF.toLowerCase()!='syn_pharmacy__c' && sourceF.toLowerCase()!='syn_authorized_rep__c')?nameSpace + sourceF:sourceF;
+                    let source_fields=config[`${nameSpace}Source_Reference_Field__c`].toLowerCase()!='syn_pharmacy__c'?nameSpace + config[`${nameSpace}Source_Reference_Field__c`]:config[`${nameSpace}Source_Reference_Field__c`];
+
 
                     let inputField = this.template.querySelector(
-                        `lightning-input-field[data-field="${source_fields}"]`
+                        `lightning-input-field[data-field="${nameSpace}${config[`${nameSpace}Source_Reference_Field__c`]}"]`
                     );
 
-                    if (inputField.fieldName === source_fields) {
+                    if (inputField.fieldName === nameSpace + config[`${nameSpace}Source_Reference_Field__c`]) {
                       inputField.value = this.selectedDuplicateRecord[type].Id;
-                      await this.handleLookUpValues(source_fields, inputField.value, '');
+                      await this.handleLookUpValues(nameSpace + config[`${nameSpace}Source_Reference_Field__c`], inputField.value, '');
                     }
-                  
+                  }else{
+                    this.skipFieldVisibility = true;
+                    await this.preFillCaseLayout();
+                  }
                 }else if(this.duplicateAccounts[type].length > 0 && type !== 'mainstake') {
                   if(this.serviceType === 'Knowledge Assessment' && !this.isCaseOpen) {
                     this.isCaseOpen = false;
@@ -974,11 +970,10 @@ import { LightningElement, track, api, wire } from "lwc";
                   isSubStakeNew = false;
                   const substakeConfig = this.currentDuplicateConfigs.filter((config) =>
                       !config[nameSpace + 'Main_Stakeholder_Account__c'] &&
-                  (config[nameSpace+'Account_RecordTypeName__c'] === type || config[`${nameSpace}Source_Reference_Field__c`] === type));
+                      config[nameSpace+'Account_RecordTypeName__c'] === type);
                   let config = substakeConfig[0];
 
-                  let sourceF=config[`${nameSpace}Source_Reference_Field__c`];
-                  let source_fields=(sourceF.toLowerCase()!='syn_pharmacy__c' && sourceF.toLowerCase()!='syn_authorized_rep__c')?nameSpace + sourceF:sourceF;
+                  let source_fields=config[`${nameSpace}Source_Reference_Field__c`].toLowerCase()!='syn_pharmacy__c'?nameSpace + config[`${nameSpace}Source_Reference_Field__c`]:config[`${nameSpace}Source_Reference_Field__c`];
                   let inputField = this.template.querySelector(
                       `lightning-input-field[data-field="${source_fields}"]`
                   );
@@ -987,6 +982,7 @@ import { LightningElement, track, api, wire } from "lwc";
                     this.createStakeHolder.push(config[`${nameSpace}Source_Reference_Field__c`]);
                   }
                   
+                  console.log('source_fields'+source_fields);
                   if (this.selectedDuplicateRecord[type] && inputField.fieldName === source_fields) {
                     inputField.value = this.selectedDuplicateRecord[type].Id;
                     this.substakeHolderUpdateList[inputField.fieldName]=inputField.value;
@@ -1052,19 +1048,10 @@ import { LightningElement, track, api, wire } from "lwc";
      this.template.querySelectorAll(
          `lightning-input-field[data-objectkey="Case"]`
      ).forEach(element=>{
-       if(element && element.fieldName && element.fieldName.toLowerCase()!='ownerid' &&  (!this.readOnlyFieldsList.includes(element.fieldName.toLowerCase()))){
+       if(element && element.fieldName && (!this.readOnlyFieldsList.includes(element.fieldName.toLowerCase()))){
          objinputFields[element.fieldName]= element.value;
-         const fieldName = element.fieldName;
-         const fieldValue = element.value;
-         const commonFieldId = element.dataset.id;
-         const commonFieldDataType = element.dataset.name;
-         const fieldErrorMsg = element.error;
-         this.validateInputField(element, fieldName, fieldValue, commonFieldDataType, fieldErrorMsg);
- 
        }
      });
-
-
      let fields= objinputFields;
      this.recordfields = fields;
       this.fieldNameService = [];
@@ -1210,14 +1197,12 @@ import { LightningElement, track, api, wire } from "lwc";
         }
         this.fields = fields;
         fields['RecordTypeId'] = this.recordTypeData;
-        if(this.draftCaseId){
-          fields['Id']=this.draftCaseId;
-        }
         console.log('Field:: ',fields);
-         this.template.querySelector(`lightning-record-edit-form[data-object="Case"]`).submit(fields);
-      
+       
+       this.template.querySelector(`lightning-record-edit-form[data-object="Case"]`).submit(fields);
+
       } else if(!this.isInputValid()) {
-         this.ShowSpinner = false;
+        this.ShowSpinner = false;
         this.showToastNotification(
           "Error",
           this.label.validationCheckForAllFields,
@@ -1265,12 +1250,6 @@ import { LightningElement, track, api, wire } from "lwc";
     }
 
     async handleOnSuccess(event) {
-      if(this.draftCaseId){
-       await this.updateDocumentCheckList(this.draftCaseId,this.draftServiceId,this.accountId)
-        this.handleSuccess('success','Success!','Case update Successfully!') 
-        this.handleNavigateToRecord('Case',this.draftCaseId);
-        return;
-      }
       if(!this.stopHandleSuccessExec){
       let nameSpace = this.namespaceVar;
 
@@ -1340,13 +1319,11 @@ import { LightningElement, track, api, wire } from "lwc";
             this.participantType &&
             (this.accountId === null || this.accountId === undefined || this.accountId == '')
           ) {
-           
             this.createServiceAccount();
           } else {
             this.createAccount();
           }
         } else {
-          console.log('error:: ',error);
           this.showToastNotification(
             "Error",
             this.label.accountErrorMsg,
@@ -1368,7 +1345,6 @@ import { LightningElement, track, api, wire } from "lwc";
     }
 
     handleError(event){
-      console.log('error:: ',error);
       const evt = new ShowToastEvent({
           title: 'Error!',
           message: event.detail.detail,
@@ -1380,7 +1356,7 @@ import { LightningElement, track, api, wire } from "lwc";
   }
     handleFieldVisibility(fieldName, fieldValues, event) {
         try {
-          fieldValues = fieldValues?.toString()
+          fieldValues = fieldValues.toString()
           this.showUI = false;
           for (const key in this.serviceFields) {
               this.serviceFields[key]['sectionVal'].forEach((element) => {
@@ -1424,10 +1400,7 @@ import { LightningElement, track, api, wire } from "lwc";
         
         if((config[`${nameSpace}Program__r`].MasterLabel).toLowerCase() === (this.programName).toLowerCase()){
         
-          let sourceF=config[`${nameSpace}Source_Reference_Field__c`];
-          let sourceRefField=(sourceF.toLowerCase()!='syn_pharmacy__c' && sourceF.toLowerCase()!='syn_authorized_rep__c')?nameSpace + sourceF:sourceF;
-
-          
+          let sourceRefField=config[`${nameSpace}Source_Reference_Field__c`].toLowerCase()=='syn_authorized_rep__c'?config[`${nameSpace}Source_Reference_Field__c`]:nameSpace+config[`${nameSpace}Source_Reference_Field__c`];
           let inputField = this.template.querySelector(
               `lightning-input-field[data-field="${sourceRefField}"]`
           );
@@ -1441,14 +1414,12 @@ import { LightningElement, track, api, wire } from "lwc";
                   this.isLooupPopulated = true;
                 }
           }else if(!this.isKAHCS && config[this.namespaceVar+'Main_Stakeholder_Account__c'] && config[`${this.namespaceVar}Requestor_Type__c`] === serviceConfig[`${this.namespaceVar}Requestor_Type__c`]){
-            
             if(!this.isKAPrescriber)
               matchingConfigsMain.push(config);
             else{
               let inputField = this.template.querySelector(
-                `lightning-input-field[data-field="${sourceRefField}"]`
+                `lightning-input-field[data-field="${nameSpace}${config[`${nameSpace}Source_Reference_Field__c`]}"]`
               );
-              console.log('inputField.value###### ',inputField.value);
               if(!inputField.value){
                 matchingConfigsMain.push(config);
               }else{
@@ -1460,7 +1431,7 @@ import { LightningElement, track, api, wire } from "lwc";
         }
       })
       console.log('serviceConfig :',serviceConfig);
-      console.log('d ',matchingConfigsMain.concat(matchingConfigsSub));
+                 console.log('d ',matchingConfigsMain.concat(matchingConfigsSub));
       return matchingConfigsMain.concat(matchingConfigsSub);
     }
 
@@ -1506,11 +1477,20 @@ import { LightningElement, track, api, wire } from "lwc";
       this.handleFieldVisibility(fieldName, fieldValue, event);
       const isValueNull = !fieldValue;
       const inputFields = this.template.querySelectorAll(`[data-id="${commonFieldId}"]`);
-      
-      
-      inputFields.forEach(inputField => {
-
-        if (fieldName === inputField.fieldName) {
+      for (let i = 0; i < inputFields.length; i++) {
+        const emailPattern =  /^[a-zA-Z0-9_'.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const phonePattern = /^(\(\d{3}\) \d{7}|\(\d{3}\) \d{3}-\d{4}|\d{10}|\d{3}-\d{3}-\d{4})$/;
+        const namePattern = /^[A-Za-z'. -]+$/;
+        const deaPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{9,}$/;
+        const extPattern = /^[0-9]{1,10}$/;
+        const slnPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]*$/;
+        const npiPattern = /^\d{10}$/;
+        const hinPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{9}$/;
+        const ncpdpPattern = /^\d{7}$/;
+        const alphaNumCharPattern = /^[A-Za-z0-9'. -]+$/;
+        let alphanumericPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]*$/ ;
+        const zipPattern = /^\d{5}(-\d{4})?$/;
+        if (fieldName === inputFields[i].fieldName) {
           if(commonFieldType ==="REFERENCE"){
             var parentAccountId;
             if(this.substakeHolderUpdateList.hasOwnProperty(fieldName)){
@@ -1539,12 +1519,85 @@ import { LightningElement, track, api, wire } from "lwc";
           }
             this.handleLookUpValues(fieldName,fieldValue,event);
             this.handleKnowledgeAssesmentPassFail(fieldValue);
-          }else {
-            this.validateInputField(inputField, fieldName, fieldValue, commonFieldDataType, fieldErrorMsg);
-
+          }else if (commonFieldDataType === 'Phone') {
+            if (fieldValue != '' && !fieldValue.match(phonePattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'Fax') {
+            if (fieldValue != '' && !fieldValue.match(phonePattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'Name') {
+            if (fieldValue != '' && !fieldValue.match(namePattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'SLN') {
+            if (fieldValue != '' && !fieldValue.match(slnPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'DEA') {
+            if (fieldValue != '' && !fieldValue.match(deaPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'Number') {
+            if (fieldValue != '' && !fieldValue.match(npiPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'HIN') {
+            if (fieldValue != '' && !fieldValue.match(hinPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
           }
+          else if (commonFieldDataType === 'Zip') {
+            if (fieldValue != '' && !fieldValue.match(zipPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'NCPDP') {
+            if (fieldValue != '' && !fieldValue.match(ncpdpPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'Ext') {
+            if (fieldValue != '' && !fieldValue.match(extPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'Email') {
+            if (fieldValue != '' && !fieldValue.match(emailPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }else if (commonFieldDataType === 'AlphaNumeric') {
+            if (fieldValue != '' && !fieldValue.match(alphaNumCharPattern)) {
+              inputFields[i].classList.add('slds-has-error');
+            }else {
+              inputFields[i].classList.remove('slds-has-error');
+            }
+          }
+          if (fieldValue && (commonFieldDataType === 'Phone' || commonFieldDataType === 'Fax' )) {
+            inputFields[i].value = this.formatPhoneNumber(fieldValue);
         }
-      });
+        }
+      }
       var distributor = 'Distributor';
       if (this.participantType != distributor && this.serviceType !='Knowledge Assessment') {
         if (fieldName === `${nameSpace}NPI__c` && fieldValue.length === 10) {
@@ -1809,33 +1862,7 @@ import { LightningElement, track, api, wire } from "lwc";
       );
       return formattedNumber;
   }
-
-
-  validateInputField(inputFields, fieldName, fieldValue, commonFieldDataType, fieldErrorMsg) {
-    const patterns = {
-        'Phone': /^(\(\d{3}\) \d{7}|\(\d{3}\) \d{3}-\d{4}|\d{10}|\d{3}-\d{3}-\d{4})$/,
-        'Fax': /^(\(\d{3}\) \d{7}|\(\d{3}\) \d{3}-\d{4}|\d{10}|\d{3}-\d{3}-\d{4})$/,
-        'Name': /^[A-Za-z'. -]+$/,
-        'SLN': /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]*$/,
-        'DEA': /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{9,}$/,
-        'Number': /^\d{10}$/,
-        'HIN': /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{9}$/,
-        'Zip': /^\d{5}(-\d{4})?$/,
-        'NCPDP': /^\d{7}$/,
-        'Ext': /^[0-9]{1,10}$/,
-        'Email': /^[a-zA-Z0-9_'.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        'AlphaNumeric': /^[A-Za-z0-9'. -]+$/
-    };
-    
-    if (fieldValue != '' && !fieldValue.match(patterns[commonFieldDataType])) {
-        inputFields.classList.add('slds-has-error');
-         return;
-    } else {
-        inputFields.classList.remove('slds-has-error');
-     }
-}
-
-  async handleLookUpValues(fieldName,fieldValue,event){
+    async handleLookUpValues(fieldName,fieldValue,event){
       let nameSpace = this.namespaceVar;
         try {
           const getFieldValues = await this.fetchFieldValues(fieldValue,fieldName,this.serviceConfigRecord ? this.serviceConfigRecord[`${nameSpace}Case_Record_Type__c`] : '');
@@ -1866,8 +1893,8 @@ import { LightningElement, track, api, wire } from "lwc";
 
     asyncUpdateFieldValues(event,parent,parentName) {
       let nameSpace = this.namespaceVar;
-      console.log('this.mapData =>',this.mapData);
-      console.log('this.parentName =>',this.accountId);
+      console.log('fieldName',parentName)
+      console.log('value:: ',parent);;
       for (const [key, value] of this.mapData.entries()) {
               if(key != `${nameSpace}REMS_Program__c`) {
                 let field = this.template.querySelector(`lightning-input-field[data-field="${key}"]`);
@@ -1882,7 +1909,7 @@ import { LightningElement, track, api, wire } from "lwc";
                   }
 
 
-                  if(key==`${nameSpace}Patient_DOB__c` || key==`${nameSpace}Age__c` || field.fieldName==`${nameSpace}Patient2__c`){
+                  if(key==`${nameSpace}Patient_DOB__c` || key==`${nameSpace}Age__c` || fieldName==`${nameSpace}Patient2__c`){
                     this.validateAge();
                   }
 
@@ -1997,7 +2024,6 @@ import { LightningElement, track, api, wire } from "lwc";
         this.closeQuickSubtab(result);
         this.ShowSpinner = false;
       } else {
-        console.log('error result: ',result);
         this.showToastNotification("Error", this.label.accountErrorMsg, "Error");
         this.ShowSpinner = false;
       }
@@ -2006,7 +2032,9 @@ import { LightningElement, track, api, wire } from "lwc";
     async createAccount() {
       this.ShowSpinner = true;
       let nameSpace = this.namespaceVar;
-        createAccount({
+      console.log('this.caseRecordId:: ',this.caseRecordId);
+      console.log('this.caseRecordId:: ',this.secondCaseId);
+      createAccount({
         caseRecordId: this.caseRecordId,
           serviceReqType: this.serviceConfig[`${nameSpace}Requestor_Type__c`],
         servicerecordType: this.serviceConfig[`${nameSpace}Rems_Service_RCtype__c`],
@@ -2114,8 +2142,7 @@ import { LightningElement, track, api, wire } from "lwc";
       this.closeForm();
   }
     handleCancel(){
-           this.handleNavigateToRecord('DocumentChecklistItem',this.documentCheckListId);
-          
+          this.showPopup=true;
         //this.closeForm();
       }
       handleYes() {
@@ -2247,7 +2274,6 @@ import { LightningElement, track, api, wire } from "lwc";
                   }
                   })
                   .catch((error) =>
-                   
                     this.showToastNotification(
                       "Error",
                       reduceErrors(error).join(", "),
@@ -2278,7 +2304,6 @@ import { LightningElement, track, api, wire } from "lwc";
           ServiceRecordTypeName: this.serviceConfigRecord[`${nameSpace}Service_Record_Type__c`],
       });
       if (result) {
-        
         this.secondService = result;
         if (this.accountId && !this.secondCaseId) {
           let fields = {
@@ -2291,7 +2316,7 @@ import { LightningElement, track, api, wire } from "lwc";
               console.log('Record updated successfully');
             })
             .catch(error => {
-              console.log('Error updating record', error);
+              console.error('Error updating record', error);
             });
             if(this.documentCheckListId !== undefined && this.documentCheckListId !== ''){
               this.updateDocumentCheckList(this.caseRecordId,this.secondService,this.accountId);
@@ -2313,7 +2338,6 @@ import { LightningElement, track, api, wire } from "lwc";
 
             })
             .catch(error => {
-              console.log('Error updating record', error);
               console.error('Error updating record', error);
             });
             if(this.documentCheckListId !== undefined && this.documentCheckListId !== ''){
@@ -2349,7 +2373,7 @@ import { LightningElement, track, api, wire } from "lwc";
 
         })
         .catch(error => {
-          console.log('Error updating record', error);
+          console.error('Error updating record', error);
         });
 
     }
@@ -2358,11 +2382,6 @@ import { LightningElement, track, api, wire } from "lwc";
       let result = await updateCase({
         caseRecordId: caseId,
         accountId: this.accountId
-      }).then(() => {
-
-      })
-      .catch(error => {
-        console.error('Error updating record', error);
       });
       //this.closeQuickSubtab(this.accountId);
     };
@@ -2647,26 +2666,4 @@ import { LightningElement, track, api, wire } from "lwc";
     let eligibleStatus=this.serviceConfigRecord.hasOwnProperty(`${nameSpace}Eligible_Status__c`)?(this.serviceConfigRecord[`${nameSpace}Eligible_Status__c`]?.split(',')):'';
     return eligibleStatus.includes(accountStatus);
   }
-  handleNavigateToRecord(objectName,recordId) {
-    
-    // Use the navigate function to navigate to the record page
-    this[NavigationMixin.Navigate]({
-        type: 'standard__recordPage',
-        attributes: {
-            recordId: recordId,
-            objectApiName: objectName, // Object API Name (e.g., 'Account', 'Contact')
-            actionName: 'view' // Action name (e.g., 'view', 'edit')
-        }
-    });
-}
-handleSuccess(variant,title,message) {
-  // Show success toast message
-  const toastEvent = new ShowToastEvent({
-      title: title,
-      message: message,
-      variant: variant, // Can be 'success', 'error', 'info', or 'warning'
-  });
-  this.dispatchEvent(toastEvent);
-}
-
   }

@@ -23,6 +23,7 @@ trigger SYN_ReceivedDocumentTrigger on ReceivedDocument(before insert,after inse
             publishEvents.add(ayncReq);
         }
     }else if(trigger.isUpdate && trigger.isAfter){
+    
         SYN_ReceivedDocumentTriggerHandler.updateShareRecord(trigger.newMap,trigger.oldMap);
 
          //Big object
@@ -41,10 +42,8 @@ trigger SYN_ReceivedDocumentTrigger on ReceivedDocument(before insert,after inse
          }
     }else if(trigger.isbefore && trigger.isupdate ){
         
-        //SYN_ReceivedDocumentTriggerHandler.updateREMSProgram(trigger.new);
+    	//SYN_ReceivedDocumentTriggerHandler.updateREMSProgram(trigger.new);
         SYN_ReceivedDocumentTriggerHandler.updateProcessingStatus(trigger.new,trigger.oldMap);
-                SYN_ReceivedDocumentTriggerHandler.updateFirstAssigned(trigger.new,trigger.oldMap);
-
         SYN_ReceivedDocumentTriggerHandler.updateAssignedProcessingTime(trigger.new);
     }
     else if (trigger.isbefore && trigger.isDelete){

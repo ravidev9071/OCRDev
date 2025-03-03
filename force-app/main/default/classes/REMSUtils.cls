@@ -308,21 +308,16 @@ global without sharing class REMSUtils {
                 }
             }
             for (String fName : programMap.keySet()) {
-                
-                String key=programMap.get(fName).StagingKey__c;
-                 System.debug('key top'+key);
-                String targetf=programMap.get(fName).TargetObjField__c;
-                key=key!=null?key.replace('.','_'):'';
-               
+                for (String value : fName.split(';')) {
+                    String fieldName = fieldNameMap.get(value);
                     String targetfield = fName.substringBefore(';'); 
-                    String fieldName = fieldNameMap.get(targetfield);
                     
-                if (!targetfield.contains('emptyField') && !String.isEmpty(fieldName) && fieldMap.keySet().contains(fieldName)) {
+                    if (!targetfield.contains('emptyField') && !String.isEmpty(fieldName) && fieldMap.keySet().contains(fieldName)) {
                         WrapperClass wrap = new WrapperClass();
                         string section = fName.substringAfterLast(';');
                        // wrap.fieldValue=stagingKeyValueMap.get(String.valueOf(programMap.get(fName).StagingKey__c)+section);
-                       wrap.fieldValue=stagingKeyValueMap.containsKey(key)?stagingKeyValueMap.get(key):'';
-
+                        String key=String.valueOf(programMap.get(fName).StagingKey__c)?.replaceAll('.','_');
+                        wrap.fieldValue=stagingKeyValueMap.get(key);
                         if (programMap.get(fName).TargetObjFieldLabel__c != null) {
                             wrap.fieldLabel = programMap.get(fName).TargetObjFieldLabel__c;
                         } else {
@@ -379,7 +374,6 @@ global without sharing class REMSUtils {
                         if(wrap.referenceRecType == null && wrap.recordType != null){
                             wrap.referenceRecType = wrap.recordType;
                         }
-
                         if (!seactionMap.containsKey(wrap.sectionName+'#'+wrap.referenceObject+'#'+wrap.referenceRecType+'#'+wrap.additionalSection) && wrap.visible == true) {
                             seactionMap.put(wrap.sectionName+'#'+wrap.referenceObject+'#'+wrap.referenceRecType+'#'+wrap.additionalSection, new List<WrapperClass>{wrap});
                         } else if (seactionMap.containsKey(wrap.sectionName+'#'+wrap.referenceObject+'#'+wrap.referenceRecType+'#'+wrap.additionalSection)) {
@@ -430,7 +424,8 @@ global without sharing class REMSUtils {
                             break;
                         }
                     }
-             }
+                }
+            }
         }  catch (Exception ex) {
             System.debug('getData  '+ex.getLineNUmber());
             throw new AuraHandledException('An unexpected error occurred in getRecords method: ' + ex.getStackTraceString());
@@ -447,12 +442,10 @@ global without sharing class REMSUtils {
     public static Map<String,String> getGetStagingData(Id docChkLstId){
         Map<String,String> keyValMap=new Map<String,String>();
         List<StagingDetail__c> stgnDetList=new List<StagingDetail__c>([SELECT ID,Key__c,value__c,SectionHeader__c FROM StagingDetail__c where StagingHeader__r.DocDetail__c=:docChkLstId]);
-      for(StagingDetail__c stgnDet:stgnDetList){
+        for(StagingDetail__c stgnDet:stgnDetList){
            // keyValMap.put(stgnDet.key__c+stgnDet.SectionHeader__c,stgnDet.value__c);
-              String key=stgnDet.key__c!=null?stgnDet.key__c.replace('.','_'):'';
-          if(key!=''){
+              String key=stgnDet.key__c?.replaceAll('.','_');
 			  keyValMap.put(key,stgnDet.value__c);
-          }
         }
         return keyValMap;
     }
@@ -501,7 +494,6 @@ public static List<US_WSREMS__Field_View_Configuration__mdt> getFieldVisibilityR
             
             queryString += ' ORDER BY SectionOrder__c, Order__c';
             List<FieldConfig__c> programFieldsList = Database.query(queryString);
-            System.debug('programFieldsList==> '+programFieldsList.size());
             if (programFieldsList != null && !programFieldsList.isEmpty()) {
                 for (FieldConfig__c pc : programFieldsList) {
                     String key = pc.TargetObjField__c != null ?
