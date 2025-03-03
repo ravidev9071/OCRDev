@@ -6,7 +6,15 @@
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class REMSUtility { 
+    public static map<string,Map<String,Id>> retrieveRecTypeNameIdCacheMap=new  map<string,Map<String,Id>>();
+    
+    
+    
     public static Map<String,Id> retrieveRecTypeNameId(String objectName){
+        String cacheKey='retrieveRecTypeNameId'+objectName;
+        if(retrieveRecTypeNameIdCacheMap.containsKey(cacheKey)){
+            return retrieveRecTypeNameIdCacheMap.get(cacheKey);
+        }
         Map<String,Id> recordTypeNameIdMap = new Map<String,Id>();
         String updatedStringName = isCustomObject(objectName) ? OCRREMSAppLiterals.NAMESPACE_STRING+objectName : objectName;
         Schema.DescribeSObjectResult objectSchema = Schema.getGlobalDescribe().get(updatedStringName).getDescribe();
@@ -15,10 +23,15 @@ public with sharing class REMSUtility {
             if(recordTypeInfoMap.get(rectypeName).getDeveloperName()!='Master' && !recordTypeInfoMap.get(rectypeName).isMaster())
                 recordTypeNameIdMap.put(rectypeName,recordTypeInfoMap.get(rectypeName).getRecordTypeId());            
         }
+        retrieveRecTypeNameIdCacheMap.put(cacheKey,recordTypeNameIdMap);
         return recordTypeNameIdMap;
     }
     
     public static Map<String,Id> retrieveRecTypeDeveloperNameId(String objectName){
+        String cacheKey='retrieveRecTypeDeveloperNameId'+objectName;
+        if(retrieveRecTypeNameIdCacheMap.containsKey(cacheKey)){
+            return retrieveRecTypeNameIdCacheMap.get(cacheKey);
+        }
         Map<String,Id> recordTypeDevNameIdMap = new Map<String,Id>();
         String updatedStringName = isCustomObject(objectName) ? OCRREMSAppLiterals.NAMESPACE_STRING+objectName : objectName;
         Schema.DescribeSObjectResult objectSchema = Schema.getGlobalDescribe().get(updatedStringName).getDescribe();
@@ -27,9 +40,14 @@ public with sharing class REMSUtility {
             if(recordTypeInfoMap.get(rectypeName).getDeveloperName()!='Master' && !recordTypeInfoMap.get(rectypeName).isMaster())
                 recordTypeDevNameIdMap.put(recordTypeInfoMap.get(rectypeName).getDeveloperName(),recordTypeInfoMap.get(rectypeName).getRecordTypeId());            
         }
+         retrieveRecTypeNameIdCacheMap.put(cacheKey,recordTypeDevNameIdMap);
         return recordTypeDevNameIdMap;
     }
     public static Map<String,Id> retrieveRecTypeDeveloperNameId_Product(String objectName){
+         String cacheKey='retrieveRecTypeDeveloperNameId_Product'+objectName;
+        if(retrieveRecTypeNameIdCacheMap.containsKey(cacheKey)){
+            return retrieveRecTypeNameIdCacheMap.get(cacheKey);
+        }
        Map<String,Id> recordTypeDevNameIdMap = new Map<String,Id>();
         String updatedStringName = isCustomObject(objectName) ? OCRREMSAppLiterals.NAMESPACE_STRING+objectName : objectName;
         Schema.DescribeSObjectResult objectSchema = Schema.getGlobalDescribe().get(updatedStringName).getDescribe();
@@ -38,10 +56,12 @@ public with sharing class REMSUtility {
             if(recTypeInfoObj.isAvailable() && recTypeInfoObj.getDeveloperName()!='Master' && !recTypeInfoObj.isMaster())
                 recordTypeDevNameIdMap.put(recTypeInfoObj.getDeveloperName(),recTypeInfoObj.getRecordTypeId());            
         }
+        retrieveRecTypeNameIdCacheMap.put(cacheKey,recordTypeDevNameIdMap);
         return recordTypeDevNameIdMap;
     }
     //This method is added by Dileep Gurram to fetch map of recordId and developername
     public static Map<Id,String> retrieveRecTypeIdDeveloperName_Product(String objectName){
+         
        Map<Id,String> recordTypeDevNameIdMap = new Map<Id,String>();
         String updatedStringName = isCustomObject(objectName) ? OCRREMSAppLiterals.NAMESPACE_STRING+objectName : objectName;
         Schema.DescribeSObjectResult objectSchema = Schema.getGlobalDescribe().get(updatedStringName).getDescribe();
@@ -50,6 +70,7 @@ public with sharing class REMSUtility {
             if(recTypeInfoObj.isAvailable() && recTypeInfoObj.getDeveloperName()!='Master' && !recTypeInfoObj.isMaster())
                 recordTypeDevNameIdMap.put(recTypeInfoObj.getRecordTypeId(),recTypeInfoObj.getDeveloperName());            
         }
+        
         return recordTypeDevNameIdMap;
     }
     public static Map<String,Schema.RecordTypeInfo> getRecordTypeNameAndSchema(String objectName){

@@ -3,8 +3,8 @@
 * @TestClass          : RREMSAccountCreation_Test
 * @Author             : 
 * @Modification Log   : 
-* Ver       Date            Developer                   Modification
-*                           Chandra                 Initial Implementation.
+* Ver       Date                        Developer             Modification
+* v1.0       15-Feb-2025                Chandra              Initial Implementation.
 **/
  public with sharing class OCRRemsAccountCreation {
     @AuraEnabled(cacheable=true)
@@ -21,11 +21,11 @@
         }
         return getAccountfieldsMapping;
     }
-    /********************************************************************************************************************************************************
+ /********************************************************************************************************************************************************
 * Method Name          : createSubStakeHolderAccounts
 * @Description         : Created Sub Stake Holders Rcords.
-* @CreatedDate         : 
-* @Author              : Jakeer
+* @CreatedDate         : 15-Feb-2025
+* @Author              : Chandra
 **********************************************************************************************************************************************************/
     @AuraEnabled
     public static Map<String,String> createSubStakeHolderAccounts(List<AccountfieldMappingWrapper> fieldMapValue, String RequestRecordType, Id programId, String programName,String channel){
@@ -52,8 +52,7 @@
         Map<String,String> getRecordTypes = REMSUtils.retrieveRecTypeDeveloperNameId('Account');
         Map<String,String> getCaseRecordTypes = REMSUtils.retrieveRecTypeDeveloperNameId('case');
         List<Account> insertAccountlist = new List<Account>();
-                System.debug('storeApiValues '+fieldMapValue);
-
+        
         for(AccountfieldMappingWrapper afm: fieldMapValue){
             if(storeApiValues.containsKey(afm.recordtype)){
                 storeApiValues.get(afm.recordtype).put(afm.fieldApiName,afm.feildValue);
@@ -65,7 +64,6 @@
         }
         List<String> sourceRefFields = new List<String>();
         Map<String,String> fieldValues = new Map<String,String>();
-        System.debug('storeApiValues '+storeApiValues);
         for(String afm: storeApiValues.keyset()){
             if(getAccountCreationMdt.containskey(afm)){
                 US_WSREMS__REMS_Duplicate_Config__mdt AccountCreationconfig = getAccountCreationMdt.get(afm);
@@ -110,8 +108,7 @@
                         }else{
                             sourceRefFields.remove(i);
                             for(Database.Error objErr : sr.getErrors()) {
-                                System.debug('Error has occurred.' + objErr.getStatusCode() + ': ' + objErr.getMessage());
-                            }
+                             }
                         }    
                         i++;  
                     }
@@ -133,46 +130,6 @@
         }
         
         return AccountIdsMap;
-    }
-    
-    
-    @AuraEnabled
-    public static void createSubstakeHolderCase(Id accountId, US_WSREMS__REMS_Duplicate_Config__mdt config){
-        Map<String,String> accountToCaseFields = new Map<String,String>();
-        Map<String,String> getCaseRecordTypes = REMSUtils.retrieveRecTypeDeveloperNameId('case');
-        List<US_WSREMS__REMS_Service_Summary__c> serviceSumList = new List<US_WSREMS__REMS_Service_Summary__c>();
-        serviceSumList = [SELECT Id FROM US_WSREMS__REMS_Service_Summary__c WHERE US_WSREMS__Participant__c=:accountId AND 
-                          RecordType.DeveloperName = :OCRREMSAppLiterals.SERVICE_RECTYPE_PARTICIPANT_ENROLLMENT order by LastModifiedDate desc];
-        if(Test.isRunningTest()){
-            accountToCaseFields.put('Name','US_WSREMS__Last_Name__c');
-        }else{
-            for(US_WSREMS__Field_Mapping_Config__mdt fieldMappingConfig : [SELECT Id,US_WSREMS__Source_Field__c,US_WSREMS__Target_Field__c,US_WSREMS__Source_RecordType_Name__c,US_WSREMS__Target_RecordType_Name__c FROM US_WSREMS__Field_Mapping_Config__mdt WHERE US_WSREMS__Source_RecordType_Name__c  = :config.US_WSREMS__Case_RecordTypeName__c AND US_WSREMS__Source_Object__c = 'Case' AND US_WSREMS__Target_Object__c = 'Account' AND US_WSREMS__IsActive__c = TRUE AND US_WSREMS__Program__c = :config.US_WSREMS__Program__c AND US_WSREMS__Target_RecordType_Name__c =: config.US_WSREMS__Account_RecordTypeName__c]){
-                if(!accountToCaseFields.containsKey(fieldMappingConfig.US_WSREMS__Target_Field__c)){
-                    accountToCaseFields.put(fieldMappingConfig.US_WSREMS__Target_Field__c,fieldMappingConfig.US_WSREMS__Source_Field__c);
-                }
-            }
-        }
-        String query = 'SELECT Id, '+String.join(new List<String>(accountToCaseFields.keySet()),',')+ ' FROM Account WHERE Id =: accountId';
-        Case newCase = new Case();
-        newCase.put('US_WSREMS__Participant__c',accountId);
-        if(!serviceSumList.isEmpty()){
-            newCase.put('US_WSREMS__REMS_Service_Summary__c',serviceSumList[0].Id);
-        }
-        if(Test.isRunningTest()){
-            newCase.RecordTypeId = getCaseRecordTypes.get('Facility_Account');
-        }
-        else{
-            newCase.RecordTypeId = getCaseRecordTypes.get(config.US_WSREMS__Case_RecordTypeName__c);
-        }
-        for(Account account : Database.query(query)){
-            for(String accountField : accountToCaseFields.keySet()){
-                if(accountToCaseFields.containsKey(accountField) && account.get(accountField) != null)
-                    newCase.put(accountToCaseFields.get(accountField),account.get(accountField));
-            }
-        }
-        newCase.Status = 'Complete';
-        newCase.US_WSREMS__Outcome__c = 'Complete';
-        insert newCase;
     }
     
     @AuraEnabled
@@ -233,7 +190,7 @@
                     if(config.US_WSREMS__Main_Stakeholder_Account__c){
                         response.put('mainstake',Database.query(soqlQuery));
                     }else{
-                        response.put(config.US_WSREMS__Source_Reference_Field__c,Database.query(soqlQuery));
+                        response.put(config.US_WSREMS__Account_RecordTypeName__c,Database.query(soqlQuery));
                     }
                 }
             }
@@ -241,109 +198,7 @@
         return response;
     }
     
-    /**
-* Method to perform duplicate checkup.
-* @param programCode The program code.
-* @param stakeholder The stakeholder type.
-* @param recordType The record type.
-* @param fieldValues Map containing field values.
-* @return List of duplicate records with label names of the display fields.
-*/
-    @AuraEnabled
-    public static Map<String, List<Account>> performDuplicateCheckup(String RequestRecordType, String programName, String programId, Map<String, String> fieldValues) {
-        // Retrieve matching criteria configurations from Custom Metadata Type
-        List<US_WSREMS__REMS_Duplicate_Config__mdt> matchingConfigurations = [SELECT Id, Label, US_WSREMS__Source_Reference_Field__c, US_WSREMS__Target_Specific_Fields__c, US_WSREMS__Case_RecordTypeName__c,US_WSREMS__Display_Fields__c,
-                                                                              US_WSREMS__IsActive__c, US_WSREMS__Account_RecordTypeName__c,US_WSREMS__Account_FieldApiNames__c ,US_WSREMS__Dublicate_Matching_Fields_JSON__c,US_WSREMS__Target_Object__c,US_WSREMS__Condition_Logic__c
-                                                                              FROM US_WSREMS__REMS_Duplicate_Config__mdt WHERE US_WSREMS__Program__r.MasterLabel = :programName AND US_WSREMS__Requestor_Type__c=: RequestRecordType AND US_WSREMS__IsActive__c=true];
-        List<Map<String, Object>> duplicateRecords = new List<Map<String, Object>>();
-        Map<String,List<Account>> getAccounts = new Map<String,List<Account>>();
-        US_WSREMS__REMS_Duplicate_Config__mdt matchedConfig;
-        try {
-            if (!matchingConfigurations.isEmpty()) {
-                Set<String> displayFieldSet = new Set<String>();
-                String soqlQuery = '';
-                // Execute dynamic SOQL query
-                for (Integer j = 0; j < matchingConfigurations.size(); j++) {
-                    
-                    US_WSREMS__REMS_Duplicate_Config__mdt config = matchingConfigurations[j];
-                    if(config.US_WSREMS__Display_Fields__c == null || config.US_WSREMS__Dublicate_Matching_Fields_JSON__c == null){
-                        continue;
-                    }
-                    matchedConfig =  matchingConfigurations[j];
-                    Set<String> tempDisplayFieldSet = new Set<String>(config.US_WSREMS__Display_Fields__c.split(','));
-                    displayFieldSet.addAll(tempDisplayFieldSet);
-                    
-                    // Deserialize matching criteria JSON
-                    String matchingCriteriaJson = config.US_WSREMS__Dublicate_Matching_Fields_JSON__c;
-                    List<MatchingCriterion> matchingCriteriaList = (List<MatchingCriterion>) JSON.deserialize(matchingCriteriaJson, List<MatchingCriterion>.class);
-                    String conditionlogic = '('+config.US_WSREMS__Condition_Logic__c+')';
-                    
-                    // Build SOQL WHERE clause based on matching criteria
-                    soqlQuery += '( ';
-                    for (Integer i = 0; i < matchingCriteriaList.size(); i++) {
-                        MatchingCriterion matchingCriterion = matchingCriteriaList[i];
-                        String targetField = addNamespace(matchingCriterion.target_field);
-                        String matchingCondition = matchingCriterion.matching_condition;
-                        //String sourceFieldValue = 'test';
-                        String sourceFieldValue = fieldValues.get(addNamespace(matchingCriterion.source_field));
-                        if(sourceFieldValue == null || sourceFieldValue == 'null'){
-                            sourceFieldValue = '';
-                        }                   
-                        String tempQuery = '';
-                        if(matchingCriterion.datatype == 'date'){
-                            tempQuery= ' '+targetField + ' ' + matchingCondition + ' ' + sourceFieldValue+' ';
-                            
-                        }else if (matchingCondition.equalsIgnoreCase('LIKE')) {
-                            tempQuery= ' '+targetField + ' LIKE \'%' + sourceFieldValue + '%\' ';
-                        } else {    
-                            tempQuery= ' '+targetField + ' ' + matchingCondition + ' \'' + sourceFieldValue+'\' ';
-                        }
-                        //soqlQuery+= tempQuery;
-                        String tmp = '['+matchingCriterion.criteria_id+']';
-                        conditionlogic = conditionlogic.replace(tmp,tempQuery);
-                        
-                        if (i < matchingCriteriaList.size() - 1) {
-                            //soqlQuery += ' AND ';
-                        }
-                        else{
-                            conditionlogic += ' AND RecordType.DeveloperName ='+ ' \'' +config.US_WSREMS__Account_RecordTypeName__c+'\' ' + ' AND (US_WSREMS__REMS_Program__c =:programId) ';
-                        }
-                    }
-                    soqlQuery += conditionlogic;
-                    
-                    
-                    if (j < matchingConfigurations.size() - 1) {
-                        soqlQuery += ') OR ';
-                    }else{
-                        soqlQuery += ' ) ';
-                    }
-                    
-                }
-                // Construct the SELECT clause of the SOQL query using the joined display fields
-                String displayFieldsQuery = String.join(new List<String>(displayFieldSet), ', ');
-                
-                // Concatenate the SELECT and WHERE clauses to form the complete SOQL query
-                soqlQuery = 'SELECT RecordType.DeveloperName,' + addNamespace(displayFieldsQuery) + ' FROM '+matchedConfig.US_WSREMS__Target_Object__c+' WHERE ' + soqlQuery ;
-                
-                for(Account acc: Database.query(soqlQuery)){
-                    if(getAccounts.containskey(acc.RecordType.DeveloperName)){
-                        getAccounts.get(acc.RecordType.DeveloperName).add(acc);
-                    }else{
-                        List<Account> accs = new List<Account>();
-                        accs.add(acc);
-                        getAccounts.put(acc.RecordType.DeveloperName,accs);
-                    }
-                }
-                
-                
-            }
-        } catch (Exception e) {
-            String errorMessage = 'Error executing dynamic query: ' + e.getMessage() + '\nStack Trace: ' + e.getStackTraceString();
-            System.debug(errorMessage);
-        }
-        
-        return getAccounts;
-    }
+    
 /********************************************************************************************************************************************************
 * Method Name          : getAccountStatus
 * @Description         : Checking selected StakeHolder Status

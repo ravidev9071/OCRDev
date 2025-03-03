@@ -53,7 +53,8 @@ public class SYN_ReceivedDocumentTriggerHandler {
     
     public static void updateAssignedProcessingTime(List<ReceivedDocument> receiveddocList){
        // REMS_Program__c
-       String businessHoursId;
+       
+        String businessHoursId;
         Id programId= SYN_CommonUtility.SOXprogramId();
         String SoxBHId = SYN_CommonUtility.getBusinessHoursId(System.Label.SOXBusinessHoursName);
         String clozapineBHId = SYN_CommonUtility.getBusinessHoursId(System.Label.ClozapineBusinessHoursName);
@@ -64,13 +65,14 @@ public class SYN_ReceivedDocumentTriggerHandler {
 				businessHoursId=SoxBHId;
 			}else{
 				 businessHoursId=clozapineBHId;
+              
 			}
 			
 			if(receiveddoc.First_Assigned_Date__c != NULL){
 				
 				Map<String, Long> timeEleMap = SYN_CommonUtility.calculateBusinessHours(businessHoursId, receiveddoc.CreatedDate, receiveddoc.First_Assigned_Date__c);
 				String totalTime = String.valueOf(timeEleMap.get('hours')) + ' hrs ' +  String.valueOf(timeEleMap.get('mins')) +' mins'; 
-				receiveddoc.Assigned_Processing_Time_in_Mins__c = (Integer.valueOf(timeEleMap.get('hours')*60) +Integer.valueof(timeEleMap.get('mins')));
+				 receiveddoc.Assigned_Processing_Time_in_Mins__c = (Integer.valueOf(timeEleMap.get('hours')*60) +Integer.valueof(timeEleMap.get('mins')));
 				receiveddoc.Assigned_Processing_Time__c = totalTime;                     
 									
 			}  
@@ -130,6 +132,19 @@ public class SYN_ReceivedDocumentTriggerHandler {
         }
         
     }
+    public static void updateFirstAssigned(List<ReceivedDocument> receivedList, Map<Id,ReceivedDocument> oldValues){
+        List<ReceivedDocument> receivedDocStatusChanged = new List<ReceivedDocument>();
+        for(ReceivedDocument rc:receivedList){
+            ReceivedDocument beforeUpdate = oldValues.get(rc.id);           
+            
+            if(beforeUpdate.Processing_Status__c !=rc.Processing_Status__c && rc.First_Assigned_Date__c== Null && (rc.Processing_Status__c=='OCR Processing' || rc.Processing_Status__c=='Assigned')){         
+                rc.First_Assigned_Date__c=System.now();
+                receivedDocStatusChanged.add(rc);
+            }
+         }
+        
+    }
+    
  
     public static void updateShareRecord(Map<Id, ReceivedDocument> newMap, Map<Id, ReceivedDocument> oldMap){
         

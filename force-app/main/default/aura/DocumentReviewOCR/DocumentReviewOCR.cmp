@@ -40,7 +40,7 @@
                 
                 <!-- BEGIN: LWC component for accoutn search -->
                 <div class="c-container slds-box container-margin slds-scrollable_y" style="height: 50rem;">
-                    <c:oCR_DocumentReview accFieldList="{!v.accFieldList}"></c:oCR_DocumentReview>
+                    <c:oCR_DocumentReview></c:oCR_DocumentReview>
                 </div>
                 <!-- END: LWC component for accoutn search -->
             </div>

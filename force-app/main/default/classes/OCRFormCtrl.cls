@@ -1,11 +1,11 @@
 /**
 * @File Name          : ORCFormCtrl.cls
-* @Description        : This controller help to get Dynamic PageLayout and Create Account and Services and Case record .
+* @Description        : This controller help to get Dynamic PageLayout and Create Account and Services and Case record.
 * @TestClass          : 
 * @Author             : Citiustech
 * @Modification Log   :
-* Ver       Date               Developer                       Modification
-* 1.0    15-0-205              Phool Chandra          Initial Implementation.
+* Ver       Date                 Developer              Modification
+* 1.0      Feb-2025              Phool Chandra          Initial Implementation.
 **/
 public with sharing class OCRFormCtrl {
     public static Map<String,US_WSREMS__ObjectFieldMapping__c> progObjConfigMap = new Map<String,US_WSREMS__ObjectFieldMapping__c>();
@@ -110,7 +110,7 @@ public with sharing class OCRFormCtrl {
             String FieldValue = String.valueOf(sObjectRecList[0].get(Value));
             TargetFieldToValueMap.put(Field, String.isBlank(FieldValue) ? ' ' : FieldValue);
         }
-        system.debug('++++fieldmappingLIst'+fieldMappingList[0]);
+       
         Account acc = new Account();
         Id recordTypeId = [SELECT Id FROM RecordType WHERE SobjectType ='Account' AND DeveloperName = : fieldMappingList[0].TargetObjRecordType__c LIMIT 1].Id;
         acc.RecordTypeId = recordTypeId;
@@ -139,8 +139,7 @@ public with sharing class OCRFormCtrl {
                 }
             }
         }
-        System.debug('acc:::: '+acc);
-        actList.add(acc);
+         actList.add(acc);
         return actList;
     }
     
@@ -149,8 +148,8 @@ public with sharing class OCRFormCtrl {
 * Parameters: String caseRecordId, Id accountId, Id remsSummaryId
 * Description: This private method updates a Case record with the specified participant and REMS service summary IDs.
 *              It is used in the process of creating an Account and associating it with a Case.
-* Created Date: [Insert Date]
-* Developers: [Insert Developer Names]
+* Created Date: 26-Feb-2025
+* Developers: Chandra
 **********************************************************************************************************************************************************/
     @AuraEnabled
     public static void updateCase(String caseRecordId, Id accountId) {
@@ -160,8 +159,14 @@ public with sharing class OCRFormCtrl {
             List<US_WSREMS__REMS_Service_Summary__c> remsSummaryList = [SELECT Id,US_WSREMS__Requestor_Type__c,US_WSREMS__REMSProgram__c,US_WSREMS__REMSProgram__r.Name, RecordtypeId, RecordType.DeveloperName,US_WSREMS__Participant__c  FROM US_WSREMS__REMS_Service_Summary__c WHERE US_WSREMS__Participant__c  = :accountId LIMIT 1];
           
             if(!remsSummaryList.isEmpty()){
-                Account accObj = [Select Id,US_WSREMS__REMS_ID__c from Account where Id=:accountId limit 1];
+                Account accObj = [Select Id,US_WSREMS__REMS_ID__c,recordType.developerName,recordType.NamespacePrefix from Account where Id=:accountId limit 1];
+                Map<string,string> recTypeMap=getRecordTypeMap(accObj.recordType.DeveloperName,remsSummaryList[0].US_WSREMS__REMSProgram__r.Name);
+                List<RecordType> mappedRecordTypeId=[select Id from recordType where developerName =:recTypeMap.get(accObj.recordType.DeveloperName) AND NamespacePrefix=:accObj.recordType.NamespacePrefix order by createddate asc limit 1];
+                System.debug('mappedRecordTypeId: '+mappedRecordTypeId);
                 Case cs = new Case(Id = caseRecordId);
+                if(mappedRecordTypeId.size()>0){
+                    cs.RecordTypeId=mappedRecordTypeId[0].Id;
+                }
                  cs.US_WSREMS__Participant__c = accountId;
                 cs.US_WSREMS__REMS_Service_Summary__c = remsSummaryList[0].Id;
                 if(remsSummaryList[0].RecordType.DeveloperName !='Enrollment'){
@@ -185,7 +190,6 @@ public with sharing class OCRFormCtrl {
 **********************************************************************************************************************************************************/
     @AuraEnabled
     public static Map<String,Map<String, List<REMSUtils.WrapperClass>>> getServiceCreation(US_WSREMS__REMS_Service_Configuration__mdt serviceConfigObj,String documentCheckListId) {
-        System.debug('serviceConfigObj:::'+serviceConfigObj);
         Map<String, List<REMSUtils.WrapperClass>> serviceFieldMap = new Map<String, List<REMSUtils.WrapperClass>>();
         Map<String, String> serviceMap = new Map<String, String>();
         try {
@@ -293,11 +297,10 @@ public with sharing class OCRFormCtrl {
             TargetSourceMap.put(mdt.US_WSREMS__Source_Field__c, mdt.US_WSREMS__Target_Field__c);
             dynamicFieldSet.add(mdt.US_WSREMS__Target_Field__c);
         }
-        System.debug(fieldMappingList);
+       
         String dynamicFieldStr = String.join( new List<String>(dynamicFieldSet),',' );
-        if(accountId!=null && accountId!=''){
+        if(accountId!=null && accountId!='' && dynamicFieldSet.size()>0){
             String dynamicQueryStr = 'SELECT ' + dynamicFieldStr + ' FROM Account WHERE Id = :accountId';
-            System.debug(dynamicQueryStr);
             sObjectRecList = Database.query(dynamicQueryStr);
             for (String Field : TargetSourceMap.KeySet()) {
                 
@@ -312,6 +315,24 @@ public with sharing class OCRFormCtrl {
             }
         }
         return TargetFieldToValueMap;
+    }
+    
+  /********************************************************************************************************************************************************
+* Method Name          : getRecordTypeMap
+* @Description         : Retrieves the Record Type name mapping
+* @CreatedDate         : 15th Feb 2025
+* @Author              : Chandra
+**********************************************************************************************************************************************************/
+    @AuraEnabled
+    public static map<String,String> getRecordTypeMap(String sourceRecordType,String programName){
+        Map<String,String> recrdTypMap=new Map<String,String>();
+        Map<String,String> trgtRecrdTypMap=new Map<String,String>();
+        
+        List<US_WSREMS__REMSRecordTypeConfig__mdt> recrdTypeMap=new List<US_WSREMS__REMSRecordTypeConfig__mdt>([SELECT Id,US_WSREMS__Target_Record_Type__c,US_WSREMS__Source_Record_Type__c FROM US_WSREMS__REMSRecordTypeConfig__mdt WHERE US_WSREMS__Program__r.MasterLabel=:programName AND US_WSREMS__Source_Record_Type__c=:sourceRecordType limit 1]);
+            for(US_WSREMS__REMSRecordTypeConfig__mdt recConfig:recrdTypeMap){
+            recrdTypMap.put(recConfig.US_WSREMS__Source_Record_Type__c,recConfig.US_WSREMS__Target_Record_Type__c);
+        }
+        return recrdTypMap;
     }
     
     
@@ -337,12 +358,11 @@ public with sharing class OCRFormCtrl {
                 ServiceRecordTypeName,
                 'REMS_Service_Summary__c'
             );
-            System.debug(LoggingLevel.Debug,'Service Record:: =>'+serviceRecord);
             insert serviceRecord;
             return serviceRecord.Id ;
         } catch (Exception ex) {
-            System.debug('Line No error: '+ex.getLineNumber());
-            throw new AuraHandledException(
+            System.debug(LoggingLevel.Debug,'Line No error: =>'+ex.getLineNumber());
+			throw new AuraHandledException(
                 'An unexpected error occurred: ' + ex.getMessage()
             );
         }
@@ -351,7 +371,7 @@ public with sharing class OCRFormCtrl {
     /********************************************************************************************************************************************************
 MethodName : getNameSpace
 Description: This method will to get Namespace
-CreatedDate: 10 Oct, 2023
+CreatedDate: 18 Feb 2025
 ***********************************************************************************************************************************************************/ 
     @AuraEnabled    
     public static String getNameSpace(){
@@ -431,7 +451,6 @@ Description: This method retrieves Assessment Submission Result based on Account
 CreatedDate: 18 Feb 2024
 @Author    : Sukanya
 
-Reivew Needed: Yes
 **************************************************************************************************************/
  
     
@@ -518,6 +537,13 @@ CreatedDate: 22 Mar 2024
         return null;
     }
     
+
+ /****************************************************************************************************
+MethodName : getServiceFieldObjSection
+Description: getServiceFieldObjSection method use for re-structuring the field Configuration Wrapper section wise.
+CreatedDate: 22 Feb 2025
+@Author    : Chandra
+* **********************************************************************************************/
     
     public static void getServiceFieldObjSection(Map<String, List<REMSUtils.WrapperClass>> serviceFieldMap, Map<String,String> childIdMap,Id recordId){  
         Map<String,REMSUtils.objectWrapper> objectDetMap = new Map<String,REMSUtils.objectWrapper>();
@@ -585,6 +611,12 @@ CreatedDate: 22 Mar 2024
         }
     }
     
+/****************************************************************************************************
+MethodName : updateSubstakeholder
+Description: updateSubstakeholder Method use for updating the stake Holder account based on case Information.
+CreatedDate: 22 Feb 2025
+@Author    : Chandra
+* **********************************************************************************************/
     
     @AuraEnabled
     public static String updateSubstakeholder(Id caseId, Map<String,Object> parentFldSet, String programName, String requestorTypeName, String recordTypeName){
@@ -630,15 +662,15 @@ CreatedDate: 22 Mar 2024
         return fldMapList;
     }
     
-    /********************************************************************************************************************************************************
+/********************************************************************************************************************************************************
 * Method Name          : getCasesForStakeholder
 * @Description         : Retrieves the cases for given accountId
-* @CreatedDate         : 25 Apr 2024
-* @Author              : Amrit
+* @CreatedDate         : 25 Feb 2025
+* @Author              : Chandra
 **********************************************************************************************************************************************************/
     @AuraEnabled
     public static List<Case> getCasesForStakeholder(Id accountId, US_WSREMS__REMS_Service_Configuration__mdt serviceConfigObj) {
-        List<Case> cases = new List<Case>([SELECT Id,CaseNumber FROM Case WHERE US_WSREMS__Participant__c = :accountId AND Status NOT IN('Complete','Cancelled') AND RecordType.DeveloperName = :serviceConfigObj.US_WSREMS__Case_Record_Type__c]);
+        List<Case> cases = new List<Case>([SELECT Id,CaseNumber,Status,US_WSREMS__REMS_Service_Summary__c FROM Case WHERE US_WSREMS__Participant__c = :accountId AND Status NOT IN('Complete','Cancelled') AND RecordType.DeveloperName = :serviceConfigObj.US_WSREMS__Case_Record_Type__c]);
         return cases;
     }
     
@@ -733,35 +765,6 @@ CreatedDate: 22 Mar 2024
         }
     }
     
-    public static Map<String,List<REMSUtils.WrapperClass>>  getSectionFields(Map<String,List<REMSUtils.WrapperClass>> serviceFieldMap){
-        Map<String,List<REMSUtils.WrapperClass>> secFldConfigMap = new Map<String,List<REMSUtils.WrapperClass>> ();
-        for(String secObj: serviceFieldMap.keySet()){
-            if(secObj.contains('#')){
-                List<String> secObjDetList = new List<String>();
-                String sectionName;
-                String objectName;
-                String recordTypeName;
-                secObjDetList = secObj.split('#');
-                if(!secObjDetList.isEmpty()){
-                    sectionName = secObjDetList[0];
-                    objectName = secObjDetList[1];
-                    recordTypeName = secObjDetList[2];
-                }
-                if(secFldConfigMap.containsKey(sectionName)){
-                    secFldConfigMap.get(sectionName).addall(serviceFieldMap.get(secObj));
-                }else{
-                    secFldConfigMap.put(sectionName,serviceFieldMap.get(secObj));
-                }
-            }
-        }
-        return secFldConfigMap;
-    }
-    /********************************************************************************************************************************************************
-* Wrapper Class: WrapperClass
-* Description: This inner class represents a wrapper for fields and configurations used in the Lightning component.
-* Developers: Sukanya 
-**********************************************************************************************************************************************************/
-    
     public class WrapperClass{
         @AuraEnabled
         public String fieldType{get;set;}
@@ -807,6 +810,4 @@ CreatedDate: 22 Mar 2024
         @AuraEnabled
         public string fieldvalue{get;set;}
     }
-    
-    
 }
